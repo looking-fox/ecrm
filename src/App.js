@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './reset.css'
+import './App.css'
+import Home from './components/Home/Home'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h1> Hello World </h1>
+      <div className="container-fluid background">
+        <Home/>
       </div>
     )
   }
