@@ -4,12 +4,14 @@ import './Home.css'
 export default class Home extends Component {
   render() {
     return (
-      <div className="container-fluid background">
+      <div className="app">
 
-        <div className="col w-100 imga">
-            <div className="row">
-            hello
-            </div>
+        <div className="header">
+           log in
+        </div>
+
+        <div className="body">
+            body
         </div>
     
       </div>
