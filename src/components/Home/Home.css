@@ -1,0 +1,14 @@
+.background {
+    height: 100vh;
+    background-color: #e2e2e2;
+}
+.header {
+    height: 80px;
+    background-color: #e2e2e2;
+}
+.body {
+    height: 89vh;   
+}
+.imga {
+    background-color: green;
+}
