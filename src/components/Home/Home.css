@@ -89,3 +89,31 @@ nav button {
     justify-self: flex-end;
     object-fit: cover;
 }
+
+
+@media (max-width: 576px) { 
+    nav {
+        display: none;
+    }
+    .logo{
+        margin-left: 50px;
+    }
+    .app {
+        grid-template-columns: 1;
+    }
+    .body {
+        grid-template-columns: 100vw;
+        grid-template-rows: 50vw 50vw;
+    }
+    .introtext{
+        font-size: 2em;
+        margin-left: -20px;
+    }
+    .mainimage{
+        grid-row: 2;
+        grid-column: 1;
+        width: 100vw;
+        height: 60vh;
+    }
+
+ }
