@@ -1,3 +1,25 @@
 .features {
-    height: 100vh;
+    height: 50vh;
+    background-color: #f9f6f6;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    justify-content: center;
+    align-content: center;
+    
+}
+
+.item {
+    height: 10vh;
+    grid-column: span 4; 
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    text-align: center;
+    font-weight: 700;
+    color: #575757;
+    align-self: center;
+  justify-self: center;
+}
+.item i {
+    font-size: 2em;
+    margin-bottom: 20px;
 }

@@ -1,0 +1,15 @@
+.footer{
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.footer h2 {
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+.footer p {
+    font-size: 0.8em;
+}
