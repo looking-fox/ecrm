@@ -67,6 +67,7 @@ nav button {
     grid-column: 1;
     font-size: 2.5em;
     font-family: 'Playfair Display';
+    line-height: 1.1em;
     /* justify-content: center;
     align-self: flex-start;
     margin-left: 150px;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Home.css'
 import head from '../../assets/head.jpg'
+import Features from '../Features/Features'
 
 export default class Home extends Component {
   render() {
@@ -18,9 +19,11 @@ export default class Home extends Component {
         </div>
 
         <div className="body">
-            <h3 className="introtext">Photographers, meet your new workspace.</h3>
+            <h3 className="introtext">Keep organized. <br/>Stay adventurous.</h3>
             <img className ="mainimage" src={head}/>
         </div>
+
+        <Features/>
     
       </div>
     )
