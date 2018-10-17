@@ -1,14 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700');
+
 .app{
     display: grid;
     grid-template-columns: 2;
     grid-template-rows: 10vh 90vh;
+    font-family: 'Josefin Sans';
 }
 
 .header{
    grid-row: 1;
-   background-color: #e2e2e2;
+   background-color: white;
+   font-weight: 600;
+   letter-spacing: 5px;
+   font-size: 1.5em;
+   display: grid;
+   grid-template-columns: 15vw 85vw;
+   grid-template-rows: 1;
 }
+
+.logo {
+    display: grid;
+    grid-column: 1;
+    justify-content: center;
+    align-content: center;
+}
+
 .body{
     grid-row: 2;
-    background-color: gray;
+    background-color: #e2e2e2;
 }

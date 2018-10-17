@@ -7,7 +7,7 @@ export default class Home extends Component {
       <div className="app">
 
         <div className="header">
-           log in
+           <h1 className="logo">R/H</h1>
         </div>
 
         <div className="body">
