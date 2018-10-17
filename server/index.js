@@ -9,6 +9,13 @@ var sessionId = 54;
 const app = express()
 
 app.use(bodyParser.json())
+
+massive(process.env.CONNECTION_STRING).then(db => {
+    app.set('db', db)
+}).catch(error => {
+    console.log(`Massive error is ${error}`)
+})
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
@@ -40,12 +47,27 @@ app.get('/auth/callback', async (req, res) => {
     req.session.user = receiveUser.data;
     req.session.user.id = sessionId;
     sessionId++
-    res.status(200).send(req.session.user)
+    
+
+    const {sub, name, email} = req.session.user
+    console.log(sub, name, email)
+
+    const dbInstance = req.app.get('db')
+    dbInstance.store_user([sub, name, email]).then( () => {
+        res.redirect('/#/contact')
+    })
 
 })
 
 //========Auth0==========//
 
+
+
+//===============DB==================//
+
+
+
+//===============DB==================//
 
 
 const SERVER_PORT = process.env.SERVER_PORT || 3050
