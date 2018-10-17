@@ -41,6 +41,7 @@ nav li {
     margin: 0px 40px;
     letter-spacing: 2px;
     color: #989898;
+    text-decoration: none;
 }
 
 nav li:hover {
