@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Home.css'
+import head from '../../assets/head.jpg'
 
 export default class Home extends Component {
   render() {
@@ -11,7 +12,8 @@ export default class Home extends Component {
         </div>
 
         <div className="body">
-            body
+            <h3 className="introtext">Photographers, meet your new workspace.</h3>
+            <img className ="mainimage" src={head}/>
         </div>
     
       </div>
