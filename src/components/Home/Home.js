@@ -11,8 +11,8 @@ export default class Home extends Component {
         <div className="header">
            <h1 className="logo">R/H</h1>
            <nav>
-             <li>PRICING</li>
              <li>FEATURES</li>
+             <li>PRICING</li>
              <li>CONTACT</li>
              <button type="button" class="btn btn-sm btn-outline-dark">LOG IN</button>
            </nav>
