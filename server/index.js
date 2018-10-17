@@ -50,12 +50,25 @@ app.get('/auth/callback', async (req, res) => {
     
 
     const {sub, name, email} = req.session.user
-    console.log(sub, name, email)
-
+   
     const dbInstance = req.app.get('db')
-    dbInstance.store_user([sub, name, email]).then( () => {
-        res.redirect('/#/contact')
+
+    //If already in DB, redirect to dashboard.
+    //If not, add them to DB first before redirecting.
+    
+    dbInstance.check_user(sub).then((response) => {
+        if(response[0]){
+            res.redirect('/#/contact')
+        }
+        else {
+            dbInstance.store_user([sub, name, email]).then( () => {
+                res.redirect('/')
+            })
+        }
     })
+
+
+    
 
 })
 
