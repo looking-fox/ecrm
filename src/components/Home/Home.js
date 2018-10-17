@@ -14,13 +14,13 @@ export default class Home extends Component {
              <li>FEATURES</li>
              <li>PRICING</li>
              <li>CONTACT</li>
-             <button type="button" class="btn btn-sm btn-outline-dark">LOG IN</button>
+             <button type="button" className="btn btn-sm btn-outline-dark">LOG IN</button>
            </nav>
         </div>
 
         <div className="body">
             <h3 className="introtext">Keep organized. <br/>Stay adventurous.</h3>
-            <img className ="mainimage" src={head}/>
+            <img className ="mainimage" src={head} alt="Yosemite Elopement"/>
         </div>
 
         <Features/>
