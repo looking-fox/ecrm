@@ -4,8 +4,8 @@ import './Dashboard.css'
 export default class Dashboard extends Component {
   render() {
     return (
-      <div>
-        Dashboard Component
+      <div className="dashboard">
+        dashboard
       </div>
     )
   }

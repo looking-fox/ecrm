@@ -58,7 +58,7 @@ app.get('/auth/callback', async (req, res) => {
     
     dbInstance.check_user(sub).then((response) => {
         if(response[0]){
-            res.redirect('/#/contact')
+            res.redirect('/#/dashboard')
         }
         else {
             dbInstance.store_user([sub, name, email]).then( () => {

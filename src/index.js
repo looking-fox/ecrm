@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 
 import {HashRouter as Router, Switch, Route} from 'react-router-dom';
 import {Provider} from 'react-redux'
+import Dashboard from './components/Dashboard/Dashboard';
 
 ReactDOM.render(
 <Provider store={store}>
@@ -15,6 +16,7 @@ ReactDOM.render(
         <Switch>
             <Route exact path="/" component={App}/>
             <Route path="/contact" component={Contact}/>
+            <Route path="/dashboard" component={Dashboard}/>
         </Switch>
     </Router>
 </Provider>

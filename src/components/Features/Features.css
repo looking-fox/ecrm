@@ -23,3 +23,13 @@
     font-size: 2em;
     margin-bottom: 20px;
 }
+
+@media (max-width: 576px) { 
+    .features {
+        height: fit-content;
+    }
+    .item {
+        grid-column: span 12;
+        margin: 50px 0px;
+    }
+}
