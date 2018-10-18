@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
+
 import './Home.css'
 import head from '../../assets/head.jpg'
 import Features from '../Features/Features'
@@ -8,10 +8,7 @@ import Footer from '../Footer/Footer'
 
 
 export default class Home extends Component {
-  constructor(){
-    super()
-    
-  }
+  
 
   login = () => {
 

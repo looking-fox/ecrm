@@ -5,5 +5,7 @@
     font-family: 'Open Sans';
 }
 .sidebar{
-    width: 20vw;
+    width: 200px;
+    height: 100vh;
+    border-right: 1px solid #e2e2e2;
 }

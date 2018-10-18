@@ -78,6 +78,15 @@ app.get('/auth/callback', async (req, res) => {
 
 //===============DB==================//
 
+app.get('/api/user-info', (req, res) => {
+    const {name, email, sub, picture} = req.session.user
+    res.status(200).send({
+        name,
+        email,
+        sub,
+        picture
+    })
+})
 
 
 //===============DB==================//
