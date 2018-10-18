@@ -33,6 +33,14 @@ class Sidebar extends Component {
           onClick={() => this.logOut()}
           className="fas fa-sign-out-alt"/>
           </div>
+
+          <div className="menuitem">
+            <p><i className="fas fa-users"/>Clients</p>
+          </div>
+
+          <div className="listitem">
+            <p>2018 Clients</p>
+          </div>
           
         </div>
     )
