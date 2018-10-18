@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {updateUser} from '../../redux/reducer'
 
 import './Dashboard.css'
+// import { connect } from 'tls';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
 
   componentDidMount(){
     axios.get('/api/user-info').then((res) => {
-      console.log('response:', res.data)
+      this.props.updateUser(res.data)
     })
   }
 
@@ -21,3 +24,10 @@ export default class Dashboard extends Component {
     )
   }
 }
+
+function mapStateToProps(state){
+  return {
+    ...this.props, ...state
+  }
+}
+export default connect(mapStateToProps, {updateUser})(Dashboard)
