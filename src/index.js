@@ -8,8 +8,9 @@ import * as serviceWorker from './serviceWorker';
 
 import {HashRouter as Router, Switch, Route} from 'react-router-dom';
 import {Provider} from 'react-redux'
-import Dashboard from './components/Dashboard/Dashboard';
+import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
+import Pricing from './components/Pricing/Pricing'
 
 ReactDOM.render(
 <Provider store={store}>
@@ -17,7 +18,25 @@ ReactDOM.render(
         <Switch>
             <Route exact path="/" component={App}/>
             <Route path="/contact" component={Contact}/>
-            <Route path="/dashboard" component={Dashboard}/>
+
+            <Route path="/dashboard" render={() => {
+                return (
+                    <div style={{display: 'flex'}}>
+                        <Sidebar/>
+                        <Clients/>
+                    </div>
+                )
+            }}/>
+
+            <Route path="/feedback" render={() => {
+                return (
+                    <div style={{display: 'flex'}}>
+                        <Sidebar/>
+                        <Pricing/>
+                    </div>
+                )
+            }}/>
+            
         </Switch>
     </Router>
 </Provider>
