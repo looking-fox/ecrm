@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import {HashRouter as Router, Switch, Route} from 'react-router-dom';
 import {Provider} from 'react-redux'
 import Dashboard from './components/Dashboard/Dashboard';
+import Clients from './components/Clients/Clients'
 
 ReactDOM.render(
 <Provider store={store}>

@@ -1,48 +1,12 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import {connect} from 'react-redux'
-import {updateUser, logoutUser} from '../../redux/reducer'
-
 import './Dashboard.css'
 
-
-class Dashboard extends Component {
-
-  componentDidMount(){
-    axios.get('/api/user-info').then((res) => {
-      this.props.updateUser(res.data)
-    })
-  }
-
-  logOut = () => {
-    axios.post('/api/logout').then(() => {
-      this.props.logoutUser()
-    })
-  }
-
+export default class Dashboard extends Component {
   render() {
     return (
-      <div className="dashboard">
-        <div className="sidebar">
-
-          <div className="topbar">
-          <img 
-          className="profileimage"
-          src={this.props.picture} 
-          alt="profile"/>
-          <i 
-          onClick={() => this.logOut()}
-          className="fas fa-sign-out-alt"/>
-          </div>
-        </div>
+      <div>
+        Dashboard
       </div>
     )
   }
 }
-
-function mapStateToProps(state){
-  return {
-    ...this.props, ...state
-  }
-}
-export default connect(mapStateToProps, {updateUser, logoutUser})(Dashboard)
