@@ -1,5 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
 .clientdashboard {
     width: 85vw;
     height: 100vh;
-    background-color: #e2e2e2;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 0px;
+    font-family: 'Open Sans';
 }
+
+.client{
+    width: 90%;
+    height: 40px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    align-content: center;
+    margin: 20px 0px;
+}
+
+.item {
+    display: grid;
+    grid-column: span 2;
+    align-content: center;
+    font-size: 0.9em;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+.notes {
+    display: grid;
+    grid-column: span 1;
+    align-content: center;
+    font-size: 0.9em;
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 1em;
+    margin-left: 20px;
+}
+
+
+.bubble {
+    width: fit-content;
+    padding: 5px 10px;
+    background-color: rgb(102, 62, 247);
+    color: white;
+    border-radius: 5px;
+    font-weight: 700;
+}
+
+
