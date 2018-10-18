@@ -25,15 +25,15 @@ export default class Clients extends Component {
           </div>
 
           <div className="location item">
-          <p>Montana</p>
+          <p>Whitefish, Montana</p>
           </div>
 
           <div className="total item">
           <p>$2,500</p>
           </div>
 
-          <div className="notes">
-          <p><i className="fas fa-comment"/></p>
+          <div className="settings">
+          <i className="fas fa-ellipsis-h"/>
           </div>
 
         </div>
