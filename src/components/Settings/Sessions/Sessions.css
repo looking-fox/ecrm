@@ -17,8 +17,7 @@
     grid-row: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;   
 }
 
 .actions {
@@ -38,6 +37,19 @@
     color: #484848;
     font-size: 0.8em;
     margin: 0px 10px;
+}
+.add {
+    position: absolute;
+    top: 15px;
+    right: 50px;
+}
+.add i {
+    font-size: 1.1em;
+    padding-right: 10px;
+}
+.add:hover{
+    color: #727272;
+    cursor: pointer;
 }
 
 

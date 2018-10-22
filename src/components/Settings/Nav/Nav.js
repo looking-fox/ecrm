@@ -16,6 +16,8 @@ export default function Nav() {
         <Link to="/settings/sessions">
         <li className="item">Sessions</li>
         </Link>
+
+        
       </div>
   )
 }

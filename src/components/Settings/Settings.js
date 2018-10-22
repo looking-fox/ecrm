@@ -9,7 +9,7 @@ export default class Settings extends Component {
     return (
       <div className="dashboard">
         <Nav/>
-        General
+        
       </div>
     )
   }
