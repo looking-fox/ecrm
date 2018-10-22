@@ -12,6 +12,7 @@ import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
 import Pricing from './components/Pricing/Pricing'
 import Settings from './components/Settings/Settings'
+import Sessions from './components/Settings/Sessions/Sessions'
 
 ReactDOM.render(
 <Provider store={store}>
@@ -29,11 +30,20 @@ ReactDOM.render(
                 )
             }}/>
 
-            <Route path="/settings" render={() => {
+            <Route exact path="/settings" render={() => {
                 return (
                     <div style={{display: 'flex'}}>
                         <Sidebar/>
                         <Settings/>
+                    </div>
+                )
+            }}/>
+
+            <Route exact path="/settings/sessions" render={() => {
+                return (
+                    <div style={{display: 'flex'}}>
+                        <Sidebar/>
+                        <Sessions/>
                     </div>
                 )
             }}/>
