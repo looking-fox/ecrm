@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import './Actions.css'
 
 export default class Actions extends Component {
+
+  componentDidMount(){
+    //Should receive props from Client component to display actions for session type, and current status from DB
+  }
+  
   render() {
     return (
         <div className="list">
