@@ -1,0 +1,31 @@
+.list{
+    width: 90%;
+    height: 50px;
+    margin-top: -50px;
+    margin-bottom: 10px;
+    background-color: #f9f7f7;
+    border-radius: 0px 0px 10px 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.action{
+    display: flex;
+    justify-content: space-between;
+}
+
+.action p{
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+}
+
+.action i {
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+.done {
+    color: #663ef7;
+}
