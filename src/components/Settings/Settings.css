@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+.settingsdashboard {
+    width: 85vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 0px;
+    font-family: 'Open Sans';
+}

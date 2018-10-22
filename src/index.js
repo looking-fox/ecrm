@@ -11,6 +11,7 @@ import {Provider} from 'react-redux'
 import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
 import Pricing from './components/Pricing/Pricing'
+import Settings from './components/Settings/Settings'
 
 ReactDOM.render(
 <Provider store={store}>
@@ -28,11 +29,11 @@ ReactDOM.render(
                 )
             }}/>
 
-            <Route path="/feedback" render={() => {
+            <Route path="/settings" render={() => {
                 return (
                     <div style={{display: 'flex'}}>
                         <Sidebar/>
-                        <Pricing/>
+                        <Settings/>
                     </div>
                 )
             }}/>

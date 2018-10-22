@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateUser, logoutUser} from '../../redux/reducer'
+import {Link} from 'react-router-dom'
 
 import './Sidebar.css'
 
@@ -32,10 +33,12 @@ class Sidebar extends Component {
           <i 
           onClick={() => this.logOut()}
           className="fas fa-sign-out-alt"/>
+
+          <Link to="/settings"><i className="fas fa-cog"/></Link>
           </div>
 
           <div className="menuitem">
-            <p><i className="fas fa-users"/>Clients</p>
+            <Link to="/dashboard"><p><i className="fas fa-users"/>Clients</p></Link>
           </div>
 
           <div className="listitem">
