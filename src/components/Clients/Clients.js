@@ -7,6 +7,8 @@ export default class Clients extends Component {
     return (
       <div className="clientdashboard">
         <Client/>
+        <Client/>
+        <Client/>
       </div>
     )
   }

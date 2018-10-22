@@ -9,8 +9,8 @@
 .client{
     width: 90%;
     height: 40px;
-    margin: 10px 0px;
-    background-color: #f2f2f2;
+    margin: 50px 0px;
+    background-color: #e8e8e8;
     border-radius: 10px 10px 0px 0px;
     display: flex;
     justify-content: space-around;
@@ -19,10 +19,10 @@
 
 .list{
     width: 90%;
-    height: 40px;
-    margin-top: -10px;
+    height: 50px;
+    margin-top: -50px;
     margin-bottom: 10px;
-    background-color: #f2f2f2;
+    background-color: #f9f7f7;
     border-radius: 0px 0px 10px 10px;
     display: flex;
     justify-content: space-around;
