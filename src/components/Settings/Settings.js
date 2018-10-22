@@ -7,11 +7,19 @@ export default class Settings extends Component {
     return (
       <div className="settingsdashboard">
 
-      <navbar>
-        <p className="menuitem">General</p>
-        <p className="menuitem">Subscription</p>
-        <p className="menuitem">Sessions</p>
-      </navbar>
+      <div className="menubar">
+        <Link to="/settings">
+        <li className="item">General</li>
+        </Link>
+
+        <Link to="/settings/subscription">
+        <li className="item">Subscription</li>
+        </Link>
+
+        <Link to="/settings/sessions">
+        <li className="item">Sessions</li>
+        </Link>
+      </div>
     
       </div>
     )
