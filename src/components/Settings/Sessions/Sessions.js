@@ -29,14 +29,19 @@ export default class Sessions extends Component {
   addItem = (e) => {
    if(e.key==="Enter"){
      var newList = this.state.actionList
-     newList.push(this.state.action)
+     newList[this.state.action] = false
      this.setState({
-       actionList: newList,
+       actionList: newList, 
        action: ''
      })
      e.target.value = ''
    }
 
+  }
+
+  saveSession = () => {
+    //Axios call to store session in DB: name, color, price, actionList
+    this.onCloseModal()
   }
 
   onOpenModal = () => {
@@ -109,7 +114,9 @@ export default class Sessions extends Component {
         </div>
 
         <footer>
-        <button type="button" class="btn btn-primary save">Save</button>
+        <button type="button" class="btn btn-primary save" 
+        onClick={this.saveSession}
+        >Save</button>
         </footer>
         
         </Modal>
