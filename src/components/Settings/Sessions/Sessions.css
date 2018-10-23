@@ -76,12 +76,30 @@
 }
 
 .input{
-    margin: 20px 0px;
+    margin-bottom: 20px;
+}
+
+button.save{
+    font-family: 'Open Sans';
+    font-weight: 600;
+    margin-top: 20px;
+    display: flex;
+    justify-self: flex-end;
+    align-self: flex-end;
+
+}
+
+.colormenu{
+    width: 100%;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .actioninfo{
     grid-column: 2;
     padding: 20px 30px;
+    overflow-y: scroll;
 }
 
 .actionitem{

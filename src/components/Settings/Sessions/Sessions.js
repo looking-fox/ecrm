@@ -64,17 +64,19 @@ export default class Sessions extends Component {
           classes={{ root: 'input' }}
           onChange={e => this.setState({name: e.target.value})}/>
 
-          <Input 
-          placeholder="Price ($1,000)"
-          fullWidth={true}
-          onChange={e => this.setState({price: e.target.value})}/>
-
-          <select name="cars">
+          <select className="colormenu">
               <option value="Purple">Purple</option>
               <option value="Blue">Blue</option>
               <option value="Red">Red</option>
               <option value="Green">Green</option>
-          </select>   
+              <option value="Orange">Orange</option>
+              <option value="Gray">Gray</option>
+          </select>  
+
+          <Input 
+          placeholder="Price ($1,000)"
+          fullWidth={true}
+          onChange={e => this.setState({price: e.target.value})}/>
 
           </div>
 
@@ -97,8 +99,9 @@ export default class Sessions extends Component {
           })}
 
           </div>
-          
+
         </div>
+        <button type="button" class="btn btn-primary save">Save</button>
         </Modal>
 
         <div className="sessionsdashboard">
