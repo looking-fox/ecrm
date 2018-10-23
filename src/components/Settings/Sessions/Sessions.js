@@ -13,6 +13,7 @@ export default class Sessions extends Component {
       open: false,
       name: '',
       action: '',
+      price: '',
       actionList: ['inquired', 'replied', 'asked']
     }
   }
@@ -60,7 +61,21 @@ export default class Sessions extends Component {
           <Input 
           placeholder="Session Name"
           fullWidth={true}
+          classes={{ root: 'input' }}
           onChange={e => this.setState({name: e.target.value})}/>
+
+          <Input 
+          placeholder="Price ($1,000)"
+          fullWidth={true}
+          onChange={e => this.setState({price: e.target.value})}/>
+
+          <select name="cars">
+              <option value="Purple">Purple</option>
+              <option value="Blue">Blue</option>
+              <option value="Red">Red</option>
+              <option value="Green">Green</option>
+          </select>   
+
           </div>
 
           <div className="actioninfo">
@@ -73,9 +88,9 @@ export default class Sessions extends Component {
           onKeyDown={e => this.addItem(e)}
           />
 
-          {this.state.actionList.map(e => {
+          {this.state.actionList.map( (e,i) => {
             return (
-              <div className="actionitem">
+              <div className="actionitem" id={i}>
                 <i className="far fa-check-circle"/>{e}
               </div>
             )

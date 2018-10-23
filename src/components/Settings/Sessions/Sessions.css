@@ -74,6 +74,11 @@
     grid-column: 1;
     padding: 20px 30px;
 }
+
+.input{
+    margin: 20px 0px;
+}
+
 .actioninfo{
     grid-column: 2;
     padding: 20px 30px;
