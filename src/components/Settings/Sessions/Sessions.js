@@ -4,21 +4,33 @@ import Nav from '../Nav/Nav'
 import Actions from '../../Actions/Actions'
 import Modal from 'react-responsive-modal';
 import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 export default class Sessions extends Component {
   constructor(){
     super()
     this.state = {
       open: false,
-      name: ''
+      name: '',
+      action: '',
+      actionList: ['inquired', 'replied', 'asked']
     }
   }
   componentDidMount(){
     //DB request to grab all current session types. 
   }
 
-  addSession = () => {
-   
+  addItem = (e) => {
+   if(e.key==="Enter"){
+     var newList = this.state.actionList
+     newList.push(this.state.action)
+     this.setState({
+       actionList: newList,
+       action: ''
+     })
+     e.target.value = ''
+   }
+
   }
 
   onOpenModal = () => {
@@ -40,12 +52,37 @@ export default class Sessions extends Component {
         <Nav/>
 
         <Modal open={this.state.open} onClose={this.onCloseModal} center>
+        <h3 className="title">Add A Session</h3>
         <div className="sessionform">
-          <h3>Add A Session</h3>
+          
+
+          <div className="sessioninfo">
           <Input 
           placeholder="Session Name"
-          classes={{root: 'inputfield'}}
-          onChange={(e) => this.setState({name: e.target.value})}/>
+          fullWidth={true}
+          onChange={e => this.setState({name: e.target.value})}/>
+          </div>
+
+          <div className="actioninfo">
+
+          <Input 
+          placeholder="Add Action"
+          fullWidth={true}
+          // classes={{root: 'inputfield'}}
+          onChange={e => this.setState({action: e.target.value})}
+          onKeyDown={e => this.addItem(e)}
+          />
+
+          {this.state.actionList.map(e => {
+            return (
+              <div className="actionitem">
+                <i className="far fa-check-circle"/>{e}
+              </div>
+            )
+          })}
+
+          </div>
+          
         </div>
         </Modal>
 

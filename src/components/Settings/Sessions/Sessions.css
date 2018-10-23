@@ -57,20 +57,41 @@
     width: 700px;
     height: 500px;
     font-family: 'Open Sans';
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 1;
+
 }
-.sessionform h3{
+.title{
+    font-family: 'Open Sans';
     font-size: 1.5em;
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
 }
-.inputfield{
-    width: 80%;
-    
+
+.sessioninfo{
+    grid-column: 1;
+    padding: 20px 30px;
 }
+.actioninfo{
+    grid-column: 2;
+    padding: 20px 30px;
+}
+
+.actionitem{
+    width: 100%;
+    height: 40px;
+    background-color: black;
+    color: white;
+    margin: 10px 0px;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+}
+.actionitem i{
+    margin-right: 10px;
+}
+
 
 
