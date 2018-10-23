@@ -14,7 +14,12 @@ export default class Sessions extends Component {
       name: '',
       action: '',
       price: '',
-      actionList: ['inquired', 'replied', 'asked']
+      color: 'Purple',
+      actionList: {
+        "inquired": false,
+        "responded": false,
+        "set up meeting": false
+      }
     }
   }
   componentDidMount(){
@@ -64,7 +69,8 @@ export default class Sessions extends Component {
           classes={{ root: 'input' }}
           onChange={e => this.setState({name: e.target.value})}/>
 
-          <select className="colormenu">
+          <select className="colormenu" 
+          onChange={e => this.setState({color: e.target.value})}>
               <option value="Purple">Purple</option>
               <option value="Blue">Blue</option>
               <option value="Red">Red</option>
@@ -90,18 +96,22 @@ export default class Sessions extends Component {
           onKeyDown={e => this.addItem(e)}
           />
 
-          {this.state.actionList.map( (e,i) => {
-            return (
-              <div className="actionitem" id={i}>
-                <i className="far fa-check-circle"/>{e}
-              </div>
-            )
+          {Object.keys(this.state.actionList).map( (e,i) => {
+              return (
+                <div className="actionitem" id={i}>
+                  <i className="far fa-check-circle"/>{e}
+                </div>
+              )
           })}
 
           </div>
 
         </div>
+
+        <footer>
         <button type="button" class="btn btn-primary save">Save</button>
+        </footer>
+        
         </Modal>
 
         <div className="sessionsdashboard">
