@@ -2,17 +2,32 @@ import React, { Component } from 'react'
 import './Sessions.css'
 import Nav from '../Nav/Nav'
 import Actions from '../../Actions/Actions'
-import Modal from 'react-bootstrap-modal'
+import Modal from 'react-responsive-modal';
+import Input from '@material-ui/core/Input';
 
 export default class Sessions extends Component {
-
+  constructor(){
+    super()
+    this.state = {
+      open: false,
+      name: ''
+    }
+  }
   componentDidMount(){
     //DB request to grab all current session types. 
   }
 
   addSession = () => {
-    alert('Add')
+   
   }
+
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
 
   render() {
     //Display each session: session info, edit button, delete button
@@ -24,10 +39,19 @@ export default class Sessions extends Component {
 
         <Nav/>
 
+        <Modal open={this.state.open} onClose={this.onCloseModal} center>
+        <div className="sessionform">
+          <h3>Add A Session</h3>
+          <Input 
+          placeholder="Session Name"
+          classes={{root: 'inputfield'}}
+          onChange={(e) => this.setState({name: e.target.value})}/>
+        </div>
+        </Modal>
+
         <div className="sessionsdashboard">
 
-        <p className="add" onClick={() => this.addSession()}
-        data-toggle="modal" data-target="#exampleModalCenter">
+        <p className="add" onClick={this.onOpenModal}>
         <i className="fas fa-plus-square"/>
         Add Session
         </p>
@@ -46,9 +70,13 @@ export default class Sessions extends Component {
             </div>
         
         </div>
-    </div>
 
-   
+
+
+
+        
+    </div>
+    
 
 </div>
         
