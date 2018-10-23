@@ -4,7 +4,6 @@ import Nav from '../Nav/Nav'
 import Actions from '../../Actions/Actions'
 import Modal from 'react-responsive-modal';
 import Input from '@material-ui/core/Input';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 export default class Sessions extends Component {
   constructor(){

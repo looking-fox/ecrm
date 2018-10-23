@@ -12,6 +12,7 @@ import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
 import Pricing from './components/Pricing/Pricing'
 import Settings from './components/Settings/Settings'
+import Subscription from './components/Settings/Subscription/Subscription'
 import Sessions from './components/Settings/Sessions/Sessions'
 
 ReactDOM.render(
@@ -35,6 +36,15 @@ ReactDOM.render(
                     <div style={{display: 'flex'}}>
                         <Sidebar/>
                         <Settings/>
+                    </div>
+                )
+            }}/>
+
+            <Route exact path="/settings/subscription" render={() => {
+                return (
+                    <div style={{display: 'flex'}}>
+                        <Sidebar/>
+                        <Subscription/>
                     </div>
                 )
             }}/>

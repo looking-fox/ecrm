@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
-.dashboard {
+.subdashboard {
     width: 85vw;
     height: 100vh;
     background-color: #dadada;
@@ -8,4 +8,3 @@
     flex-direction: column;
     font-family: 'Open Sans';
 }
-
