@@ -6,6 +6,8 @@ const axios = require('axios')
 require('dotenv').config()
 var sessionId = 54;
 
+const sessions = require('./sessions_controller')
+
 const app = express()
 
 app.use(bodyParser.json())
@@ -93,15 +95,17 @@ app.post('/api/logout', (req, res) => {
     res.send()
 })
 
-app.get('/api/getsessions', (req, res) => {
-    const dbInstance = req.app.get('db')
-    dbInstance.get_sessions().then(response => {
-        res.status(200).send(response)
-    })
-})
-
 
 //===============DB==================//
+
+
+//===============SESSIONS==================//
+
+app.get('/api/getsessions', sessions.getsessions)
+
+app.post('/api/storesession', sessions.storesession)
+
+//===============SESSIONS==================//
 
 
 const SERVER_PORT = process.env.SERVER_PORT || 3050

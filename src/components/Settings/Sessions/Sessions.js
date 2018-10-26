@@ -19,13 +19,16 @@ export default class Sessions extends Component {
         {"inquired": false},
         {"responded": false},
         {"booked!" : false}
-      ]
+      ], 
+      sessions: []
     }
   }
+
   componentDidMount(){
     //DB request to grab all current session types. 
     axios.get('/api/getsessions').then(response => {
-      console.log('response:', response)
+      console.log(response.data)
+      // this.setState({sessions: response.data[0].action_list})
     })
   }
 
@@ -49,6 +52,16 @@ export default class Sessions extends Component {
 
   saveSession = () => {
     //Axios call to store session in DB: name, color, price, actionList
+    var sessionInfo = {
+      name: this.state.name,
+      price: this.state.price,
+      color: this.state.color,
+      actionList: this.state.actionList
+    }
+    axios.post('/api/storesession', {sessionInfo} ).then(response => {
+      console.log('savedResponse: ', response)
+    })
+
     this.onCloseModal()
   }
 
