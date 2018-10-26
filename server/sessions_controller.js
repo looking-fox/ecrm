@@ -4,7 +4,7 @@ module.exports = {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
         dbInstance.get_sessions(sub).then(response => {
-            res.sendStatus(200)
+            res.status(200).send(response)
         })
     },
 

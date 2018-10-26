@@ -27,9 +27,9 @@ export default class Sessions extends Component {
   componentDidMount(){
     //DB request to grab all current session types. 
     axios.get('/api/getsessions').then(response => {
-      console.log(response.data)
-      // this.setState({sessions: response.data[0].action_list})
+      this.setState({sessions: response.data})
     })
+    
   }
 
   addItem = (e) => {
@@ -152,9 +152,9 @@ export default class Sessions extends Component {
         </p>
 
         
-        <div className="session">
+        {/* <div className="session"> */}
 
-            <div className="sessionmenu">
+            {/* <div className="sessionmenu">
               <h3>Elopement</h3> 
               <i className="far fa-edit"/>
               <i className="far fa-trash-alt"/>
@@ -162,9 +162,25 @@ export default class Sessions extends Component {
 
             <div className="actions">
               <Actions/>
-            </div>
+            </div> */}
+
+            {this.state.sessions.map((e,i) => {
+              return (
+              <div className="session">
+                <div className="sessionmenu">
+                  <h3>{e.session_name}</h3>
+                  <i className="far fa-edit"/>
+                  <i className="far fa-trash-alt"/>
+                </div>
+
+                <div className="actions">
+                <Actions/>
+                </div>
+              </div>
+              )
+            })}
         
-        </div>
+        {/* </div> */}
 
 
 
