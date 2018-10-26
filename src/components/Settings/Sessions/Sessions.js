@@ -14,11 +14,11 @@ export default class Sessions extends Component {
       action: '',
       price: '',
       color: 'Purple',
-      actionList: {
-        "inquired": false,
-        "responded": false,
-        "set up meeting": false
-      }
+      actionList: [
+        {"inquired": false},
+        {"responded": false},
+        {"booked!" : false}
+      ]
     }
   }
   componentDidMount(){
