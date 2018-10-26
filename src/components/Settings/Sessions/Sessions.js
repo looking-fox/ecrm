@@ -48,6 +48,12 @@ export default class Sessions extends Component {
 
   }
 
+  deleteItem = (i) => {
+    var newList = this.state.actionList
+    newList.splice(i, 1)
+    this.setState({actionList: newList})
+  }
+
   
 
   saveSession = () => {
@@ -58,6 +64,9 @@ export default class Sessions extends Component {
       color: this.state.color,
       actionList: this.state.actionList
     }
+
+    //Need to add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
+    
     axios.post('/api/storesession', {sessionInfo} ).then(response => {
       console.log('savedResponse: ', response)
     })
@@ -128,6 +137,8 @@ export default class Sessions extends Component {
             {/* Object.keys(e) returns the keys listed at the element.
             Which is an array with one key value. Currying [0] returns the string value vs. the array of the string value. */}
               <i className="far fa-check-circle"/>{Object.keys(e)[0]}
+              <i className="far fa-trash-alt deleteitem"
+              onClick={() => this.deleteItem(i)}/>
                 </div>
               )
           })}

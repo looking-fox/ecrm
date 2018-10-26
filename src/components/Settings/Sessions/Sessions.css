@@ -111,9 +111,21 @@ button.save{
     padding-left: 20px;
     display: flex;
     align-items: center;
+    position: relative;
 }
 .actionitem i{
     margin-right: 10px;
+}
+
+.deleteitem{
+    position: absolute;
+    right: 20px;
+    opacity: 0.5;
+    font-size: 0.9em;
+}
+.deleteitem:hover{
+    opacity: 1;
+    font-size: 1em;
 }
 
 footer{

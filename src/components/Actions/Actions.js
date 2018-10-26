@@ -3,13 +3,8 @@ import './Actions.css'
 
 export default class Actions extends Component {
 
-
-  
   render(props) {
-     this.props.actionList.map((e,i) => {
-        console.log(e)
-        console.log(Object.keys(JSON.parse(e)))
-     })
+     
     return (
         <div className="list">
             {this.props.actionList.map((e,i) => {
