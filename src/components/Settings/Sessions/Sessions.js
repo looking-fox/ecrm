@@ -28,7 +28,10 @@ export default class Sessions extends Component {
   addItem = (e) => {
    if(e.key==="Enter"){
      var newList = this.state.actionList
-     newList[this.state.action] = false
+     var newItem = {}
+     newItem[this.state.action] = false
+     newList.push(newItem)
+
      this.setState({
        actionList: newList, 
        action: ''
@@ -115,7 +118,7 @@ export default class Sessions extends Component {
         </div>
 
         <footer>
-        <button type="button" class="btn btn-primary save" 
+        <button type="button" className="btn btn-primary save" 
         onClick={this.saveSession}
         >Save</button>
         </footer>
