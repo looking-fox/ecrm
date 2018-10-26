@@ -4,6 +4,7 @@ import Nav from '../Nav/Nav'
 import Actions from '../../Actions/Actions'
 import Modal from 'react-responsive-modal';
 import Input from '@material-ui/core/Input';
+import axios from 'axios'
 
 export default class Sessions extends Component {
   constructor(){
@@ -23,6 +24,9 @@ export default class Sessions extends Component {
   }
   componentDidMount(){
     //DB request to grab all current session types. 
+    axios.get('/api/getsessions').then(response => {
+      console.log('response:', response)
+    })
   }
 
   addItem = (e) => {
@@ -40,6 +44,8 @@ export default class Sessions extends Component {
    }
 
   }
+
+  
 
   saveSession = () => {
     //Axios call to store session in DB: name, color, price, actionList

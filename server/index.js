@@ -93,6 +93,13 @@ app.post('/api/logout', (req, res) => {
     res.send()
 })
 
+app.get('/api/getsessions', (req, res) => {
+    const dbInstance = req.app.get('db')
+    dbInstance.get_sessions().then(response => {
+        res.status(200).send(response)
+    })
+})
+
 
 //===============DB==================//
 
