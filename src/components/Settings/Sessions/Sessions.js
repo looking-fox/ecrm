@@ -100,10 +100,12 @@ export default class Sessions extends Component {
           onKeyDown={e => this.addItem(e)}
           />
 
-          {Object.keys(this.state.actionList).map( (e,i) => {
+          {this.state.actionList.map( (e,i) => {
               return (
                 <div className="actionitem" id={i}>
-                  <i className="far fa-check-circle"/>{e}
+            {/* Object.keys(e) returns the keys listed at the element.
+            Which is an array with one key value. Currying [0] returns the string value vs. the array of the string value. */}
+              <i className="far fa-check-circle"/>{Object.keys(e)[0]}
                 </div>
               )
           })}
