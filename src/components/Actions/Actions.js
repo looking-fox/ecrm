@@ -3,49 +3,23 @@ import './Actions.css'
 
 export default class Actions extends Component {
 
-  componentDidMount(){
-    //Should receive props from Client component to display actions for session type, and current status from DB
-  }
+
   
-  render() {
+  render(props) {
+     this.props.actionList.map((e,i) => {
+        console.log(e)
+        console.log(Object.keys(JSON.parse(e)))
+     })
     return (
         <div className="list">
-        
-        <div className="action">
-            <i className="fas fa-check-circle done"/>
-            <p>pricing sent</p>
-        </div>
-    
-        <div className="action">
-            <i className="fas fa-check-circle done"/>
-            <p>wants to book</p>
-        </div>
-
-        <div className="action">
-            <i className="fas fa-check-circle done"/>
-            <p>booked!</p>
-        </div>
-    
-        <div className="action">
-            <i className="far fa-check-circle"/>
-            <p>date set</p>
-        </div>
-    
-        <div className="action">
-            <i className="far fa-check-circle"/>
-            <p>elopement</p>
-        </div>
-    
-        <div className="action">
-            <i className="far fa-check-circle"/>
-            <p>files delivered</p>
-        </div>
-
-        <div className="action">
-            <i className="far fa-check-circle"/>
-            <p>feedback sent</p>
-        </div>
-    
+            {this.props.actionList.map((e,i) => {
+                return (
+                    <div className="action">
+                        <i className="far fa-check-circle"/>
+                        <p>{Object.keys(JSON.parse(e))}</p>
+                    </div>
+                )
+            })}
         </div>
     )
   }

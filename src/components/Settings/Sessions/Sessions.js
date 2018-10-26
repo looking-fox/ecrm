@@ -152,18 +152,6 @@ export default class Sessions extends Component {
         </p>
 
         
-        {/* <div className="session"> */}
-
-            {/* <div className="sessionmenu">
-              <h3>Elopement</h3> 
-              <i className="far fa-edit"/>
-              <i className="far fa-trash-alt"/>
-            </div>
-
-            <div className="actions">
-              <Actions/>
-            </div> */}
-
             {this.state.sessions.map((e,i) => {
               return (
               <div className="session">
@@ -174,17 +162,12 @@ export default class Sessions extends Component {
                 </div>
 
                 <div className="actions">
-                <Actions/>
+                <Actions actionList={e.action_list}/>
                 </div>
               </div>
               )
             })}
         
-        {/* </div> */}
-
-
-
-
         
     </div>
     

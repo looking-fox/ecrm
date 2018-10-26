@@ -40,7 +40,7 @@ handleClick = () => {
 
     </div>
 
-   <Actions/>
+   {/* <Actions/> */}
 
     </div>
     )
