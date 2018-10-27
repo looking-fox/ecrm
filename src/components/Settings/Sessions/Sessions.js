@@ -59,6 +59,8 @@ export default class Sessions extends Component {
     axios.delete(`/api/deletesession/${id}`).then(result => {
       console.log(result)
     })
+    sessions.splice(i, 1)
+    this.setState({sessions: sessions})
   }
 
   saveSession = () => {
