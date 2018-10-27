@@ -17,6 +17,15 @@ module.exports = {
         }).catch(error => {
             console.log('StoreSession Error: ', error)
         })
+    },
+
+    deletesession: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {id} = req.params
+
+        dbInstance.delete_session(id).then(() => {
+            res.sendStatus(200)
+        })
     }
 
 }

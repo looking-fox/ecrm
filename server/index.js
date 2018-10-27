@@ -105,6 +105,8 @@ app.get('/api/getsessions', sessions.getsessions)
 
 app.post('/api/storesession', sessions.storesession)
 
+app.delete('/api/deletesession/:id', sessions.deletesession)
+
 //===============SESSIONS==================//
 
 

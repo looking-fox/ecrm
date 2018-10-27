@@ -29,7 +29,6 @@ export default class Sessions extends Component {
     axios.get('/api/getsessions').then(response => {
       this.setState({sessions: response.data})
     })
-    
   }
 
   addItem = (e) => {
@@ -54,7 +53,13 @@ export default class Sessions extends Component {
     this.setState({actionList: newList})
   }
 
-  
+  deleteSession = (i) => {
+    const {sessions} = this.state
+    var id = sessions[i].session_id
+    axios.delete(`/api/deletesession/${id}`).then(result => {
+      console.log(result)
+    })
+  }
 
   saveSession = () => {
     //Axios call to store session in DB: name, color, price, actionList
@@ -169,7 +174,8 @@ export default class Sessions extends Component {
                 <div className="sessionmenu">
                   <h3>{e.session_name}</h3>
                   <i className="far fa-edit"/>
-                  <i className="far fa-trash-alt"/>
+                  <i className="far fa-trash-alt"
+                  onClick={() => this.deleteSession(i)}/>
                 </div>
 
                 <div className="actions">
