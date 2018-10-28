@@ -9,29 +9,30 @@ handleClick = () => {
 }
 
   render() {
+    console.log('props', this.props)
     return (
         <div className="clientcontainer">
 
         <div className="client">
 
         <div className="name item">
-        <p>John Smith</p>
+        <p>{this.props.name}</p>
         </div>
 
         <div className="package item">
-        <span className="bubble">Elopement</span>
+        <span className="bubble">{this.props.sessionName}</span>
         </div>
 
         <div className="date item">
-        <p>10 / 05 / 2018</p>
+        <p>{this.props.sessionDate}</p>
         </div>
 
         <div className="location item">
-        <p>Whitefish, Montana</p>
+        <p>{this.props.sessionLocation}</p>
         </div>
 
         <div className="total item">
-        <p>$2,500</p>
+        <p>{this.props.sessionPrice}</p>
         </div>
 
         <div className="settings">
