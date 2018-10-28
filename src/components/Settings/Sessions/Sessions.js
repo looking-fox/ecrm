@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import './Sessions.css'
 import Nav from '../Nav/Nav'
 import Actions from '../../Actions/Actions'
-import Modal from 'react-responsive-modal';
-import Input from '@material-ui/core/Input';
+import Modal from 'react-responsive-modal'
+import Input from '@material-ui/core/Input'
 import axios from 'axios'
 
 export default class Sessions extends Component {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './Client.css'
-import Actions from '../Actions/Actions'
 
 export default class Client extends Component {
 

@@ -10,7 +10,6 @@ import {HashRouter as Router, Switch, Route} from 'react-router-dom';
 import {Provider} from 'react-redux'
 import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
-import Pricing from './components/Pricing/Pricing'
 import Settings from './components/Settings/Settings'
 import Subscription from './components/Settings/Subscription/Subscription'
 import Sessions from './components/Settings/Sessions/Sessions'
