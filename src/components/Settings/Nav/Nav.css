@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-.item{
+.navitem{
     height: 50px;
     width: 100px;
     display: flex;
@@ -16,7 +16,7 @@
     list-style: none;
 }
 
-.item:hover{
+.navitem:hover{
     border-bottom: 2px solid gray;
     cursor: pointer;
 }
