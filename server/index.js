@@ -7,6 +7,7 @@ require('dotenv').config()
 var sessionId = 54;
 
 const sessions = require('./sessions_controller')
+const clients = require('./clients_controller')
 
 const app = express()
 
@@ -108,6 +109,14 @@ app.post('/api/storesession', sessions.storesession)
 app.delete('/api/deletesession/:id', sessions.deletesession)
 
 //===============SESSIONS==================//
+
+
+
+//===============CLIENTS==================//
+
+app.get('/api/getclients', clients.getclients)
+
+//===============CLIENTS==================//
 
 
 const SERVER_PORT = process.env.SERVER_PORT || 3050
