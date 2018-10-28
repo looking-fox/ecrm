@@ -9,7 +9,8 @@ export default class Clients extends Component {
   constructor(){
     super()
     this.state = {
-      clients: []
+      clients: [],
+      open: false
     }
   }
   componentDidMount(){
@@ -18,12 +19,15 @@ export default class Clients extends Component {
     })
   }
 
+
+
   render() {
     return (
       <div className="clientdashboard">
         {this.state.clients.map( (e) => {
           return (
           <div className="bar">
+
                 <Client 
                 name={e.name}
                 sessionName={e.session_name}
@@ -37,6 +41,14 @@ export default class Clients extends Component {
           </div>
           )
         })}
+
+          <div className="addclient">
+
+            <i className="fas fa-plus-circle"
+            onClick={() => this.setState({open: true})}/>
+
+          </div>
+
       </div>
     )
   }
