@@ -16,7 +16,9 @@ export default class Clients extends Component {
       sessionIndex: 0,
       sessionPrice: '',
       open: false,
-      clientName: ''
+      clientName: '',
+      clientDate: '',
+      clientLocation: ''
     }
   }
   componentDidMount(){
@@ -33,7 +35,22 @@ export default class Clients extends Component {
 
   sessionPriceUpdater = (index) => {
     this.setState({
-      sessionPrice: this.state.sessions[index].session_price
+      sessionPrice: this.state.sessions[index].session_price,
+      sessionIndex: index
+    })
+  }
+
+  saveClient = () => {
+
+    var clientObj = {
+      name: this.state.clientName,
+      sessionId: this.state.sessions[this.state.sessionIndex].session_id,
+      date: this.state.clientDate,
+      location: this.state.clientLocation
+    }
+
+    axios.post('/api/addclient', {clientObj} ).then( () => {
+      this.setState({open: false})
     })
   }
 
@@ -79,6 +96,7 @@ export default class Clients extends Component {
 
     <div className="addclientmodal">
           <Input
+          className="clientinput"
           placeholder="Client's Name"
           onChange={e => this.setState({clientName: e.target.value})}/>
 
@@ -92,16 +110,26 @@ export default class Clients extends Component {
       </select> 
 
           <Input
+          className="clientinput"
+          placeholder="Date"
+          onChange={e => this.setState({clientDate: e.target.value})}/>
+
+          <Input
+          className="clientinput"
           placeholder="Location"
-          onChange={e => this.setState({clientName: e.target.value})}/>
+          onChange={e => this.setState({clientLocation: e.target.value})}/>
 
-          <div className="clientPrice">
-
-          {this.state.sessionPrice}
-
+          <div className="clientprice"> 
+            {this.state.sessionPrice}
           </div>
-
+  
     </div>
+
+        <footer>
+        <button type="button" className="btn btn-primary save full" 
+        onClick={this.saveClient}
+        >+ Add Client</button>
+        </footer>
 
     </Modal>
 

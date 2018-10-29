@@ -116,6 +116,8 @@ app.delete('/api/deletesession/:id', sessions.deletesession)
 
 app.get('/api/getclients', clients.getclients)
 
+app.post('/api/addclient', clients.addclient)
+
 //===============CLIENTS==================//
 
 

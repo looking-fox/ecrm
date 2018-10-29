@@ -37,10 +37,12 @@
 .addclientmodal{
     width: 30vw;
     min-width: 400px;
-    height: 80vh;
+    height: 40vh;
     display: flex;
     flex-direction: column;
     font-family: 'Open Sans';
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c4c4c4;
 }
 
 .title i {
@@ -50,6 +52,27 @@
 .sessionmenu{
     width: 100%;
     height: 30px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.clientprice{
+    width: 100%;
+    height: 40px;
+    background-color: black;
+    color: white;
+    margin: 20px 0px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.clientinput{
+    margin: 10px 0px;
+}
+
+.full{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
