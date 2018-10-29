@@ -15,6 +15,11 @@
     justify-content: space-between;
 }
 
+.action:hover{
+    cursor: pointer;
+    color: gray;
+}
+
 .action p{
     font-size: 0.8em;
     display: flex;

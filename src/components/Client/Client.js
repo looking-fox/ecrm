@@ -8,6 +8,7 @@ handleClick = () => {
 }
 
   render() {
+    //MISSING: Session Name should have varying color based on sessionId.
     
     return (
         <div className="clientcontainer">

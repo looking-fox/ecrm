@@ -52,6 +52,10 @@ export default class Clients extends Component {
     axios.post('/api/addclient', {clientObj} ).then( () => {
       this.setState({open: false})
     })
+
+    //Client is added, modal disappears once complete.
+    
+    //MISSING: Rerender or update UI with newly added client. 
   }
 
   render() {
