@@ -8,7 +8,7 @@ handleClick = () => {
 }
 
   render() {
-    console.log('props', this.props)
+    
     return (
         <div className="clientcontainer">
 
@@ -40,7 +40,7 @@ handleClick = () => {
 
     </div>
 
-   {/* <Actions/> */}
+  
 
     </div>
     )

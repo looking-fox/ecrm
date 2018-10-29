@@ -13,7 +13,10 @@ export default class Clients extends Component {
     this.state = {
       clients: [],
       sessions: [],
-      open: false
+      sessionIndex: 0,
+      sessionPrice: '',
+      open: false,
+      clientName: ''
     }
   }
   componentDidMount(){
@@ -23,14 +26,21 @@ export default class Clients extends Component {
     axios.get('/api/getsessions').then(response => {
       this.setState({
         sessions: response.data,
-        sessionType: response.data[0].session_id
+        sessionPrice: response.data[0].session_price
       })
     })
   }
 
-
+  sessionPriceUpdater = (index) => {
+    this.setState({
+      sessionPrice: this.state.sessions[index].session_price
+    })
+  }
 
   render() {
+
+    
+
     return (
       <div className="clientdashboard">
         {this.state.clients.map( (e) => {
@@ -69,17 +79,27 @@ export default class Clients extends Component {
 
     <div className="addclientmodal">
           <Input
-          placeholder="Something New"
-          onChange={e => this.setState({something: e.target.value})}/>
+          placeholder="Client's Name"
+          onChange={e => this.setState({clientName: e.target.value})}/>
 
       <select className="sessionmenu" 
-        onChange={e => this.setState({sessionType: e.target.value})}>
-              {this.state.sessions.map(e => {
+        onChange={e => this.sessionPriceUpdater(e.target.value)}>
+              {this.state.sessions.map((e,i) => {
                 return (
-                <option value={e.session_id}>{e.session_name}</option>
+                <option value={i}> {e.session_name} </option>
                 )
               })}
       </select> 
+
+          <Input
+          placeholder="Location"
+          onChange={e => this.setState({clientName: e.target.value})}/>
+
+          <div className="clientPrice">
+
+          {this.state.sessionPrice}
+
+          </div>
 
     </div>
 
