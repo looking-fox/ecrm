@@ -20,6 +20,7 @@ export default class Clients extends Component {
       clientDate: '',
       clientLocation: ''
     }
+    this.actionCheck = this.actionCheck.bind(this)
   }
   componentDidMount(){
     axios.get('/api/getclients').then(response => {
@@ -54,8 +55,25 @@ export default class Clients extends Component {
     })
 
     //Client is added, modal disappears once complete.
-    
     //MISSING: Rerender or update UI with newly added client. 
+  }
+
+  actionCheck = (actionObj) => {
+    //actionObj = {index: index of specific action, elementIndex: index of client in this.state.clients}
+    const {index, action, elementIndex} = actionObj
+    var newClientList = this.state.clients
+    newClientList.forEach(e => {
+      JSON.parse(e["action_list"])
+      //WARNING: Starting to get into quadratic time with a nested loop. Let's go back and look at this design so we can avoid this.
+    })
+    console.log(newClientList)
+    // var newAction = Object.keys(JSON.parse(action))[0]
+    // var parsed = JSON.parse(action)
+    // parsed["session"] = true
+
+    // newClientList[elementIndex]["action_list"][index] = parsed
+    // console.log(newClientList)
+        
   }
 
   render() {
@@ -64,7 +82,7 @@ export default class Clients extends Component {
 
     return (
       <div className="clientdashboard">
-        {this.state.clients.map( (e) => {
+        {this.state.clients.map( (e, i) => {
           return (
           <div className="bar">
 
@@ -76,7 +94,10 @@ export default class Clients extends Component {
                 sessionDate={e.date}
                 sessionLocation={e.location}/>
 
-                <Actions actionList={e.action_list}/>
+                <Actions 
+                actionCheck={this.actionCheck}
+                actionItem={i}
+                actionList={e.action_list}/>
 
           </div>
           )
