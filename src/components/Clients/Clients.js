@@ -28,9 +28,14 @@ export default class Clients extends Component {
     })
 
     axios.get('/api/getactions').then(response => {
-      console.log(response.data)
+      var sessionMap = {}
+      response.data.forEach((e,i) => {
+        let stringForm = String(e.session_id)
+        sessionMap[stringForm] = e
+      })
+      
       this.setState({
-        sessions: response.data
+        sessions: sessionMap
       })
     })
   }
@@ -125,11 +130,13 @@ export default class Clients extends Component {
 
       <select className="sessionmenu" 
         onChange={e => this.sessionPriceUpdater(e.target.value)}>
-              {this.state.sessions.map((e,i) => {
-                return (
-                <option value={i}> {e.session_name} </option>
-                )
+              {this.state.sessions.map(e => {
+                console.log('e', e)
+                // return (
+                // <option value={i}> {e.session_name} </option>
+                // )
               })}
+              
       </select> 
 
           <Input

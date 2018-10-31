@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Actions.css'
-import axios from 'axios'
+
 
 export default class Actions extends Component {
 
