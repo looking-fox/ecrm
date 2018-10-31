@@ -8,6 +8,15 @@ module.exports = {
         })
     },
 
+    getactions: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+
+        dbInstance.get_actions(sub).then(response => {
+            res.status(200).send(response)
+        })
+    },
+
     storesession: (req, res) => {
         const dbInstance = req.app.get('db')
         const {name, price, color, actionList} = req.body.sessionInfo

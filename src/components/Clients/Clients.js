@@ -26,10 +26,11 @@ export default class Clients extends Component {
     axios.get('/api/getclients').then(response => {
       this.setState({clients: response.data})
     })
-    axios.get('/api/getsessions').then(response => {
+
+    axios.get('/api/getactions').then(response => {
+      console.log(response.data)
       this.setState({
-        sessions: response.data,
-        sessionPrice: response.data[0].session_price
+        sessions: response.data
       })
     })
   }
@@ -94,10 +95,7 @@ export default class Clients extends Component {
                 sessionDate={e.date}
                 sessionLocation={e.location}/>
 
-                <Actions 
-                actionCheck={this.actionCheck}
-                actionItem={i}
-                actionList={e.action_list}/>
+                <Actions id={e.session_id}/>
 
           </div>
           )

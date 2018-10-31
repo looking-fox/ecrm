@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
 import './Actions.css'
+import axios from 'axios'
 
 export default class Actions extends Component {
 
-   changeAction = (index) => {
-        console.log(index)
-   }
-
-  render(props) {
+ render(props) {
      
     return (
         //MISSING: Click action item changes UI, updates in DB.
 
         <div className="list">
-            {this.props.actionList.map((e,i) => {
+            {/* {this.props.actionList.map((e,i) => {
                 let key = Object.keys(JSON.parse(e))[0].toString()
                
                 if(e[key]){
@@ -38,7 +35,8 @@ export default class Actions extends Component {
                         </div>
                     )
                 }
-            })}
+            })} */}
+            Not Nothing
         </div>
     )
   }

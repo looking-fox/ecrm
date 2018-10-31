@@ -5,11 +5,11 @@ import './Home.css'
 import head from '../../assets/head.jpg'
 import Features from '../Features/Features'
 import Footer from '../Footer/Footer'
+import axios from 'axios';
 
 
 export default class Home extends Component {
   
-
   login = () => {
 
     let {REACT_APP_AUTH0_DOMAIN,

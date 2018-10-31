@@ -108,6 +108,8 @@ app.post('/api/storesession', sessions.storesession)
 
 app.delete('/api/deletesession/:id', sessions.deletesession)
 
+app.get('/api/getactions', sessions.getactions)
+
 //===============SESSIONS==================//
 
 
