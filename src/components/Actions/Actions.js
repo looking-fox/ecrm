@@ -11,12 +11,12 @@ export default class Actions extends Component {
         }
     }
     
-    
-
     componentDidUpdate(prevProps){
         if(prevProps !== this.props){
-            var items = this.props.actionList["array_agg"]
-            var clientId = this.props.actionList["array_agg"][0]["client_id"]
+        
+            var items = this.props.actionList["actions"]
+            var clientId = this.props.actionList["actions"][0]["client_id"]
+
             this.setState({
                 actions: items,
                 clientId: clientId
@@ -25,7 +25,7 @@ export default class Actions extends Component {
     }
 
     actionCheck = (id) => {
-        console.log(id)
+        console.log(`Action ID: ${id} with Client: ${this.state.clientId}`)
     }
     
  render(props) {
@@ -35,7 +35,7 @@ export default class Actions extends Component {
             
             <div className="list">
                 {this.state.actions.map((e,i) => {
-                    
+            //NOTE: String not boolean for true in order to use aggregate function in SQL. 
                     if(e.completed==="true"){
             //NOTE: Index value will not change since the order is important. So index will work as a key in this instance. Trade Off: React says this is a last resort. But it's not necessary and requires more data for no improvement in this instance. 
                         return (

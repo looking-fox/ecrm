@@ -30,7 +30,7 @@ export default class Clients extends Component {
     axios.get('/api/getactions').then(response => {
       var sessionMap = {}
       response.data.map((e,i) => {
-        let stringForm = String(e.session_id)
+        let stringForm = String(e.actions[0]["client_id"])
         sessionMap[stringForm] = e
       })
       
@@ -69,7 +69,7 @@ export default class Clients extends Component {
     return (
       <div className="clientdashboard">
         {this.state.clients.map( (e, i) => {
-          let sessionInfo = this.state.sessions[e.session_id]
+          let sessionInfo = this.state.sessions[e.client_id]
           
           return (
           <div className="bar">
