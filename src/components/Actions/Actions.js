@@ -6,15 +6,26 @@ export default class Actions extends Component {
     constructor(props){
         super(props)
         this.state = {
-            actions: []
+            actions: [],
+            clientId: null
         }
     }
+    
+    
 
     componentDidUpdate(prevProps){
         if(prevProps !== this.props){
             var items = this.props.actionList["array_agg"]
-            this.setState({actions: items})
+            var clientId = this.props.actionList["array_agg"][0]["client_id"]
+            this.setState({
+                actions: items,
+                clientId: clientId
+            })
         }
+    }
+
+    actionCheck = (id) => {
+        console.log(id)
     }
     
  render(props) {
@@ -29,7 +40,7 @@ export default class Actions extends Component {
             //NOTE: Index value will not change since the order is important. So index will work as a key in this instance. Trade Off: React says this is a last resort. But it's not necessary and requires more data for no improvement in this instance. 
                         return (
                             <div className="action" key={e.id}
-                            onClick={() => this.props.actionCheck(e)}>
+                            onClick={() => this.actionCheck(e.id)}>
                                 <i className="fas fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>
@@ -38,10 +49,7 @@ export default class Actions extends Component {
                     else {
                         return (
                             <div className="action" key={e.id}
-                            onClick={() => this.props.actionCheck({index: i, 
-                            action: e,
-                            elementIndex: this.props.actionItem}
-                            )}>
+                            onClick={() => this.actionCheck(e.id)}>
                                 <i className="far fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>

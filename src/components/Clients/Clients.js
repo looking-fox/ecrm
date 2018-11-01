@@ -20,7 +20,7 @@ export default class Clients extends Component {
       clientDate: '',
       clientLocation: ''
     }
-    this.actionCheck = this.actionCheck.bind(this)
+    
   }
   componentDidMount(){
     axios.get('/api/getclients').then(response => {
@@ -62,10 +62,6 @@ export default class Clients extends Component {
 
     //Client is added, modal disappears once complete.
     //MISSING: Rerender or update UI with newly added client. 
-  }
-
-  actionCheck = (actionObj) => {
-    //Check off an action.     
   }
 
   render() {
