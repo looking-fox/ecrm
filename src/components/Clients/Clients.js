@@ -29,14 +29,14 @@ export default class Clients extends Component {
 
     axios.get('/api/getactions').then(response => {
       var sessionMap = {}
-      response.data.forEach((e,i) => {
-        let stringForm = String(e.session_id)
+      response.data.map((e,i) => {
+        let stringForm = String(e.session_name)
         sessionMap[stringForm] = e
       })
       
-      this.setState({
-        sessions: sessionMap
-      })
+      this.setState({ sessions: sessionMap })
+    
+      
     })
   }
 
@@ -65,26 +65,12 @@ export default class Clients extends Component {
   }
 
   actionCheck = (actionObj) => {
-    //actionObj = {index: index of specific action, elementIndex: index of client in this.state.clients}
-    const {index, action, elementIndex} = actionObj
-    var newClientList = this.state.clients
-    newClientList.forEach(e => {
-      JSON.parse(e["action_list"])
-      //WARNING: Starting to get into quadratic time with a nested loop. Let's go back and look at this design so we can avoid this.
-    })
-    console.log(newClientList)
-    // var newAction = Object.keys(JSON.parse(action))[0]
-    // var parsed = JSON.parse(action)
-    // parsed["session"] = true
-
-    // newClientList[elementIndex]["action_list"][index] = parsed
-    // console.log(newClientList)
-        
+    //Check off an action.     
   }
 
   render() {
 
-    
+    const actions = this.state.sessions
 
     return (
       <div className="clientdashboard">
@@ -130,11 +116,11 @@ export default class Clients extends Component {
 
       <select className="sessionmenu" 
         onChange={e => this.sessionPriceUpdater(e.target.value)}>
-              {this.state.sessions.map(e => {
-                console.log('e', e)
-                // return (
-                // <option value={i}> {e.session_name} </option>
-                // )
+
+              {Object.keys(this.state.sessions).map(e => {
+                return (
+                  <option value={e.session_id}> {e.session_name} </option>
+                  )
               })}
               
       </select> 
