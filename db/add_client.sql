@@ -19,7 +19,7 @@ array_agg( sessions.actions ), clients.client_id
 from sessions
 left join clients
 on clients.session_id = sessions.session_id
-where action_list IS NOT NULL and client_id IS NOT NULL
+where actions IS NOT NULL and client_id IS NOT NULL
 group by clients.client_id
 order by clients.client_id desc
 limit 1;
