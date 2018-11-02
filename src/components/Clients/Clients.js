@@ -30,6 +30,7 @@ export default class Clients extends Component {
     })
 
     axios.get('/api/getactions').then(response => {
+      
       var sessionMap = {}
       response.data.map((e,i) => {
         let stringForm = String(e.actions[0]["client_id"])

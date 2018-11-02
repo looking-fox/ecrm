@@ -5,15 +5,6 @@ VALUES ( $1, $2, $3, $4, $5 );
 -- If we try and give where clauses for the client, we could potentially hit an edge case. 
 -- Order by/limit help us avoid this, and the where clause avoids returning a null value from the DB by accident.
 
--- select 
--- sessions.action_list, clients.client_id, sessions.session_id, sessions.user_id
--- from sessions
--- left join clients
--- on clients.session_id = sessions.session_id
--- where action_list IS NOT NULL and client_id IS NOT NULL
--- order by client_id desc
--- limit 1;
-
 select 
 array_agg( sessions.actions ), clients.client_id
 from sessions
