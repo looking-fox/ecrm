@@ -171,6 +171,7 @@ export default class Sessions extends Component {
 
         
             {this.state.sessions.map((e,i) => {
+             
               return (
               <div className="session">
                 <div className="sessionmenu">
@@ -181,7 +182,7 @@ export default class Sessions extends Component {
                 </div>
 
                 <div className="actions">
-                <Actions actionList={e.action_list}/>
+                <Actions actionList={e}/>
                 </div>
               </div>
               )
