@@ -15,7 +15,7 @@ VALUES ( $1, $2, $3, $4, $5 );
 -- limit 1;
 
 select 
-array_agg( sessions.action_list ), clients.client_id
+array_agg( sessions.actions ), clients.client_id
 from sessions
 left join clients
 on clients.session_id = sessions.session_id

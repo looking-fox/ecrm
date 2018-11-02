@@ -27,8 +27,10 @@ export default class Sessions extends Component {
   componentDidMount(){
     //DB request to grab all current session types. 
     axios.get('/api/getsessions').then(response => {
+      console.log(response)
       this.setState({sessions: response.data})
     })
+    
   }
 
   addItem = (e) => {
@@ -182,7 +184,13 @@ export default class Sessions extends Component {
                 </div>
 
                 <div className="actions">
+
+
                 <Actions actionList={e}/>
+
+               {/* this.props.actionList["actions"][0]["client_id"] */}
+
+
                 </div>
               </div>
               )
