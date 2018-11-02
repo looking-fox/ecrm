@@ -8,6 +8,7 @@ var sessionId = 54;
 
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
+const sessionActions = require('./sessionActions.controller')
 
 const app = express()
 
@@ -111,6 +112,15 @@ app.delete('/api/deletesession/:id', sessions.deletesession)
 app.get('/api/getactions', sessions.getactions)
 
 //===============SESSIONS==================//
+
+
+
+//===============ACTIONS==================//
+
+app.put('/api/updateaction', sessionActions.putaction)
+
+
+//===============ACTIONS==================//
 
 
 

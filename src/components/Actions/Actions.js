@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Actions.css'
-
+import axios from 'axios'
 
 export default class Actions extends Component {
     constructor(props){
@@ -24,8 +24,20 @@ export default class Actions extends Component {
         }
     }
 
-    actionCheck = (id) => {
-        console.log(`Action ID: ${id} with Client: ${this.state.clientId}`)
+    actionCheck = (id, index, status=null) => {
+        let item = this.state.actions[index]["completed"]
+
+        if(item==="true") status="false"
+        else {
+            status="true"
+        }
+
+        axios.put('/api/updateaction', {id, status}).then(() => {
+            let newActions = this.state.actions
+            newActions[index]["completed"] = status
+            this.setState({actions: newActions})
+        })
+        
     }
     
  render(props) {
@@ -40,7 +52,7 @@ export default class Actions extends Component {
             //NOTE: Index value will not change since the order is important. So index will work as a key in this instance. Trade Off: React says this is a last resort. But it's not necessary and requires more data for no improvement in this instance. 
                         return (
                             <div className="action" key={e.id}
-                            onClick={() => this.actionCheck(e.id)}>
+                            onClick={() => this.actionCheck(e.id, i)}>
                                 <i className="fas fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>
@@ -49,7 +61,7 @@ export default class Actions extends Component {
                     else {
                         return (
                             <div className="action" key={e.id}
-                            onClick={() => this.actionCheck(e.id)}>
+                        onClick={() => this.actionCheck(e.id, i)}>
                                 <i className="far fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>
