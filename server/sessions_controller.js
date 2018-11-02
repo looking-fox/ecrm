@@ -8,6 +8,14 @@ module.exports = {
         })
     },
 
+    getsessiontypes: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        dbInstance.get_sessiontypes(sub).then(response => {
+            res.status(200).send(response)
+        })
+    },
+
     getactions: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user

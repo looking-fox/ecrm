@@ -13,6 +13,7 @@ export default class Clients extends Component {
     this.state = {
       clients: [],
       sessions: [],
+      sessionTypes: [],
       sessionIndex: 0,
       sessionPrice: '',
       open: false,
@@ -23,6 +24,7 @@ export default class Clients extends Component {
     
   }
   componentDidMount(){
+    
     axios.get('/api/getclients').then(response => {
       this.setState({clients: response.data})
     })
@@ -36,13 +38,24 @@ export default class Clients extends Component {
       
       this.setState({ sessions: sessionMap })
     
-      
     })
+
+  }
+
+  openModal = () => {
+    axios.get('/api/getsessiontypes').then(response => {
+      this.setState({
+        open: true,
+        sessionTypes: response.data,
+        sessionPrice: response.data[0].session_price
+      })
+    })
+
   }
 
   sessionPriceUpdater = (index) => {
     this.setState({
-      sessionPrice: this.state.sessions[index].session_price,
+      sessionPrice: this.state.sessionTypes[index].session_price,
       sessionIndex: index
     })
   }
@@ -91,7 +104,7 @@ export default class Clients extends Component {
           <div className="addclient">
 
             <i className="fas fa-plus-circle"
-            onClick={() => this.setState({open: true})}/>
+            onClick={this.openModal}/>
 
           </div>
 
@@ -113,9 +126,9 @@ export default class Clients extends Component {
       <select className="sessionmenu" 
         onChange={e => this.sessionPriceUpdater(e.target.value)}>
 
-              {Object.keys(this.state.sessions).map(e => {
+              {this.state.sessionTypes.map( (e,i) => {
                 return (
-                  <option value={e.session_id}> {e.session_name} </option>
+                  <option value={i}> {e.session_name} </option>
                   )
               })}
               

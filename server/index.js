@@ -105,6 +105,8 @@ app.post('/api/logout', (req, res) => {
 
 app.get('/api/getsessions', sessions.getsessions)
 
+app.get('/api/getsessiontypes', sessions.getsessiontypes)
+
 app.post('/api/storesession', sessions.storesession)
 
 app.delete('/api/deletesession/:id', sessions.deletesession)
