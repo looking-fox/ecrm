@@ -20,7 +20,7 @@ export default class Actions extends Component {
     }
 
     renderActions(){
-
+        
         var items = this.props.actionList["actions"]
         var clientId = this.props.actionList["actions"][0]["client_id"]
         

@@ -29,11 +29,9 @@ module.exports = {
         const dbInstance = req.app.get('db')
         const {name, price, color, actionList} = req.body.sessionInfo
         const {sub} = req.session.user
+
         dbInstance.store_session([name, color, price, actionList, sub])
-        .then(response => {res.sendStatus(200)
-        }).catch(error => {
-            console.log('StoreSession Error: ', error)
-        })
+        .then( () => res.sendStatus(200) )
     },
 
     deletesession: (req, res) => {

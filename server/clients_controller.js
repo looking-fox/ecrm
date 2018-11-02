@@ -14,7 +14,26 @@ module.exports = {
         const {name, sessionId, date, location} = req.body.clientObj
         dbInstance
         .add_client([sub, name, sessionId, date, location])
-        .then(() => res.sendStatus(200) )
+        .then((response) => {
+            
+            const {sessionId} = req.body.clientObj
+            const {sub} = req.session.user
+            var clientId = response[0].client_id
+            var actionItems = response[0]["array_agg"][0]
+            
+            actionItems.forEach(e => {
+                const {name} = JSON.parse(e)
+                dbInstance.create_actions([name, sessionId, sub, clientId])
+            })
+
+            // for(let i = 0; i<actionItems.length; i++){
+            //     const {name} = JSON.parse(actionItems[i])
+            //     dbInstance.create_actions([name, sessionId, sub, clientId])
+            // }
+            
+
+            res.sendStatus(200) 
+        })
     }
 
 }

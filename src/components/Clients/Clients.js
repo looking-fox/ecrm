@@ -64,7 +64,7 @@ export default class Clients extends Component {
 
     var clientObj = {
       name: this.state.clientName,
-      sessionId: this.state.sessions[this.state.sessionIndex].session_id,
+      sessionId: this.state.sessionTypes[this.state.sessionIndex].session_id,
       date: this.state.clientDate,
       location: this.state.clientLocation
     }

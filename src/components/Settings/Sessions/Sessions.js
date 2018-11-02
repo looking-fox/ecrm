@@ -16,9 +16,9 @@ export default class Sessions extends Component {
       price: '',
       color: 'Purple',
       actionList: [
-        {"inquired": false},
-        {"responded": false},
-        {"booked!" : false}
+        {"name": "inquired"},
+        {"name": "emailed"},
+        {"name": "booked!"}
       ], 
       sessions: []
     }
@@ -34,8 +34,8 @@ export default class Sessions extends Component {
   addItem = (e) => {
    if(e.key==="Enter"){
      var newList = this.state.actionList
-     var newItem = {}
-     newItem[this.state.action] = false
+     var newItem = {"name": this.state.action}
+
      newList.push(newItem)
 
      this.setState({
@@ -75,7 +75,7 @@ export default class Sessions extends Component {
     //Need to add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
     
     axios.post('/api/storesession', {sessionInfo} ).then(response => {
-      console.log('savedResponse: ', response)
+      console.log('savedResponse: ', response.data)
     })
 
     this.onCloseModal()
@@ -143,7 +143,7 @@ export default class Sessions extends Component {
                 <div className="actionitem" id={i}>
             {/* Object.keys(e) returns the keys listed at the element.
             Which is an array with one key value. Currying [0] returns the string value vs. the array of the string value. */}
-              <i className="far fa-check-circle"/>{Object.keys(e)[0]}
+              <i className="far fa-check-circle"/>{e.name}
               <i className="far fa-trash-alt deleteitem"
               onClick={() => this.deleteItem(i)}/>
                 </div>

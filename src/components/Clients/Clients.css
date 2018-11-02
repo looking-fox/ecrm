@@ -2,13 +2,15 @@
 
 .clientdashboard {
     width: 85vw;
-    height: 100vh;
+    height: fit-content;
     background-color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 0px 0px;
+    margin-bottom: 50px;
     font-family: 'Open Sans';
+    overflow-y: scroll;
 }
 
 .bar{
@@ -20,7 +22,7 @@
 }
 
 .addclient{
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     right: 20px;
 }
