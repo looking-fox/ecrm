@@ -6,3 +6,9 @@ insert into sessions(
     "user_id")
 
 values ( $1, $2, $3, array_to_json($4), $5 );
+
+
+select session_id from sessions
+where user_id=$5
+order by session_id desc
+limit 1;

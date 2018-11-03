@@ -34,6 +34,7 @@ export default class Sessions extends Component {
   }
 
   addItem = (e) => {
+    //Modal list of action items, adding to array
    if(e.key==="Enter"){
      var newList = this.state.actionList
      var newItem = {"name": this.state.action}
@@ -50,12 +51,14 @@ export default class Sessions extends Component {
   }
 
   deleteItem = (i) => {
+    //Modal list of action items, delete from array
     var newList = this.state.actionList
     newList.splice(i, 1)
     this.setState({actionList: newList})
   }
 
   deleteSession = (i) => {
+    //Delete session based on id which we get from sessions[index]
     const {sessions} = this.state
     var id = sessions[i].session_id
     axios.delete(`/api/deletesession/${id}`).then( () => {
@@ -77,7 +80,7 @@ export default class Sessions extends Component {
     //Need to add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
     
     axios.post('/api/storesession', {sessionInfo} ).then(response => {
-      console.log('savedResponse: ', response.data)
+      //Update state on front end with new session.
     })
 
     this.onCloseModal()

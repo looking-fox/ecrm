@@ -33,6 +33,8 @@ export default class Actions extends Component {
 
 
     actionCheck = (id, index, status=null) => {
+        if(this.props.checkValues){
+
         let item = this.state.actions[index]["completed"]
 
         if(item==="true") status="false"
@@ -45,15 +47,21 @@ export default class Actions extends Component {
             newActions[index]["completed"] = status
             this.setState({actions: newActions})
         })
+
+    }
+        else {
+            alert("You can't complete something in your settings 🤷‍")
+        }
         
     }
     
  render(props) {
-   
+    console.log('state', this.state)
         return (
             //MISSING: Click action item changes UI, updates in DB.
             
             <div className="list">
+                
                 {this.state.actions.map((e,i) => {
                     
             //NOTE: String not boolean for true in order to use aggregate function in SQL. 
