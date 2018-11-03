@@ -57,7 +57,7 @@ export default class Actions extends Component {
                 {this.state.actions.map((e,i) => {
                     
             //NOTE: String not boolean for true in order to use aggregate function in SQL. 
-                    if(e.completed==="true"){
+                    if(e.completed==="true" && this.props.checkValues){
             //NOTE: Index value will not change since the order is important. So index will work as a key in this instance. Trade Off: React says this is a last resort. But it's not necessary and requires more data for no improvement in this instance. 
                         return (
                             <div className="action" key={e.id}

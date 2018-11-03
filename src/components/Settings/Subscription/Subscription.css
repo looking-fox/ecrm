@@ -3,6 +3,7 @@
 .subdashboard {
     width: 85vw;
     height: 100vh;
+    margin-left: 250px;
     background-color: #dadada;
     display: flex;
     flex-direction: column;

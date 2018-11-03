@@ -9,6 +9,7 @@
     flex-direction: column;
     padding: 0px 0px;
     margin-bottom: 50px;
+    margin-left: 250px;
     font-family: 'Open Sans';
     overflow-y: scroll;
 }

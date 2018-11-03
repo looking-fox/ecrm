@@ -96,7 +96,9 @@ export default class Clients extends Component {
                 sessionDate={e.date}
                 sessionLocation={e.location}/>
 
-                <Actions actionList={sessionInfo}/>
+                <Actions 
+                checkValues={true}
+                actionList={sessionInfo}/>
 
           </div>
           )

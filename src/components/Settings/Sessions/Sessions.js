@@ -186,7 +186,9 @@ export default class Sessions extends Component {
                 <div className="actions">
 
 
-                <Actions actionList={e}/>
+                <Actions 
+                checkValues={false}
+                actionList={e}/>
 
                {/* this.props.actionList["actions"][0]["client_id"] */}
 
