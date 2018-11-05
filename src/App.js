@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 import './reset.css'
 import Home from './components/Home/Home'
 

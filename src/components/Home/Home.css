@@ -4,7 +4,7 @@
 
 .app{
     display: grid;
-    grid-template-columns: 2;
+    overflow-x: hidden;
     grid-template-rows: 10vh 90vh;
     font-family: 'Open Sans';
 }
@@ -60,6 +60,7 @@ nav button {
     display: grid;
     grid-template-rows: 1;
     grid-template-columns: 30vw 70vw;
+    animation: fadeIn 0.8s linear;
 }
 
 .introtext{
@@ -70,17 +71,8 @@ nav button {
     font-size: 2.5em;
     font-family: 'Playfair Display';
     line-height: 1.1em;
-    /* justify-content: center;
-    align-self: flex-start;
-    margin-left: 150px;
-    margin-top: 150px;
-    border-left: 1px solid black;
-    height: 100px;
-    width: 700px;
-    background-color: white;
-    padding: 10px;
-    padding-left: 30px;
-    z-index: 3; */
+    position: relative;
+    animation: moveUp 0.8s linear;
 }
 
 .mainimage{
@@ -118,4 +110,14 @@ nav button {
         height: 60vh;
     }
 
+ }
+
+ @keyframes fadeIn {
+     from{opacity: 0}
+     to{opacity: 1}
+ }
+
+ @keyframes moveUp{
+     from{top: 30px}
+     to{top: 0px}
  }
