@@ -20,17 +20,27 @@ module.exports = {
             const {sub} = req.session.user
             var clientId = response[0].client_id
             var actionItems = response[0]["array_agg"][0]
-            
-            actionItems.forEach(e => {
-                const {name} = JSON.parse(e)
-                dbInstance.create_actions([name, sessionId, sub, clientId])
-            })
+            var itemIndex = 0
 
-            // for(let i = 0; i<actionItems.length; i++){
-            //     const {name} = JSON.parse(actionItems[i])
+            // actionItems.forEach(e => {
+            //     const {name} = JSON.parse(e)
             //     dbInstance.create_actions([name, sessionId, sub, clientId])
-            // }
+            // })
+
+            function addActions(){
+                //Recursively add items in order and avoid async issues
+                let e = JSON.parse(actionItems[itemIndex])
+                const {name} = e
+
+                dbInstance.create_actions([name, sessionId, sub, clientId]).then(() => {
+                    itemIndex++
+                    if(itemIndex <= actionItems.length-1){
+                        addActions()
+                    }
+                })
+            }
             
+            addActions()
 
             res.sendStatus(200) 
         })

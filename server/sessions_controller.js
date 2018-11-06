@@ -38,7 +38,7 @@ module.exports = {
             var itemIndex = 0
             
             function addDefaultActions(){
-                
+    //Recursively add items in order and avoid async issues
                 const {name} = actionList[itemIndex]
                 dbInstance.create_default_actions([name, session_id, sub]).then(() => {
                     itemIndex++
