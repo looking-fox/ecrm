@@ -77,7 +77,11 @@ export default class Clients extends Component {
    
     else {
       return (
-        <div></div>
+        <div className="no-client-container">
+          <i className="fas fa-campground"/>
+          <h1>welcome to basecamp!</h1>
+          <p>head on over to settings > sessions to get started</p>
+        </div>
       )
     }
     

@@ -80,3 +80,33 @@
     display: flex;
     justify-content: center;
 }
+
+.no-client-container{
+    background-color: #d8d8d8;
+    color: black;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.no-client-container i {
+    font-size: 60px;
+    position: relative;
+    animation: bounce ease 2s infinite;
+    
+}
+
+.no-client-container h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 20px 20px;
+}
+
+@keyframes bounce {
+    0% {top: 0px}
+    50% {top: 10px}
+    100% {top: 0px}
+}
