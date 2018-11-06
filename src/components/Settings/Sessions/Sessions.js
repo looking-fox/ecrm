@@ -57,10 +57,11 @@ export default class Sessions extends Component {
     this.setState({actionList: newList})
   }
 
-  deleteSession = (i) => {
+  deleteSession = (item, i) => {
     //Delete session based on id which we get from sessions[index]
     const {sessions} = this.state
-    var id = sessions[i].session_id
+    var id = item.session_id
+    
     axios.delete(`/api/deletesession/${id}`).then( () => {
       sessions.splice(i, 1)
       this.setState({sessions: sessions})
@@ -183,7 +184,7 @@ export default class Sessions extends Component {
                   <h3>{e.session_name}</h3>
                   <i className="far fa-edit"/>
                   <i className="far fa-trash-alt"
-                  onClick={() => this.deleteSession(i)}/>
+                  onClick={() => this.deleteSession(e, i)}/>
                 </div>
 
                 <div className="actions">

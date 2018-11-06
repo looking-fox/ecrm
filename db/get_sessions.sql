@@ -7,5 +7,5 @@ order by action_id
 ) as actions  from sessions
 left join session_actions
 on session_actions.session_id = sessions.session_id
-where sessions.user_id=$1
+where sessions.user_id=$1 and sessions.active='active'
 group by sessions.session_id, session_actions.client_id;
