@@ -6,7 +6,7 @@ import Contact from './components/Contact/Contact'
 import store from './redux/store'
 import * as serviceWorker from './serviceWorker';
 
-import {HashRouter as Router, Switch, Route} from 'react-router-dom';
+import {HashRouter as Router, Switch, Route, withRouter} from 'react-router-dom';
 import {Provider} from 'react-redux'
 import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
@@ -21,10 +21,10 @@ ReactDOM.render(
             <Route exact path="/" component={App}/>
             <Route path="/contact" component={Contact}/>
 
-            <Route path="/dashboard" render={() => {
+            <Route path="/dashboard" render={(props) => {
                 return (
                     <div style={{display: 'flex'}}>
-                        <Sidebar/>
+                        <Sidebar {...props}/>
                         <Clients/>
                     </div>
                 )

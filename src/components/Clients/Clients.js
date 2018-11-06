@@ -12,6 +12,7 @@ export default class Clients extends Component {
     super()
     this.state = {
       clients: [],
+      noClients: false,
       sessions: [],
       sessionTypes: [],
       sessionIndex: 0,
@@ -26,7 +27,21 @@ export default class Clients extends Component {
   componentDidMount(){
     
     axios.get('/api/getclients').then(response => {
-      this.setState({clients: response.data})
+      this.setState(() => {
+        let firstClient = response.data[0]
+
+        if(firstClient){
+              if(firstClient.client_id===null){
+                return {
+                  clients: response.data,
+                  noClients: true
+                }
+              }
+              else return {clients: response.data}
+        }
+        
+
+      })
     })
 
     axios.get('/api/getactions').then(response => {
@@ -75,13 +90,18 @@ export default class Clients extends Component {
         }
     }
    
-    else {
+    if(this.state.noClients) {
       return (
         <div className="no-client-container">
           <i className="fas fa-campground"/>
           <h1>welcome to basecamp!</h1>
           <p>head on over to settings > sessions to get started</p>
         </div>
+      )
+    }
+    else {
+      return (
+        <div></div>
       )
     }
     
