@@ -35,21 +35,20 @@ module.exports = {
             const {session_id} = response[0]
             const {actionList} = req.body.sessionInfo
             const {sub} = req.session.user
-            console.log('actionList: ', actionList)
-            // actionList.forEach(e => {
-            //     console.log('item: ', e)
-            //     const {name} = e
-            //     dbInstance.create_default_actions([name, session_id, sub]).then( (response) => {
-            //         if(response){
-            //             return
-            //         }
-            //     })
-            // })
-            for(let i = 0; i < actionList.length; i++){
-                console.log('item: ', actionList[i])
-                const {name} = actionList[i]
-                dbInstance.create_default_actions([name, session_id, sub])
+            var itemIndex = 0
+            
+            function addDefaultActions(){
+                
+                const {name} = actionList[itemIndex]
+                dbInstance.create_default_actions([name, session_id, sub]).then(() => {
+                    itemIndex++
+                    if(itemIndex <= actionList.length-1){
+                        addDefaultActions()
+                    }
+                })
             }
+
+            addDefaultActions()
 
             res.sendStatus(200) 
         })

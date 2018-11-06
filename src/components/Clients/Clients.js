@@ -85,21 +85,21 @@ export default class Clients extends Component {
 
   openModal = () => {
     axios.get('/api/getsessiontypes').then(response => {
+    //If user has no session types, they can't add a client. 
       if(response.data[0]){
-      if(response.data[0].session_id !== null){
+          if(response.data[0].session_id !== null){
           this.setState({
             open: true,
             sessionTypes: response.data,
             sessionPrice: response.data[0].session_price
           })
-    }
-  }
-    else {
+        }
+      }
+
+      else {
       alert("You'll first want to head over to Settings > Sessions and add a few session types.")
-    }
-
-    })
-
+           }
+      })
   }
 
   sessionPriceUpdater = (index) => {
