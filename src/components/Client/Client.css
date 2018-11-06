@@ -1,6 +1,8 @@
 .clientcontainer{
     width: 100%;
     display: flex;
+    position: relative;
+    animation: fadeUpIn 0.1s ease-in;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -10,10 +12,11 @@
     width: 90%;
     height: 40px;
     margin: 50px 0px;
+    padding: 0px 30px;
     background-color: #e8e8e8;
     border-radius: 10px 10px 0px 0px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -21,6 +24,7 @@
     font-size: 0.9em;
     font-weight: 400;
     letter-spacing: 0;
+    width: 180px;
 }
 
 .settings {
@@ -31,7 +35,9 @@
     margin-left: 20px;
 }
 
-
+.package {
+   margin-right: 30px;
+}
 .bubble {
     width: fit-content;
     padding: 2px 10px;
@@ -41,3 +47,7 @@
     font-weight: 700;
 }
 
+@keyframes fadeUpIn {
+    from {top: 20px; opacity: 0.8}
+    to {top: 0px; opacity: 1}
+}

@@ -25,7 +25,13 @@ export default class Clients extends Component {
     
   }
   componentDidMount(){
-    
+    //Separating this out so I can call these actions twice. Trying to be functional at least until I can optimize my DB call to only return new clients. 
+    this.getClients()
+
+  }
+
+  getClients(){
+
     axios.get('/api/getclients').then(response => {
       this.setState(() => {
         let firstClient = response.data[0]
@@ -143,6 +149,7 @@ export default class Clients extends Component {
     }
 
     axios.post('/api/addclient', {clientObj} ).then( () => {
+      this.getClients()
       this.setState({open: false})
     })
 

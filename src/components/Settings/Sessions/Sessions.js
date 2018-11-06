@@ -26,11 +26,14 @@ export default class Sessions extends Component {
 
   componentDidMount(){
     //DB request to grab all current session types. 
+    this.getSessions()
+    
+  }
+
+  getSessions(){
     axios.get('/api/getsessions').then(response => {
-      console.log(response)
       this.setState({sessions: response.data})
     })
-    
   }
 
   addItem = (e) => {
@@ -82,6 +85,7 @@ export default class Sessions extends Component {
     
     axios.post('/api/storesession', {sessionInfo} ).then(response => {
       //Update state on front end with new session.
+      this.getSessions()
     })
 
     this.onCloseModal()

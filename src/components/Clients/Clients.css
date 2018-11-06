@@ -3,7 +3,6 @@
 .clientdashboard {
     width: 85vw;
     height: fit-content;
-    background-color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
