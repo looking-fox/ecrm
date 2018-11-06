@@ -43,13 +43,61 @@ export default class Clients extends Component {
 
   }
 
+  renderClients(){
+    //If we have zero clients, we don't want to map and render the Client or Actions components
+   
+    let firstClient = this.state.clients[0]
+    if(firstClient){
+
+        if(firstClient.client_id !==null){
+
+            return this.state.clients.map( (e, i) => {
+              let sessionInfo = this.state.sessions[e.client_id]
+              
+              return (
+              <div className="bar">
+        
+                    <Client 
+                    name={e.name}
+                    sessionName={e.session_name}
+                    sessionColor={e.session_color}
+                    sessionPrice={e.session_price}
+                    sessionDate={e.date}
+                    sessionLocation={e.location}/>
+        
+                    <Actions 
+                    checkValues={true}
+                    actionList={sessionInfo}/>
+        
+              </div>
+              )
+            })
+        }
+    }
+   
+    else {
+      return (
+        <div></div>
+      )
+    }
+    
+  }
+
   openModal = () => {
     axios.get('/api/getsessiontypes').then(response => {
-      this.setState({
-        open: true,
-        sessionTypes: response.data,
-        sessionPrice: response.data[0].session_price
-      })
+      if(response.data[0]){
+      if(response.data[0].session_id !== null){
+          this.setState({
+            open: true,
+            sessionTypes: response.data,
+            sessionPrice: response.data[0].session_price
+          })
+    }
+  }
+    else {
+      alert("You'll first want to head over to Settings > Sessions and add a few session types.")
+    }
+
     })
 
   }
@@ -82,27 +130,8 @@ export default class Clients extends Component {
 
     return (
       <div className="clientdashboard">
-        {this.state.clients.map( (e, i) => {
-          let sessionInfo = this.state.sessions[e.client_id]
-          
-          return (
-          <div className="bar">
-
-                <Client 
-                name={e.name}
-                sessionName={e.session_name}
-                sessionColor={e.session_color}
-                sessionPrice={e.session_price}
-                sessionDate={e.date}
-                sessionLocation={e.location}/>
-
-                <Actions 
-                checkValues={true}
-                actionList={sessionInfo}/>
-
-          </div>
-          )
-        })}
+        { this.renderClients() }
+      
 
           <div className="addclient">
 
