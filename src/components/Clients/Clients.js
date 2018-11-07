@@ -26,9 +26,7 @@ class Clients extends Component {
         //Color picker needs to work
         //Currency needs to check/add comma + currency
         //Date picker for Client modal
-        //Action items for sessions needs to be reset 
-        //Client list needs to redirect to dashboard from settings
-        //Add symbol next to each client list
+        
 
   //NON-MVP:
         //Clicking Clients itself--Shows all 

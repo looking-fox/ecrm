@@ -88,6 +88,9 @@ export default class Sessions extends Component {
       this.getSessions()
     })
 
+    this.setState({ actionList: [ {"name": "inquired"},
+      {"name": "emailed"}, {"name": "booked!"}]  })
+
     this.onCloseModal()
   }
 

@@ -58,15 +58,15 @@ class Sidebar extends Component {
             if(response.data[0].session_id !== null){
                 if(this.props.lists[0]){
   
-                  // this.setState({
-                  //   sessionTypes: response.data,
-                  //   sessionPrice: response.data[0].session_price
-                  // })
-
-                  this.props.updateClientModal({
-                    clientModalOpen: true,
+                  this.setState({
                     sessionTypes: response.data,
                     sessionPrice: response.data[0].session_price
+                  })
+
+                  this.props.updateClientModal({
+                    clientModalOpen: true
+                    // sessionTypes: response.data,
+                    // sessionPrice: response.data[0].session_price
                   })
   
                 }
@@ -80,6 +80,14 @@ class Sidebar extends Component {
         })
   }
 
+  clickList = (list) => {
+    this.updateCurrentList(list.list_id)
+    
+        if(this.props.match.path !== '/dashboard'){
+          this.props.history.push('/dashboard')
+        }
+  }
+
   logOut = () => {
     axios.post('/api/logout').then(() => {
       this.props.logoutUser()
@@ -90,6 +98,7 @@ class Sidebar extends Component {
   
 
   render() {
+    console.log('props', this.props)
     return (
         <div className="sidebar">
 
@@ -119,10 +128,10 @@ class Sidebar extends Component {
             if(this.props.listId===e.list_id){
               return (
                 <div className="listitem current-list" key={e.list_id}
-                onClick={() => this.updateCurrentList(e.list_id)}>
+                onClick={() => this.clickList(e)}>
                   <p>
                     {e.list_name}
-                    <i onClick={() => this.openClient()}
+                    <i onClick={() => this.openClient(e)}
             className="fas fa-plus-circle add-client-in-list"/>
                   </p>
                 </div>
@@ -132,7 +141,7 @@ class Sidebar extends Component {
             else {
               return (
                 <div className="listitem" key={e.list_id}
-                onClick={() => this.updateCurrentList(e.list_id)}>
+                onClick={() => this.clickList(e)}>
                   <p>{e.list_name}</p>
                 </div>
               )
