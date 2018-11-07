@@ -21,22 +21,28 @@ class Sidebar extends Component {
   componentDidMount(){
     axios.get('/api/user-info').then((res) => {
       const {lists} = res.data
-      let id = lists[0].list_id
-
       this.setState({ lists })
 
       this.props.updateUser(res.data)
-      this.props.updateCurrentList( {listId: id} )
+
+      if(lists[0]){
+            if(lists[0].list_id){
+              let id = lists[0].list_id
+              this.props.updateCurrentList( {listId: id} )
+            }
+      }
+     
     })
   }
 
   saveList = () => {
     const {listName} = this.state
     axios.post('/api/addlist', {listName}).then(response => {
-
-      console.log('list response: ', response.data)
-      this.setState({open: false})
-      
+      let newList = response.data[0]
+      let updatedList = this.state.lists
+      updatedList.push(newList)
+      this.setState({open: false, lists: updatedList})
+      //TODO: Update lists in props
     })
   }
 
@@ -84,7 +90,11 @@ class Sidebar extends Component {
               return (
                 <div className="listitem current-list" key={e.list_id}
                 onClick={() => this.updateCurrentList(e.list_id)}>
-                  <p>{e.list_name}</p>
+                  <p>
+                    {e.list_name}
+                    <i onClick={() => this.setState({open: true})}
+            className="fas fa-plus-circle add-client-in-list"/>
+                  </p>
                 </div>
               )
             }

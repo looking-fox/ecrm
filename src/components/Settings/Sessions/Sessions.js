@@ -116,6 +116,7 @@ export default class Sessions extends Component {
 
           <div className="sessioninfo">
           <Input 
+          autoFocus={true}
           placeholder="Session Name"
           fullWidth={true}
           classes={{ root: 'input' }}

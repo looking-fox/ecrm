@@ -95,3 +95,18 @@
 .clientinput{
     width: 100%;
 }
+
+.add-client-in-list {
+    opacity: 0;
+    position: absolute;
+    right: 20px;
+}
+
+.add-client-in-list:hover {
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+.listitem:hover .add-client-in-list {
+    opacity: 1;
+}

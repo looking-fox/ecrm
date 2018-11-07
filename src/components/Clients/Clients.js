@@ -25,6 +25,22 @@ class Clients extends Component {
     }
     
   }
+
+  //TODO AFTER USER TEST: 
+        //Color picker needs to work
+        //Currency needs to check/add comma + currency
+        //Date picker for Client modal
+        //Action items for sessions needs to be reset 
+        //Client list needs to redirect to dashboard from settings
+        //Add symbol next to each client list
+
+  //NON-MVP:
+        //Clicking Clients itself--Shows all 
+        //User icon will be new menu for settings, logout
+        //Drag and drop on session actions
+        //Drag and drop on client lists
+        //Ability to add multiple "clients" big lists
+
   componentDidMount(){
     //Separating this out so I can call these actions twice. Trying to be functional at least until I can optimize my DB call to only return new clients. 
     this.getClients()
@@ -131,16 +147,22 @@ class Clients extends Component {
   openModal = () => {
     axios.get('/api/getsessiontypes').then(response => {
     //If user has no session types, they can't add a client. 
+    //If user has no lists, they can't add clients. 
       if(response.data[0]){
           if(response.data[0].session_id !== null){
-          this.setState({
-            open: true,
-            sessionTypes: response.data,
-            sessionPrice: response.data[0].session_price
-          })
+              if(this.props.lists[0]){
+
+                this.setState({
+                  open: true,
+                  sessionTypes: response.data,
+                  sessionPrice: response.data[0].session_price
+                })
+
+              }
+          
         }
       }
-
+      //TODO: Different alert statements for no client list or no sessions. 
       else {
       alert("You'll first want to head over to Settings > Sessions and add a few session types.")
            }
@@ -197,6 +219,7 @@ class Clients extends Component {
 
     <div className="addclientmodal">
           <Input
+          autoFocus={true}
           className="clientinput"
           placeholder="Client's Name"
           onChange={e => this.setState({clientName: e.target.value})}/>
