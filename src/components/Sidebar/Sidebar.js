@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {updateUser, logoutUser} from '../../redux/reducer'
+import {updateUser, logoutUser, updateCurrentList} from '../../redux/reducer'
 import {Link} from 'react-router-dom'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
@@ -34,6 +34,10 @@ class Sidebar extends Component {
       this.setState({open: false})
       
     })
+  }
+
+  updateCurrentList = (id) => {
+      this.props.updateCurrentList( {listId: id} )
   }
 
   logOut = () => {
@@ -71,7 +75,8 @@ class Sidebar extends Component {
 
           {this.state.lists.map(e => {
             return (
-              <div className="listitem" key={e.list_id}>
+              <div className="listitem" key={e.list_id}
+              onClick={() => this.updateCurrentList(e.list_id)}>
                 <p>{e.list_name}</p>
               </div>
             )
@@ -105,4 +110,4 @@ function mapStateToProps(state){
     ...this.props, ...state
   }
 }
-export default connect(mapStateToProps, {updateUser, logoutUser})(Sidebar)
+export default connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList})(Sidebar)

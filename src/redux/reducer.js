@@ -7,6 +7,7 @@ const initialState = {
 
 const UPDATE_USER = 'UPDATE_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
+const UPDATE_CURRENT_LIST = 'UPDATE_CURRENT_LIST'
 
 export default function reducer(state=initialState, action){
     switch(action.type){
@@ -16,6 +17,9 @@ export default function reducer(state=initialState, action){
 
         case LOGOUT_USER: 
             return {...initialState}
+
+        case UPDATE_CURRENT_LIST: 
+            return {...state, ...action.payload}
 
         default: 
             return state
@@ -32,5 +36,12 @@ export function updateUser(value){
 export function logoutUser(value){
     return {
         type: LOGOUT_USER
+    }
+}
+
+export function updateCurrentList(value){
+    return {
+        type: UPDATE_CURRENT_LIST,
+        payload: value
     }
 }
