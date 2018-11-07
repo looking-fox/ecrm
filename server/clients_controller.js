@@ -11,9 +11,10 @@ module.exports = {
     addclient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, sessionId, date, location} = req.body.clientObj
+        const {name, sessionId, date, location, listId} = req.body.clientObj
+        console.log('listId: ', listId)
         dbInstance
-        .add_client([sub, name, sessionId, date, location])
+        .add_client([sub, name, sessionId, date, location, listId])
         .then((response) => {
             
             const {sessionId} = req.body.clientObj
@@ -21,11 +22,6 @@ module.exports = {
             var clientId = response[0].client_id
             var actionItems = response[0]["array_agg"][0]
             var itemIndex = 0
-
-            // actionItems.forEach(e => {
-            //     const {name} = JSON.parse(e)
-            //     dbInstance.create_actions([name, sessionId, sub, clientId])
-            // })
 
             function addActions(){
                 //Recursively add items in order and avoid async issues

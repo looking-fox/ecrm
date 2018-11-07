@@ -21,8 +21,12 @@ class Sidebar extends Component {
   componentDidMount(){
     axios.get('/api/user-info').then((res) => {
       const {lists} = res.data
+      let id = lists[0].list_id
+
       this.setState({ lists })
+
       this.props.updateUser(res.data)
+      this.props.updateCurrentList( {listId: id} )
     })
   }
 
@@ -74,12 +78,26 @@ class Sidebar extends Component {
           </div>
 
           {this.state.lists.map(e => {
-            return (
-              <div className="listitem" key={e.list_id}
-              onClick={() => this.updateCurrentList(e.list_id)}>
-                <p>{e.list_name}</p>
-              </div>
-            )
+        //If propsId is itemId, this list is currently selected.
+            
+            if(this.props.listId===e.list_id){
+              return (
+                <div className="listitem current-list" key={e.list_id}
+                onClick={() => this.updateCurrentList(e.list_id)}>
+                  <p>{e.list_name}</p>
+                </div>
+              )
+            }
+
+            else {
+              return (
+                <div className="listitem" key={e.list_id}
+                onClick={() => this.updateCurrentList(e.list_id)}>
+                  <p>{e.list_name}</p>
+                </div>
+              )
+            }
+
           })}
 
           <Modal open={this.state.open} 

@@ -5,9 +5,10 @@ import Actions from '../Actions/Actions'
 import axios from 'axios';
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
+import {connect} from 'react-redux'
 
 
-export default class Clients extends Component {
+class Clients extends Component {
   constructor(){
     super()
     this.state = {
@@ -28,6 +29,14 @@ export default class Clients extends Component {
     //Separating this out so I can call these actions twice. Trying to be functional at least until I can optimize my DB call to only return new clients. 
     this.getClients()
 
+  }
+
+  componentDidUpdate(prevProps){
+//Extra server call that isn't needed. We should separate the mapping function from the axios request to optimize getClients()
+
+    if(prevProps !== this.props){
+      this.getClients()
+    }
   }
 
   getClients(){
@@ -72,7 +81,13 @@ export default class Clients extends Component {
 
         if(firstClient.client_id !==null){
 
-            return this.state.clients.map( (e, i) => {
+            return this.state.clients
+
+            .filter(e => {
+              return e.list_id===this.props.listId
+            })
+            
+            .map( (e, i) => {
               let sessionInfo = this.state.sessions[e.client_id]
               
               return (
@@ -145,7 +160,8 @@ export default class Clients extends Component {
       name: this.state.clientName,
       sessionId: this.state.sessionTypes[this.state.sessionIndex].session_id,
       date: this.state.clientDate,
-      location: this.state.clientLocation
+      location: this.state.clientLocation,
+      listId: this.props.listId
     }
 
     axios.post('/api/addclient', {clientObj} ).then( () => {
@@ -224,3 +240,13 @@ export default class Clients extends Component {
     )
   }
 }
+
+
+
+function mapStateToProps(state){
+  return {
+    ...this.props, ...state
+  }
+}
+
+export default connect(mapStateToProps)(Clients)

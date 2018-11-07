@@ -24,7 +24,8 @@
 .menuitem {
     width: 100%;
     height: 40px;
-    background-color: #f9f6f6;
+    background-color: white;
+    border-bottom: 1px solid rgb(221, 221, 221);
     font-weight: 600;
     display: flex;
     justify-content: center;
@@ -51,6 +52,11 @@
 }
 
 .listitem:hover {
+    background-color: #f9f6f6;
+    border-right: 4px solid #808080;
+}
+
+.current-list {
     background-color: #f9f6f6;
     border-right: 4px solid #808080;
 }

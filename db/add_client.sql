@@ -1,5 +1,5 @@
-insert into clients (user_id, name, session_id, date, location)
-VALUES ( $1, $2, $3, $4, $5 );
+insert into clients (user_id, name, session_id, date, location, list_id)
+VALUES ( $1, $2, $3, $4, $5, $6 );
 
 -- Give me back the action_list and new client_id for the client we just created. 
 -- If we try and give where clauses for the client, we could potentially hit an edge case. 
