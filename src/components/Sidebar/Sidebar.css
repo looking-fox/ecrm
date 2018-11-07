@@ -47,6 +47,7 @@
     align-items: center;
     font-weight: 200;
     font-size: 0.9em;
+    cursor: pointer;
 }
 
 .listitem:hover {

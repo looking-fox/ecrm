@@ -51,8 +51,17 @@ module.exports = {
         const {sub} = req.session.user
         const {listName} = req.body
         
-        dbInstance.store_list([sub, listName]).then( () => {
+        dbInstance.store_client_list([sub, listName]).then( () => {
             res.sendStatus(200)
+        })
+    },
+
+    getClientLists: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        
+        dbInstance.get_client_lists(sub).then(response => {
+            res.status(200).send(response)
         })
     }
 

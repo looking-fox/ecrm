@@ -84,11 +84,17 @@ app.get('/auth/callback', async (req, res) => {
 
 app.get('/api/user-info', (req, res) => {
     const {name, email, sub, picture} = req.session.user
-    res.status(200).send({
-        name,
-        email,
-        sub,
-        picture
+    
+    const dbInstance = req.app.get('db')
+    dbInstance.get_client_lists(sub).then(response => {
+
+        res.status(200).send({
+            name,
+            email,
+            sub,
+            picture,
+            lists: response
+        })
     })
 })
 
@@ -122,6 +128,7 @@ app.get('/api/getactions', sessions.getactions)
 app.put('/api/updateaction', sessionActions.putaction)
 
 
+
 //===============ACTIONS==================//
 
 
@@ -132,7 +139,10 @@ app.get('/api/getclients', clients.getclients)
 
 app.post('/api/addclient', clients.addclient)
 
+app.get('/api/getclientlists', clients.getClientLists)
+
 app.post('/api/addlist', clients.addClientList)
+
 
 //===============CLIENTS==================//
 

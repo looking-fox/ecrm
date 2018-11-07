@@ -13,12 +13,15 @@ class Sidebar extends Component {
     super()
     this.state = {
       open: false,
+      lists: [],
       listName: ''
     }
   }
 
   componentDidMount(){
     axios.get('/api/user-info').then((res) => {
+      const {lists} = res.data
+      this.setState({ lists })
       this.props.updateUser(res.data)
     })
   }
@@ -66,12 +69,16 @@ class Sidebar extends Component {
 
           </div>
 
-          <div className="listitem">
-            <p>2018 Clients</p>
-          </div>
+          {this.state.lists.map(e => {
+            return (
+              <div className="listitem" key={e.list_id}>
+                <p>{e.list_name}</p>
+              </div>
+            )
+          })}
 
           <Modal open={this.state.open} 
-          onClose={() => this.setState({open: false})} center>
+          onClose={() => this.setState({open: false, listName: ''})} center>
           <h3 className='modal-title'><i className="fas fa-users"/> Add Client List</h3>
           <div className="list-modal">
 
