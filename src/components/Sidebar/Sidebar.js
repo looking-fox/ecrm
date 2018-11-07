@@ -88,6 +88,14 @@ class Sidebar extends Component {
         }
   }
 
+  showAllClients = () => {
+    this.updateCurrentList(-1)
+
+    if(this.props.match.path !== '/dashboard'){
+      this.props.history.push('/dashboard')
+    }
+  }
+
   logOut = () => {
     axios.post('/api/logout').then(() => {
       this.props.logoutUser()
@@ -114,9 +122,10 @@ class Sidebar extends Component {
           <Link to="/settings"><i className="fas fa-cog"/></Link>
           </div>
 
-          <div className="menuitem">
+          <div className="menuitem"
+          onClick={this.showAllClients}>
 
-            <Link to="/dashboard"><p><i className="fas fa-users"/>Clients</p></Link>
+            <p><i className="fas fa-users"/>Clients</p>
             <i onClick={() => this.setState({open: true})}
             className="fas fa-plus-circle add-client-list"/>
 

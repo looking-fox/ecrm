@@ -94,7 +94,12 @@ class Clients extends Component {
             return this.state.clients
 
             .filter(e => {
-              return e.list_id===this.props.listId
+
+              if(this.props.listId === -1) return true
+              else {
+                return e.list_id===this.props.listId
+              } 
+              
             })
             
             .map( (e, i) => {
