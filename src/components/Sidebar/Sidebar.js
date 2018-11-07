@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {updateUser, logoutUser, updateCurrentList} from '../../redux/reducer'
+import {updateUser, logoutUser, updateCurrentList, updateClientModal} from '../../redux/reducer'
 import {Link} from 'react-router-dom'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
@@ -50,6 +50,36 @@ class Sidebar extends Component {
       this.props.updateCurrentList( {listId: id} )
   }
 
+  openClient = () => {
+    axios.get('/api/getsessiontypes').then(response => {
+      //If user has no session types, they can't add a client. 
+      //If user has no lists, they can't add clients. 
+        if(response.data[0]){
+            if(response.data[0].session_id !== null){
+                if(this.props.lists[0]){
+  
+                  // this.setState({
+                  //   sessionTypes: response.data,
+                  //   sessionPrice: response.data[0].session_price
+                  // })
+
+                  this.props.updateClientModal({
+                    clientModalOpen: true,
+                    sessionTypes: response.data,
+                    sessionPrice: response.data[0].session_price
+                  })
+  
+                }
+            
+          }
+        }
+        //TODO: Different alert statements for no client list or no sessions. 
+        else {
+        alert("You'll first want to head over to Settings > Sessions and add a few session types.")
+             }
+        })
+  }
+
   logOut = () => {
     axios.post('/api/logout').then(() => {
       this.props.logoutUser()
@@ -92,7 +122,7 @@ class Sidebar extends Component {
                 onClick={() => this.updateCurrentList(e.list_id)}>
                   <p>
                     {e.list_name}
-                    <i onClick={() => this.setState({open: true})}
+                    <i onClick={() => this.openClient()}
             className="fas fa-plus-circle add-client-in-list"/>
                   </p>
                 </div>
@@ -138,4 +168,4 @@ function mapStateToProps(state){
     ...this.props, ...state
   }
 }
-export default connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList})(Sidebar)
+export default connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList, updateClientModal})(Sidebar)

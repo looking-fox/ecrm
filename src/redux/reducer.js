@@ -2,12 +2,14 @@ const initialState = {
     name: '',
     email: '',
     picture: '',
-    sub: ''
+    sub: '', 
+    clientModalOpen: false
 }
 
 const UPDATE_USER = 'UPDATE_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
 const UPDATE_CURRENT_LIST = 'UPDATE_CURRENT_LIST'
+const UPDATE_CLIENT_MODAL = 'UPDATE_CLIENT_MODAL'
 
 export default function reducer(state=initialState, action){
     switch(action.type){
@@ -19,6 +21,9 @@ export default function reducer(state=initialState, action){
             return {...initialState}
 
         case UPDATE_CURRENT_LIST: 
+            return {...state, ...action.payload}
+
+        case UPDATE_CLIENT_MODAL: 
             return {...state, ...action.payload}
 
         default: 
@@ -42,6 +47,13 @@ export function logoutUser(value){
 export function updateCurrentList(value){
     return {
         type: UPDATE_CURRENT_LIST,
+        payload: value
+    }
+}
+
+export function updateClientModal(value){
+    return {
+        type: UPDATE_CLIENT_MODAL, 
         payload: value
     }
 }
