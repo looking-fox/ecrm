@@ -51,9 +51,9 @@ module.exports = {
         const {sub} = req.session.user
         const {listName} = req.body
         
-        // dbInstance.store_list([sub, listName]).then(response => {
-        //     res.sendStatus(200)
-        // })
+        dbInstance.store_list([sub, listName]).then( () => {
+            res.sendStatus(200)
+        })
     }
 
 }
