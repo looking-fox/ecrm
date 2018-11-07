@@ -132,6 +132,8 @@ app.get('/api/getclients', clients.getclients)
 
 app.post('/api/addclient', clients.addclient)
 
+app.post('/api/addlist', clients.addClientList)
+
 //===============CLIENTS==================//
 
 

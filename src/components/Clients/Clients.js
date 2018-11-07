@@ -154,7 +154,6 @@ export default class Clients extends Component {
     })
 
     //Client is added, modal disappears once complete.
-    //MISSING: Rerender or update UI with newly added client. 
   }
 
   render() {

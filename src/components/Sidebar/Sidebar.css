@@ -31,6 +31,9 @@
     align-items: center;
     padding-right: 50px;
 }
+.menuitem:hover .add-client-list{
+    opacity: 1;
+}
 
 .menuitem i {
     margin-right: 10px;
@@ -49,4 +52,39 @@
 .listitem:hover {
     background-color: #f9f6f6;
     border-right: 4px solid #808080;
+}
+
+.add-client-list {
+    position: absolute;
+    right: 10px;
+    color: #808080;
+    opacity: 0;
+}
+
+.add-client-list:hover {
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+.list-modal {
+    width: 30vw;
+    min-width: 400px;
+    height: fit-content;
+    padding-bottom: 10px;
+}
+
+.modal-title {
+    font-family: 'Open Sans';
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-title i {
+    margin-right: 10px;
+}
+
+.clientinput{
+    width: 100%;
 }

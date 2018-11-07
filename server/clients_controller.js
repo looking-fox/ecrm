@@ -44,6 +44,16 @@ module.exports = {
 
             res.sendStatus(200) 
         })
+    },
+
+    addClientList: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {listName} = req.body
+        
+        // dbInstance.store_list([sub, listName]).then(response => {
+        //     res.sendStatus(200)
+        // })
     }
 
 }

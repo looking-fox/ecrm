@@ -56,7 +56,7 @@ export default class Actions extends Component {
     }
     
  render(props) {
-    console.log('state', this.state)
+    
         return (
             //MISSING: Click action item changes UI, updates in DB.
             
