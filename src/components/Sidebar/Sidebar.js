@@ -119,7 +119,10 @@ class Sidebar extends Component {
           onClick={() => this.logOut()}
           className="fas fa-sign-out-alt"/>
 
-          <Link to="/settings"><i className="fas fa-cog"/></Link>
+        {/* Normally I'd use Link. But props is not updating location. Currently reviewing MJacksons notes on blocked location props.  */}
+        
+         <i onClick={() => this.props.history.push('/settings')}
+         className="fas fa-cog"/>
           </div>
 
           <div className="menuitem"
