@@ -80,9 +80,28 @@
 
 .pricing {
     height: 50vh;
-    
+    background-color: #f9f6f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.pricing h1 {
+    font-size: 30px;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    margin-bottom: 20px;
 }
 
+.pricing h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.pricing p {
+    font-style: italic;
+    margin-bottom: 30px;
+}
 
 @media (max-width: 576px) { 
     .features {

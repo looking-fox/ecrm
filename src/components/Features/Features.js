@@ -39,7 +39,12 @@ export default class Features extends Component {
             </div>
 
             <div className="pricing">
-              pricing
+              <h1>Open for Beta!</h1>
+              <h4>Provide feedback. Get free lifetime acccess. </h4>
+              <p>Limited spots available.</p>
+              <button type="button" className="btn btn-primary">
+              <i className="far fa-envelope"/> Contact Us 
+              </button> 
             </div>
 
       </div>
