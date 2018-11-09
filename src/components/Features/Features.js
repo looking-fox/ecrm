@@ -42,9 +42,10 @@ export default class Features extends Component {
               <h1>Open for Beta!</h1>
               <h4>Provide feedback. Get free lifetime acccess. </h4>
               <p>Limited spots available.</p>
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary"
+              onClick={() => this.props.history.push('/contact')}>
               <i className="far fa-envelope"/> Contact Us 
-              </button> 
+              </button>
             </div>
 
       </div>

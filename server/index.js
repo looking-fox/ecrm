@@ -153,6 +153,33 @@ app.post('/api/addlist', clients.addClientList)
 
 //===============CLIENTS==================//
 
+
+//============SENDGRID==================//
+
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+app.post('/api/sendcontactemail', (req, res) => {
+    const {name, email, inputMessage} = req.body.message
+    const msg = {
+        to: 'lookingfoxco@gmail.com',
+        from: email,
+        subject: `Contact Submission from ${name}`,
+        text: inputMessage
+    }
+    sgMail.send(msg).then(() => {
+        res.sendStatus(200)
+    })
+
+})
+
+// sgMail.send(msg);
+
+//============SENDGRID==================//
+
+
+
 app.get('*', (req, res)=>{
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });

@@ -21,7 +21,7 @@ export default class Home extends Component {
             <img className ="mainimage" src={head} alt="Yosemite Elopement"/>
         </div>
 
-        <Features/>
+        <Features {...this.props}/>
         <Footer/>
 
       </div>

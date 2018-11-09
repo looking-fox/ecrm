@@ -48,13 +48,16 @@ export default class NavBar extends Component {
     goToContact = () => {
           this.props.history.push('/contact')
       }
+    
+    
 
 
   render() {
     
     return (
         <div className="header">
-            <h1 className="logo">LOOKING FOX</h1>
+            <h1 className="logo"
+            onClick={() => this.props.history.push('/')}>LOOKING FOX</h1>
             <nav>
             <li onClick={() => this.handleClick('features')}>FEATURES</li>
             <li onClick={() => this.handleClick('pricing')}>PRICING</li>
