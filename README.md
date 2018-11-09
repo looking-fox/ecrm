@@ -10,28 +10,15 @@ In building Looking Fox, I wanted to write clean and concise code, have good com
 
 ## Tech
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+React | Material UI | Bootstrap | Postgres | Express | Express-Session | Redux | Auth0 | Massive 
 
 
-## Acknowledgments
+## Next Up
+I will be refining features in the Dashboard, like adding color organization, adding a date-pciker, and allowing the user to edit session types. 
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+I'll be adding Stripe elements to set up a subscription service in the settings panel. 
 
+I'll be adding an email feature where users can send template emails to clients by clicking on a to do list item. 
 
+These features will be added as quickly as possible. However, I am doing some contract work that will take priority. 
 
