@@ -157,9 +157,9 @@ app.post('/api/addlist', clients.addClientList)
 
 //===============CLIENTS==================//
 
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, '../build/index.html'));
-});
+// app.get('*', (req, res)=>{
+//     res.sendFile(path.join(__dirname, '../build/index.html'));
+// });
 
 
 const SERVER_PORT = process.env.SERVER_PORT || 3051
