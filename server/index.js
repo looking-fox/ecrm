@@ -6,22 +6,23 @@ const axios = require('axios')
 require('dotenv').config()
 var sessionId = 54;
 const path = require('path');
-const proxy = require('http-proxy-middleware')
+var proxy = require('http-proxy-middleware')
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const sessionActions = require('./sessionActions.controller')
 
 const app = express()
 
-app.use(bodyParser.json())
+
 
 //-----PROXY-------//
 app.use( express.static( `${__dirname}/../build` ) );
 
 app.use(proxy('/api', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/`, changeOrigin: true }))
 
-app.use(proxy('/auth/callback', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/`, changeOrigin: true }))
+app.use(proxy('/auth/callback', { target: 'www.lookingfox.com', changeOrigin: true }))
 
+app.use(bodyParser.json())
 //-----PROXY-------//
 
 massive(process.env.CONNECTION_STRING).then(db => {
