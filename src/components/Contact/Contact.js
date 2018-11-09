@@ -16,6 +16,11 @@ export default class Contact extends Component {
       const {name, email, inputMessage} = this.state
       var message = { name, email, inputMessage }
       axios.post('/api/sendcontactemail', {message} ).then(() => {
+        this.setState({
+          name: '',
+          email: '',
+          inputMessage: ''
+        })
         alert('Email sent! 🚀')
       })
     }
@@ -41,6 +46,7 @@ export default class Contact extends Component {
 
                         <div class="col">
                           <input type="text" class="form-control" placeholder="Name"
+            
                           onChange={(e) => this.setState({name: e.target.value})}/>
                         </div>
 
