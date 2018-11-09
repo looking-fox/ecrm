@@ -4,9 +4,9 @@ import './reset.css'
 import Home from './components/Home/Home'
 
 class App extends Component {
-  render() {
+  render(props) {
     return (
-      <Home/>
+      <Home {...props}/>
     )
   }
 }

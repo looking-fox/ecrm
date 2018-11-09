@@ -1,3 +1,10 @@
+.app{
+  display: grid;
+  overflow-x: hidden;
+  grid-template-rows: 10vh 90vh;
+  font-family: 'Open Sans';
+}
+
 body {
   margin: 0;
   padding: 0;

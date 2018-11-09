@@ -4,61 +4,12 @@
 
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700');
 
-.app{
+.home{
     display: grid;
     overflow-x: hidden;
     grid-template-rows: 10vh 90vh;
     font-family: 'Open Sans';
-}
-
-.header{
-   grid-row: 1;
-   border-bottom: 1px solid #e2e2e2;
-   display: grid;
-   grid-template-columns: 25vw 75vw;
-   grid-template-rows: 1;
-   padding-right: 20px;
-}
-
-.logo {
-    font-weight: 700;
-   letter-spacing: 5px;
-   font-size: 1.1em;
-    display: grid;
-    grid-column: 1;
-    justify-content: center;
-    align-content: center;
-    font-family: 'Josefin Sans';
-}
-
-nav {
-    font-size: 0.8em;
-    font-weight: 700;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-right: 50px;
-}
-
-nav li {
-    list-style: none;
-    margin: 0px 40px;
-    letter-spacing: 2px;
-    font-family: 'Josefin Sans';
-    color: #989898;
-    text-decoration: none;
-}
-
-nav li:hover {
-    color: black;
-    cursor: pointer;
-}
-
-nav button {
-    margin: 0 40px;
-    letter-spacing: 1px;
-}
-
+  }
 
 .body{
     grid-row: 2;

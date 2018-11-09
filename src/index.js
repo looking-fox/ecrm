@@ -8,6 +8,8 @@ import * as serviceWorker from './serviceWorker';
 
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import {Provider} from 'react-redux'
+import Navbar from './components/NavBar/NavBar'
+import Home from './components/Home/Home'
 import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
 import Settings from './components/Settings/Settings'
@@ -18,8 +20,17 @@ ReactDOM.render(
 <Provider store={store}>
     <Router>
         <Switch>
-            <Route exact path="/" component={App}/>
-            <Route path="/contact" component={Contact}/>
+            <Route exact path="/" 
+            render={props => <Home {...props}/>}/>
+
+            <Route path="/contact" render={(props) => {
+                return (
+                <div className="app">
+                    <Navbar {...props}/>
+                    <Contact/>
+                </div>
+                )
+            }}/>
 
             <Route path="/dashboard" render={(props) => {
                 return (
@@ -39,7 +50,8 @@ ReactDOM.render(
                 )
             }}/>
 
-            <Route exact path="/settings/subscription" render={(props) => {
+            <Route exact path="/settings/subscription" 
+            render={(props) => {
                 return (
                     <div style={{display: 'flex'}}>
                         <Sidebar {...props}/>
@@ -48,7 +60,8 @@ ReactDOM.render(
                 )
             }}/>
 
-            <Route exact path="/settings/sessions" render={(props) => {
+            <Route exact path="/settings/sessions" 
+            render={(props) => {
                 return (
                     <div style={{display: 'flex'}}>
                         <Sidebar {...props}/>
