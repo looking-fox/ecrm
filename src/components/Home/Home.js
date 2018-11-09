@@ -25,9 +25,9 @@ export default class Home extends Component {
       REACT_APP_AUTH0_CLIENT_ID
     } = process.env;
   
-    let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
+    // let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
 
-    // let url = `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/auth/callback`
+    let url = 'https://www.lookingfox.com/auth/callback'
 
   
     window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_url=${url}&response_type=code`
