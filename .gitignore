@@ -1,8 +1,10 @@
+src/setUpProxy.js
 
 .env
 # dependencies
 /node_modules
 .env
+
 
 # testing
 /coverage
