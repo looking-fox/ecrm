@@ -18,9 +18,9 @@ const app = express()
 //-----PROXY-------//
 app.use( express.static( `${__dirname}/../build` ) );
 
-app.use(proxy('/api', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/`, changeOrigin: true }))
+app.use(proxy('/api', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051`, changeOrigin: true }))
 
-app.use(proxy('/auth/callback', { target: 'https://www.lookingfox.com:3051/', changeOrigin: true }))
+app.use(proxy('/auth/callback', { target: 'https://www.lookingfox.com:3051', changeOrigin: true }))
 
 app.use(bodyParser.json())
 //-----PROXY-------//
