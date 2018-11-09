@@ -18,9 +18,9 @@ app.use(bodyParser.json())
 //-----PROXY-------//
 app.use( express.static( `${__dirname}/../build` ) );
 
-app.use(proxy('/api', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/` }))
+app.use(proxy('/api', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/`, changeOrigin: true }))
 
-app.use(proxy('/auth/callback', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/` }))
+app.use(proxy('/auth/callback', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/`, changeOrigin: true }))
 
 //-----PROXY-------//
 
