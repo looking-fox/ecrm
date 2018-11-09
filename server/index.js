@@ -5,7 +5,7 @@ const massive = require('massive')
 const axios = require('axios')
 require('dotenv').config()
 var sessionId = 54;
-
+const path = require('path');
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const sessionActions = require('./sessionActions.controller')
@@ -146,8 +146,13 @@ app.post('/api/addlist', clients.addClientList)
 
 //===============CLIENTS==================//
 
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
-const SERVER_PORT = process.env.SERVER_PORT || 3050
+
+const SERVER_PORT = process.env.SERVER_PORT || 3051
+
 app.listen(SERVER_PORT, () => {
     console.log(`Server is listening on ${SERVER_PORT}`)
 })

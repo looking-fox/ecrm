@@ -7,6 +7,7 @@ export default class Footer extends Component {
       <div className="footer">
         <h2> L / F </h2>
         <p>Founded in Denver, CO.</p>
+        <p>© Looking Fox. All rights reserved.</p>
       </div>
     )
   }
