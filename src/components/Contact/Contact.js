@@ -21,6 +21,7 @@ export default class Contact extends Component {
           email: '',
           inputMessage: ''
         })
+        document.getElementById("contact-form-control").reset();
         alert('Email sent! 🚀')
       })
     }
@@ -41,7 +42,7 @@ export default class Contact extends Component {
 
           <div className="contact-form">
 
-              <form>
+              <form id="contact-form-control">
                   <div class="form-row">
 
                         <div class="col">
