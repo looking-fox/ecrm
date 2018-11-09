@@ -20,7 +20,7 @@ app.use( express.static( `${__dirname}/../build` ) );
 
 app.use(proxy('/api', { target: `${process.env.PROTOCOL}://${process.env.HOSTED}:3051/`, changeOrigin: true }))
 
-app.use(proxy('/auth/callback', { target: 'www.lookingfox.com', changeOrigin: true }))
+app.use(proxy('/auth/callback', { target: 'http://www.lookingfox.com', changeOrigin: true }))
 
 app.use(bodyParser.json())
 //-----PROXY-------//
