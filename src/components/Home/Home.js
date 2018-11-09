@@ -37,7 +37,7 @@ export default class Home extends Component {
       <div className="app">
 
         <div className="header">
-           <h1 className="logo">R/H</h1>
+           <h1 className="logo">LOOKING FOX</h1>
            <nav>
              <li onClick={() => this.handleScroll('features')}>FEATURES</li>
              <li onClick={() => this.handleScroll('pricing')}>PRICING</li>
