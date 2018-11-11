@@ -3,13 +3,15 @@ const initialState = {
     email: '',
     picture: '',
     sub: '', 
-    clientModalOpen: false
+    clientModalOpen: false,
+    clientSettingsModal: { open: false, client: {} }
 }
 
 const UPDATE_USER = 'UPDATE_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
 const UPDATE_CURRENT_LIST = 'UPDATE_CURRENT_LIST'
 const UPDATE_CLIENT_MODAL = 'UPDATE_CLIENT_MODAL'
+const UPDATE_CLIENT_SETTINGS_MODAL = 'UPDATE_CLIENT_SETTINGS_MODAL'
 
 export default function reducer(state=initialState, action){
     switch(action.type){
@@ -25,6 +27,9 @@ export default function reducer(state=initialState, action){
 
         case UPDATE_CLIENT_MODAL: 
             return {...state, ...action.payload}
+        
+        case UPDATE_CLIENT_SETTINGS_MODAL: 
+            return {...state, ...aciton.payload}
 
         default: 
             return state
@@ -54,6 +59,13 @@ export function updateCurrentList(value){
 export function updateClientModal(value){
     return {
         type: UPDATE_CLIENT_MODAL, 
+        payload: value
+    }
+}
+
+export function updateClientSettingsModal(value){
+    return {
+        type: UPDATE_CLIENT_SETTINGS_MODAL, 
         payload: value
     }
 }
