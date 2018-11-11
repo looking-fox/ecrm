@@ -9,6 +9,14 @@ handleClick = () => {
 
   render() {
     //MISSING: Session Name should have varying color based on sessionId.
+
+    //City
+    // https://www.google.com/maps/place/Whitefish+MT
+
+    //Venue
+    //https://www.google.com/maps/place/Hampton+Inn+%26+Suites+Whitefish
+
+
     
     return (
         <div className="clientcontainer">
@@ -28,7 +36,7 @@ handleClick = () => {
         </div>
 
         <div className="location item">
-        <p>{this.props.sessionLocation}</p>
+        <p><i className="far fa-map"/>{this.props.sessionLocation}</p>
         </div>
 
         <div className="total item">

@@ -35,6 +35,17 @@
     margin-left: 20px;
 }
 
+.location i {
+    color: gray;
+    margin-right: 5px;
+}
+
+.location:hover * {
+    color: #007bff;
+    cursor:pointer;
+}
+
+
 .package {
    margin-right: 30px;
 }

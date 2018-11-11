@@ -75,6 +75,7 @@ class ClientModal extends Component {
     }
 
     //Convert Material UI format to display format for User.
+    //TODO: Use regex to remove front zero
     convertDate = () => {
         let date = this.state.clientDate.split('-')
         let year = date.shift()
@@ -113,19 +114,15 @@ class ClientModal extends Component {
                   
           </select> 
     
-              {/* <Input
-              className="clientinput"
-              placeholder="Date"
-              onChange={e => this.setState({clientDate: e.target.value})}/> */}
 
-                <TextField
-                id="date"
-                label="Date"
-                type="date"
-                defaultValue="2019-06-10"
-                onChange={e => this.setState({clientDate: e.target.value})}
-                InputLabelProps={{
-                shrink: true, }} />
+            <TextField
+            id="date"
+            label="Date"
+            type="date"
+            defaultValue="2019-06-10"
+            onChange={e => this.setState({clientDate: e.target.value})}
+            InputLabelProps={{
+            shrink: true, }} />
     
               <Input
               className="clientinput"
