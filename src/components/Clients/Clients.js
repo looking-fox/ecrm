@@ -25,11 +25,8 @@ class Clients extends Component {
   //TODO AFTER USER TEST: 
         //Color picker needs to work
         //Currency needs to check/add comma + currency
-        //Date picker for Client modal
-        
-
+       
   //NON-MVP:
-        //Clicking Clients itself--Shows all 
         //User icon will be new menu for settings, logout
         //Drag and drop on session actions
         //Drag and drop on client lists
@@ -83,6 +80,20 @@ class Clients extends Component {
 
   }
 
+  goToMap = (location) => {
+    //Format for Google URL String and Open in New Tab
+    var location = location
+        .replace(/[,]+/g, "")
+        .replace(/[ ]+/g, "+")
+        .replace(/[&]+/g, "%26")
+
+    let url = `https://www.google.com/maps/place/${location}`
+
+    window.open(url, '_blank')
+  }
+
+
+
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
    
@@ -114,7 +125,8 @@ class Clients extends Component {
                     sessionColor={e.session_color}
                     sessionPrice={e.session_price}
                     sessionDate={e.date}
-                    sessionLocation={e.location}/>
+                    sessionLocation={e.location}
+                    goToMap={this.goToMap}/>
         
                     <Actions 
                     checkValues={true}
