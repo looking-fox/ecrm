@@ -34,6 +34,9 @@
     font-size: 1em;
     margin-left: 20px;
 }
+.settings:hover {
+    cursor: pointer;
+}
 
 .location i {
     color: gray;

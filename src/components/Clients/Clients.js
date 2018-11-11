@@ -3,10 +3,11 @@ import './Clients.css'
 import Client from '../Client/Client'
 import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
+import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import axios from 'axios';
 
 import {connect} from 'react-redux'
-import {updateClientModal} from '../../redux/reducer'
+import {updateClientModal, updateClientSettingsModal} from '../../redux/reducer'
 
 
 class Clients extends Component {
@@ -92,6 +93,13 @@ class Clients extends Component {
     window.open(url, '_blank')
   }
 
+  openClientSettingsModal = (client) => {
+    this.props.updateClientSettingsModal({
+      clientSettingsModal: {open: true, 
+        client: client}
+    })
+  }
+
 
 
   renderClients(){
@@ -126,7 +134,8 @@ class Clients extends Component {
                     sessionPrice={e.session_price}
                     sessionDate={e.date}
                     sessionLocation={e.location}
-                    goToMap={this.goToMap}/>
+                    goToMap={this.goToMap}
+                    openClientSettingsModal={this.openClientSettingsModal}/>
         
                     <Actions 
                     checkValues={true}
@@ -176,7 +185,7 @@ class Clients extends Component {
           </div>
 
       <ClientModal/>
-
+      <ClientSettingsModal {...this.props}/>
       </div>
     )
   }
@@ -190,4 +199,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateClientModal})(Clients)
+export default connect(mapStateToProps, {updateClientModal, updateClientSettingsModal})(Clients)

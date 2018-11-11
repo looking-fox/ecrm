@@ -29,7 +29,8 @@ export default function Client(props) {
             </div>
 
             <div className="settings">
-            <i className="fas fa-ellipsis-h"/>
+            <i className="fas fa-ellipsis-h"
+            onClick={() => props.openClientSettingsModal(props)}/>
             </div>
 
         </div>

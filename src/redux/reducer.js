@@ -29,7 +29,7 @@ export default function reducer(state=initialState, action){
             return {...state, ...action.payload}
         
         case UPDATE_CLIENT_SETTINGS_MODAL: 
-            return {...state, ...aciton.payload}
+            return {...state, ...action.payload}
 
         default: 
             return state
@@ -64,6 +64,7 @@ export function updateClientModal(value){
 }
 
 export function updateClientSettingsModal(value){
+    console.log('va', value)
     return {
         type: UPDATE_CLIENT_SETTINGS_MODAL, 
         payload: value
