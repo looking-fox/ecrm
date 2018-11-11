@@ -18,3 +18,10 @@
     font-family: 'Open Sans';
     margin: 3px 0px;
 }
+
+@media (max-width: 576px) { 
+    .footer {
+        height: 20vh;
+        padding: 20px 0px;
+    }
+}

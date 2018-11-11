@@ -12,7 +12,7 @@ module.exports = {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
         const {name, sessionId, date, location, listId} = req.body.clientObj
-        console.log('listId: ', listId)
+        
         dbInstance
         .add_client([sub, name, sessionId, date, location, listId])
         .then((response) => {

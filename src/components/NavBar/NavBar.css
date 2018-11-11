@@ -46,3 +46,18 @@
      margin: 0 40px;
      letter-spacing: 1px;
  }
+
+ @media (max-width: 576px) { 
+    nav li {
+        display: none;
+    }
+    .log-in-button{
+        display: none;
+    }
+    .header{
+        grid-template-columns: 100%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+}

@@ -62,7 +62,7 @@ export default class NavBar extends Component {
             <li onClick={() => this.handleClick('features')}>FEATURES</li>
             <li onClick={() => this.handleClick('pricing')}>PRICING</li>
             <li onClick={this.goToContact}>CONTACT</li>
-            <button type="button" className="btn btn-sm btn-outline-dark" onClick={() => this.login()}>LOG IN</button>
+            <button type="button" className="btn btn-sm btn-outline-dark log-in-button" onClick={() => this.login()}>LOG IN</button>
             </nav>
      </div>
     )

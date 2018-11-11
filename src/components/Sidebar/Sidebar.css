@@ -16,6 +16,7 @@
 }
 .topbar i:hover {
     color: #919191;
+    cursor: pointer;
 }
 .profileimage{
     width: 30px;

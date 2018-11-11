@@ -14,7 +14,7 @@ React | Material UI | Bootstrap | Postgres | Express | Express-Session | Redux |
 
 
 ## Next Up
-I will be refining features in the Dashboard, like adding color organization, adding a date-pciker, and allowing the user to edit session types. 
+I will be refining features in the Dashboard, like adding color organization, adding a date-picker, and allowing the user to edit session types. 
 
 I'll be adding Stripe elements to set up a subscription service in the settings panel. 
 
