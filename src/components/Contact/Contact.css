@@ -64,3 +64,43 @@ textarea {
     margin-top: 20px;
     background-color: black;
 }
+
+
+@media (max-width: 576px) { 
+    .contact {
+        width: 100vw;
+        height: 130vh;
+    }
+    .title-header {
+        width: 100vw;
+    }
+    .contact-form{
+        height: 60vh;
+        width: 90vw;
+        margin-top: 130px;
+    }
+    .contact-form-title {
+        width: 90vw;
+        padding: 0px 20px;
+        margin-top: 120px;
+    }
+    #contact-form-control {
+       display: grid;
+       grid-template-columns: 100%;
+       grid-template-rows: repeat(12, 1fr);
+       width: 90vw;
+       height: 50vh;
+    }
+    .form-control {
+        width: 90vw;
+        margin: 10px 0px;
+    }
+    .message-box {
+        width: 90vw;
+        height: 20vh;
+    }
+    .send-button {
+        width: 90vw;
+    }
+
+}

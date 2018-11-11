@@ -43,16 +43,16 @@ export default class Contact extends Component {
           <div className="contact-form">
 
               <form id="contact-form-control">
-                  <div class="form-row">
+                  <div className="form-row">
 
-                        <div class="col">
-                          <input type="text" class="form-control" placeholder="Name"
+                        <div className="col">
+                          <input type="text" className="form-control" placeholder="Name"
             
                           onChange={(e) => this.setState({name: e.target.value})}/>
                         </div>
 
-                        <div class="col">
-                          <input type="text" class="form-control" placeholder="Email"
+                        <div className="col">
+                          <input type="text" className="form-control" placeholder="Email"
                           onChange={(e) => this.setState({email: e.target.value})}/>
                         </div>
 
