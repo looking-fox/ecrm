@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './ClientModal.css'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
+import TextField from '@material-ui/core/TextField'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
 import axios from 'axios'
@@ -56,10 +57,12 @@ class ClientModal extends Component {
     
       saveClient = () => {
 
+        let date = this.convertDate()
+
         var clientObj = {
           name: this.state.clientName,
           sessionId: this.state.sessionTypes[this.state.sessionIndex].session_id,
-          date: this.state.clientDate,
+          date: date,
           location: this.state.clientLocation,
           listId: this.props.listId
         }
@@ -69,6 +72,15 @@ class ClientModal extends Component {
         })
     
         //Client is added, modal disappears once complete.
+    }
+
+    //Convert Material UI format to display format for User.
+    convertDate = () => {
+        let date = this.state.clientDate.split('-')
+        let year = date.shift()
+        date.push(year)
+        date = date.join('/')
+        return date
     }
 
 
@@ -101,10 +113,19 @@ class ClientModal extends Component {
                   
           </select> 
     
-              <Input
+              {/* <Input
               className="clientinput"
               placeholder="Date"
-              onChange={e => this.setState({clientDate: e.target.value})}/>
+              onChange={e => this.setState({clientDate: e.target.value})}/> */}
+
+                <TextField
+                id="date"
+                label="Date"
+                type="date"
+                defaultValue="2019-06-10"
+                onChange={e => this.setState({clientDate: e.target.value})}
+                InputLabelProps={{
+                shrink: true, }} />
     
               <Input
               className="clientinput"
