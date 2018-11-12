@@ -20,14 +20,18 @@ export default class Actions extends Component {
     }
 
     renderActions(){
+        //When deleting client, props rerenders actions component before state update occurs. If statement blocks Actions from updating when it doesn't need to.
+         
+        if(this.props.actionList){
+            var items = this.props.actionList["actions"]
+            var clientId = this.props.actionList["actions"][0]["client_id"]
+            
+            this.setState({
+                actions: items,
+                clientId: clientId
+            })
+        }
         
-        var items = this.props.actionList["actions"]
-        var clientId = this.props.actionList["actions"][0]["client_id"]
-        
-        this.setState({
-            actions: items,
-            clientId: clientId
-        })
     
     }
 

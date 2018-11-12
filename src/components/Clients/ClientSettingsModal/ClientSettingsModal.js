@@ -26,10 +26,10 @@ class ClientSettingsModal extends Component {
 
   deleteClient = () => {
     const {clientId} = this.props.clientSettingsModal.client
+
     axios.delete(`/api/deleteclient/${clientId}`).then(() => {
-
-      //TODO: Update frontend to remove client
-
+      this.closeDeleteModal()
+      this.closeModal()
     })
   }
     

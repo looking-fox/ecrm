@@ -100,6 +100,12 @@ class Clients extends Component {
     })
   }
 
+  deleteClient = (clientId) => {
+    let currentSessions = this.state.sessions
+    delete currentSessions[clientId]
+    this.setState({sessions: currentSessions})
+  }
+
 
 
   renderClients(){
@@ -186,7 +192,10 @@ class Clients extends Component {
           </div>
 
       <ClientModal/>
-      <ClientSettingsModal {...this.props}/>
+
+      <ClientSettingsModal {...this.props}
+      deleteClient={this.deleteClient}/>
+
       </div>
     )
   }
