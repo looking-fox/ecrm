@@ -34,7 +34,6 @@ class ClientSettingsModal extends Component {
   }
     
   render() {
-    console.log('pr', this.props.clientSettingsModal)
     return (
         <Modal 
         open={this.props.clientSettingsModal['open']} 
