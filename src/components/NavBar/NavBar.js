@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { PropTypes } from 'react'
+// import { PropTypes } from 'react'
 import './NavBar.css'
 var smoothScroll = require('smoothscroll');
 

@@ -183,7 +183,8 @@ class ClientModal extends Component {
         
                       {this.state.sessionTypes.map( (e,i) => {
                         return (
-                          <option value={i}> {e.session_name} </option>
+                          <option value={i} key={e.session_id}>         {e.session_name} 
+                          </option>
                           )
                       })}
                       

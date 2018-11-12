@@ -83,12 +83,12 @@ class Clients extends Component {
 
   goToMap = (location) => {
     //Format for Google URL String and Open in New Tab
-    var location = location
+    var convertedLocation = location
         .replace(/[,]+/g, "")
         .replace(/[ ]+/g, "+")
         .replace(/[&]+/g, "%26")
 
-    let url = `https://www.google.com/maps/place/${location}`
+    let url = `https://www.google.com/maps/place/${convertedLocation}`
 
     window.open(url, '_blank')
   }
@@ -131,7 +131,7 @@ class Clients extends Component {
               let sessionInfo = this.state.sessions[e.client_id]
               
               return (
-              <div className="bar">
+              <div className="bar" key={e.client_id}>
         
                     <Client 
                     name={e.name}

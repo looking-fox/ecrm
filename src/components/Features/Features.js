@@ -28,7 +28,7 @@ export default class Features extends Component {
             <div className="action-list">
 
               <div className="action-list-image">
-                <img src={screenshot}/>
+                <img src={screenshot} alt="Dashboard Preview"/>
               </div>
 
               <div className="action-list-text">

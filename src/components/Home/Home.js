@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import './Home.css'
 import head from '../../assets/head.jpg'
 import Navbar from '../NavBar/NavBar'
 import Features from '../Features/Features'
 import Footer from '../Footer/Footer'
-
-var smoothScroll = require('smoothscroll');
 
 export default class Home extends Component {
   
