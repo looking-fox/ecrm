@@ -33,7 +33,7 @@ export default class NavBar extends Component {
               if(newPath === '/') this.handleScroll(location)
 
             })()
-      
+           
         }
 
         else this.handleScroll(location)

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './ClientSettingsModal.css'
 import Modal from 'react-responsive-modal'
 import {connect} from 'react-redux'
-import updateclientSettingsModal from '../../../redux/reducer'
+import {updateClientSettingsModal, updateClientModal} from '../../../redux/reducer'
 import axios from 'axios';
 
 class ClientSettingsModal extends Component {
@@ -23,6 +23,12 @@ class ClientSettingsModal extends Component {
   closeDeleteModal = () => {
     this.setState({deleteVerifyOpen: false})
   }
+
+
+  updateClient = () => {
+    this.props.updateClientModal({clientModalOpen: true})
+  }
+
 
   deleteClient = () => {
     const {clientId} = this.props.clientSettingsModal.client
@@ -47,7 +53,7 @@ class ClientSettingsModal extends Component {
 
                 <button type="button" 
                 className="btn btn-primary options"
-                onClick={() => alert('update')}>Update</button>
+                onClick={this.updateClient}>Update</button>
 
                  <button type="button" 
                  className="btn btn-danger options"
@@ -85,4 +91,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateclientSettingsModal})(ClientSettingsModal)
+export default connect(mapStateToProps, {updateClientSettingsModal, updateClientModal})(ClientSettingsModal)
