@@ -64,7 +64,7 @@ export function updateClientModal(value){
 }
 
 export function updateClientSettingsModal(value){
-    console.log('va', value)
+    
     return {
         type: UPDATE_CLIENT_SETTINGS_MODAL, 
         payload: value
