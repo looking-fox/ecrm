@@ -150,6 +150,7 @@ app.get('/api/getclientlists', clients.getClientLists)
 
 app.post('/api/addlist', clients.addClientList)
 
+app.delete('/api/deleteclient/:id', clients.deleteClient)
 
 //===============CLIENTS==================//
 

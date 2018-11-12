@@ -59,6 +59,17 @@ module.exports = {
         dbInstance.get_client_lists(sub).then(response => {
             res.status(200).send(response)
         })
+    },
+
+    deleteClient: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {id} = req.params
+
+        dbInstance.delete_client([sub, id]).then(() => {
+            res.sendStatus(200)
+        })
+        
     }
 
 }

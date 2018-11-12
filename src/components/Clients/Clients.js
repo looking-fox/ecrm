@@ -129,6 +129,7 @@ class Clients extends Component {
         
                     <Client 
                     name={e.name}
+                    clientId={e.client_id}
                     sessionName={e.session_name}
                     sessionColor={e.session_color}
                     sessionPrice={e.session_price}
