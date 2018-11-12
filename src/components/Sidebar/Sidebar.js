@@ -177,7 +177,12 @@ class Sidebar extends Component {
           </div>
 
           </Modal>
-          
+
+        <div className="sidebar-footer">
+            <p onClick={() => this.props.updateCurrentList( {listId: -2} )}>
+           <i className="fas fa-archive"/>Archive</p> 
+        </div>
+
         </div>
     )
   }

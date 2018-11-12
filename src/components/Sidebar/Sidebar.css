@@ -112,3 +112,23 @@
 .listitem:hover .add-client-in-list {
     opacity: 1;
 }
+
+.sidebar-footer{
+    background-color: #f9f9f9;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-footer i{
+    margin-right: 10px;
+}
+
+.sidebar-footer:hover {
+    color: #505050;
+    cursor: pointer;
+}
