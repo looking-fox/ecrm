@@ -61,6 +61,18 @@ module.exports = {
         })
     },
 
+    updateClient: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {name, sessionId, date, location, clientId} = req.body.clientObj
+
+        dbInstance.update_client([sub, clientId, name, sessionId, date, location])
+
+        .then(() => {
+            res.sendStatus(200)
+        })
+    },
+
     deleteClient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user

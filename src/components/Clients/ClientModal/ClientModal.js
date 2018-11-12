@@ -95,7 +95,6 @@ class ClientModal extends Component {
       saveClient = () => {
 
         let date = this.convertDate()
-
         var clientObj = {
           name: this.state.clientName,
           sessionId: this.state.sessionTypes[this.state.sessionIndex].session_id,
@@ -103,12 +102,26 @@ class ClientModal extends Component {
           location: this.state.clientLocation,
           listId: this.props.listId
         }
-    
+
+        if(this.props.clientSettingsModal.client.clientId){
+            //Editing and saving client if Id is stored in props.
+            const {clientId} = this.props.clientSettingsModal.client
+            clientObj['clientId'] = clientId
+            axios.put('/api/updateclient', {clientObj}).then(() => {
+            this.props.updateClientModal({clientModalOpen: false})
+            })
+        }
+
+        else {
+            //Client is added, modal disappears once complete.
+
         axios.post('/api/addclient', {clientObj} ).then(() => {
             this.props.updateClientModal({clientModalOpen: false})
         })
-    
-        //Client is added, modal disappears once complete.
+        }
+
+        
+       
     }
 
     //Convert Material UI format to display format for User.
@@ -160,16 +173,25 @@ class ClientModal extends Component {
               defaultValue={this.state.clientName}
               onChange={e => this.setState({clientName: e.target.value})}/>
     
-          <select className="sessionmenu" 
-            onChange={e => this.sessionPriceUpdater(e.target.value)}>
-    
-                  {this.state.sessionTypes.map( (e,i) => {
-                    return (
-                      <option value={i}> {e.session_name} </option>
-                      )
-                  })}
-                  
-          </select> 
+          {
+            //If new client, render session type dropdown.
+            (() => {
+              if(!this.props.clientSettingsModal.client.clientId){
+                return (
+                <select className="sessionmenu" 
+                onChange={e => this.sessionPriceUpdater(e.target.value)}>
+        
+                      {this.state.sessionTypes.map( (e,i) => {
+                        return (
+                          <option value={i}> {e.session_name} </option>
+                          )
+                      })}
+                      
+              </select> 
+                )
+              }
+          })()
+          }
     
 
             <TextField
