@@ -152,6 +152,8 @@ app.post('/api/addlist', clients.addClientList)
 
 app.put('/api/updateclient', clients.updateClient)
 
+app.put('/api/archiveclient', clients.archiveClient)
+
 app.delete('/api/deleteclient/:id', clients.deleteClient)
 
 //===============CLIENTS==================//

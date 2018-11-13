@@ -82,6 +82,17 @@ module.exports = {
             res.sendStatus(200)
         })
         
+    },
+
+    archiveClient: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {clientId, archived} = req.body
+        dbInstance.archive_client([sub, clientId, archived])
+        .then(() => {
+            res.sendStatus(200)
+        })
+
     }
 
 }

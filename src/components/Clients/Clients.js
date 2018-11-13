@@ -5,9 +5,11 @@ import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import axios from 'axios';
+import ArchiveModal from './ArchiveModal/ArchiveModal'
 
 import {connect} from 'react-redux'
 import {updateClientModal, updateClientSettingsModal} from '../../redux/reducer'
+
 
 
 class Clients extends Component {
@@ -100,6 +102,16 @@ class Clients extends Component {
     })
   }
 
+  openArchiveClientModal = (open, clientId) => {
+      if(clientId){
+        var client = this.state.clients[clientId]
+        this.props.archiveClientModal({open, client})
+      }
+      else {
+        this.props.archiveClientModal({open: false, client: {}})
+      }
+  }
+
   deleteClient = (clientId) => {
     let currentSessions = this.state.sessions
     delete currentSessions[clientId]
@@ -146,7 +158,8 @@ class Clients extends Component {
         
                     <Actions 
                     checkValues={true}
-                    actionList={sessionInfo}/>
+                    actionList={sessionInfo}
+                    openArchiveClientModal={this.openArchiveClientModal}/>
         
               </div>
               )
@@ -191,10 +204,16 @@ class Clients extends Component {
 
           </div>
 
-      <ClientModal/>
+        {/* ------Modals------ */}
 
-      <ClientSettingsModal {...this.props}
-      deleteClient={this.deleteClient}/>
+              <ClientModal/>
+
+              <ClientSettingsModal {...this.props}
+              deleteClient={this.deleteClient}/>
+
+              <ArchiveModal/>
+
+        {/* ------Modals------ */}
 
       </div>
     )

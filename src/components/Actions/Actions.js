@@ -16,7 +16,11 @@ export default class Actions extends Component {
     }
     
     componentDidUpdate(prevProps){
-        if(prevProps !== this.props) this.renderActions()
+        if(prevProps !== this.props) {
+            this.renderActions()
+            this.allItemsComplete()
+        }
+        
     }
 
     renderActions(){
@@ -35,6 +39,30 @@ export default class Actions extends Component {
     
     }
 
+    //If all items are complete, move to Archive. 
+    allItemsComplete = () => {
+       let allComplete = true
+
+        this.state.actions.map(e => {
+            if(e.completed==="false"){
+                allComplete = false
+            }
+        })
+
+        
+        
+        if(allComplete){
+        const {clientId} = this.state
+    this.props.archiveClientModal({open: true, clientId})
+        }
+
+        // axios.put('/api/archiveclient', {clientId, archived}).then(() => {
+        //     this.props.archiveClientModal({open: false, client: {} })
+        // })
+        
+    }
+
+    //Status variable passed as arguement! Heads up.
 
     actionCheck = (id, index, status=null) => {
         if(this.props.checkValues){
@@ -42,14 +70,13 @@ export default class Actions extends Component {
         let item = this.state.actions[index]["completed"]
 
         if(item==="true") status="false"
-        else {
-            status="true"
-        }
+        else status="true"
 
         axios.put('/api/updateaction', {id, status}).then(() => {
             let newActions = this.state.actions
             newActions[index]["completed"] = status
             this.setState({actions: newActions})
+            this.allItemsComplete()
         })
 
     }
