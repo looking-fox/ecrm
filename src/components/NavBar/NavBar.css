@@ -70,9 +70,17 @@
         display: none;
     }
     .header{
+        display: grid;
         grid-template-columns: 100%;
-        display: flex;
-        justify-content: center;
-        align-content: center;
+        grid-template-rows: 100%;
+        padding-right: 0px;
+        justify-items: center;
+        align-items: center;
+        padding-top: 5px;
+        
+    }
+    .logo{
+        width: 200px;
+        margin-left: -10px;
     }
 }
