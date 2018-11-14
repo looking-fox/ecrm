@@ -13,7 +13,7 @@ const LOGOUT_USER = 'LOGOUT_USER'
 const UPDATE_CURRENT_LIST = 'UPDATE_CURRENT_LIST'
 const UPDATE_CLIENT_MODAL = 'UPDATE_CLIENT_MODAL'
 const UPDATE_CLIENT_SETTINGS_MODAL = 'UPDATE_CLIENT_SETTINGS_MODAL'
-const ARCHIVE_CLIENT_MODAL = 'ARCHIVE_CLIENT_MODAL'
+const ARCHIVE_CLIENT = 'ARCHIVE_CLIENT'
 
 export default function reducer(state=initialState, action){
     switch(action.type){
@@ -33,7 +33,7 @@ export default function reducer(state=initialState, action){
         case UPDATE_CLIENT_SETTINGS_MODAL: 
             return {...state, ...action.payload}
 
-        case ARCHIVE_CLIENT_MODAL: 
+        case ARCHIVE_CLIENT: 
             return {...state, ...action.payload}
 
         default: 
@@ -76,9 +76,9 @@ export function updateClientSettingsModal(value){
     }
 }
 
-export function archiveClientModal(value){
+export function archiveClient(value){
     return {
-        type: ARCHIVE_CLIENT_MODAL,
+        type: ARCHIVE_CLIENT,
         payload: value
     }
 }

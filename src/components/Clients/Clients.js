@@ -8,7 +8,7 @@ import axios from 'axios';
 import ArchiveModal from './ArchiveModal/ArchiveModal'
 
 import {connect} from 'react-redux'
-import {updateClientModal, updateClientSettingsModal} from '../../redux/reducer'
+import {updateClientModal, updateClientSettingsModal, archiveClient} from '../../redux/reducer'
 
 
 
@@ -102,13 +102,16 @@ class Clients extends Component {
     })
   }
 
-  openArchiveClientModal = (open, clientId) => {
+  openArchiveClientModal = (clientInfo) => {
+      const {open, clientId} = clientInfo
+      console.log('open: ', open, 'clientId: ', clientId)
       if(clientId){
-        var client = this.state.clients[clientId]
-        this.props.archiveClientModal({open, client})
+        var client = this.state.clients
+        console.log('client? ', client)
+        this.props.archiveClient({open, client})
       }
       else {
-        this.props.archiveClientModal({open: false, client: {}})
+        this.props.archiveClient({open: false, client: {}})
       }
   }
 
@@ -228,4 +231,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateClientModal, updateClientSettingsModal})(Clients)
+export default connect(mapStateToProps, {updateClientModal, updateClientSettingsModal, archiveClient})(Clients)

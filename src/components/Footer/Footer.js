@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import './Footer.css'
+import Logo from '../../assets/logo.png'
 
 export default class Footer extends Component {
   render() {
     return (
       <div className="footer">
-        <h2> L / F </h2>
-        <p>Founded in Denver, CO.</p>
+        <img src={Logo} alt="Logo" className="logo-image"/>
         <p>© Looking Fox. All rights reserved.</p>
       </div>
     )

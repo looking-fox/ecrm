@@ -2,19 +2,20 @@ import React, { Component } from 'react'
 import './ArchiveModal.css'
 import Modal from 'react-responsive-modal'
 import {connect} from 'react-redux'
-import {archiveClientModal} from '../../../redux/reducer'
+import {archiveClient} from '../../../redux/reducer'
 
-export default class ArchiveModal extends Component {
+class ArchiveModal extends Component {
 
 closeModal = () => {
-    this.props.archiveClientModal({open: false, client: {}})
+    this.props.archiveClient({open: false, client: {}})
 }
 
 
   render() {
+      console.log(this.props.archiveClientModal)
     return (
         <Modal 
-        open={false} 
+        open={this.props.archiveClientModal["open"]} 
         onClose={this.closeModal} center>
 
         <div className="archive-client-modal">
@@ -27,10 +28,10 @@ closeModal = () => {
 }
 
 
-// function mapStateToProps(state){
-//     return {
-//         ...this.props, ...state
-//     }
-// }
+function mapStateToProps(state){
+    return {
+        ...this.props, ...state
+    }
+}
 
-// export default connect(mapStateToProps, archiveClientModal )(archiveClientModal)
+export default connect(mapStateToProps, {archiveClient})(ArchiveModal)
