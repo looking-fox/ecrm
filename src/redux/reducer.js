@@ -4,8 +4,7 @@ const initialState = {
     picture: '',
     sub: '', 
     clientModalOpen: false,
-    clientSettingsModal: { open: false, client: {} },
-    archiveClientModal: {open: false, client: {} }
+    clientSettingsModal: { open: false, client: {} }
 }
 
 const UPDATE_USER = 'UPDATE_USER'
@@ -31,9 +30,6 @@ export default function reducer(state=initialState, action){
             return {...state, ...action.payload}
         
         case UPDATE_CLIENT_SETTINGS_MODAL: 
-            return {...state, ...action.payload}
-
-        case ARCHIVE_CLIENT: 
             return {...state, ...action.payload}
 
         default: 
@@ -72,13 +68,6 @@ export function updateClientSettingsModal(value){
     
     return {
         type: UPDATE_CLIENT_SETTINGS_MODAL, 
-        payload: value
-    }
-}
-
-export function archiveClient(value){
-    return {
-        type: ARCHIVE_CLIENT,
         payload: value
     }
 }

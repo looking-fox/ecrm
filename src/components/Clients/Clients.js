@@ -8,7 +8,7 @@ import axios from 'axios';
 import ArchiveModal from './ArchiveModal/ArchiveModal'
 
 import {connect} from 'react-redux'
-import {updateClientModal, updateClientSettingsModal, archiveClient} from '../../redux/reducer'
+import {updateClientModal, updateClientSettingsModal} from '../../redux/reducer'
 
 
 
@@ -102,26 +102,11 @@ class Clients extends Component {
     })
   }
 
-  openArchiveClientModal = (clientInfo) => {
-      const {open, clientId} = clientInfo
-      console.log('open: ', open, 'clientId: ', clientId)
-      if(clientId){
-        var client = this.state.clients
-        console.log('client? ', client)
-        this.props.archiveClient({open, client})
-      }
-      else {
-        this.props.archiveClient({open: false, client: {}})
-      }
-  }
-
   deleteClient = (clientId) => {
     let currentSessions = this.state.sessions
     delete currentSessions[clientId]
     this.setState({sessions: currentSessions})
   }
-
-
 
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
@@ -161,8 +146,7 @@ class Clients extends Component {
         
                     <Actions 
                     checkValues={true}
-                    actionList={sessionInfo}
-                    openArchiveClientModal={this.openArchiveClientModal}/>
+                    actionList={sessionInfo}/>
         
               </div>
               )
@@ -231,4 +215,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateClientModal, updateClientSettingsModal, archiveClient})(Clients)
+export default connect(mapStateToProps, {updateClientModal, updateClientSettingsModal})(Clients)
