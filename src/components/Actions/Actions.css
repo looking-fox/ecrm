@@ -1,20 +1,30 @@
 .list{
     width: 90%;
+    min-width: 90%;
     height: 50px;
     margin-top: -50px;
     margin-bottom: 10px;
+    padding-left: 30px;
     background-color: #f9f7f7;
     border-radius: 0px 0px 10px 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
+    overflow-x: scroll;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
 }
 
 .action{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-grow: 1;
     position: relative;
+    min-width: 125px;
     z-index: 2;
+    margin: 0px 10px;
 }
 
 .action:hover{

@@ -2,49 +2,30 @@ import React, { Component } from 'react'
 import './Actions.css'
 import axios from 'axios'
 
+
 export default class Actions extends Component {
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state = {
-            actions: [],
-            clientId: null
+            actionItems: []
         }
-    }
-    
-    componentDidMount(){
-        if(this.props.actionList) this.renderActions()
-    }
-    
-    componentDidUpdate(prevProps){
-        if(prevProps !== this.props) {
-            this.renderActions()
-        }
-        
     }
 
-    renderActions(){
-        //When deleting client, props rerenders actions component before state update occurs. If statement blocks Actions from updating when it doesn't need to.
-         
-        if(this.props.actionList){
-            var items = this.props.actionList["actions"]
-            var clientId = this.props.actionList["actions"][0]["client_id"]
-            
-            this.setState({
-                actions: items,
-                clientId: clientId
-            })
-        }
-        
-    
+    componentDidMount(props){
+        let newList = this.props.actionList
+        this.setState({
+            actionItems: newList
+        })
     }
 
-    //If all items are complete, move to Archive. 
+    //If all items are complete, change complete to true in DB.
     allItemsComplete = () => {
-       var allComplete = true
        
        var checkPromise = new Promise(resolve => {
-            this.state.actions.map(e => {
-                if(e.completed==="false"){
+        var allComplete = true
+            this.state.actionItems.map(e => {
+                console.log('e', e)
+                if(e.completed===false){
                     allComplete = false
                 } 
             })
@@ -53,35 +34,35 @@ export default class Actions extends Component {
        })
         
         checkPromise.then((value) => {
-            if(value===true){
-                
-        const {clientId} = this.state
-        this.props.openArchiveClientModal({open: true, clientId})
-                allComplete = false
+            console.log('checkPromise: ', value, this.props.actionsComplete)
+
+            if(value !== this.props.actionsComplete){
+                var clientId = this.props.id
+                this.props.allChecked(clientId, value)
+                axios.put('/api/clientcomplete', {clientId, completed: value})
             }
+            
         })
 
-        // axios.put('/api/archiveclient', {clientId, archived}).then(() => {
-        //     this.props.archiveClientModal({open: false, client: {} })
-        // })
-        
     }
 
-
     //Status variable passed as arguement! Heads up.
-    actionCheck = (id, index, status=null) => {
+    actionCheck = (id, index, completed, status=null) => {
+        
         if(this.props.checkValues){
 
-        let item = this.state.actions[index]["completed"]
-
-        if(item==="true") status="false"
-        else status="true"
+            if(completed===true) status=false
+            else status=true
 
         axios.put('/api/updateaction', {id, status}).then(() => {
-            let newActions = this.state.actions
-            newActions[index]["completed"] = status
-            this.setState({actions: newActions})
+           
+            
+            var updatedActions = this.props.actionList.slice()
+            updatedActions[index]["completed"] = status
+            this.setState({ actionItems: updatedActions })
+
             this.allItemsComplete()
+            
         })
 
     }
@@ -92,20 +73,19 @@ export default class Actions extends Component {
     }
     
  render(props) {
-    
+    if(this.props.actionList){
         return (
-            //MISSING: Click action item changes UI, updates in DB.
             
             <div className="list">
                 
-                {this.state.actions.map((e,i) => {
+                {this.props.actionList.map((e,i) => {
                     
             //NOTE: String not boolean for true in order to use aggregate function in SQL. 
-                    if(e.completed==="true" && this.props.checkValues){
-            //NOTE: Index value will not change since the order is important. So index will work as a key in this instance. Trade Off: React says this is a last resort. But it's not necessary and requires more data for no improvement in this instance. 
+                    if(e.completed===true && this.props.checkValues===true){
+            //NOTE: Index value will not change since the order is important. So index will work as a key in this instance.
                         return (
                             <div className="action" key={e.id}
-                            onClick={() => this.actionCheck(e.id, i)}>
+                            onClick={() => this.actionCheck(e.id, i, e.completed)}>
                                 <i className="fas fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>
@@ -114,7 +94,7 @@ export default class Actions extends Component {
                     else {
                         return (
                             <div className="action" key={e.id}
-                        onClick={() => this.actionCheck(e.id, i)}>
+                        onClick={() => this.actionCheck(e.id, i, e.completed)}>
                                 <i className="far fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>
@@ -122,7 +102,8 @@ export default class Actions extends Component {
                     }
                 })}
             </div>
-        )
-    
-  }
+        )    
+     }     
+     return <div>Loading...</div>
+    }
 }

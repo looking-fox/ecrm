@@ -5,13 +5,14 @@ VALUES ( $1, $2, $3, $4, $5, $6 );
 -- If we try and give where clauses for the client, we could potentially hit an edge case. 
 -- Order by/limit help us avoid this, and the where clause avoids returning a null value from the DB by accident.
 
-select 
-array_agg( sessions.actions ), clients.client_id
-from sessions
-left join clients
-on clients.session_id = sessions.session_id
-where actions IS NOT NULL and client_id IS NOT NULL
-group by clients.client_id
+select * from users
+left join clients 
+on users.user_id = clients.user_id
+left join sessions
+on sessions.session_id = clients.session_id
+where users.user_id = $1
 order by clients.client_id desc
 limit 1;
+
+
 

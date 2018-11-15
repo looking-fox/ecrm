@@ -187,29 +187,24 @@ export default class Sessions extends Component {
             {this.state.sessions.map((e,i) => {
              
               return (
-              <div className="session">
-                <div className="sessionmenu">
-                  <h3>{e.session_name}</h3>
-                  <i className="far fa-edit"/>
-                  <i className="far fa-trash-alt"
-                  onClick={() => this.deleteSession(e, i)}/>
-                </div>
+                <div className="session" key={i}>
+                    <div className="sessionmenu">
+                      <h3>{e.session_name}</h3>
+                      <i className="far fa-edit"/>
+                      <i className="far fa-trash-alt"
+                      onClick={() => this.deleteSession(e, i)}/>
+                    </div>
 
-                <div className="actions">
+                    <div className="actions">
 
+                        <Actions 
+                        checkValues={false}
+                        actionList={e.actions}/>
 
-                <Actions 
-                checkValues={false}
-                actionList={e}/>
-
-               {/* this.props.actionList["actions"][0]["client_id"] */}
-
-
-                </div>
+                    </div>
               </div>
               )
             })}
-        
         
     </div>
     

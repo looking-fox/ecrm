@@ -15,6 +15,7 @@ class ClientModal extends Component {
             sessionTypes: [],
             sessionIndex: 0,
             sessionPrice: '',
+            sessionId: '',
             clientName: '',
             clientDate: '2019-06-10',
             clientLocation: ''
@@ -31,7 +32,6 @@ class ClientModal extends Component {
         if(prevProps !== this.props){
             
             if(this.props.clientSettingsModal.open){
-                console.log('updating', this.state)
                 this.convertDateToMUI()
                 this.isEditingClient()
             }
@@ -84,6 +84,15 @@ class ClientModal extends Component {
     
     }
 
+    getSession = () => {
+        if(this.state.sessionPrice){
+            return this.state.sessionTypes[this.state.sessionIndex].session_id
+        }
+        else {
+            return this.props.clientSettingsModal.client.sessionId
+        }
+    }
+
     sessionPriceUpdater = (index) => {
         this.setState({
           sessionPrice: this.state.sessionTypes[index].session_price,
@@ -95,33 +104,57 @@ class ClientModal extends Component {
       saveClient = () => {
 
         let date = this.convertDate()
-        var clientObj = {
-          name: this.state.clientName,
-          sessionId: this.state.sessionTypes[this.state.sessionIndex].session_id,
-          date: date,
-          location: this.state.clientLocation,
-          listId: this.props.listId
+        // let sessionId = this.findSession()
+        var clientInfo = {
+            name: this.state.clientName,
+            session_id: this.getSession(),
+            date: date,
+            location: this.state.clientLocation,
+            listId: this.props.listId
         }
-
+       
         if(this.props.clientSettingsModal.client.clientId){
             //Editing and saving client if Id is stored in props.
             const {clientId} = this.props.clientSettingsModal.client
-            clientObj['clientId'] = clientId
-            axios.put('/api/updateclient', {clientObj}).then(() => {
-            this.props.updateClientModal({clientModalOpen: false})
+            var index = this.props.clients.findIndex(element => {
+                return element.client_id === clientId
+                })
+            var newClient = Object.assign({}, this.props.clients[index],clientInfo)
+
+            var allClients = this.props.clients
+            allClients[index] = newClient
+
+            clientInfo["client_id"] = clientId
+            axios.put('/api/updateclient', {clientInfo}).then(() => {
+                this.props.updateClientModal({
+                    clientModalOpen: false,
+                    clients: allClients
+                })
             })
         }
 
         else {
             //Client is added, modal disappears once complete.
 
-        axios.post('/api/addclient', {clientObj} ).then(() => {
-            this.props.updateClientModal({clientModalOpen: false})
-        })
-        }
+            axios.post('/api/addclient', {clientInfo} ).then( response => {
+                console.log('response: ', response)
+                var allClients = this.props.clients
+                var newClient = response.data.client[0]
+                allClients.push(newClient)
 
-        
-       
+                const {client_id} = response.data.client[0]
+                var allActions = this.props.actions
+                var Id = String(client_id)
+                allActions[Id] = { actions: response.data.actions[0]["actions"] }
+
+                this.props.updateClientModal({
+                    clientModalOpen: false,
+                    clients: allClients, 
+                    actions: allActions
+                })
+            })
+        }
+ 
     }
 
     //Convert Material UI format to display format for User.
@@ -211,7 +244,7 @@ class ClientModal extends Component {
               onChange={e => this.setState({clientLocation: e.target.value})}/>
     
               <div className="clientprice"> 
-                {this.state.sessionPrice}
+                {this.props.clientSettingsModal.client.sessionPrice}
               </div>
       
         </div>

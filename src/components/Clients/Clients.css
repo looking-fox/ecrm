@@ -22,6 +22,12 @@
     flex-direction: column;
 }
 
+.completed {
+    animation: fadeAndShrink 0.5s linear;
+    opacity: 0.5;
+    width: 95%;
+}
+
 .addclient{
     position: fixed;
     bottom: 20px;
@@ -108,4 +114,9 @@
     0% {top: 0px}
     50% {top: 10px}
     100% {top: 0px}
+}
+
+@keyframes fadeAndShrink {
+    from{opacity: 1; width: 100%}
+    to{opacity: 0.5; width: 95%}
 }

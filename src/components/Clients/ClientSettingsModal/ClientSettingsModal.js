@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './ClientSettingsModal.css'
 import Modal from 'react-responsive-modal'
 import {connect} from 'react-redux'
-import {updateClientSettingsModal, updateClientModal} from '../../../redux/reducer'
+import {updateClientSettingsModal, updateClientModal, updateClients} from '../../../redux/reducer'
 import axios from 'axios';
 
 class ClientSettingsModal extends Component {
@@ -33,6 +33,14 @@ class ClientSettingsModal extends Component {
   deleteClient = () => {
     const {clientId} = this.props.clientSettingsModal.client
 
+    var updatedClients = this.props.clients.slice()
+    var index = updatedClients.findIndex(element => {
+      return element.client_id === clientId
+    })
+
+    updatedClients.splice(index, 1)
+    this.props.updateClients({ clients: updatedClients })
+
     axios.delete(`/api/deleteclient/${clientId}`).then(() => {
       this.closeDeleteModal()
       this.closeModal()
@@ -57,8 +65,7 @@ class ClientSettingsModal extends Component {
 
                  <button type="button" 
                  className="btn btn-danger options"
-                onClick={() =>  
-                  this.setState({deleteVerifyOpen: true})}>Delete</button>
+                onClick={() => this.setState({deleteVerifyOpen: true})}> Delete</button>
 
           </div>
 
@@ -91,4 +98,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateClientSettingsModal, updateClientModal})(ClientSettingsModal)
+export default connect(mapStateToProps, {updateClientSettingsModal, updateClientModal, updateClients})(ClientSettingsModal)

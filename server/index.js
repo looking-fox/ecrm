@@ -152,7 +152,7 @@ app.post('/api/addlist', clients.addClientList)
 
 app.put('/api/updateclient', clients.updateClient)
 
-app.put('/api/archiveclient', clients.archiveClient)
+app.put('/api/clientcomplete', clients.clientComplete)
 
 app.delete('/api/deleteclient/:id', clients.deleteClient)
 

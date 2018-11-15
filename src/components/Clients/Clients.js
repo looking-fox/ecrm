@@ -5,11 +5,9 @@ import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import axios from 'axios';
-import ArchiveModal from './ArchiveModal/ArchiveModal'
 
 import {connect} from 'react-redux'
-import {updateClientModal, updateClientSettingsModal} from '../../redux/reducer'
-
+import {updateClients, updateClientModal, updateClientSettingsModal} from '../../redux/reducer'
 
 
 class Clients extends Component {
@@ -43,41 +41,49 @@ class Clients extends Component {
 
   componentDidUpdate(prevProps){
 //Extra server call that isn't needed. We should separate the mapping function from the axios request to optimize getClients()
+    // if(!prevProps === this.props){
+    //   this.getClients()
+    // }
 
-    if(prevProps !== this.props){
-      this.getClients()
-    }
   }
 
   getClients(){
+        //IF: we have 0 clients, we want to update noClients to true to conditionally render basecamp animation.
 
+        //ElSE: Async task where we map clientIds to object storing all clients. Then store those clients in Redux.
     axios.get('/api/getclients').then(response => {
-      this.setState(() => {
+        var clients = response.data
+        
         let firstClient = response.data[0]
-
         if(firstClient){
               if(firstClient.client_id===null){
-                return {
-                  clients: response.data,
-                  noClients: true
-                }
+                this.props.updateClients({noClients: true})
               }
-              else return {clients: response.data}
+              else {
+                this.props.updateClients({ clients })
+              }
         }
-        
-
-      })
+                 
     })
 
     axios.get('/api/getactions').then(response => {
       
-      var sessionMap = {}
-      response.data.map((e,i) => {
-        let stringForm = String(e.actions[0]["client_id"])
-        sessionMap[stringForm] = e
+      var actionPromise = new Promise(resolve => {
+        var actionMap = {}
+       
+        response.data.map((e,i) => {
+          //Set clientId as Key for actionMap object.
+          let stringForm = String(e.actions[0]["client_id"])
+          actionMap[stringForm] = e
+        })
+        resolve(actionMap)
+      })
+
+      actionPromise.then((value) => {
+        this.props.updateClients({actions: value})
       })
       
-      this.setState({ sessions: sessionMap })
+      
     
     })
 
@@ -108,15 +114,26 @@ class Clients extends Component {
     this.setState({sessions: currentSessions})
   }
 
+  allItemsChecked = (clientId, value) => {
+    var index = this.props.clients.findIndex(element => {
+      return element.client_id === clientId
+    })
+    var updatedClients = this.props.clients.slice()
+    updatedClients[index]["completed"] = value
+
+    this.props.updateClients({ clients: updatedClients })
+  }
+
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
    
-    let firstClient = this.state.clients[0]
+    let firstClient = this.props.clients[0]
+    
     if(firstClient){
 
         if(firstClient.client_id !==null){
 
-            return this.state.clients
+            return this.props.clients
 
             .filter(e => {
 
@@ -126,30 +143,71 @@ class Clients extends Component {
               } 
               
             })
+
+            .sort((a,b) => {
+              return a.completed - b.completed
+            })
             
-            .map( (e, i) => {
-              let sessionInfo = this.state.sessions[e.client_id]
+            .map( (e, i) => {    
+              if(this.props.actions[Object.keys(this.props.actions)[0]]){
+                var id = e.client_id
+                var actionList = this.props.actions[id]["actions"]
+              }
+              if(e.completed===false){
+                return (
+                  <div className="bar" key={e.client_id}>
+            
+                        <Client 
+                        name={e.name}
+                        index={i}
+                        clientId={e.client_id}
+                        sessionName={e.session_name}
+                        sessionColor={e.session_color}
+                        sessionPrice={e.session_price}
+                        sessionId={e.session_id}
+                        sessionDate={e.date}
+                        sessionLocation={e.location}
+                        goToMap={this.goToMap}
+                        openClientSettingsModal={this.openClientSettingsModal}/>
+            
+                        <Actions 
+                        id={e.client_id}
+                        actionsComplete={e.completed}
+                        checkValues={true}
+                        allChecked={this.allItemsChecked}
+                        actionList={actionList}/>
+            
+                  </div>
+                  )
+              }
+              else {
+                return (
+                  <div className="bar completed" key={e.client_id}>
+            
+                        <Client 
+                        name={e.name}
+                        index={i}
+                        clientId={e.client_id}
+                        sessionName={e.session_name}
+                        sessionColor={e.session_color}
+                        sessionPrice={e.session_price}
+                        sessionId={e.session_id}
+                        sessionDate={e.date}
+                        sessionLocation={e.location}
+                        goToMap={this.goToMap}
+                        openClientSettingsModal={this.openClientSettingsModal}/>
+            
+                        <Actions 
+                        id={e.client_id}
+                        actionsComplete={e.completed}
+                        checkValues={true}
+                        allChecked={this.allItemsChecked}
+                        actionList={actionList}/>
+            
+                  </div>
+                  )
+              }
               
-              return (
-              <div className="bar" key={e.client_id}>
-        
-                    <Client 
-                    name={e.name}
-                    clientId={e.client_id}
-                    sessionName={e.session_name}
-                    sessionColor={e.session_color}
-                    sessionPrice={e.session_price}
-                    sessionDate={e.date}
-                    sessionLocation={e.location}
-                    goToMap={this.goToMap}
-                    openClientSettingsModal={this.openClientSettingsModal}/>
-        
-                    <Actions 
-                    checkValues={true}
-                    actionList={sessionInfo}/>
-        
-              </div>
-              )
             })
         }
     }
@@ -178,7 +236,7 @@ class Clients extends Component {
 
 
   render() {
-
+    
     return (
       <div className="clientdashboard">
 
@@ -198,7 +256,6 @@ class Clients extends Component {
               <ClientSettingsModal {...this.props}
               deleteClient={this.deleteClient}/>
 
-              <ArchiveModal/>
 
         {/* ------Modals------ */}
 
@@ -215,4 +272,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateClientModal, updateClientSettingsModal})(Clients)
+export default connect(mapStateToProps, {updateClients, updateClientModal, updateClientSettingsModal})(Clients)

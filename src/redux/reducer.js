@@ -3,6 +3,8 @@ const initialState = {
     email: '',
     picture: '',
     sub: '', 
+    clients: [],
+    actions: [],
     clientModalOpen: false,
     clientSettingsModal: { open: false, client: {} }
 }
@@ -12,7 +14,7 @@ const LOGOUT_USER = 'LOGOUT_USER'
 const UPDATE_CURRENT_LIST = 'UPDATE_CURRENT_LIST'
 const UPDATE_CLIENT_MODAL = 'UPDATE_CLIENT_MODAL'
 const UPDATE_CLIENT_SETTINGS_MODAL = 'UPDATE_CLIENT_SETTINGS_MODAL'
-const ARCHIVE_CLIENT = 'ARCHIVE_CLIENT'
+const UPDATE_CLIENTS = 'UPDATE_CLIENTS'
 
 export default function reducer(state=initialState, action){
     switch(action.type){
@@ -32,6 +34,8 @@ export default function reducer(state=initialState, action){
         case UPDATE_CLIENT_SETTINGS_MODAL: 
             return {...state, ...action.payload}
 
+        case UPDATE_CLIENTS: 
+            return {...state, ...action.payload}
         default: 
             return state
     }
@@ -65,9 +69,15 @@ export function updateClientModal(value){
 }
 
 export function updateClientSettingsModal(value){
-    
     return {
         type: UPDATE_CLIENT_SETTINGS_MODAL, 
+        payload: value
+    }
+}
+
+export function updateClients(value){
+    return {
+        type: UPDATE_CLIENTS,
         payload: value
     }
 }
