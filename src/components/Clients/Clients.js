@@ -153,6 +153,7 @@ class Clients extends Component {
                 var id = e.client_id
                 var actionList = this.props.actions[id]["actions"]
               }
+
               if(e.completed===false){
                 return (
                   <div className="bar" key={e.client_id}>

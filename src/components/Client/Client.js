@@ -12,7 +12,7 @@ export default function Client(props) {
             </div>
 
             <div className="package item">
-            <span className="bubble">{props.sessionName}</span>
+            <span className={`bubble ${props.sessionColor}`}>{props.sessionName}</span>
             </div>
 
             <div className="date item">

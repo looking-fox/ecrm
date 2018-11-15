@@ -88,7 +88,7 @@ class ClientModal extends Component {
     }
 
     isEditingClient = () => {
-       
+       //Updates local state with Client variables, if editing.
         const {name, sessionLocation} = this.props.clientSettingsModal.client
         
         this.setState({
@@ -99,6 +99,7 @@ class ClientModal extends Component {
     }
 
     getSession = () => {
+        //Conditionally returns sessionId based on new/previous client.
         if(this.props.clientSettingsModal.client.sessionId){
             return this.props.clientSettingsModal.client.sessionId
         }
@@ -118,7 +119,7 @@ class ClientModal extends Component {
       saveClient = () => {
 
         let date = this.convertDate()
-        // let sessionId = this.findSession()
+        
         var clientInfo = {
             name: this.state.clientName,
             session_id: this.getSession(),
@@ -148,8 +149,7 @@ class ClientModal extends Component {
         }
 
         else {
-            //Client is added, modal disappears once complete.
-
+            //Client added to DB. Receive new Client (w/ ID) and client's actions. Updating front end via props.
             axios.post('/api/addclient', {clientInfo} ).then( response => {
                 console.log('response: ', response)
                 var allClients = this.props.clients
@@ -181,6 +181,7 @@ class ClientModal extends Component {
         return date
     }
 
+    //Convert DB date to MUI for user display.
     convertDateToMUI = () => {
         const {sessionDate} = this.props.clientSettingsModal.client
 
@@ -193,8 +194,8 @@ class ClientModal extends Component {
     }
 
     closeAndResetModal = () => {
-        
-    this.props.updateClientModal({clientModalOpen: false})
+
+        this.props.updateClientModal({clientModalOpen: false})
                             
     }
 
