@@ -11,10 +11,10 @@ module.exports = {
     addclient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, session_id, date, location, listId} = req.body.clientInfo
+        const {name, session_id, date, location, listId, clientPrice} = req.body.clientInfo
         
         dbInstance
-        .add_client([sub, name, session_id, date, location, listId])
+        .add_client([sub, name, session_id, date, location, listId, clientPrice])
         .then((response) => {
             var client = response
 
@@ -71,9 +71,9 @@ module.exports = {
     updateClient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, session_id, date, location, client_id} = req.body.clientInfo
+        const {name, session_id, date, location, client_id, client_price} = req.body.clientInfo
         
-        dbInstance.update_client([sub, client_id, name, session_id, date, location])
+        dbInstance.update_client([sub, client_id, name, session_id, date, location, client_price])
         .then(() => {
             res.sendStatus(200)
         })

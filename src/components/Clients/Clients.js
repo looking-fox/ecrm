@@ -164,7 +164,7 @@ class Clients extends Component {
                         clientId={e.client_id}
                         sessionName={e.session_name}
                         sessionColor={e.session_color}
-                        sessionPrice={e.session_price}
+                        sessionPrice={e.client_price}
                         sessionId={e.session_id}
                         sessionDate={e.date}
                         sessionLocation={e.location}

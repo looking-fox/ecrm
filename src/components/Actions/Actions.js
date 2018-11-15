@@ -24,7 +24,7 @@ export default class Actions extends Component {
        var checkPromise = new Promise(resolve => {
         var allComplete = true
             this.state.actionItems.map(e => {
-                console.log('e', e)
+                
                 if(e.completed===false){
                     allComplete = false
                 } 
@@ -34,8 +34,7 @@ export default class Actions extends Component {
        })
         
         checkPromise.then((value) => {
-            console.log('checkPromise: ', value, this.props.actionsComplete)
-
+            
             if(value !== this.props.actionsComplete){
                 var clientId = this.props.id
                 this.props.allChecked(clientId, value)
