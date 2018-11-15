@@ -34,6 +34,8 @@ class ClientModal extends Component {
             if(this.props.clientSettingsModal.open){
                 this.convertDateToMUI()
                 this.isEditingClient()
+                this.getSessions()
+
             }
             
             if(!this.props.clientSettingsModal.open){
@@ -52,12 +54,12 @@ class ClientModal extends Component {
    
     getSessions = () => {
         axios.get('/api/getsessiontypes').then(response => {
+
             //If user has no session types, they can't add a client. 
             //If user has no lists, they can't add clients. 
-              if(response.data[0]){
+            if(response.data[0]){
                   if(response.data[0].session_id !== null){
                       if(this.props.lists){
-                        
                         this.setState({
                           sessionTypes: response.data,
                           sessionPrice: response.data[0].session_price
@@ -66,10 +68,22 @@ class ClientModal extends Component {
                       }       
                   }
               }
+            //If user is editing a previous client, update State to reflect their sessionPrice--not the default session price.
+
+            // TODO: Make these conditionals more cohesive. Setting state twice in rare situations.
+            if(this.props.clientSettingsModal.open){
+                const {sessionPrice} = this.props.clientSettingsModal.client
+                
+                this.setState({ sessionPrice: sessionPrice })
+            }
+            
+            
               //TODO: Different alert statements for no client list or no sessions. 
               else {
+                if(!this.props.clients[0]){
               alert("You'll first want to head over to Settings > Sessions and add a few session types.")
                    }
+                }
               })
     }
 
@@ -85,11 +99,11 @@ class ClientModal extends Component {
     }
 
     getSession = () => {
-        if(this.state.sessionPrice){
-            return this.state.sessionTypes[this.state.sessionIndex].session_id
+        if(this.props.clientSettingsModal.client.sessionId){
+            return this.props.clientSettingsModal.client.sessionId
         }
         else {
-            return this.props.clientSettingsModal.client.sessionId
+            return this.state.sessionTypes[this.state.sessionIndex].session_id
         }
     }
 
@@ -244,7 +258,7 @@ class ClientModal extends Component {
               onChange={e => this.setState({clientLocation: e.target.value})}/>
     
               <div className="clientprice"> 
-                {this.props.clientSettingsModal.client.sessionPrice}
+                {this.state.sessionPrice}
               </div>
       
         </div>
