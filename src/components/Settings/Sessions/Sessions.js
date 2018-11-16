@@ -1,25 +1,17 @@
 import React, { Component } from 'react'
 import './Sessions.css'
+import axios from 'axios'
+import {connect} from 'react-redux'
+import { updateProps } from '../../../redux/reducer'
+
 import Nav from '../Nav/Nav'
 import Actions from '../../Actions/Actions'
-import Modal from 'react-responsive-modal'
-import Input from '@material-ui/core/Input'
-import axios from 'axios'
+import SessionModal from './SessionModal/SessionModal'
 
-export default class Sessions extends Component {
+class Sessions extends Component {
   constructor(){
     super()
     this.state = {
-      open: false,
-      name: '',
-      action: '',
-      price: '',
-      color: 'Purple',
-      actionList: [
-        {"name": "inquired"},
-        {"name": "emailed"},
-        {"name": "booked!"}
-      ], 
       sessions: []
     }
   }
@@ -30,34 +22,23 @@ export default class Sessions extends Component {
     
   }
 
-  getSessions(){
+  getSessions =() => {
     axios.get('/api/getsessions').then(response => {
       this.setState({sessions: response.data})
     })
   }
 
-  addItem = (e) => {
-    //Modal list of action items, adding to array
-   if(e.key==="Enter"){
-     var newList = this.state.actionList
-     var newItem = {"name": this.state.action}
-
-     newList.push(newItem)
-
-     this.setState({
-       actionList: newList, 
-       action: ''
-     })
-     e.target.value = ''
-   }
-
+  openModal = (session) => {
+    if(session.session_name){
+      this.props.updateProps({sessionModal: {open: true, new: false, session: session} })
+    }
+    else {
+      this.props.updateProps({sessionModal: {open: true, new: true, session: {} }})
+    }
   }
 
-  deleteItem = (i) => {
-    //Modal list of action items, delete from array
-    var newList = this.state.actionList
-    newList.splice(i, 1)
-    this.setState({actionList: newList})
+  editSession = (id) => {
+    alert(`Id of Client: ${id}`)
   }
 
   deleteSession = (item, i) => {
@@ -72,36 +53,6 @@ export default class Sessions extends Component {
     
   }
 
-  saveSession = () => {
-    //Axios call to store session in DB: name, color, price, actionList
-    var sessionInfo = {
-      name: this.state.name,
-      price: this.state.price,
-      color: this.state.color,
-      actionList: this.state.actionList
-    }
-
-    //Need to add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
-    
-    axios.post('/api/storesession', {sessionInfo} ).then(response => {
-      //Update state on front end with new session.
-      this.getSessions()
-    })
-
-    this.setState({ actionList: [ {"name": "inquired"},
-      {"name": "emailed"}, {"name": "booked!"}]  })
-
-    this.onCloseModal()
-  }
-
-  onOpenModal = () => {
-    this.setState({ open: true });
-  };
-
-  onCloseModal = () => {
-    this.setState({ open: false });
-  };
-
   render() {
     //Display each session: session info, edit button, delete button
     //Add button 
@@ -112,77 +63,14 @@ export default class Sessions extends Component {
 
         <Nav/>
 
-        <Modal open={this.state.open} onClose={this.onCloseModal} center>
-        <h3 className="title">Add A Session</h3>
-        <div className="sessionform">
-          
-
-          <div className="sessioninfo">
-          <Input 
-          autoFocus={true}
-          placeholder="Session Name"
-          fullWidth={true}
-          classes={{ root: 'input' }}
-          onChange={e => this.setState({name: e.target.value})}/>
-
-          <select className="colormenu" 
-          onChange={e => this.setState({color: e.target.value})}>
-              <option value="Purple">Purple</option>
-              <option value="Blue">Blue</option>
-              <option value="Red">Red</option>
-              <option value="Green">Green</option>
-              <option value="Orange">Orange</option>
-              <option value="Gray">Gray</option>
-          </select>  
-
-          <Input 
-          placeholder="Price ($1,000)"
-          fullWidth={true}
-          onChange={e => this.setState({price: e.target.value})}/>
-
-          </div>
-
-          <div className="actioninfo">
-
-          <Input 
-          placeholder="Add Action"
-          fullWidth={true}
-          // classes={{root: 'inputfield'}}
-          onChange={e => this.setState({action: e.target.value})}
-          onKeyDown={e => this.addItem(e)}
-          />
-
-          {this.state.actionList.map( (e,i) => {
-              return (
-                <div className="actionitem" id={i}>
-            {/* Object.keys(e) returns the keys listed at the element.
-            Which is an array with one key value. Currying [0] returns the string value vs. the array of the string value. */}
-              <i className="far fa-check-circle"/>{e.name}
-              <i className="far fa-trash-alt deleteitem"
-              onClick={() => this.deleteItem(i)}/>
-                </div>
-              )
-          })}
-
-          </div>
-
-        </div>
-
-        <footer>
-        <button type="button" className="btn btn-primary save" 
-        onClick={this.saveSession}
-        >Save</button>
-        </footer>
-        
-        </Modal>
+        <SessionModal/>
 
         <div className="sessionsdashboard">
 
-        <p className="add" onClick={this.onOpenModal}>
+        <p className="add" onClick={this.openModal}>
         <i className="fas fa-plus-square"/>
         Add Session
         </p>
-
         
             {this.state.sessions.map((e,i) => {
              
@@ -190,7 +78,8 @@ export default class Sessions extends Component {
                 <div className="session" key={i}>
                     <div className="sessionmenu">
                       <h3>{e.session_name}</h3>
-                      <i className="far fa-edit"/>
+                      <i className="far fa-edit"
+                      onClick={() => this.openModal(e)}/>
                       <i className="far fa-trash-alt"
                       onClick={() => this.deleteSession(e, i)}/>
                     </div>
@@ -206,12 +95,16 @@ export default class Sessions extends Component {
               )
             })}
         
+        </div>
     </div>
-    
-
-</div>
         
-     
     )
   }
 }
+
+function mapStateToProps(state){
+  return {
+      ...this.props, ...state
+  }
+}
+export default connect(mapStateToProps, {updateProps} )(Sessions)

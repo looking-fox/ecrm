@@ -6,6 +6,7 @@ const initialState = {
     clients: [],
     actions: [],
     clientModalOpen: false,
+    sessionModal: {open : false, new: true, session: {} },
     clientSettingsModal: { open: false, client: {} }
 }
 
@@ -15,6 +16,7 @@ const UPDATE_CURRENT_LIST = 'UPDATE_CURRENT_LIST'
 const UPDATE_CLIENT_MODAL = 'UPDATE_CLIENT_MODAL'
 const UPDATE_CLIENT_SETTINGS_MODAL = 'UPDATE_CLIENT_SETTINGS_MODAL'
 const UPDATE_CLIENTS = 'UPDATE_CLIENTS'
+const UPDATE_PROPS = 'UPDATE_PROPS'
 
 export default function reducer(state=initialState, action){
     switch(action.type){
@@ -36,6 +38,10 @@ export default function reducer(state=initialState, action){
 
         case UPDATE_CLIENTS: 
             return {...state, ...action.payload}
+
+        case UPDATE_PROPS:
+            return {...state, ...action.payload}
+
         default: 
             return state
     }
@@ -78,6 +84,13 @@ export function updateClientSettingsModal(value){
 export function updateClients(value){
     return {
         type: UPDATE_CLIENTS,
+        payload: value
+    }
+}
+
+export function updateProps(value){
+    return {
+        type: UPDATE_PROPS,
         payload: value
     }
 }

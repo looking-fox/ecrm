@@ -126,6 +126,9 @@ button.save{
 .actionitem i{
     margin-right: 10px;
 }
+.actionitem:hover {
+    cursor: move;
+}
 
 .deleteitem{
     position: absolute;
