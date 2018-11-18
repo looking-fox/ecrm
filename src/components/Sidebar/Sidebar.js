@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {updateUser, logoutUser, updateCurrentList, updateClientModal} from '../../redux/reducer'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
+import ListItem from './ListItem'
 import './Sidebar.css'
 
 
@@ -138,23 +139,21 @@ class Sidebar extends Component {
             
             if(this.props.listId===e.list_id){
               return (
-                <div className="listitem current-list" key={e.list_id}
-                onClick={() => this.clickList(e)}>
-                  <p>
-                    {e.list_name}
-                    <i onClick={() => this.openClient(e)}
-            className="fas fa-plus-circle add-client-in-list"/>
-                  </p>
-                </div>
+                <ListItem
+                item={e}
+                active={true}
+                clickList={this.clickList}
+                openClient={this.openClient}
+                />
               )
             }
-
             else {
               return (
-                <div className="listitem" key={e.list_id}
-                onClick={() => this.clickList(e)}>
-                  <p>{e.list_name}</p>
-                </div>
+               <ListItem
+               item={e}
+               active={false}
+               clickList={this.clickList}
+               />
               )
             }
 
