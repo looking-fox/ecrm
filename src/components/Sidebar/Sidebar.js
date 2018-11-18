@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
+import './Sidebar.css'
+
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateUser, logoutUser, updateCurrentList, updateClientModal} from '../../redux/reducer'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
+import flow from 'lodash/flow'
 import ListItem from './ListItem'
-import './Sidebar.css'
+import HTML5Backend from 'react-dnd-html5-backend'
+import {DragDropContext} from 'react-dnd'
+const update = require('immutability-helper')
 
 
 class Sidebar extends Component {
@@ -34,6 +39,19 @@ class Sidebar extends Component {
      
     })
   }
+
+  moveListItem = (dragIndex, hoverIndex) => {
+		const { lists } = this.state
+    const dragList = lists[dragIndex]
+    
+		this.setState(
+			update(this.state, {
+				lists: {
+					$splice: [[dragIndex, 1], [hoverIndex, 0, dragList]],
+				},
+			}),
+		)
+	}
 
   saveList = () => {
     const {listName} = this.state
@@ -134,16 +152,19 @@ class Sidebar extends Component {
 
           </div>
 
-          {this.state.lists.map(e => {
+          {this.state.lists.map((e,i) => {
         //If propsId is itemId, this list is currently selected.
             
             if(this.props.listId===e.list_id){
               return (
                 <ListItem
                 item={e}
+                index={i}
+                id={e.list_id}
                 active={true}
                 clickList={this.clickList}
                 openClient={this.openClient}
+                moveListItem={this.moveListItem}
                 />
               )
             }
@@ -151,8 +172,11 @@ class Sidebar extends Component {
               return (
                <ListItem
                item={e}
+               index={i}
+               id={e.list_id}
                active={false}
                clickList={this.clickList}
+               moveListItem={this.moveListItem}
                />
               )
             }
@@ -187,4 +211,10 @@ function mapStateToProps(state){
     ...this.props, ...state
   }
 }
-export default connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList, updateClientModal})(Sidebar)
+
+export default flow(
+  DragDropContext(HTML5Backend),
+
+  connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList, updateClientModal})
+
+)(Sidebar)
