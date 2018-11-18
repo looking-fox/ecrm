@@ -113,21 +113,30 @@ class ClientModal extends Component {
             date: date,
             location: this.state.clientLocation,
             session_price: this.state.sessionPrice,
-            listId: this.props.listId
+            list_id: this.props.listId
         }
        
         if(this.props.clientSettingsModal.open){
             //Editing and saving client if Id is stored in props.
-            const {clientId, sessionId, actions, index} = this.props.clientSettingsModal.client
+            const {clientId, sessionId, actionList} = this.props.clientSettingsModal.client
+            var index; 
         
-            var newClient = Object.assign({}, this.props.clients[index],clientInfo)
-            
-            var allClients = this.props.clients
-            allClients[index] = newClient
-
             clientInfo["client_id"] = clientId
             clientInfo["session_id"] =  sessionId
-            clientInfo["actions"] = actions
+            clientInfo["actions"] = actionList
+
+            this.props.clients.map((e,i) => {
+                if(e.client_id === clientId){
+                    index = i
+                    return
+                }
+            })
+
+            var newClient = Object.assign({}, this.props.clients[index],clientInfo)
+
+            var allClients = this.props.clients
+            allClients.splice(index, 1, newClient)
+           
             axios.put('/api/updateclient', {clientInfo}).then(() => {
                 this.props.updateClientModal({
                   clientModalOpen: false,

@@ -25,7 +25,7 @@ class SessionModal extends Component {
     componentDidUpdate(prevProps){
         if(prevProps !== this.props){
             const {sessionModal} = this.props
-            console.log('seshmodal: ', sessionModal)
+        
             if(sessionModal.session && sessionModal.session.session_name){
                 const {session} = this.props.sessionModal
                 this.setState({
@@ -92,7 +92,6 @@ class SessionModal extends Component {
             const {session_id} = this.props.sessionModal.session
             sessionInfo = addId(session_id)
             axios.put('/api/updatesession', {sessionInfo}).then((response) => {
-                console.log('server response: ', response)
                 const {index} = this.props.sessionModal.session
                 let updatedSession = response.data[0]
                 let tempSessionTypes = this.props.sessionTypes
@@ -101,8 +100,6 @@ class SessionModal extends Component {
                 this.props.updateProps({ sessionTypes: tempSessionTypes })
 
                 this.onCloseModal()
-            
-                //close modal
             })
 
 
