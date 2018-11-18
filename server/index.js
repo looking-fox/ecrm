@@ -143,7 +143,19 @@ app.put('/api/updateaction', sessionActions.putaction)
 
 //===============ACTIONS==================//
 
+app.post('/api/changelistorder', (req, res) => {
+    //Swaps Index Ids to swap list order.
+    const dbInstance = req.app.get('db')
+    const { dragId, hoverId, dragIndex, hoverIndex} = req.body.swap
+     
+    dbInstance.swap_lists([hoverIndex, dragId]).then(() => {
 
+        dbInstance.swap_lists([dragIndex, hoverId]).then(() => {
+            res.sendStatus(200)
+        })
+    })
+  
+})
 
 //===============CLIENTS==================//
 

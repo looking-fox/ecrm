@@ -34,6 +34,7 @@
     padding-right: 50px;
     cursor: pointer;
 }
+
 .menuitem:hover .add-client-list{
     opacity: 1;
 }

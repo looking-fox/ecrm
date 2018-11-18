@@ -1,3 +1,3 @@
-select list_id, list_name from client_lists
+select list_id, list_name, index_id from client_lists
 where user_id = $1
-order by list_id;
+order by index_id;

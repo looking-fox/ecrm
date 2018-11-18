@@ -24,10 +24,10 @@ class Sidebar extends Component {
   }
 
   componentDidMount(){
-    axios.get('/api/user-info').then((res) => {
+    axios.get('/api/user-info').then( res => {
       const {lists} = res.data
-      this.setState({ lists })
 
+      this.setState({ lists }) 
       this.props.updateUser(res.data)
 
       if(lists[0]){
@@ -37,6 +37,9 @@ class Sidebar extends Component {
             }
       }
      
+    }).catch(error => {
+      //If 500 error with no user, redirect to home page. 
+      this.props.history.push('/')
     })
   }
 
@@ -50,7 +53,18 @@ class Sidebar extends Component {
 					$splice: [[dragIndex, 1], [hoverIndex, 0, dragList]],
 				},
 			}),
-		)
+    )
+
+    lists[dragIndex]["index_id"] = hoverIndex
+    lists[hoverIndex]["index_id"] = dragIndex
+
+    let dragId = lists[dragIndex]["list_id"]
+    let hoverId = lists[hoverIndex]["list_id"]
+
+    let swap = { dragId, hoverId, dragIndex, hoverIndex}
+
+    axios.post('/api/changelistorder', {swap} )
+    
 	}
 
   saveList = () => {
@@ -160,6 +174,7 @@ class Sidebar extends Component {
                 <ListItem
                 item={e}
                 index={i}
+                key={e.list_id}
                 id={e.list_id}
                 active={true}
                 clickList={this.clickList}
@@ -174,6 +189,7 @@ class Sidebar extends Component {
                item={e}
                index={i}
                id={e.list_id}
+               key={e.list_id}
                active={false}
                clickList={this.clickList}
                moveListItem={this.moveListItem}

@@ -67,11 +67,11 @@ const itemTarget = {
 
 class ListItem extends Component {
   render() {
-    const {item, text, isDragging, connectDragSource, 
+    const {item, isDragging, connectDragSource, 
     connectDropTarget} = this.props
 
     const opacity = isDragging ? 0 : 1
-
+	
     if(this.props.active){
     return (
 		connectDragSource &&

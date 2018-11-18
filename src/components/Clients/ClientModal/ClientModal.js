@@ -76,6 +76,7 @@ class ClientModal extends Component {
             }
             else {
                 if(!this.props.clients[0]){
+                    if(!this.props.clients[0]["client_id"])
                     alert("You'll first want to head over to Settings > Sessions and add a few session types.")
                 }
             }
