@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Sign In to Looking Fox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="https://dl.dropboxusercontent.com/s/oihy3gre34nt0m0/favicon.ico">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+  <style>
+      @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700');
+    
+    body, html {
+      height: 100%;
+    }
+
+    .outer-container {
+        width: 100%;
+        height: 100vh;
+        background-image: url('https://i.postimg.cc/HsGQFCfj/roman-bozhko-251947-unsplash.jpg');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position-y: 40%;
+    }
+
+    .inner-login-container {
+        width: 400px;
+        height: 200px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        animation: fadeIn 0.5s linear;
+        position: relative;
+        top: 200px;
+        left: 200px;
+    }
+
+    .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+    }
+
+    .fox-image {
+        width: 100px;
+    }
+
+    h1 {
+        font-family: 'Josefin Sans';
+        font-weight: 700;
+        font-size: 1.7em;
+        letter-spacing: 5px;
+        margin-left: 20px;
+    }
+    #error-message {
+      display: none;
+    }
+    
+    p {
+        font-size: 1.3em;
+        font-family: 'Open Sans';
+        font-weight: 200;
+        margin-bottom: 50px;
+    }
+    
+    button i {
+      margin-right: 10px;
+    }
+    
+    .google-btn {
+      background-color: black;
+      border: none;
+      font-family: 'Open Sans';
+      width: 100%;
+    }
+
+    .google-btn:hover {
+        background-color: #1f1f1f;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; bottom: 50px}
+        to {opacity: 1; bottom: 0px}
+    }
+  </style>
+<body>
+    <div class="outer-container">
+
+            <!-- https://preview.ibb.co/hNgaLL/annie-spratt-161511-unsplash.jpg -->
+            <!-- https://preview.ibb.co/gH2zfL/ben-kolde-725896-unsplash.jpg -->
+       
+        
+        <div id="error-message" class="alert alert-danger"></div>
+      
+        <div class="login-container">
+            <div class="inner-login-container">
+                <div class="logo">
+                    <img src="https://image.ibb.co/m5Nwuf/logo.png" class="fox-image" alt="logo"/>
+                        <h1>LOOKING FOX</h1>
+                </div>
+                
+                
+                <button
+                type="button"
+                id="btn-google"
+                class="btn btn-default btn-danger btn-block google-btn">
+                    <i class="fab fa-google"></i> Log In with Google
+                </button>
+            </div>
+        </div>
+    
+  </div>
+
+  <!--[if IE 8]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js"></script>
+  <![endif]-->
+
+  <!--[if lte IE 9]>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/base64.min.js"></script>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/es5-shim.min.js"></script>
+  <![endif]-->
+
+  <script src="https://cdn.auth0.com/js/auth0/9.2/auth0.min.js"></script>
+  <script src="https://cdn.auth0.com/js/polyfills/1.0/object-assign.min.js"></script>
+  <script>
+    window.addEventListener('load', function() {
+
+      var config = JSON.parse(
+        decodeURIComponent(escape(window.atob('@@config@@')))
+      );
+
+      var params = Object.assign({
+        /* additional configuration needed for use of custom domains
+        overrides: {
+          __tenant: config.auth0Tenant,
+          __token_issuer: 'YOUR_CUSTOM_DOMAIN'
+        }, */
+        domain: config.auth0Domain,
+        clientID: config.clientID,
+        redirectUri: config.callbackURL,
+        responseType: 'code'
+      }, config.internalOptions);
+
+      var webAuth = new auth0.WebAuth(params);
+
+
+      function loginWithGoogle() {
+        webAuth.authorize({
+          connection: 'google-oauth2'
+        }, function(err) {
+          if (err) displayError(err);
+        });
+      }
+
+      function displayError(err) {
+        var errorMessage = document.getElementById('error-message');
+        errorMessage.innerHTML = err.description;
+        errorMessage.style.display = 'block';
+      }
+
+      document.getElementById('btn-google').addEventListener('click', loginWithGoogle);
+      
+    });
+  </script>
+</body>
+</html>
