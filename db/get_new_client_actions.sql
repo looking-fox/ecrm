@@ -1,9 +1,9 @@
 select 
 array_agg( 
 jsonb_build_object('user_id', session_actions.user_id, 'session_id', session_actions.session_id, 'name', session_actions.name, 'completed', session_actions.completed,
-'id', session_actions.action_id, 'client_id', session_actions.client_id) order by action_id
+'id', session_actions.action_id) order by action_id
 ) as actions from session_actions
-where client_id is not null and user_id=$1
-group by session_actions.client_id
-order by client_id desc
+where user_id=$1 and template = false
+group by session_actions.session_id
+order by session_id desc
 limit 1;

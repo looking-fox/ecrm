@@ -73,7 +73,10 @@ class SessionModal extends Component {
         
         if(this.props.sessionModal.new === true){
             //If new client
-            axios.post('/api/storesession', {sessionInfo} ).then(() => {
+            axios.post('/api/storesession', {sessionInfo} ).then((response) => {
+                var newSessions = this.props.sessionTypes.slice()
+                newSessions.push(response.data[0])
+                this.props.updateProps({sessionTypes: newSessions})
                 //Reset to initial state
                 this.setState({ actionList: [ {"name": "inquired"},
                 {"name": "emailed"}, {"name": "booked!"}]  })

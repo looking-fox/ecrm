@@ -105,48 +105,55 @@ class ClientModal extends Component {
 
     
       saveClient = () => {
-
+        
         let date = this.convertDate()
         
         var clientInfo = {
             name: this.state.clientName,
-            session_id: this.state.sessionId,
             date: date,
             location: this.state.clientLocation,
-            client_price: this.state.sessionPrice,
+            session_price: this.state.sessionPrice,
             listId: this.props.listId
         }
        
         if(this.props.clientSettingsModal.open){
             //Editing and saving client if Id is stored in props.
-            const {clientId} = this.props.clientSettingsModal.client
-            var index = this.props.clients.findIndex(element => {
-                return element.client_id === clientId
-                })
+            const {clientId, sessionId, actions, index} = this.props.clientSettingsModal.client
+        
             var newClient = Object.assign({}, this.props.clients[index],clientInfo)
             
             var allClients = this.props.clients
             allClients[index] = newClient
 
             clientInfo["client_id"] = clientId
+            clientInfo["session_id"] =  sessionId
+            clientInfo["actions"] = actions
             axios.put('/api/updateclient', {clientInfo}).then(() => {
                 this.props.updateClientModal({
-                    clientModalOpen: false,
-                    clients: allClients
+                  clientModalOpen: false,
+                  clientSettingsModal: { open: false, client: {} },
+                  clients: allClients
                 })
             })
         }
 
         else {
             //Client added to DB. Receive new Client (w/ ID) and client's actions. Updating front end via props.
+            // session_name, session_color, actions, session_price
+            const {session_name, session_color, actions} = this.state.sessionTypes[this.state.sessionIndex]
+            
+            clientInfo["session_name"] = session_name
+            clientInfo["session_color"] = session_color
+            clientInfo["actions"] = actions
+
             axios.post('/api/addclient', {clientInfo} ).then( response => {
                 var allClients = this.props.clients
                 var newClient = response.data.client[0]
                 allClients.push(newClient)
 
-                const {client_id} = response.data.client[0]
+                const {session_id} = response.data.client[0]
                 var allActions = this.props.actions
-                var Id = String(client_id)
+                var Id = String(session_id)
                 allActions[Id] = { actions: response.data.actions[0]["actions"] }
 
                 this.props.updateClientModal({

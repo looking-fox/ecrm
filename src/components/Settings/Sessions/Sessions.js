@@ -12,20 +12,17 @@ class Sessions extends Component {
   constructor(){
     super()
     this.state = {
-      sessions: []
+      sessionTypes: []
     }
   }
 
   componentDidMount(){
     //DB request to grab all current session types. 
-    this.getSessions()
-    
-  }
-
-  getSessions =() => {
     axios.get('/api/getsessions').then(response => {
-      this.setState({sessions: response.data})
+      this.props.updateProps({sessionTypes: response.data})
+      this.setState({sessionTypes: response.data})
     })
+    
   }
 
   openModal = (session) => {
@@ -43,12 +40,13 @@ class Sessions extends Component {
 
   deleteSession = (item, i) => {
     //Delete session based on id which we get from sessions[index]
-    const {sessions} = this.state
-    var id = item.session_id
+    const {session_id} = this.props.sessionTypes[i]
     
-    axios.delete(`/api/deletesession/${id}`).then( () => {
-      sessions.splice(i, 1)
-      this.setState({sessions: sessions})
+    axios.delete(`/api/deletesession/${session_id}`).then( () => {
+      let tempSessions = this.props.sessionTypes
+      tempSessions.splice(i, 1)
+      this.props.updateProps({ sessionTypes: tempSessions })
+      this.setState({sessionTypes: tempSessions})
     })
     
   }
@@ -72,7 +70,7 @@ class Sessions extends Component {
         Add Session
         </p>
         
-            {this.state.sessions.map((e,i) => {
+            {this.props.sessionTypes.map((e,i) => {
              
               return (
                 <div className="session" key={i}>

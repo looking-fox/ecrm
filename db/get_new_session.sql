@@ -8,4 +8,6 @@ order by action_id
 left join session_actions
 on session_actions.session_id = sessions.session_id
 where sessions.user_id=$1 and sessions.template=true
-group by sessions.session_id;
+group by sessions.session_id
+order by sessions.session_id desc
+limit 1;

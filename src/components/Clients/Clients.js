@@ -7,7 +7,7 @@ import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import axios from 'axios';
 
 import {connect} from 'react-redux'
-import {updateClients, updateClientModal, updateClientSettingsModal} from '../../redux/reducer'
+import {updateClients, updateClientModal, updateClientSettingsModal, updateProps} from '../../redux/reducer'
 
 
 class Clients extends Component {
@@ -66,6 +66,23 @@ class Clients extends Component {
                  
     })
 
+    // axios.get('/api/getdefaultsessions').then(response => {
+    //   var sessionPromise = new Promise(resolve => {
+    //     var sessionMap = {}
+
+    //     response.data.map((e,i) => {
+    //       let stringForm = String(e.session_id)
+    //       sessionMap[stringForm] = e
+    //     })
+
+    //     resolve(sessionMap)
+    //   })
+    //   sessionPromise.then(value => {
+    //     this.props.updateProps({sessions: value})
+    //   })
+    // })
+
+
     axios.get('/api/getactions').then(response => {
       
       var actionPromise = new Promise(resolve => {
@@ -73,7 +90,7 @@ class Clients extends Component {
        
         response.data.map((e,i) => {
           //Set clientId as Key for actionMap object.
-          let stringForm = String(e.actions[0]["client_id"])
+          let stringForm = String(e.actions[0]["session_id"])
           actionMap[stringForm] = e
         })
         resolve(actionMap)
@@ -150,7 +167,7 @@ class Clients extends Component {
             
             .map( (e, i) => {    
               if(this.props.actions[Object.keys(this.props.actions)[0]]){
-                var id = e.client_id
+                var id = e.session_id
                 var actionList = this.props.actions[id]["actions"]
               }
 
@@ -164,7 +181,7 @@ class Clients extends Component {
                         clientId={e.client_id}
                         sessionName={e.session_name}
                         sessionColor={e.session_color}
-                        sessionPrice={e.client_price}
+                        sessionPrice={e.session_price}
                         sessionId={e.session_id}
                         sessionDate={e.date}
                         sessionLocation={e.location}
@@ -176,7 +193,8 @@ class Clients extends Component {
                         actionsComplete={e.completed}
                         checkValues={true}
                         allChecked={this.allItemsChecked}
-                        actionList={actionList}/>
+                        actionList={actionList}
+                        />
             
                   </div>
                   )
@@ -203,7 +221,8 @@ class Clients extends Component {
                         actionsComplete={e.completed}
                         checkValues={true}
                         allChecked={this.allItemsChecked}
-                        actionList={actionList}/>
+                        actionList={actionList}
+                        />
             
                   </div>
                   )
@@ -273,4 +292,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateClients, updateClientModal, updateClientSettingsModal})(Clients)
+export default connect(mapStateToProps, {updateClients, updateClientModal, updateClientSettingsModal, updateProps})(Clients)

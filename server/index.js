@@ -116,6 +116,8 @@ app.post('/api/logout', (req, res) => {
 
 //===============SESSIONS==================//
 
+app.get('/api/getdefaultsessions', sessions.getDefaultSessions)
+
 app.get('/api/getsessions', sessions.getsessions)
 
 app.get('/api/getsessiontypes', sessions.getsessiontypes)
@@ -124,13 +126,14 @@ app.post('/api/storesession', sessions.storesession)
 
 app.delete('/api/deletesession/:id', sessions.deletesession)
 
-app.get('/api/getactions', sessions.getactions)
 
 //===============SESSIONS==================//
 
 
 
 //===============ACTIONS==================//
+
+app.get('/api/getactions', sessions.getactions)
 
 app.put('/api/updateaction', sessionActions.putaction)
 

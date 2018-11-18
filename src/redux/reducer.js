@@ -5,6 +5,7 @@ const initialState = {
     sub: '', 
     clients: [],
     actions: [],
+    sessionTypes: [],
     clientModalOpen: false,
     sessionModal: {open : false, new: true, session: {} },
     clientSettingsModal: { open: false, client: {} }
