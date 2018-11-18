@@ -185,6 +185,7 @@ class Clients extends Component {
                         sessionId={e.session_id}
                         sessionDate={e.date}
                         sessionLocation={e.location}
+                        actionList={actionList}
                         goToMap={this.goToMap}
                         openClientSettingsModal={this.openClientSettingsModal}/>
             
@@ -213,6 +214,7 @@ class Clients extends Component {
                         sessionId={e.session_id}
                         sessionDate={e.date}
                         sessionLocation={e.location}
+                        actionList={actionList}
                         goToMap={this.goToMap}
                         openClientSettingsModal={this.openClientSettingsModal}/>
             

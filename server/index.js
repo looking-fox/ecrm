@@ -124,6 +124,8 @@ app.get('/api/getsessiontypes', sessions.getsessiontypes)
 
 app.post('/api/storesession', sessions.storesession)
 
+app.put('/api/updatesession', sessions.updateSession)
+
 app.delete('/api/deletesession/:id', sessions.deletesession)
 
 

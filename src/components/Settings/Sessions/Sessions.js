@@ -25,8 +25,9 @@ class Sessions extends Component {
     
   }
 
-  openModal = (session) => {
-    if(session.session_name){
+  openModal = (sessionInfo, index) => {
+    if(sessionInfo.session_name){
+      let session = {...sessionInfo, ...{ index } }
       this.props.updateProps({sessionModal: {open: true, new: false, session: session} })
     }
     else {
@@ -77,7 +78,7 @@ class Sessions extends Component {
                     <div className="sessionmenu">
                       <h3>{e.session_name}</h3>
                       <i className="far fa-edit"
-                      onClick={() => this.openModal(e)}/>
+                      onClick={() => this.openModal(e, i)}/>
                       <i className="far fa-trash-alt"
                       onClick={() => this.deleteSession(e, i)}/>
                     </div>
