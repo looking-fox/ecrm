@@ -91,16 +91,16 @@ app.get('/auth/callback', async (req, res) => {
 
 app.get('/api/user-info', (req, res) => {
     const {name, email, sub, picture} = req.session.user
-    
+    console.log(req.session.user)
     const dbInstance = req.app.get('db')
     dbInstance.get_client_lists(sub).then(response => {
-
+        var lists = response
         res.status(200).send({
             name,
             email,
             sub,
             picture,
-            lists: response
+            lists
         })
     })
 })
@@ -155,6 +155,24 @@ app.post('/api/changelistorder', (req, res) => {
         })
     })
   
+})
+
+app.put('/api/updatelist', (req, res) => {
+    const dbInstance = req.app.get('db')
+    const {list_id, listName} = req.body
+    const {sub} = req.session.user
+    dbInstance.update_list([sub, list_id, listName]).then(() => {
+        res.sendStatus(200)
+    })
+})
+
+app.delete('/api/deletelist/:id', (req, res) => {
+    const dbInstance = req.app.get('db')
+    const {id} = req.params
+    const {sub} = req.session.user
+    dbInstance.delete_client_list([sub, id]).then(() => {
+        res.sendStatus(200)
+    })
 })
 
 //===============CLIENTS==================//

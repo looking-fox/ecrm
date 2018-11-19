@@ -3,7 +3,7 @@ import './Sidebar.css'
 
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {updateUser, logoutUser, updateCurrentList, updateClientModal} from '../../redux/reducer'
+import {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProps} from '../../redux/reducer'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import flow from 'lodash/flow'
@@ -21,7 +21,9 @@ class Sidebar extends Component {
       open: false,
       lists: [],
       listName: '',
-      optionsMenu: false
+      optionsMenu: false,
+      deleteListCheck: false,
+      listInEdit: {}
     }
 
     //If options menu is open, but user clicks away--close menu.
@@ -79,6 +81,23 @@ class Sidebar extends Component {
 
   saveList = () => {
     const {listName} = this.state
+
+    if(this.state.listInEdit.list_name){
+        const {index, list_id} = this.state.listInEdit
+        axios.put('/api/updatelist', {list_id, listName}).then(() => {
+          let updatedList = this.state.lists
+          let updatedListItem = this.state.lists[index]
+         
+          updatedListItem["list_name"] = listName
+          updatedList.splice(index, 1, updatedListItem)
+       
+          this.setState({open: false, lists: updatedList})
+          this.props.updateProps({lists: updatedList})
+          this.updateCurrentList(list_id)
+        })
+    }
+    else {
+
     axios.post('/api/addlist', {listName}).then(response => {
       let newList = response.data[0]
       let updatedList = this.state.lists
@@ -86,6 +105,7 @@ class Sidebar extends Component {
       this.setState({open: false, lists: updatedList})
       //TODO: Update lists in props
     })
+  }
   }
 
   updateCurrentList = (id) => {
@@ -130,9 +150,31 @@ class Sidebar extends Component {
         }
   }
 
-  optionsMenu = (item) => {
-    const {index_id, list_id, list_name} = item
-    this.setState({optionsMenu: !this.state.optionsMenu})
+  optionsMenu = () => {
+    this.setState({ optionsMenu: !this.state.optionsMenu })
+  }
+
+  deleteListCheck = (list, index) => {
+    let listWithIndex = {...list, ...{ index } }
+    this.setState({ listInEdit: listWithIndex, deleteListCheck: true })
+  }
+
+  updateList = (list, index) => {
+    const {list_name} = list
+    let listWithIndex = {...list, ...{index} }
+    this.setState({open: true, listName: list_name, listInEdit: listWithIndex})
+  }
+
+  deleteList = () => {
+    const {index, list_id} = this.state.listInEdit
+    
+      axios.delete(`/api/deletelist/${list_id}`).then(() => {
+      let newList = this.state.lists
+      newList.splice(index, 1)
+      this.setState({deleteListCheck: false, lists: newList})
+      this.props.updateProps({listId: -1})
+      })
+
   }
 
   showAllClients = () => {
@@ -181,16 +223,15 @@ class Sidebar extends Component {
 
           </div>
 
-          {this.state.lists.map((e,i) => {
+          {this.props.lists.map((e,i) => {
         //If propsId is itemId, this list is currently selected.
             
             if(this.props.listId===e.list_id){
               return (
-                <div>
+                <div key={e.list_id}>
                 <ListItem
                 item={e}
                 index={i}
-                key={e.list_id}
                 id={e.list_id}
                 active={true}
                 clickList={this.clickList}
@@ -200,8 +241,10 @@ class Sidebar extends Component {
                 />
                 <div className="options-menu" 
                 style={{ display: isEditing }}>
-                <p><i className="far fa-edit"/>edit</p>
-                <p><i className="far fa-trash-alt"/>delete</p>
+                <p onClick={() => this.updateList(e, i)}
+                ><i className="far fa-edit"/>edit</p>
+                <p onClick={() => this.deleteListCheck(e, i)}
+                ><i className="far fa-trash-alt"/>delete</p>
                 </div>
                 </div>
               )
@@ -222,22 +265,44 @@ class Sidebar extends Component {
 
           })}
 
+          {/* Modal to Add List or Edit Previous List */}
           <Modal open={this.state.open} 
-          onClose={() => this.setState({open: false, listName: ''})} center>
-          <h3 className='modal-title'><i className="fas fa-users"/> Add Client List</h3>
-          <div className="list-modal">
+          onClose={() => this.setState({open: false, listName: '', listInEdit: {} })} center>
+          {this.state.listInEdit.list_name ? 
+          <h3 className='modal-title'>Update List</h3>
+           :
+           <h3 className='modal-title'>
+           <i className="fas fa-users"/> Add Client List
+           </h3>}
 
           <Input
           className="clientinput"
           placeholder="Client List Name"
+          value={this.state.listName}
           onChange={e => this.setState({listName: e.target.value})}/>
 
-          <button type="button" className="btn btn-primary save full" 
-        onClick={this.saveList}
-        >+ Add List</button>
+          <div className="list-modal">
+
+          <button type="button" className="btn btn-primary save full" onClick={this.saveList}>
+          {this.state.listInEdit.list_name ? 
+          'Save List' : '+ Add List'}
+          </button>
 
           </div>
 
+          </Modal>
+
+         {/* Modal to check if user wants to delete list */}
+           <Modal open={this.state.deleteListCheck} 
+          onClose={() => this.setState({deleteListCheck: false, listName: '', listInEdit: {} })} center>
+            <h3 className='modal-title'> 
+            Delete {this.state.listInEdit.list_name}?
+            </h3>
+            <div className="list-modal">
+            <p>All Clients will be deleted.</p>
+
+            <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>Delete List</button>
+            </div>
           </Modal>
 
         </div>
@@ -254,6 +319,6 @@ function mapStateToProps(state){
 export default flow(
   DragDropContext(HTML5Backend),
 
-  connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList, updateClientModal})
+  connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProps})
 
 )(Sidebar)

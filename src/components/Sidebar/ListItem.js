@@ -67,12 +67,9 @@ const itemTarget = {
 
 class ListItem extends Component {
 
-	challenge = () => {
-		alert('the media')
-		console.log('anything')
-	}
-
   render() {
+	  console.log('list rerender items')
+
     const {item, isDragging, connectDragSource, 
     connectDropTarget} = this.props
 
@@ -90,8 +87,7 @@ class ListItem extends Component {
                   <p>
 
 				  <i id="menu-icon" className="fas fa-ellipsis-v menu-icon options-icon"
-				  onClick={() => this.props.optionsMenu(item)}
-				  onBlur={this.challenge}/>
+				  onClick={this.props.optionsMenu}/>
 
 					{item.list_name}
 					
