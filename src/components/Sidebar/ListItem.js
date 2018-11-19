@@ -68,8 +68,7 @@ const itemTarget = {
 class ListItem extends Component {
 
   render() {
-	  console.log('list rerender items')
-
+	  
     const {item, isDragging, connectDragSource, 
     connectDropTarget} = this.props
 

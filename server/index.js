@@ -91,7 +91,6 @@ app.get('/auth/callback', async (req, res) => {
 
 app.get('/api/user-info', (req, res) => {
     const {name, email, sub, picture} = req.session.user
-    console.log(req.session.user)
     const dbInstance = req.app.get('db')
     dbInstance.get_client_lists(sub).then(response => {
         var lists = response
