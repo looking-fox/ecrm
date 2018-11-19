@@ -8,7 +8,7 @@ const initialState = {
     lists: [],
     sessionTypes: [],
     clientModalOpen: false,
-    sessionModal: {open : false, new: true, session: {} },
+    sessionModal: {open : false, newSession: true, session: {} },
     clientSettingsModal: { open: false, client: {} }
 }
 

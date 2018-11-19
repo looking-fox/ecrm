@@ -28,10 +28,10 @@ class Sessions extends Component {
   openModal = (sessionInfo, index) => {
     if(sessionInfo.session_name){
       let session = {...sessionInfo, ...{ index } }
-      this.props.updateProps({sessionModal: {open: true, new: false, session: session} })
+      this.props.updateProps({sessionModal: {open: true, newSession: false, session: session} })
     }
     else {
-      this.props.updateProps({sessionModal: {open: true, new: true, session: {} }})
+      this.props.updateProps({sessionModal: {open: true, newSession: true, session: {} }})
     }
   }
 

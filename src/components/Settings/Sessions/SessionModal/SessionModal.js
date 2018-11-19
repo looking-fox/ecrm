@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './SessionModal.css'
+import ActionList from './ActionList/ActionList'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import axios from 'axios'
@@ -10,64 +11,37 @@ class SessionModal extends Component {
     constructor(){
         super()
         this.state = {
-          name: '',
-          action: '',
+          name: 'Session Name',
           price: '',
-          color: 'Purple',
-          actionList: [
-            {"name": "inquired"},
-            {"name": "emailed"},
-            {"name": "booked!"}
-          ]
+          color: 'Purple'
         }
       }
 
     componentDidUpdate(prevProps){
-        if(prevProps !== this.props){
+        if(prevProps.sessionModal.open !== this.props.sessionModal.open){
             const {sessionModal} = this.props
         
-            if(sessionModal.session && sessionModal.session.session_name){
-                const {session} = this.props.sessionModal
+            if(sessionModal.session){
+                if(sessionModal.session.session_name){
+                const {session_name, session_price, session_color} = this.props.sessionModal.session
                 this.setState({
-                    name: session.session_name,
-                    price: session.session_price,
-                    color: session.session_color,
-                    actionList: session.actions
+                    name: session_name,
+                    price: session_price,
+                    color: session_color
                 })
             }
+          }
         }
     }
-
-    addItem = (e) => {
-            //Modal list of action items, adding to array
-            if(e.key==="Enter"){
-                var newList = this.state.actionList
-                var newItem = {"name": this.state.action}
-            
-                newList.push(newItem)
-            
-                this.setState({
-                actionList: newList, 
-                action: ''
-                })
-                e.target.value = ''
-            }
-      }
     
-    deleteItem = (i) => {
-            //Modal list of action items, delete from array
-            var newList = this.state.actionList
-            newList.splice(i, 1)
-            this.setState({actionList: newList})
-      }
-
     saveSession = () => {
         //Axios call to store session in DB: name, color, price, actionList
+        const {actions} = this.props.sessionModal.session
         var sessionInfo = {
           name: this.state.name,
           price: this.state.price,
           color: this.state.color,
-          actionList: this.state.actionList
+          actionList: actions
         }
     
         //Need to add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
@@ -78,9 +52,7 @@ class SessionModal extends Component {
                 var newSessions = this.props.sessionTypes.slice()
                 newSessions.push(response.data[0])
                 this.props.updateProps({sessionTypes: newSessions})
-                //Reset to initial state
-                this.setState({ actionList: [ {"name": "inquired"},
-                {"name": "emailed"}, {"name": "booked!"}]  })
+                this.setState({})
                 //Close modal
                 this.onCloseModal()
             })
@@ -102,7 +74,6 @@ class SessionModal extends Component {
                 this.onCloseModal()
             })
 
-
             function addId(id){
                 return {...sessionInfo, ...{session_id: id}}
             }
@@ -111,19 +82,14 @@ class SessionModal extends Component {
     
       }
 
-
     onCloseModal = () => {
         //Props function to close modal and clear form on state
-        this.setState({name: '',
-        action: '',
-        price: '',
-        color: 'Purple',
-        actionList: [
-          {"name": "inquired"},
-          {"name": "emailed"},
-          {"name": "booked!"}
-        ]})
-        this.props.updateProps({sessionModal: {open: false, new: false, session: {} }})
+        this.setState({
+            name: 'Session Name',
+            price: '',
+            color: 'Purple'
+        })
+        this.props.updateProps({sessionModal: {open: false, newSession: false, session: {} }})
       };
 
 
@@ -171,28 +137,9 @@ class SessionModal extends Component {
 
           </div>
 
-          <div className="actioninfo">
-
-          <Input 
-          placeholder="Add Action"
-          fullWidth={true}
-          classes={{root: 'inputfield'}}
-          onChange={e => this.setState({action: e.target.value})}
-          onKeyDown={e => this.addItem(e)}
-          />
-
-          {this.state.actionList.map( (e,i) => (
-                <div className="actionitem" id={i}>
-            {/* Object.keys(e) returns the keys listed at the element.
-            Which is an array with one key value. Currying [0] returns the string value vs. the array of the string value. */}
-              <i className="far fa-check-circle"/>{e.name}
-              <i className="far fa-trash-alt deleteitem"
-              onClick={() => this.deleteItem(i)}/>
-                </div>
-              )
-          )}
-
-          </div>
+            <div className="actioninfo">
+                <ActionList/>
+            </div>
 
         </div>
 
