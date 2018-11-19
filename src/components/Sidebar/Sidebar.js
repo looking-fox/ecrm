@@ -85,15 +85,15 @@ class Sidebar extends Component {
     if(this.state.listInEdit.list_name){
         const {index, list_id} = this.state.listInEdit
         axios.put('/api/updatelist', {list_id, listName}).then(() => {
-          let updatedList = this.state.lists
+          let newList = this.state.lists
           let updatedListItem = this.state.lists[index]
          
           updatedListItem["list_name"] = listName
-          updatedList.splice(index, 1, updatedListItem)
+          newList.splice(index, 1, updatedListItem)
        
-          this.setState({open: false, lists: updatedList})
-          this.props.updateProps({lists: updatedList})
-          this.updateCurrentList(list_id)
+          this.setState({open: false, lists: newList, listInEdit: {}, listName: ''})
+          this.props.updateProps({lists: newList, listId: -1})
+
         })
     }
     else {
@@ -171,7 +171,7 @@ class Sidebar extends Component {
       axios.delete(`/api/deletelist/${list_id}`).then(() => {
       let newList = this.state.lists
       newList.splice(index, 1)
-      this.setState({deleteListCheck: false, lists: newList})
+      this.setState({deleteListCheck: false, lists: newList, listInEdit: {}, listName: '' })
       this.props.updateProps({listId: -1})
       })
 
@@ -278,6 +278,7 @@ class Sidebar extends Component {
           <Input
           className="clientinput"
           placeholder="Client List Name"
+          autoFocus={true}
           value={this.state.listName}
           onChange={e => this.setState({listName: e.target.value})}/>
 
