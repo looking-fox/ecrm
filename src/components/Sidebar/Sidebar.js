@@ -93,7 +93,7 @@ class Sidebar extends Component {
        
           this.setState({open: false, lists: newList, listInEdit: {}, listName: ''})
           this.props.updateProps({lists: newList, listId: -1})
-
+          this.props.updateProps({listId: list_id})
         })
     }
     else {
