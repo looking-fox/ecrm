@@ -14,15 +14,25 @@ const update = require('immutability-helper')
 
 
 class Sidebar extends Component {
+  
   constructor(){
     super()
     this.state = {
       open: false,
       lists: [],
-      listName: ''
+      listName: '',
+      optionsMenu: false
     }
+
+    //If options menu is open, but user clicks away--close menu.
+    window.addEventListener("click", (event) => {
+      if(event.target.id !== 'menu-icon' && this.state.optionsMenu){
+          this.setState({optionsMenu: false}) 
+      }
+    });
   }
 
+  
   componentDidMount(){
     axios.get('/api/user-info').then( res => {
       const {lists} = res.data
@@ -121,7 +131,8 @@ class Sidebar extends Component {
   }
 
   optionsMenu = (item) => {
-    console.log('item: ', item)
+    const {index_id, list_id, list_name} = item
+    this.setState({optionsMenu: !this.state.optionsMenu})
   }
 
   showAllClients = () => {
@@ -142,7 +153,7 @@ class Sidebar extends Component {
   
 
   render() {
-    
+    const isEditing = this.state.optionsMenu ? 'flex' : 'none'
     return (
         <div className="sidebar">
 
@@ -175,6 +186,7 @@ class Sidebar extends Component {
             
             if(this.props.listId===e.list_id){
               return (
+                <div>
                 <ListItem
                 item={e}
                 index={i}
@@ -186,6 +198,12 @@ class Sidebar extends Component {
                 moveListItem={this.moveListItem}
                 optionsMenu={this.optionsMenu}
                 />
+                <div className="options-menu" 
+                style={{ display: isEditing }}>
+                <p><i className="far fa-edit"/>edit</p>
+                <p><i className="far fa-trash-alt"/>delete</p>
+                </div>
+                </div>
               )
             }
             else {
