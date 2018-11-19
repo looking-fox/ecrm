@@ -76,7 +76,9 @@ class Sessions extends Component {
               return (
                 <div className="session" key={i}>
                     <div className="sessionmenu">
+                  <div className={`bubble session-type ${e.session_color}`}>
                       <h3>{e.session_name}</h3>
+                    </div>
                       <i className="far fa-edit"
                       onClick={() => this.openModal(e, i)}/>
                       <i className="far fa-trash-alt"

@@ -36,11 +36,6 @@
     margin-top: 50px;
 }
 
-.sessionmenu h3{
-    font-size: 1.3em;
-    font-weight: 600;
-    margin-right: 20px;
-}
 .sessionmenu i{
     color: #484848;
     font-size: 0.8em;
@@ -73,9 +68,10 @@
 }
 .title{
     font-family: 'Open Sans';
-    font-size: 1.5em;
-    font-weight: 600;
+    font-size: 1.1em;
+    font-weight: 700;
     text-align: center;
+    margin-top: 20px;
     margin-bottom: 20px;
     letter-spacing: 0;
 }
@@ -104,6 +100,11 @@ button.save{
     height: 30px;
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.session-type {
+    padding: 5px 15px;
+    margin-right: 10px;
 }
 
 .actioninfo{
@@ -139,6 +140,7 @@ button.save{
 .deleteitem:hover{
     opacity: 1;
     font-size: 1em;
+    cursor: pointer;
 }
 
 footer{

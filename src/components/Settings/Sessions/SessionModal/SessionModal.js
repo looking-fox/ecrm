@@ -113,7 +113,16 @@ class SessionModal extends Component {
 
 
     onCloseModal = () => {
-        //Props function to close modal
+        //Props function to close modal and clear form on state
+        this.setState({name: '',
+        action: '',
+        price: '',
+        color: 'Purple',
+        actionList: [
+          {"name": "inquired"},
+          {"name": "emailed"},
+          {"name": "booked!"}
+        ]})
         this.props.updateProps({sessionModal: {open: false, new: false, session: {} }})
       };
 
@@ -125,7 +134,10 @@ class SessionModal extends Component {
         <Modal open={sessionModal.open} onClose={this.onCloseModal} center>
             <h3 className="title">
                 {sessionModal.new ? `Add A Session` 
-                : `Edit ${sessionModal.session.session_name}`}
+                : 
+                <span className={`bubble ${this.state.color}`}>
+                {this.state.name}
+                </span>}
             </h3>
             <div className="sessionform">
           

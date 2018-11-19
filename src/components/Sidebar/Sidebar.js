@@ -223,7 +223,7 @@ class Sidebar extends Component {
 
           </div>
 
-          {this.props.lists.map((e,i) => {
+          {this.state.lists.map((e,i) => {
         //If propsId is itemId, this list is currently selected.
             
             if(this.props.listId===e.list_id){
