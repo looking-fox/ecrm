@@ -82,9 +82,15 @@ class ListItem extends Component {
             key={item.list_id} style={{ opacity }}
                 onClick={() => this.props.clickList(item)}>
                   <p>
-                    {item.list_name}
+
+				  <i className="fas fa-ellipsis-v menu-icon options-icon"
+				  onClick={() => this.props.optionsMenu(item)}/>
+
+					{item.list_name}
+					
                     <i onClick={() => this.props.openClient(item)}
-            className="fas fa-plus-circle add-client-in-list"/>
+            className="fas fa-plus-circle menu-icon add-icon"/>
+
                   </p>
             </div>
 			),

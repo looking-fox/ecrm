@@ -35,7 +35,7 @@
     cursor: pointer;
 }
 
-.menuitem:hover .add-client-list{
+.menuitem:hover .menu-icon{
     opacity: 1;
 }
 
@@ -64,14 +64,26 @@
     border-right: 4px solid #808080;
 }
 
-.add-client-list {
-    position: absolute;
-    right: 10px;
+.current-list:hover .menu-icon {
+    opacity: 1;
+}
+
+.menu-icon {
     color: #808080;
     opacity: 0;
 }
 
-.add-client-list:hover {
+.add-icon {
+    position: absolute;
+    right: 20px;
+}
+
+.options-icon {
+    position: absolute;
+    left: 20px;
+}
+
+.menu-icon:hover {
     color: #007bff;
     font-size: 1.2em;
 }

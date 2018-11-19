@@ -120,6 +120,10 @@ class Sidebar extends Component {
         }
   }
 
+  optionsMenu = (item) => {
+    console.log('item: ', item)
+  }
+
   showAllClients = () => {
     this.updateCurrentList(-1)
 
@@ -162,7 +166,7 @@ class Sidebar extends Component {
 
             <p><i className="fas fa-users"/>Clients</p>
             <i onClick={() => this.setState({open: true})}
-            className="fas fa-plus-circle add-client-list"/>
+            className="fas fa-plus-circle add-icon menu-icon"/>
 
           </div>
 
@@ -180,6 +184,7 @@ class Sidebar extends Component {
                 clickList={this.clickList}
                 openClient={this.openClient}
                 moveListItem={this.moveListItem}
+                optionsMenu={this.optionsMenu}
                 />
               )
             }
