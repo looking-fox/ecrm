@@ -83,13 +83,14 @@ module.exports = {
                     if(itemIndex <= actionList.length-1){
                         addDefaultActions()
                     }
+                    else {
+                        res.sendStatus(200)
+                    }
                 })
             }
             addDefaultActions()
             
-            dbInstance.get_new_session(sub).then(response => {
-                res.status(200).send(response)
-            })   
+             
         })
     },
 

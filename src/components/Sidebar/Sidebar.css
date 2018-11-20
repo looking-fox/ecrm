@@ -57,6 +57,7 @@
 .listitem:hover {
     background-color: #f9f6f6;
     border-right: 4px solid #808080;
+    position: relative;
 }
 
 .current-list {

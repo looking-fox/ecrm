@@ -55,6 +55,7 @@ class SessionModal extends Component {
     
     saveSession = () => {
         //Axios call to store session in DB: name, color, price, actionList
+
         const {actionList} = this.props
         var sessionInfo = {
           name: this.state.name,
@@ -63,7 +64,7 @@ class SessionModal extends Component {
           actionList
         }
     
-        //Need to add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
+        //TODO: add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
         
         if(this.props.sessionModal.newSession === true){
             //If new client
@@ -71,7 +72,7 @@ class SessionModal extends Component {
                 var newSessions = this.props.sessionTypes.slice()
                 newSessions.push(response.data[0])
                 this.props.updateProps({sessionTypes: newSessions})
-                this.setState({})
+    
                 //Close modal
                 this.onCloseModal()
             })
@@ -79,19 +80,15 @@ class SessionModal extends Component {
         }
         else {
             //If updating previous client
-            //TODO: Form axios/service to handle updating session.
+                
+            const newSessions = this.getNewActions()
+            this.props.updateProps({sessionTypes: newSessions})
+
             const {session_id} = this.props.sessionModal.session
             sessionInfo = addId(session_id)
-            axios.put('/api/updatesession', {sessionInfo}).then((response) => {
-                const {index} = this.props.sessionModal.session
-                let updatedSession = response.data[0]
-                let tempSessionTypes = this.props.sessionTypes
-                tempSessionTypes.splice(index, 1, updatedSession)
 
-                this.props.updateProps({ sessionTypes: tempSessionTypes })
-
-                this.onCloseModal()
-            })
+            axios.put('/api/updatesession', {sessionInfo})
+            .then(() => this.onCloseModal() )
 
             function addId(id){
                 return {...sessionInfo, ...{session_id: id}}
@@ -113,6 +110,15 @@ class SessionModal extends Component {
             actionList: [ {"name": "inquired"}, {"name": "emailed"},
             {"name": "booked!"} ] })
       };
+
+      getNewActions = () => {
+        //Returns new sessionType with updated actions
+        const {index} = this.props.sessionModal.session
+        let tempSessions = this.props.sessionTypes.slice()
+        const list = this.props.actionList
+        tempSessions[index]["actions"] = list
+        return tempSessions
+        }
 
 
   render() {
