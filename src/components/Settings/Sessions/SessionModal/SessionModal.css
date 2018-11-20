@@ -1,0 +1,16 @@
+.bubble-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.bubble-display {
+    min-width: 75px;
+    min-height: 1.2em;
+    padding: 5px 10px;
+}
+
+.action-container {
+    padding: 20px 30px;
+}

@@ -16,6 +16,7 @@
     "lodash.flow": "^3.5.0",
     "massive": "^5.5.1",
     "react": "^16.5.2",
+    "react-beautiful-dnd": "^10.0.1",
     "react-dnd": "^6.0.0",
     "react-dnd-html5-backend": "^6.0.0",
     "react-dom": "^16.5.2",
@@ -41,5 +42,13 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": {
+    "/api": {
+      "target": "https://www.lookingfox.com:3051"
+    },
+    "/auth/callback": {
+      "target": "https://www.lookingfox.com:3051"
+    }
+  }
 }

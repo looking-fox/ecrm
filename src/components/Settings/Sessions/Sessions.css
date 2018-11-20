@@ -78,7 +78,10 @@
 
 .sessioninfo{
     grid-column: 1;
-    padding: 20px 30px;
+    padding: 2px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .input{

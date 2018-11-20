@@ -6,12 +6,13 @@ import Input from '@material-ui/core/Input'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import { updateProps } from '../../../../redux/reducer'
+import {DragDropContext} from 'react-beautiful-dnd'
 
 class SessionModal extends Component {
     constructor(){
         super()
         this.state = {
-          name: 'Session Name',
+          name: '',
           price: '',
           color: 'Purple'
         }
@@ -23,7 +24,7 @@ class SessionModal extends Component {
         
             if(sessionModal.session){
                 if(sessionModal.session.session_name){
-                const {session_name, session_price, session_color} = this.props.sessionModal.session
+                const {session_name, session_price, session_color, actions} = this.props.sessionModal.session
                 this.setState({
                     name: session_name,
                     price: session_price,
@@ -33,20 +34,38 @@ class SessionModal extends Component {
           }
         }
     }
+
+    onDragEnd = result => {
+        const {destination, source, draggableId} = result
+
+        //If dropped outside droppable or same index just return
+        if(!destination) return
+        if(destination.droppableId === source.droppableId &&
+        destination.index === source.index) return 
+        
+        //Else splice and move to new position & update props
+        let movingItem = this.props.actionList[draggableId]
+        var newList = this.props.actionList
+        newList.splice(source.index, 1)
+        newList.splice(destination.index, 0, movingItem)
+        
+        this.props.updateProps({actionList: newList})
+        
+    }
     
     saveSession = () => {
         //Axios call to store session in DB: name, color, price, actionList
-        const {actions} = this.props.sessionModal.session
+        const {actionList} = this.props
         var sessionInfo = {
           name: this.state.name,
           price: this.state.price,
           color: this.state.color,
-          actionList: actions
+          actionList
         }
     
         //Need to add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
         
-        if(this.props.sessionModal.new === true){
+        if(this.props.sessionModal.newSession === true){
             //If new client
             axios.post('/api/storesession', {sessionInfo} ).then((response) => {
                 var newSessions = this.props.sessionTypes.slice()
@@ -89,7 +108,10 @@ class SessionModal extends Component {
             price: '',
             color: 'Purple'
         })
-        this.props.updateProps({sessionModal: {open: false, newSession: false, session: {} }})
+        this.props.updateProps({sessionModal: 
+            {open: false, newSession: false}, 
+            actionList: [ {"name": "inquired"}, {"name": "emailed"},
+            {"name": "booked!"} ] })
       };
 
 
@@ -101,9 +123,11 @@ class SessionModal extends Component {
             <h3 className="title">
                 {sessionModal.new ? `Add A Session` 
                 : 
-                <span className={`bubble ${this.state.color}`}>
+                <div className="bubble-container">
+                <div className={`bubble-display bubble ${this.state.color}`}>
                 {this.state.name}
-                </span>}
+                </div>
+                </div>}
             </h3>
             <div className="sessionform">
           
@@ -137,9 +161,9 @@ class SessionModal extends Component {
 
           </div>
 
-            <div className="actioninfo">
-                <ActionList/>
-            </div>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+                <ActionList/> 
+        </DragDropContext>
 
         </div>
 

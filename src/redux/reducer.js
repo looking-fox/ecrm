@@ -5,10 +5,12 @@ const initialState = {
     sub: '', 
     clients: [],
     actions: [],
+    actionList: [ {"name": "inquired"}, {"name": "emailed"},
+    {"name": "booked!"} ],
     lists: [],
     sessionTypes: [],
     clientModalOpen: false,
-    sessionModal: {open : false, newSession: true, session: {} },
+    sessionModal: { open : false, newSession: true },
     clientSettingsModal: { open: false, client: {} }
 }
 

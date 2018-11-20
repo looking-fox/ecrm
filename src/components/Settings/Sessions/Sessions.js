@@ -31,7 +31,7 @@ class Sessions extends Component {
       this.props.updateProps({sessionModal: {open: true, newSession: false, session: session} })
     }
     else {
-      this.props.updateProps({sessionModal: {open: true, newSession: true, session: {} }})
+      this.props.updateProps({sessionModal: {open: true, newSession: true }})
     }
   }
 

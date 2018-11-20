@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import ActionItem from './ActionItem'
 import Input from '@material-ui/core/Input'
 import {connect} from 'react-redux'
 import { updateProps } from '../../../../../redux/reducer'
-
+import { Droppable } from 'react-beautiful-dnd'
 
 class ActionList extends Component {
     constructor(){
@@ -21,11 +22,23 @@ class ActionList extends Component {
       if(this.props.sessionModal.session){
           const {session} = this.props.sessionModal
           if(session.session_name){
+              const {actions} = session
+              function getNames(){
+                  return actions.map(e => {
+                      return {name: e.name}
+                  } )
+              }
+              var newNames = getNames()
+              
+              this.setState({ actionList: newNames })
+              this.props.updateProps({actionList: newNames })
+          }
+          else {
               this.setState({
-                  actionList: session.actions
+                  actionList: this.props.actionList
               })
           }
-      }
+      }   
   }
 
   addItem = (e) => {
@@ -43,9 +56,7 @@ class ActionList extends Component {
 }
 
 updateActionItems = (newList) => {
-    const {open, newSession, session} = this.props.sessionModal
-    session["actions"] = newList
-    this.props.updateProps({sessionModal: {session, open, newSession}})
+    this.props.updateProps({actionList: newList})
 }
 
 deleteItem = (i) => {
@@ -58,7 +69,7 @@ deleteItem = (i) => {
 
   render() {
     return (
-        <div>
+        <div className="action-container">
                 <Input 
                 placeholder="Add Action"
                 fullWidth={true}
@@ -67,16 +78,25 @@ deleteItem = (i) => {
                 onKeyDown={e => this.addItem(e)}
                 />
 
-            {this.state.actionList.map( (e,i) => (
-                <div className="actionitem" id={i}>
+            <Droppable droppableId={'action-area'}>
+            {provided => (
+            <div ref={provided.innerRef}
+            {...provided.droppableProps}>
+                {this.props.actionList.map( (e,i) => (
+                    <ActionItem 
+                    key={i}
+                    item={e} 
+                    index={i}
+                    deleteItem={this.deleteItem}
+                    />
+                  )
+                )}
+                {provided.placeholder}
+            </div>
+            )}
+            </Droppable>
 
-              <i className="far fa-check-circle"/>{e.name}
-              <i className="far fa-trash-alt deleteitem"
-              onClick={() => this.deleteItem(i)}/>
-              
-                </div>
-              )
-          )}
+
         </div>
     )
   }
