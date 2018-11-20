@@ -70,7 +70,7 @@ class Sessions extends Component {
         <i className="fas fa-plus-square"/>
         Add Session
         </p>
-        
+        <div className="session-container"> 
             {this.props.sessionTypes.map((e,i) => {
              
               return (
@@ -95,6 +95,7 @@ class Sessions extends Component {
               </div>
               )
             })}
+          </div>
         
         </div>
     </div>
