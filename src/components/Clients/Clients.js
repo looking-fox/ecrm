@@ -5,6 +5,7 @@ import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import axios from 'axios';
+import keyBy from 'lodash.keyby'
 
 import {connect} from 'react-redux'
 import {updateClients, updateClientModal, updateClientSettingsModal, updateProps} from '../../redux/reducer'
@@ -24,27 +25,17 @@ class Clients extends Component {
   }
 
   //TODO AFTER USER TEST: 
-        //Color picker needs to work
         //Currency needs to check/add comma + currency
        
   //NON-MVP:
         //User icon will be new menu for settings, logout
-        //Drag and drop on session actions
-        //Drag and drop on client lists
         //Ability to add multiple "clients" big lists
+
 
   componentDidMount(){
     //Separating this out so I can call these actions twice. Trying to be functional at least until I can optimize my DB call to only return new clients. 
     this.getClients()
     
-  }
-
-  componentDidUpdate(prevProps){
-//Extra server call that isn't needed. We should separate the mapping function from the axios request to optimize getClients()
-    // if(!prevProps === this.props){
-    //   this.getClients()
-    // }
-
   }
 
   getClients(){
@@ -66,42 +57,10 @@ class Clients extends Component {
                  
     })
 
-    // axios.get('/api/getdefaultsessions').then(response => {
-    //   var sessionPromise = new Promise(resolve => {
-    //     var sessionMap = {}
-
-    //     response.data.map((e,i) => {
-    //       let stringForm = String(e.session_id)
-    //       sessionMap[stringForm] = e
-    //     })
-
-    //     resolve(sessionMap)
-    //   })
-    //   sessionPromise.then(value => {
-    //     this.props.updateProps({sessions: value})
-    //   })
-    // })
-
-
     axios.get('/api/getactions').then(response => {
-      
-      var actionPromise = new Promise(resolve => {
-        var actionMap = {}
-       
-        response.data.map((e,i) => {
-          //Set clientId as Key for actionMap object.
-          let stringForm = String(e.actions[0]["session_id"])
-          actionMap[stringForm] = e
-        })
-        resolve(actionMap)
-      })
-
-      actionPromise.then((value) => {
-        this.props.updateClients({actions: value})
-      })
-      
-      
-    
+      //keyBy maps session_id as key for actions array
+        var actionList = keyBy(response.data, "actions[0][session_id")
+        this.props.updateClients({actions: actionList})
     })
 
   }
@@ -151,15 +110,10 @@ class Clients extends Component {
         if(firstClient.client_id !==null){
 
             return this.props.clients
-
             .filter(e => {
-
               if(this.props.listId === -1) return true
-              else {
-                return e.list_id===this.props.listId
-              } 
-              
-            })
+              else return e.list_id===this.props.listId  
+              })
 
             .sort((a,b) => {
               return a.completed - b.completed
@@ -255,8 +209,6 @@ class Clients extends Component {
     this.props.updateClientModal({clientModalOpen: true})
   }
 
-
-
   render() {
     
     return (
@@ -285,8 +237,6 @@ class Clients extends Component {
     )
   }
 }
-
-
 
 function mapStateToProps(state){
   return {
