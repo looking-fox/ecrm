@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './ClientModal.css'
+import ClientActions from './ClientActions'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
@@ -14,7 +15,7 @@ class ClientModal extends Component {
         this.state = {
             sessionTypes: [],
             sessionIndex: 0,
-            sessionPrice: '',
+            price: '',
             sessionId: '',
             clientName: '',
             clientDate: '2019-06-10',
@@ -30,18 +31,19 @@ class ClientModal extends Component {
 
     componentDidUpdate(prevProps){
         if(prevProps !== this.props){
+            const {newClient} = this.props.clientSettingsModal
             this.getSessions()
 
-            if(this.props.clientSettingsModal.open){
+            if(newClient === false){
                 this.convertDateToMUI()
                 this.isEditingClient()
             }
             
-            if(!this.props.clientSettingsModal.open){
+            if(newClient === true){
                     this.setState({
                         sessionTypes: [],
                         sessionIndex: 0,
-                        sessionPrice: '',
+                        price: 0,
                         sessionId: '',
                         clientName: '',
                         clientDate: '2019-06-10',
@@ -55,27 +57,32 @@ class ClientModal extends Component {
 
     getSessions = () => {
         axios.get('/api/getsessiontypes').then(response => {
-
+            const sessions = response.data
+           
             //If user has no session types, they can't add a client. 
             //If user has no lists, they can't add clients. 
-            if(response.data[0]){
-                  if(response.data[0].session_id !== null){
+            if(sessions[0]){
+                  if(sessions[0].session_id !== null){
                       if(this.props.lists){
-                            this.setState({
-                            sessionTypes: response.data,
-                            sessionPrice: response.data[0].session_price,
-                            sessionId: response.data[0].session_id
-                            })
+                        this.setState({
+                          sessionTypes: sessions,
+                          sessionIndex: 0,
+                          sessionId: sessions[0]["session_id"],
+                          price: sessions[0]["session_price"]
+                        })
                       }       
                   }
               }
 
             //If user is editing a previous client, update State to reflect their sessionPrice--not the default session price.
-            if(this.props.clientSettingsModal.open){
+            const {newClient} = this.props.clientSettingsModal
+            
+            if(newClient === false){
                  this.isEditingClient()
             }
             else {
                 if(!this.props.clients[0]){
+            //TODO: Properly resolve if no sessions/lists
                 //     if(!this.props.clients[0]["client_id"]){
                 //     alert("You'll first want to head over to Settings > Sessions and add a few session types.")
                 // }
@@ -91,34 +98,36 @@ class ClientModal extends Component {
         this.setState({
             clientName: name,
             clientLocation: sessionLocation,
-            sessionPrice: sessionPrice,
+            price: sessionPrice,
             sessionId: sessionId
         })
-    
     }
 
     sessionPriceUpdater = (index) => {
+        const {sessionTypes} = this.state
+        
         this.setState({
-          sessionPrice: this.state.sessionTypes[index].session_price,
           sessionIndex: index,
-          sessionId: this.state.sessionTypes[index].session_id
+          sessionId: sessionTypes[index]["session_id"],
+          price: sessionTypes[index]["session_price"]
         })
+        
       }
 
     
       saveClient = () => {
-        
+        const {newClient} = this.props.clientSettingsModal
         let date = this.convertDate()
         
         var clientInfo = {
             name: this.state.clientName,
             date: date,
             location: this.state.clientLocation,
-            session_price: this.state.sessionPrice,
+            session_price: this.state.price,
             list_id: this.props.listId
         }
        
-        if(this.props.clientSettingsModal.open){
+        if(!newClient){
             //Editing and saving client if Id is stored in props.
             const {clientId, sessionId, actionList} = this.props.clientSettingsModal.client
             var index; 
@@ -134,15 +143,15 @@ class ClientModal extends Component {
                 }
             })
 
-            var newClient = Object.assign({}, this.props.clients[index],clientInfo)
+            var newClientObj = Object.assign({}, this.props.clients[index],clientInfo)
 
             var allClients = this.props.clients
-            allClients.splice(index, 1, newClient)
+            allClients.splice(index, 1, newClientObj)
            
             axios.put('/api/updateclient', {clientInfo}).then(() => {
                 this.props.updateClientModal({
                   clientModalOpen: false,
-                  clientSettingsModal: { open: false, client: {} },
+                  clientSettingsModal: { open: false, newClient: true, client: {} },
                   clients: allClients
                 })
             })
@@ -212,6 +221,7 @@ class ClientModal extends Component {
     
     
   render() {
+      const {newClient} = this.props.clientSettingsModal
     return (
         <Modal 
         open={this.props.clientModalOpen} 
@@ -219,8 +229,7 @@ class ClientModal extends Component {
     
         <h3 className="title">
         <i className="far fa-user-circle"/>
-        {this.props.clientSettingsModal.open ? 
-            "Update Client" : "Add Client"}
+        {newClient ?  "Add Client" : "Update Client"}
         </h3>
     
         <div className="addclientmodal">
@@ -234,7 +243,7 @@ class ClientModal extends Component {
           {
             //If new client, render session type dropdown.
             (() => {
-              if(!this.props.clientSettingsModal.client.clientId){
+              if(newClient){
                 return (
                 <select className="sessionmenu" 
                 onChange={e => this.sessionPriceUpdater(e.target.value)}>
@@ -251,7 +260,6 @@ class ClientModal extends Component {
               }
           })()
           }
-    
 
             <TextField
             id="date"
@@ -268,26 +276,33 @@ class ClientModal extends Component {
               defaultValue={this.state.clientLocation}
               onChange={e => this.setState({clientLocation: e.target.value})}/>
     
-
               
             {this.state.togglePriceEdit ? 
 
             <Input className="clientinput"
-            placeholder={this.state.sessionPrice}
-            defaultValue={this.state.sessionPrice}
+            placeholder={this.state.price}
+            defaultValue={this.state.price}
             onBlur={this.toggleEdit}
-            onChange={e => this.setState({sessionPrice: e.target.value})}/>
+            onChange={e => this.setState({price: e.target.value})}/>
             :
             <div className="clientprice" onClick={this.toggleEdit}> 
-             {this.state.sessionPrice}
+             {this.state.price}
             </div> 
             
             }
-                  
-              
-                  
 
-      
+            {/* Session Actions DnD */}
+            {/* If editing a client, render ClientActions */}
+            
+            {/* TODO: setState if editing, then render/change classnames, to make more readable than IIFE. */}
+            {
+               ( () => {
+                    if(!newClient) return <ClientActions/>  
+                } )()
+            }
+            
+             {/* Session Actions DnD */}
+                  
         </div>
     
             <footer>
@@ -296,8 +311,7 @@ class ClientModal extends Component {
             className="btn btn-primary save full" 
             onClick={this.saveClient}>
 
-            {this.props.clientSettingsModal.open ? 
-            "Save Client" : "+ Add Client"}
+            {newClient ? "+ Add Client" : "Save Client"}
 
             </button>
             </footer>
@@ -313,4 +327,5 @@ function mapStateToProps(state){
         ...this.props, ...state
     }
 }
+
 export default connect(mapStateToProps, {updateClientModal})(ClientModal)

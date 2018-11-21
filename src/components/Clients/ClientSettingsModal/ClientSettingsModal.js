@@ -16,7 +16,7 @@ class ClientSettingsModal extends Component {
 
   closeModal = () => {
     this.props.updateClientSettingsModal({ 
-      clientSettingsModal: {open: false, client: {}}
+      clientSettingsModal: {open: false, newClient: true, client: {}}
     })
   }
 
@@ -48,13 +48,14 @@ class ClientSettingsModal extends Component {
   }
     
   render() {
+    const {clientSettingsModal} = this.props
     return (
         <Modal 
-        open={this.props.clientSettingsModal['open']} 
+        open={clientSettingsModal["open"]} 
         onClose={this.closeModal} center>
 
           <h1 className="client-settings-modal-title">
-          <i className="far fa-user"/>{this.props.clientSettingsModal.client.name}
+          <i className="far fa-user"/>{clientSettingsModal.client.name}
           </h1>
 
           <div className="client-options">
@@ -80,7 +81,7 @@ class ClientSettingsModal extends Component {
                     <button type="button" 
                  className="btn btn-danger options"
                 onClick={this.deleteClient}>
-                  Yes, Delete {this.props.clientSettingsModal.client.name}
+                  Yes, Delete {clientSettingsModal.client.name}
                   </button>
                   </div>
 

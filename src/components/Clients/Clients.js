@@ -79,7 +79,7 @@ class Clients extends Component {
 
   openClientSettingsModal = (client) => {
     this.props.updateClientSettingsModal({
-      clientSettingsModal: {open: true, 
+      clientSettingsModal: {open: true, newClient: false,
         client: client}
     })
   }

@@ -43,13 +43,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": {
-    "/api": {
-      "target": "https://www.lookingfox.com:3051"
-    },
-    "/auth/callback": {
-      "target": "https://www.lookingfox.com:3051"
-    }
-  }
+  ]
 }
