@@ -43,16 +43,6 @@
     font-size: 2.2em;
 }
 
-.addclientmodal{
-    width: 30vw;
-    min-width: 400px;
-    height: 40vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Open Sans';
-    padding-bottom: 20px;
-    border-bottom: 1px solid #c4c4c4;
-}
 
 .title i {
     margin-right: 10px;

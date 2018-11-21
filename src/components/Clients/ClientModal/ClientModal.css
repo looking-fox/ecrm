@@ -1,4 +1,32 @@
 /* TODO: Bring over CSS from Clients.css  */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+.client-modal-container {
+    width: 50vw;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    column-gap: 20px;
+    padding: 0px 20px;
+    font-family: 'Open Sans';
+}
+
+.addclientmodal{ 
+    width:25vw;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Open Sans';
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c4c4c4;
+    grid-column: 1;
+}
+
+.action-panel {
+    grid-column: 2;
+    width: 25vw;
+    height: 100%;
+}
 
 .sessionmenu{
     margin-bottom: 20px;

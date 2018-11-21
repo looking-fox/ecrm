@@ -130,6 +130,12 @@ class ClientModal extends Component {
         if(!newClient){
             //Editing and saving client if Id is stored in props.
             const {clientId, sessionId, actionList} = this.props.clientSettingsModal.client
+
+            var updatedActions = this.props.actionList
+            
+            console.log(updatedActions === actionList)
+        
+
             var index; 
         
             clientInfo["client_id"] = clientId
@@ -210,7 +216,10 @@ class ClientModal extends Component {
 
     closeAndResetModal = () => {
 
-        this.props.updateClientModal({clientModalOpen: false})
+        this.props.updateClientModal({
+            clientSettingsModal: {open: false, newClient: true, client: {}},
+            clientModalOpen: false,
+        })
                             
     }
 
@@ -221,7 +230,10 @@ class ClientModal extends Component {
     
     
   render() {
-      const {newClient} = this.props.clientSettingsModal
+      const {newClient, client} = this.props.clientSettingsModal
+      const isEditing = newClient ? 
+      '' : 'client-modal-container'
+
     return (
         <Modal 
         open={this.props.clientModalOpen} 
@@ -231,7 +243,7 @@ class ClientModal extends Component {
         <i className="far fa-user-circle"/>
         {newClient ?  "Add Client" : "Update Client"}
         </h3>
-    
+    <div className={isEditing}>
         <div className="addclientmodal">
               <Input
               autoFocus={true}
@@ -289,31 +301,36 @@ class ClientModal extends Component {
              {this.state.price}
             </div> 
             
-            }
-
-            {/* Session Actions DnD */}
+            }                  
+        </div>
+    
+         {/* Session Actions DnD */}
             {/* If editing a client, render ClientActions */}
             
-            {/* TODO: setState if editing, then render/change classnames, to make more readable than IIFE. */}
             {
                ( () => {
-                    if(!newClient) return <ClientActions/>  
+                    if(!newClient){
+                    return (
+                    <div className="action-panel">
+                        <ClientActions/>
+                    </div>
+                      )
+                    }   
                 } )()
             }
             
-             {/* Session Actions DnD */}
-                  
+        {/* Session Actions DnD */}
+
         </div>
-    
+
             <footer>
+                <button type="button" 
+                className="btn btn-primary save full" 
+                onClick={this.saveClient}>
 
-            <button type="button" 
-            className="btn btn-primary save full" 
-            onClick={this.saveClient}>
+                {newClient ? "+ Add Client" : "Save Client"}
 
-            {newClient ? "+ Add Client" : "Save Client"}
-
-            </button>
+                </button>
             </footer>
     
         </Modal>

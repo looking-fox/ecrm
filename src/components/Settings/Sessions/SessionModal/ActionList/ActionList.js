@@ -18,17 +18,12 @@ class ActionList extends Component {
         }
     }
 
-  componentDidMount(){
+  componentDidMount =() => {
       if(this.props.sessionModal.session){
           const {session} = this.props.sessionModal
           if(session.session_name){
               const {actions} = session
-              function getNames(){
-                  return actions.map(e => {
-                      return {name: e.name}
-                  } )
-              }
-              var newNames = getNames()
+              var newNames = getNames(actions)
               
               this.setState({ actionList: newNames })
               this.props.updateProps({actionList: newNames })
@@ -39,6 +34,19 @@ class ActionList extends Component {
               })
           }
       }   
+
+        function getNames(actions){
+            return actions.map(e => {
+                return {name: e.name}
+            } )
+        }
+    }
+
+  componentDidUpdate(prevProps){
+      if(prevProps !== this.props){
+          const {actionList} = this.props
+          this.setState({actionList})
+      }
   }
 
   addItem = (e) => {
@@ -95,7 +103,6 @@ deleteItem = (i) => {
             </div>
             )}
             </Droppable>
-
 
         </div>
     )
