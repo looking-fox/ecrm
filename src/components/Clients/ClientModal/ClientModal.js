@@ -4,6 +4,7 @@ import ClientActions from './ClientActions'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
+import isEqualWith from 'lodash.isequalwith'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
 import axios from 'axios'
@@ -31,6 +32,7 @@ class ClientModal extends Component {
 
     componentDidUpdate(prevProps){
         if(prevProps !== this.props){
+
             const {newClient} = this.props.clientSettingsModal
             this.getSessions()
 
@@ -129,27 +131,27 @@ class ClientModal extends Component {
        
         if(!newClient){
             //Editing and saving client if Id is stored in props.
-            const {clientId, sessionId, actionList} = this.props.clientSettingsModal.client
-
-            var updatedActions = this.props.actionList
+            const { clientId, sessionId, index } = this.props.clientSettingsModal.client
             
-            console.log(updatedActions === actionList)
-        
+            var updatedActions = this.props.actionList
+            var clientOldActions = this.props.clients[index].actions
 
-            var index; 
-        
+            var sameValues = compareValues(clientOldActions, updatedActions)
+
+            if(sameValues){
+                console.log('samesies')
+            }
+            else {
+                console.log('not samesies')
+            }
+
+           
+
             clientInfo["client_id"] = clientId
             clientInfo["session_id"] =  sessionId
-            clientInfo["actions"] = actionList
+            
 
-            this.props.clients.map((e,i) => {
-                if(e.client_id === clientId){
-                    index = i
-                    return
-                }
-            })
-
-            var newClientObj = Object.assign({}, this.props.clients[index],clientInfo)
+            var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
 
             var allClients = this.props.clients
             allClients.splice(index, 1, newClientObj)
@@ -161,6 +163,15 @@ class ClientModal extends Component {
                   clients: allClients
                 })
             })
+
+            function compareValues(obj, otherObj){
+                for(let i = 0; i < obj.length; i++){
+             if(JSON.parse(obj[i]).name !== otherObj[i].name){
+                 return false
+                 }
+             }
+                return true
+            }
         }
 
         else {
