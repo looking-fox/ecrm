@@ -35,3 +35,30 @@
 .clientinput {
     margin-top: 20px;
 }
+
+.location-search-input {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+}
+
+.autocomplete-dropdown-container {
+    width: 90%;
+    position: absolute;
+    z-index: 2;
+    color: white;
+}
+
+.suggestion-item {
+    background: black;
+    padding: 10px 15px;
+}
+
+.suggestion-item--active {
+    background: #292929;
+    padding: 10px 15px;
+}

@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import './ClientModal.css'
 import ClientActions from './ClientActions'
+import LocationSearch from './LocationSearch'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
 import axios from 'axios'
+
 
 class ClientModal extends Component {
     constructor(){
@@ -231,6 +233,10 @@ class ClientModal extends Component {
         this.setState({clientDate: newString})
     }
 
+    updateLocation = (address) => {
+        this.setState({clientLocation: address})
+    }
+
     getIndex = (id) => {
         let index; 
         this.props.clients.map((e,i) => {
@@ -322,14 +328,13 @@ class ClientModal extends Component {
             onChange={e => this.setState({clientDate: e.target.value})}
             InputLabelProps={{
             shrink: true, }} />
-    
-              <Input
-              className="clientinput"
-              placeholder="Location"
-              defaultValue={this.state.clientLocation}
-              onChange={e => this.setState({clientLocation: e.target.value})}/>
-    
-              
+
+
+            <LocationSearch
+            updateLocation={this.updateLocation}
+            location={this.state.clientLocation}/>
+          
+
             {this.state.togglePriceEdit ? 
 
             <Input className="clientinput"

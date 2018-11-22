@@ -18,6 +18,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    overflow-x: hidden;
 }
 
 
@@ -28,6 +29,12 @@
     width: 180px;
     max-width: 180px;
     margin: 0px 5px;
+}
+
+.item p {
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .settings {
@@ -43,6 +50,10 @@
 
 .location i {
     margin-right: 5px;
+}
+
+.total {
+    padding-left: 3vw;
 }
 
 .location:hover * {
