@@ -82,6 +82,40 @@ module.exports = {
         })
     },
 
+    updateFullClient: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {name, session_id, date, location, client_id, session_price, actions} = req.body.clientInfo
+        var filteredActions = actions.map(e => e.name)
+        
+        dbInstance.update_full_client([sub, client_id, name, session_id, date, location, session_price, filteredActions])
+        .then(() => {
+            dbInstance.delete_actions([sub, session_id])
+        .then(() => {
+            addActions()
+        })
+        })
+            var itemIndex = 0
+            // (name, session_id, user_id, completed)
+            function addActions(){
+                //Recursively add items in order and avoid async issues
+                const {name} = actions[itemIndex]
+                let checked = actions[itemIndex]["completed"] ? 
+                true : false
+
+                dbInstance.replace_actions([name, session_id, sub, checked]).then(() => {
+                    itemIndex++
+                    if(itemIndex <= actions.length-1){
+                        addActions()
+                    }
+                    else {
+                        res.sendStatus(200)
+                    }
+                })
+            }
+            
+    },
+
     deleteClient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user

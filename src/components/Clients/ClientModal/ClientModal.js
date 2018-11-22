@@ -4,7 +4,6 @@ import ClientActions from './ClientActions'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
-import isEqualWith from 'lodash.isequalwith'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
 import axios from 'axios'
@@ -137,37 +136,45 @@ class ClientModal extends Component {
             var current = this.props.actionList
 
             var clientOldActions = this.props.clients[index]["actions"]
-
             var sameValues = compareValues(clientOldActions, current)
 
             clientInfo["client_id"] = clientId
             clientInfo["session_id"] =  sessionId
-            
+            clientInfo["actions"] = current
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
 
             var allClients = this.props.clients.slice()
-           
             allClients.splice(index, 1, newClientObj)
             
-           
-            axios.put('/api/updateclient', {clientInfo}).then(() => {
-                this.props.updateClientModal({
-                  clientModalOpen: false,
-                  clientSettingsModal: { open: false, newClient: true, client: {} },
-                  clients: allClients
-                })
-            })
+           if(sameValues){
+               delete clientInfo.actions
+            axios.put('/api/updateclient', {clientInfo} )
+             .then( () => this.clearForm(allClients) )
+            }
+
+            else {
+                axios.put('/api/updatefullclient', {clientInfo} )
+                .then( () => this.clearForm(allClients) )
+            }
 
             function compareValues(obj, otherObj){
+
                 for(let i = 0; i < obj.length; i++){
-             if(JSON.parse(obj[i]).name !== otherObj[i].name){
-                 return false
-                 }
-             }
-                return true
+                    if(typeof obj[i] === "string"){
+                        if(obj[i] !== otherObj[i].name){
+                            return false
+                        }
+                    }
+                    else {
+                        if(obj[i].name !== otherObj[i].name){
+                            return false
+                        }
+                    }
+                }
+                    return true
+                }  
             }
-        }
 
         else {
             //Client added to DB. Receive new Client (w/ ID) and client's actions. Updating front end via props.
@@ -228,6 +235,14 @@ class ClientModal extends Component {
             }
         })
         return index
+    }
+
+    clearForm = (newClientList) => {
+        this.props.updateClientModal({
+            clientModalOpen: false,
+            clientSettingsModal: { open: false, newClient: true, client: {} },
+            clients: newClientList
+          })
     }
 
     closeAndResetModal = () => {

@@ -188,6 +188,8 @@ app.post('/api/addlist', clients.addClientList)
 
 app.put('/api/updateclient', clients.updateClient)
 
+app.put('/api/updatefullclient', clients.updateFullClient)
+
 app.put('/api/clientcomplete', clients.clientComplete)
 
 app.delete('/api/deleteclient/:id', clients.deleteClient)

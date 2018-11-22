@@ -19,8 +19,11 @@ class ActionList extends Component {
     }
 
   componentDidMount =() => {
-      if(this.props.sessionModal.session){
-          const {session} = this.props.sessionModal
+      //If editing a client or a sessionType, put those actions on state and update props.
+      
+      const {sessionModal, clientSettingsModal} = this.props
+      if(sessionModal.session){
+          const {session} = sessionModal
           if(session.session_name){
               const {actions} = session
               var newNames = getNames(actions)
@@ -28,11 +31,15 @@ class ActionList extends Component {
               this.setState({ actionList: newNames })
               this.props.updateProps({actionList: newNames })
           }
-          else {
-              this.setState({
-                  actionList: this.props.actionList
-              })
-          }
+
+     if(!clientSettingsModal.newClient){
+        console.log('notta a new')
+        const {actionList} = clientSettingsModal.client
+
+        this.setState({actionList})
+        this.props.updateProps({actionList})
+     }
+
       }   
 
         function getNames(actions){
