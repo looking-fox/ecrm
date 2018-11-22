@@ -22,7 +22,6 @@ export default class LocationSearch extends Component {
     };
   
     handleSelect = address => {
-        console.log(address)
         this.setState({ address })
         this.props.updateLocation(address)
     };

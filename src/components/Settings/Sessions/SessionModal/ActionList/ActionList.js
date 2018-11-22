@@ -33,7 +33,6 @@ class ActionList extends Component {
           }
 
      if(!clientSettingsModal.newClient){
-        console.log('notta a new')
         const {actionList} = clientSettingsModal.client
 
         this.setState({actionList})
