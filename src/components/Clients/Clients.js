@@ -149,6 +149,7 @@ class Clients extends Component {
                         name={e.name}
                         index={i}
                         clientId={e.client_id}
+                        clientEmail={e.client_email}
                         sessionName={e.session_name}
                         sessionColor={e.session_color}
                         sessionPrice={e.session_price}
@@ -180,6 +181,7 @@ class Clients extends Component {
                         name={e.name}
                         index={i}
                         clientId={e.client_id}
+                        clientEmail={e.client_email}
                         sessionName={e.session_name}
                         sessionColor={e.session_color}
                         sessionPrice={e.session_price}

@@ -14,7 +14,7 @@ class SessionModal extends Component {
         this.state = {
           name: '',
           price: '',
-          color: 'Purple'
+          color: 'Blue'
         }
       }
 
@@ -103,7 +103,7 @@ class SessionModal extends Component {
         this.setState({
             name: 'Session Name',
             price: '',
-            color: 'Purple'
+            color: 'Blue'
         })
         this.props.updateProps({sessionModal: 
             {open: false, newSession: false}, 
@@ -126,15 +126,19 @@ class SessionModal extends Component {
 
     return (
         <Modal open={sessionModal.open} onClose={this.onCloseModal} center>
-            <h3 className="title">
-                {sessionModal.new ? `Add A Session` 
+                {sessionModal.new ? 
+                <p className="session-title"> 
+                Add A Session
+                </p>
                 : 
+                <h3 className="title">
                 <div className="bubble-container">
                 <div className={`bubble-display bubble ${this.state.color}`}>
                 {this.state.name}
                 </div>
-                </div>}
-            </h3>
+                </div>
+                </h3>}
+           
             <div className="sessionform">
           
 
@@ -167,14 +171,16 @@ class SessionModal extends Component {
 
           </div>
 
-        <DragDropContext onDragEnd={this.onDragEnd}>
-                <ActionList/> 
-        </DragDropContext>
-
+        <div className="session-action-panel">
+            <DragDropContext onDragEnd={this.onDragEnd}>
+                    <ActionList/> 
+            </DragDropContext>
+        </div>
+        
         </div>
 
-        <footer>
-        <button type="button" className="btn btn-primary save" 
+        <footer className="session-footer">
+        <button type="button" className="btn btn-primary save full" 
         onClick={this.saveSession}
         >Save</button>
         </footer>

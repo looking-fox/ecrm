@@ -14,3 +14,13 @@
 .action-container {
     padding: 20px 30px;
 }
+
+.session-action-panel {
+    height: 350px;
+    overflow-y: scroll;
+}
+.session-title {
+    font-size: 1.1em;
+    color: black;
+    background: blue;
+}

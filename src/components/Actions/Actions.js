@@ -103,6 +103,6 @@ export default class Actions extends Component {
             </div>
         )    
      }     
-     return <div>Loading...</div>
+     return <div className="loading">Loading...</div>
     }
 }

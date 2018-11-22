@@ -64,7 +64,7 @@
 }
 .sessionform{
     width: 700px;
-    height: 500px;
+    height: 400px;
     font-family: 'Open Sans';
     display: grid;
     grid-template-columns: 50% 50%;
@@ -73,7 +73,7 @@
 }
 .title{
     font-family: 'Open Sans';
-    font-size: 1.1em;
+    font-size: 1.3em;
     font-weight: 700;
     text-align: center;
     margin-top: 20px;
@@ -100,7 +100,12 @@ button.save{
     display: flex;
     justify-self: flex-end;
     align-self: flex-end;
+    background: #2d2d2d;
+    border: none;
+}
 
+button.save:hover {
+    background: #4b4b4b;
 }
 
 .colormenu{
@@ -153,9 +158,7 @@ button.save{
 
 footer{
     width: 100%;
-    height: 75px;
-    display: flex;
-    justify-content: flex-end;
+    margin-top: -20px;
 }
 
 

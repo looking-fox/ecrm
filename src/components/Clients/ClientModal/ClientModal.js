@@ -18,6 +18,7 @@ class ClientModal extends Component {
             price: '',
             sessionId: '',
             clientName: '',
+            clientEmail: '',
             clientDate: '2019-06-10',
             clientLocation: '',
             togglePriceEdit: false
@@ -47,6 +48,7 @@ class ClientModal extends Component {
                         price: 0,
                         sessionId: '',
                         clientName: '',
+                        clientEmail: '',
                         clientDate: '2019-06-10',
                         clientLocation: '',
                         togglePriceEdit: false
@@ -94,10 +96,11 @@ class ClientModal extends Component {
 
     isEditingClient = () => {
        //Updates local state with Client variables, if editing.
-        const {name, sessionLocation, sessionPrice, sessionId} = this.props.clientSettingsModal.client
-        
+        const {name, clientEmail, sessionLocation, sessionPrice, sessionId} = this.props.clientSettingsModal.client
+        console.log('yeaz email', clientEmail)
         this.setState({
             clientName: name,
+            clientEmail: clientEmail,
             clientLocation: sessionLocation,
             price: sessionPrice,
             sessionId: sessionId
@@ -122,6 +125,7 @@ class ClientModal extends Component {
         
         var clientInfo = {
             name: this.state.clientName,
+            clientEmail: this.state.clientEmail,
             date: date,
             location: this.state.clientLocation,
             session_price: this.state.price,
@@ -272,7 +276,7 @@ class ClientModal extends Component {
     
         <h3 className="title">
         <i className="far fa-user-circle"/>
-        {newClient ?  "Add Client" : "Update Client"}
+        {newClient ?  "Add Client" : `Edit ${client.name}`}
         </h3>
     <div className={isEditing}>
         <div className="addclientmodal">
@@ -282,6 +286,12 @@ class ClientModal extends Component {
               placeholder="Client's Name"
               defaultValue={this.state.clientName}
               onChange={e => this.setState({clientName: e.target.value})}/>
+
+              <Input
+              className="clientinput"
+              placeholder="Client's Email"
+              defaultValue={this.state.clientEmail}
+              onChange={e => this.setState({clientEmail: e.target.value})}/>
     
           {
             //If new client, render session type dropdown.
