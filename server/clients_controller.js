@@ -120,7 +120,7 @@ module.exports = {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
         const {id} = req.params
-
+        
         dbInstance.delete_client([sub, id]).then(() => {
             res.sendStatus(200)
         })

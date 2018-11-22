@@ -36,6 +36,7 @@
     letter-spacing: 0;
     font-size: 1em;
     margin-left: 20px;
+    position: relative;
 }
 .settings:hover {
     cursor: pointer;
@@ -85,6 +86,10 @@
 
 .LightGreen {
     background: #879a71;
+}
+
+.client-edit {
+   right: 0;
 }
 
 @keyframes fadeUpIn {

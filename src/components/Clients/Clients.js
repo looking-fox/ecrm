@@ -19,7 +19,8 @@ class Clients extends Component {
       noClients: false,
       sessions: [],
       sessionTypes: [],
-      sessionPrice: ''
+      sessionPrice: '',
+      deleteVerify: false
     }
     
   }
@@ -88,6 +89,15 @@ class Clients extends Component {
       clientSettingsModal: {open: true, newClient: false,
         client: client}
     })
+    
+  }
+
+  openClientModal = () => {
+    this.props.updateClientModal({clientModalOpen: true})
+  }
+
+  optDeleteModal = () => {
+    this.setState({deleteVerify: !this.state.deleteVerify})
   }
 
   deleteClient = (clientId) => {
@@ -108,7 +118,7 @@ class Clients extends Component {
 
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
-   
+    const {clientSettingsModal} = this.props
     let firstClient = this.props.clients[0]
     
     if(firstClient){
@@ -147,6 +157,8 @@ class Clients extends Component {
                         sessionLocation={e.location}
                         actionList={actionList}
                         goToMap={this.goToMap}
+                        openClientModal={this.openClientModal}
+                        optDeleteModal={this.optDeleteModal}
                         openClientSettingsModal={this.openClientSettingsModal}/>
             
                         <Actions 
@@ -176,6 +188,8 @@ class Clients extends Component {
                         sessionLocation={e.location}
                         actionList={actionList}
                         goToMap={this.goToMap}
+                        openClientModal={this.openClientModal}
+                        optDeleteModal={this.optDeleteModal}
                         openClientSettingsModal={this.openClientSettingsModal}/>
             
                         <Actions 
@@ -234,7 +248,9 @@ class Clients extends Component {
               <ClientModal/>
 
               <ClientSettingsModal {...this.props}
-              deleteClient={this.deleteClient}/>
+              deleteClient={this.deleteClient}
+              optDeleteModal={this.optDeleteModal}
+              deleteVerify={this.state.deleteVerify}/>
 
 
         {/* ------Modals------ */}

@@ -239,7 +239,7 @@ class Sidebar extends Component {
                 moveListItem={this.moveListItem}
                 optionsMenu={this.optionsMenu}
                 />
-                <div className="options-menu" 
+                <div className="options-menu sidebar-edit" 
                 style={{ display: isEditing }}>
                 <p onClick={() => this.updateList(e, i)}
                 ><i className="far fa-edit"/>edit</p>
