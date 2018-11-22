@@ -134,6 +134,11 @@ class Clients extends Component {
             .sort((a,b) => {
               return a.completed - b.completed
             })
+
+            // .sort((a,b) => {
+            //   if(a.name < b.name) return -1
+            //   else return 1
+            // })
             
             .map( (e, i) => {    
               if(this.props.actions[Object.keys(this.props.actions)[0]]){

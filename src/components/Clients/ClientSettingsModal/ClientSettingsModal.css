@@ -22,8 +22,10 @@
 .options {
     width: 350px;
     margin: 5px 0px;
+    background: #2d2d2d;
+    border: none;
 }
 
-.client-edit {
-    
+.options:hover {
+    background: #4b4b4b;
 }
