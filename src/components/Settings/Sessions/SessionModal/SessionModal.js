@@ -151,12 +151,12 @@ class SessionModal extends Component {
           <select className="colormenu" 
           value={this.state.color}
           onChange={e => this.setState({color: e.target.value})}>
-              <option value="Purple">Purple</option>
               <option value="Blue">Blue</option>
-              <option value="Red">Red</option>
+              <option value="LightBlue">Light Blue</option>
               <option value="Green">Green</option>
-              <option value="Orange">Orange</option>
-              <option value="Gray">Gray</option>
+              <option value="LightGreen">Light Green</option>
+              <option value="Goldenrod">Goldenrod</option>
+              <option value="Sandstone">Sandstone</option>
           </select>  
 
           <Input 
