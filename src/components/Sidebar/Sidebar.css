@@ -15,7 +15,7 @@
     align-items: center;
 }
 .topbar i:hover {
-    color: #919191;
+    color: #676767;
     cursor: pointer;
 }
 .profileimage{
@@ -86,7 +86,7 @@
 }
 
 .menu-icon:hover {
-    color: #007bff;
+    color: #676767;
     font-size: 1.2em;
 }
 

@@ -48,6 +48,10 @@ table {
 }
 a:hover {
 	text-decoration: none;
+	color: #616161
 }
 
+a {
+	color: black;
+}
 /* Will need to move this over to App and determine a color for links. */
