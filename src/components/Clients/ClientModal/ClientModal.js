@@ -131,21 +131,14 @@ class ClientModal extends Component {
        
         if(!newClient){
             //Editing and saving client if Id is stored in props.
-            const { clientId, sessionId, index } = this.props.clientSettingsModal.client
+            const { clientId, sessionId } = this.props.clientSettingsModal.client
             
-            var updatedActions = this.props.actionList
-            var clientOldActions = this.props.clients[index].actions
+            var index = this.getIndex(clientId)
+            var current = this.props.actionList
 
-            var sameValues = compareValues(clientOldActions, updatedActions)
+            var clientOldActions = this.props.clients[index]["actions"]
 
-            if(sameValues){
-                console.log('samesies')
-            }
-            else {
-                console.log('not samesies')
-            }
-
-           
+            var sameValues = compareValues(clientOldActions, current)
 
             clientInfo["client_id"] = clientId
             clientInfo["session_id"] =  sessionId
@@ -153,8 +146,10 @@ class ClientModal extends Component {
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
 
-            var allClients = this.props.clients
+            var allClients = this.props.clients.slice()
+           
             allClients.splice(index, 1, newClientObj)
+            
            
             axios.put('/api/updateclient', {clientInfo}).then(() => {
                 this.props.updateClientModal({
@@ -223,6 +218,16 @@ class ClientModal extends Component {
         newString = newString.join("-")
 
         this.setState({clientDate: newString})
+    }
+
+    getIndex = (id) => {
+        let index; 
+        this.props.clients.map((e,i) => {
+            if(e.client_id === id){
+                index = i
+            }
+        })
+        return index
     }
 
     closeAndResetModal = () => {

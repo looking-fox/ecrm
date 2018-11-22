@@ -72,7 +72,6 @@ module.exports = {
     },
 
     updateClient: (req, res) => {
-        console.log('body', req.body)
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
         const {name, session_id, date, location, client_id, session_price} = req.body.clientInfo
