@@ -67,13 +67,13 @@ app.get('/auth/callback', async (req, res) => {
     //If already in DB, redirect to dashboard.
     //If not, add them to DB first before redirecting.
     
-    dbInstance.check_user(sub).then((response) => {
+    dbInstance.check_user(sub).then( response => {
         if(response[0]){
             res.redirect('/#/dashboard')
         }
         else {
             dbInstance.store_user([sub, name, email]).then( () => {
-                res.redirect('/')
+                res.redirect('/#/dashboard/welcome')
             })
         }
     })
@@ -90,7 +90,6 @@ app.get('/auth/callback', async (req, res) => {
 //===============DB==================//
 
 app.get('/api/user-info', (req, res) => {
-
     const {name, email, sub, picture} = req.session.user
     
     const dbInstance = req.app.get('db')

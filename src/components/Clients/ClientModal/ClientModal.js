@@ -309,7 +309,8 @@ class ClientModal extends Component {
         
                       {this.state.sessionTypes.map( (e,i) => {
                         return (
-                          <option value={i} key={e.session_id}>         {e.session_name} 
+                          <option value={i} key={e.session_id}>         
+                            {e.session_name} 
                           </option>
                           )
                       })}
@@ -339,6 +340,7 @@ class ClientModal extends Component {
 
             <Input className="clientinput"
             placeholder={this.state.price}
+            autoFocus={true}
             defaultValue={this.state.price}
             onBlur={this.toggleEdit}
             onChange={e => this.setState({price: e.target.value})}/>

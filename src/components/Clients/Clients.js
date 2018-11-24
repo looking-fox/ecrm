@@ -5,7 +5,6 @@ import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import PaymentModal from './PaymentModal/PaymentModal'
-import Tutorial from './Tutorial/Tutorial'
 import axios from 'axios';
 import keyBy from 'lodash.keyby'
 
@@ -23,7 +22,7 @@ class Clients extends Component {
       sessionTypes: [],
       sessionPrice: '',
       deleteVerify: false,
-      showTutorial: true
+      showTutorial: false
     }
     
   }
@@ -38,7 +37,11 @@ class Clients extends Component {
 
   componentDidMount(){
     //Separating this out so I can call these actions twice. Trying to be functional at least until I can optimize my DB call to only return new clients. 
-    this.getClients()
+    
+      this.getClients()
+      console.log('props: ', this.props.history)
+     
+    
   }
 
   componentDidUpdate(prevProps){
@@ -101,10 +104,6 @@ class Clients extends Component {
 
   optDeleteModal = () => {
     this.setState({deleteVerify: !this.state.deleteVerify})
-  }
-
-  hideTutorial = () => {
-    this.setState({showTutorial: false})
   }
 
   deleteClient = (clientId) => {
@@ -267,10 +266,6 @@ class Clients extends Component {
               deleteVerify={this.state.deleteVerify}/>
 
               <PaymentModal/>
-
-              <Tutorial 
-              showTutorial={this.state.showTutorial}
-              hideTutorial={this.hideTutorial}/>
 
         {/* ------Modals------ */}
 

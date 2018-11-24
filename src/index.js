@@ -41,6 +41,15 @@ ReactDOM.render(
                 )
             }}/>
 
+            <Route path="/dashboard/welcome" render={(props) => {
+                return (
+                    <div style={{display: 'flex'}}>
+                        <Sidebar {...props}/>
+                        <Clients/>
+                    </div>
+                )
+            }}/>
+
             <Route exact path="/settings" render={(props) => {
                 return (
                     <div style={{display: 'flex'}}>

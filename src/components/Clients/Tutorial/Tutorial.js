@@ -12,11 +12,11 @@ export default class Tutorial extends Component {
         super()
         this.state = {
             progress: [
-                {complete: true},
-                {complete: false},
-                {complete: false},
-                {complete: false},
-                {complete: false}
+                {complete: true, id: 'a'},
+                {complete: false, id: 'b'},
+                {complete: false, id: 'c'},
+                {complete: false, id: 'd'},
+                {complete: false, id: 'e'}
             ],
             currentIndex: 0
         }
@@ -116,16 +116,16 @@ export default class Tutorial extends Component {
                 {/* Bottom Navigation */}
                 
                 <div className="progress">
-                    {this.state.progress.map((e,i) => {
+                    {this.state.progress.map( e => {
                         if(e.complete){
                             return (
-                            <div className="circle fill">
+                            <div className="circle fill" key={e.id}>
                             </div>
                             )
                         }
                         else {
                             return (
-                            <div className="circle unfill">
+                            <div className="circle unfill" key={e.id}>
                             </div>
                             )
                         }

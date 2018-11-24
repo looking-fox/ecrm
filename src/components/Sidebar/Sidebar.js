@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Sidebar.css'
-
+import Tutorial from '../Clients/Tutorial/Tutorial'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProps} from '../../redux/reducer'
@@ -23,7 +23,8 @@ class Sidebar extends Component {
       listName: '',
       optionsMenu: false,
       deleteListCheck: false,
-      listInEdit: {}
+      listInEdit: {},
+      showTutorial: false
     }
 
     //If options menu is open, but user clicks away--close menu.
@@ -37,19 +38,23 @@ class Sidebar extends Component {
   
   componentDidMount(){
     axios.get('/api/user-info').then( res => {
+      const {pathname} = this.props.history.location
       const {lists} = res.data
-
       this.setState({ lists }) 
       this.props.updateUser(res.data)
-
+      
       if(lists[0]){
             if(lists[0].list_id){
               let id = lists[0].list_id
               this.props.updateCurrentList( {listId: id} )
             }
       }
+      if(pathname === "/dashboard/welcome"){
+        this.setState({showTutorial: true})
+      }
      
     }).catch(error => {
+      console.log('user-info-error: ', error)
       //If 500 error with no user, redirect to home page. 
       this.props.history.push('/')
     })
@@ -77,7 +82,12 @@ class Sidebar extends Component {
 
     axios.post('/api/changelistorder', {swap} )
     
-	}
+  }
+  
+  //Hit enter key on input box to save list.
+  returnSave = (event) => {
+    if(event.keyCode === 13) this.saveList()
+  }
 
   saveList = () => {
     const {listName} = this.state
@@ -192,6 +202,10 @@ class Sidebar extends Component {
     })
   }
 
+  hideTutorial = () => {
+    this.setState({showTutorial: false})
+  }
+
   
 
   render() {
@@ -280,7 +294,8 @@ class Sidebar extends Component {
           placeholder="Client List Name"
           autoFocus={true}
           value={this.state.listName}
-          onChange={e => this.setState({listName: e.target.value})}/>
+          onChange={e => this.setState({listName: e.target.value})}
+          onKeyDown={e => this.returnSave(e)}/>
 
           <div className="list-modal">
 
@@ -295,6 +310,7 @@ class Sidebar extends Component {
 
          {/* Modal to check if user wants to delete list */}
            <Modal open={this.state.deleteListCheck} 
+          on
           onClose={() => this.setState({deleteListCheck: false, listName: '', listInEdit: {} })} center>
             <h3 className='modal-title'> 
             Delete {this.state.listInEdit.list_name}?
@@ -305,6 +321,10 @@ class Sidebar extends Component {
             <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>Delete List</button>
             </div>
           </Modal>
+
+          <Tutorial 
+          showTutorial={this.state.showTutorial}
+          hideTutorial={this.hideTutorial}/>
 
         </div>
     )
