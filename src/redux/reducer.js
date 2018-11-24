@@ -11,7 +11,8 @@ const initialState = {
     sessionTypes: [],
     clientModalOpen: false,
     sessionModal: { open : false, newSession: true },
-    clientSettingsModal: { open: false, newClient: true, client: {} }
+    clientSettingsModal: { open: false, newClient: true, client: {} },
+    paymentModal: {open: false, clientId: null}
 }
 
 const UPDATE_USER = 'UPDATE_USER'

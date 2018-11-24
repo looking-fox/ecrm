@@ -54,4 +54,8 @@ a:hover {
 a {
 	color: black;
 }
-/* Will need to move this over to App and determine a color for links. */
+
+select {
+	outline: none;
+}
+

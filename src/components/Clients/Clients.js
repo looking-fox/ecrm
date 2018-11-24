@@ -4,6 +4,8 @@ import Client from '../Client/Client'
 import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
+import PaymentModal from './PaymentModal/PaymentModal'
+import Tutorial from './Tutorial/Tutorial'
 import axios from 'axios';
 import keyBy from 'lodash.keyby'
 
@@ -20,7 +22,8 @@ class Clients extends Component {
       sessions: [],
       sessionTypes: [],
       sessionPrice: '',
-      deleteVerify: false
+      deleteVerify: false,
+      showTutorial: true
     }
     
   }
@@ -98,6 +101,10 @@ class Clients extends Component {
 
   optDeleteModal = () => {
     this.setState({deleteVerify: !this.state.deleteVerify})
+  }
+
+  hideTutorial = () => {
+    this.setState({showTutorial: false})
   }
 
   deleteClient = (clientId) => {
@@ -259,6 +266,11 @@ class Clients extends Component {
               optDeleteModal={this.optDeleteModal}
               deleteVerify={this.state.deleteVerify}/>
 
+              <PaymentModal/>
+
+              <Tutorial 
+              showTutorial={this.state.showTutorial}
+              hideTutorial={this.hideTutorial}/>
 
         {/* ------Modals------ */}
 
