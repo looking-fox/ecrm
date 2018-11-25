@@ -47,8 +47,8 @@ class Sessions extends Component {
   }
 
   deleteSession = (item, i) => {
-    //Delete session based on id which we get from sessions[index]
-    const {session_id} = this.props.sessionTypes[i]
+    //Delete session based on session_id
+    const {session_id} = item
     
     axios.delete(`/api/deletesession/${session_id}`).then( () => {
       let tempSessions = this.props.sessionTypes
