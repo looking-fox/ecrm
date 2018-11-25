@@ -7,12 +7,15 @@ import { updateProps } from '../../../redux/reducer'
 import Nav from '../Nav/Nav'
 import Actions from '../../Actions/Actions'
 import SessionModal from './SessionModal/SessionModal'
+import VerifyDeleteModal from './VerifyDeleteModal/VerifyDeleteModal'
 
 class Sessions extends Component {
   constructor(){
     super()
     this.state = {
-      sessionTypes: []
+      sessionTypes: [],
+      deleteModal: false,
+      session: {}
     }
   }
 
@@ -35,6 +38,10 @@ class Sessions extends Component {
     }
   }
 
+  openVerifyDelete = (item, index) => {
+    this.setState({ deleteModal: true, session: {item, index}  })
+  }
+
   editSession = (id) => {
     alert(`Id of Client: ${id}`)
   }
@@ -47,7 +54,7 @@ class Sessions extends Component {
       let tempSessions = this.props.sessionTypes
       tempSessions.splice(i, 1)
       this.props.updateProps({ sessionTypes: tempSessions })
-      this.setState({sessionTypes: tempSessions})
+      this.setState({sessionTypes: tempSessions, deleteModal: false})
     })
     
   }
@@ -82,7 +89,7 @@ class Sessions extends Component {
                       <i className="far fa-edit"
                       onClick={() => this.openModal(e, i)}/>
                       <i className="far fa-trash-alt"
-                      onClick={() => this.deleteSession(e, i)}/>
+                      onClick={() => this.openVerifyDelete(e,i)}/>
                     </div>
 
                     <div className="actions">
@@ -98,6 +105,13 @@ class Sessions extends Component {
           </div>
         
         </div>
+
+        <VerifyDeleteModal
+        open={this.state.deleteModal}
+        session={this.state.session}
+        deleteSession={this.deleteSession}/>
+
+
     </div>
         
     )
