@@ -127,6 +127,15 @@ module.exports = {
         
     },
 
+    moveClients: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {deleteId, moveId} = req.body
+        dbInstance.move_clients([sub, deleteId, moveId]).then(() => {
+            res.sendStatus(200)
+        })
+    },
+
     clientComplete: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user

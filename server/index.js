@@ -193,6 +193,8 @@ app.put('/api/clientcomplete', clients.clientComplete)
 
 app.delete('/api/deleteclient/:id', clients.deleteClient)
 
+app.put('/api/moveclients', clients.moveClients)
+
 //===============CLIENTS==================//
 
 

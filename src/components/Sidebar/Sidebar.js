@@ -25,6 +25,7 @@ class Sidebar extends Component {
       optionsMenu: false,
       deleteListCheck: false,
       listInEdit: {},
+      listToMove: null,
       showTutorial: false
     }
 
@@ -164,8 +165,19 @@ class Sidebar extends Component {
   }
 
   deleteListCheck = (list, index) => {
+    //Add index to list var that we verify user wants to delete.
+    //Set default listId to move clients to that isn't current list.
+
     let listWithIndex = {...list, ...{ index } }
-    this.setState({ listInEdit: listWithIndex, deleteListCheck: true })
+    let defaultListId = this.state.lists.filter(e => {
+      return e.list_id !== list.list_id
+    })[0].list_id
+
+    this.setState({ 
+      listInEdit: listWithIndex, 
+      deleteListCheck: true,
+      listToMove: defaultListId
+    })
   }
 
   updateList = (list, index) => {
@@ -180,10 +192,17 @@ class Sidebar extends Component {
       axios.delete(`/api/deletelist/${list_id}`).then(() => {
       let newList = this.state.lists
       newList.splice(index, 1)
-      this.setState({deleteListCheck: false, lists: newList, listInEdit: {}, listName: '' })
-      this.props.updateProps({listId: -1})
-      })
 
+      this.props.updateProps({listId: -1, lists: newList})
+      this.setState({deleteListCheck: false, lists: newList, listInEdit: {}, listName: '' })
+      })
+  }
+
+  moveClients = () => {
+    let deleteId = this.state.listInEdit.list_id
+    let moveId = this.state.listToMove
+    axios.put('/api/moveclients', {deleteId, moveId})
+    .then( () => this.deleteList() )
   }
 
   showAllClients = () => {
@@ -322,9 +341,32 @@ class Sidebar extends Component {
             Delete {this.state.listInEdit.list_name}?
             </h3>
             <div className="list-modal">
-            <p>All Clients will be deleted.</p>
+            <p> Move Clients to: </p>
 
-            <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>Delete List</button>
+            {/* select list to transfer */}
+
+            <select className="sessionmenu"
+            onChange={e => this.setState({listToMove: parseInt(e.target.value)})}> 
+                {this.state.lists
+                .filter(e => {
+                  return e.list_id !== this.state.listInEdit.list_id
+                })
+                .map( (e,i) => {
+                  return (
+                    <option value={e.list_id} key={e.list_id}>         
+                      {e.list_name} 
+                    </option>
+                    )
+                })}
+            </select>
+
+             {/* select list to transfer */}
+
+
+            <button type="button" className="btn btn-danger save full" onClick={this.moveClients}>Delete List and Move Clients</button>
+
+            <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>Delete List and Clients</button>
+
             </div>
           </Modal>
 
