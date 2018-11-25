@@ -10,8 +10,8 @@ class ActionList extends Component {
         super()
         this.state = {
             actionList: [
-                {"name": "inquired"},
-                {"name": "emailed"},
+                {"name": "inquirles"},
+                {"name": "emaily"},
                 {"name": "booked!"}
               ],
             action: ''
@@ -27,19 +27,18 @@ class ActionList extends Component {
           if(session.session_name){
               const {actions} = session
               var newNames = getNames(actions)
-              
               this.setState({ actionList: newNames })
-              this.props.updateProps({actionList: newNames })
+              this.props.updateProps({currentActions: newNames })
           }
-
-     if(!clientSettingsModal.newClient){
-        const {actionList} = clientSettingsModal.client
-
-        this.setState({actionList})
-        this.props.updateProps({actionList})
-     }
-
+        
       }   
+
+      if(!clientSettingsModal.newClient){
+        const {actionList} = clientSettingsModal.client
+        this.setState({actionList})
+        this.props.updateProps({currentActions: actionList})
+     }
+      
 
         function getNames(actions){
             return actions.map(e => {
@@ -50,8 +49,8 @@ class ActionList extends Component {
 
   componentDidUpdate(prevProps){
       if(prevProps !== this.props){
-          const {actionList} = this.props
-          this.setState({actionList})
+          const {currentActions} = this.props
+          this.setState({actionList: currentActions})
       }
   }
 
@@ -70,7 +69,7 @@ class ActionList extends Component {
 }
 
 updateActionItems = (newList) => {
-    this.props.updateProps({actionList: newList})
+    this.props.updateProps({currentActions: newList})
 }
 
 deleteItem = (i) => {
@@ -96,7 +95,7 @@ deleteItem = (i) => {
             {provided => (
             <div ref={provided.innerRef}
             {...provided.droppableProps}>
-                {this.props.actionList.map( (e,i) => (
+                {this.props.currentActions.map( (e,i) => (
                     <ActionItem 
                     key={i}
                     item={e} 

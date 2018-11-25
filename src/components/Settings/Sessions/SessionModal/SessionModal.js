@@ -44,24 +44,24 @@ class SessionModal extends Component {
         destination.index === source.index) return 
         
         //Else splice and move to new position & update props
-        let movingItem = this.props.actionList[draggableId]
-        var newList = this.props.actionList
+        let movingItem = this.props.currentActions[draggableId]
+        var newList = this.props.currentActions
         newList.splice(source.index, 1)
         newList.splice(destination.index, 0, movingItem)
         
-        this.props.updateProps({actionList: newList})
+        this.props.updateProps({currentActions: newList})
         
     }
     
     saveSession = () => {
         //Axios call to store session in DB: name, color, price, actionList
 
-        const {actionList} = this.props
+        const {currentActions} = this.props
         var sessionInfo = {
           name: this.state.name,
           price: this.state.price,
           color: this.state.color,
-          actionList
+          actionList: currentActions
         }
     
         //TODO: add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
@@ -115,7 +115,7 @@ class SessionModal extends Component {
         //Returns new sessionType with updated actions
         const {index} = this.props.sessionModal.session
         let tempSessions = this.props.sessionTypes.slice()
-        const list = this.props.actionList
+        const list = this.props.currentActions
         tempSessions[index]["actions"] = list
         return tempSessions
         }

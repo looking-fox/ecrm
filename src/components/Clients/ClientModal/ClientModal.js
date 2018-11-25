@@ -139,7 +139,7 @@ class ClientModal extends Component {
             const { clientId, sessionId } = this.props.clientSettingsModal.client
             
             var index = this.getIndex(clientId)
-            var current = this.props.actionList
+            var current = this.props.currentActions
 
             var clientOldActions = this.props.clients[index]["actions"]
             var sameValues = compareValues(clientOldActions, current)
@@ -165,7 +165,8 @@ class ClientModal extends Component {
             }
 
             function compareValues(obj, otherObj){
-
+                if(obj.length !== otherObj.length) return false
+                
                 for(let i = 0; i < obj.length; i++){
                     if(typeof obj[i] === "string"){
                         if(obj[i] !== otherObj[i].name){

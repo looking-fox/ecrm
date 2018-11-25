@@ -37,11 +37,7 @@ class Clients extends Component {
 
   componentDidMount(){
     //Separating this out so I can call these actions twice. Trying to be functional at least until I can optimize my DB call to only return new clients. 
-    
       this.getClients()
-      console.log('props: ', this.props.history)
-     
-    
   }
 
   componentDidUpdate(prevProps){

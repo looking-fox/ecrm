@@ -54,7 +54,6 @@ class Sidebar extends Component {
       }
      
     }).catch(error => {
-      console.log('user-info-error: ', error)
       //If 500 error with no user, redirect to home page. 
       this.props.history.push('/')
     })

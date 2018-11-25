@@ -8,7 +8,7 @@ class ClientActions extends Component {
 
   componentDidMount(){
     const {actionList} = this.props.clientSettingsModal.client
-    this.props.updateProps({ actionList })
+    this.props.updateProps({ currentActions: actionList })
   }
 
   onDragEnd = result => {
@@ -20,12 +20,12 @@ class ClientActions extends Component {
     destination.index === source.index) return 
     
     //Else splice and move to new position & update props
-    let movingItem = this.props.actionList[draggableId]
-    var newList = this.props.actionList
+    let movingItem = this.props.currentActions[draggableId]
+    var newList = this.props.currentActions
     newList.splice(source.index, 1)
     newList.splice(destination.index, 0, movingItem)
     
-    this.props.updateProps({actionList: newList})
+    this.props.updateProps({currentActions: newList})
     
 }
 
