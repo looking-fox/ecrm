@@ -10,8 +10,8 @@ class ActionList extends Component {
         super()
         this.state = {
             actionList: [
-                {"name": "inquirles"},
-                {"name": "emaily"},
+                {"name": "inquired"},
+                {"name": "emailed"},
                 {"name": "booked!"}
               ],
             action: ''

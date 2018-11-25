@@ -195,7 +195,7 @@ class ClientModal extends Component {
             axios.post('/api/addclient', {clientInfo} ).then( response => {
                 var allClients = this.props.clients
                 var newClient = response.data.client[0]
-                allClients.push(newClient)
+                allClients.unshift(newClient)
 
                 const {session_id} = response.data.client[0]
                 var allActions = this.props.actions
