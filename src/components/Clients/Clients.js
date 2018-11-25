@@ -245,13 +245,7 @@ class Clients extends Component {
 
         { this.renderClients() }
       
-          <div className="addclient">
-
-            <i className="fas fa-plus-circle"
-            onClick={this.openModal}/>
-
-          </div>
-
+      
         {/* ------Modals------ */}
 
               <ClientModal/>

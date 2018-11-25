@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Sidebar.css'
+import Logo from '../../assets/logo.png'
 import Tutorial from '../Clients/Tutorial/Tutorial'
 import axios from 'axios'
 import {connect} from 'react-redux'
@@ -143,8 +144,7 @@ class Sidebar extends Component {
                 }
             
           }
-        }
-        //TODO: Different alert statements for no client list or no sessions. 
+        } 
         else {
         alert("You'll first want to head over to Settings > Sessions and add a few session types.")
              }
@@ -278,6 +278,13 @@ class Sidebar extends Component {
 
           })}
 
+          <div className="sidebar-footer">
+            <img src={Logo} alt="Fox Logo"/>  
+            <i className="far fa-question-circle"
+            onClick={() => this.setState({showTutorial: !this.state.showTutorial})}/>
+          </div>
+
+
           {/* Modal to Add List or Edit Previous List */}
           <Modal open={this.state.open} 
           onClose={() => this.setState({open: false, listName: '', listInEdit: {} })} center>
@@ -324,7 +331,7 @@ class Sidebar extends Component {
           <Tutorial 
           showTutorial={this.state.showTutorial}
           hideTutorial={this.hideTutorial}/>
-
+          
         </div>
     )
   }
