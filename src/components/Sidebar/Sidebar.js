@@ -113,8 +113,8 @@ class Sidebar extends Component {
       let newList = response.data[0]
       let updatedList = this.state.lists
       updatedList.push(newList)
+      this.props.updateProps({lists: updatedList})
       this.setState({open: false, lists: updatedList})
-      //TODO: Update lists in props
     })
   }
   }
@@ -169,9 +169,13 @@ class Sidebar extends Component {
     //Set default listId to move clients to that isn't current list.
 
     let listWithIndex = {...list, ...{ index } }
-    let defaultListId = this.state.lists.filter(e => {
+    let defaultListId = 
+    this.state.lists.length > 1 ? 
+    this.state.lists.filter(e => {
       return e.list_id !== list.list_id
     })[0].list_id
+    :
+    this.state.lists[0].list_id
 
     this.setState({ 
       listInEdit: listWithIndex, 
@@ -338,13 +342,24 @@ class Sidebar extends Component {
           on
           onClose={() => this.setState({deleteListCheck: false, listName: '', listInEdit: {} })} center>
             <h3 className='modal-title'> 
+            {this.state.lists.length > 1 ? 
+            <p>
             Keep clients from {this.state.listInEdit.list_name}?
+            </p>
+            :
+            <p>
+            Delete {this.state.listInEdit.list_name}?
+            </p>
+            }
+            
             </h3>
             <div className="list-modal">
-            <p> Move Clients to: </p>
-
+            
             {/* select list to transfer */}
 
+            {this.state.lists.length > 1 ? 
+            <div>
+            <p> Move Clients to: </p>
             <select className="sessionmenu"
             onChange={e => this.setState({listToMove: parseInt(e.target.value)})}> 
                 {this.state.lists
@@ -359,13 +374,22 @@ class Sidebar extends Component {
                     )
                 })}
             </select>
+            </div>
+            :
+            ''}
 
              {/* select list to transfer */}
 
-
-            <button type="button" className="btn btn-danger save full" onClick={this.moveClients}>Yes, move clients first</button>
-
-            <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>No, delete everything</button>
+            {this.state.lists.length > 1 ? 
+            <div>
+              <button type="button" className="btn btn-danger save full" onClick={this.moveClients}>Yes, move clients first</button>
+              
+              <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>No, delete everything</button>
+            </div>
+            : 
+            <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>Delete List</button>
+            }
+            
 
             </div>
           </Modal>
