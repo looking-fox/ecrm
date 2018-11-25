@@ -224,11 +224,11 @@ class Clients extends Component {
         }
     }
    
-    if(this.state.noClients) {
+    if(this.props.noClients) {
       return (
         <div className="no-client-container">
           <i className="fas fa-campground"/>
-          <h1>welcome to basecamp!</h1>
+          <h1>welcome to looking fox!</h1>
           <p>head on over to settings > sessions to get started</p>
         </div>
       )

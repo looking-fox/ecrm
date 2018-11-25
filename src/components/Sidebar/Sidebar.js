@@ -338,7 +338,7 @@ class Sidebar extends Component {
           on
           onClose={() => this.setState({deleteListCheck: false, listName: '', listInEdit: {} })} center>
             <h3 className='modal-title'> 
-            Delete {this.state.listInEdit.list_name}?
+            Keep clients from {this.state.listInEdit.list_name}?
             </h3>
             <div className="list-modal">
             <p> Move Clients to: </p>
@@ -363,9 +363,9 @@ class Sidebar extends Component {
              {/* select list to transfer */}
 
 
-            <button type="button" className="btn btn-danger save full" onClick={this.moveClients}>Delete List and Move Clients</button>
+            <button type="button" className="btn btn-danger save full" onClick={this.moveClients}>Yes, move clients first</button>
 
-            <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>Delete List and Clients</button>
+            <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>No, delete everything</button>
 
             </div>
           </Modal>

@@ -127,7 +127,7 @@ class ClientModal extends Component {
         
         var clientInfo = {
             name: this.state.clientName,
-            clientEmail: this.state.clientEmail,
+            client_email: this.state.clientEmail,
             date: date,
             location: this.state.clientLocation,
             session_price: this.state.price,
@@ -150,8 +150,11 @@ class ClientModal extends Component {
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
 
-            var allClients = this.props.clients.slice()
-            allClients.splice(index, 1, newClientObj)
+            var allClients = (() => {
+                let prevClients = this.props.clients.slice()
+                prevClients[index] = newClientObj
+                return prevClients
+            })()
             
            if(sameValues){
                delete clientInfo.actions
@@ -257,19 +260,16 @@ class ClientModal extends Component {
     }
 
     closeAndResetModal = () => {
-
         this.props.updateClientModal({
             clientSettingsModal: {open: false, newClient: true, client: {}},
             clientModalOpen: false,
-        })
-                            
+        })                           
     }
 
     toggleEdit = () => {
         this.setState({togglePriceEdit: !this.state.togglePriceEdit})
     }
 
-    
     
   render() {
       const {newClient, client} = this.props.clientSettingsModal
@@ -386,7 +386,6 @@ class ClientModal extends Component {
     )
   }
 }
-
 
 function mapStateToProps(state){
     return {

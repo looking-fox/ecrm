@@ -15,7 +15,7 @@
 
 .client-options {
     width: 350px;
-    height: 13vh;
+    height: fit-content;
     font-family: 'Open Sans';
 }
 

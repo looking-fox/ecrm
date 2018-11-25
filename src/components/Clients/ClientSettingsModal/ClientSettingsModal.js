@@ -44,6 +44,9 @@ class ClientSettingsModal extends Component {
                     <h1 className="client-settings-modal-title">
                     Are you sure?
                     </h1> 
+                    <p style={{marginBottom: '20px', textAlign: 'center'}}>
+                      This will permanently delete your client.
+                    </p>
 
                     <button type="button" 
                 className="btn btn-danger options"
