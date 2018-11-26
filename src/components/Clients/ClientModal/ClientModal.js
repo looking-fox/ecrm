@@ -13,12 +13,13 @@ import axios from 'axios'
 class ClientModal extends Component {
     constructor(){
         super()
-
+        
         this.state = {
             sessionTypes: [],
             sessionIndex: 0,
             price: '',
             sessionId: '',
+            listId: null,
             clientName: '',
             clientEmail: '',
             clientDate: '2019-06-10',
@@ -73,7 +74,8 @@ class ClientModal extends Component {
                           sessionTypes: sessions,
                           sessionIndex: 0,
                           sessionId: sessions[0]["session_id"],
-                          price: sessions[0]["session_price"]
+                          price: sessions[0]["session_price"],
+                          listId: this.props.listId
                         })
                       }       
                   }
@@ -111,13 +113,11 @@ class ClientModal extends Component {
 
     sessionPriceUpdater = (index) => {
         const {sessionTypes} = this.state
-        
         this.setState({
           sessionIndex: index,
           sessionId: sessionTypes[index]["session_id"],
           price: sessionTypes[index]["session_price"]
         })
-        
       }
 
     
@@ -131,7 +131,7 @@ class ClientModal extends Component {
             date: date,
             location: this.state.clientLocation,
             session_price: this.state.price,
-            list_id: this.props.listId
+            list_id: this.state.listId
         }
        
         if(!newClient){
@@ -300,26 +300,34 @@ class ClientModal extends Component {
               defaultValue={this.state.clientEmail}
               onChange={e => this.setState({clientEmail: e.target.value})}/>
     
-          {
-            //If new client, render session type dropdown.
-            (() => {
-              if(newClient){
-                return (
+        
+        {/* If new client, select menu for choosing session type. If editing client, select menu for changing lists. Ternary "selected" value sets default to current list for client. */}
+
+          {newClient ? 
                 <select className="sessionmenu" 
                 onChange={e => this.sessionPriceUpdater(e.target.value)}>
-        
-                      {this.state.sessionTypes.map( (e,i) => {
+                        {this.state.sessionTypes.map( (e,i) => {
                         return (
-                          <option value={i} key={e.session_id}>      
+                            <option value={i} key={e.session_id}>      
                             {e.session_name} 
-                          </option>
-                          )
-                      })}
-                      
-              </select> 
-                )
-              }
-          })()
+                            </option>
+                            )
+                        })}      
+                </select> 
+            :
+            <select className="sessionmenu" 
+            onChange={e => this.setState({listId: parseInt(e.target.value)})}>
+                        {this.props.lists.map(e => {
+                            return e.list_id === this.props.listId ? 
+                            <option value={e.list_id} key={e.list_id} selected="selected">
+                                {e.list_name} 
+                            </option>
+                            :
+                            <option value={e.list_id} key={e.list_id}>      
+                            {e.list_name} 
+                            </option>
+                        })}      
+            </select>
           }
 
             <TextField
