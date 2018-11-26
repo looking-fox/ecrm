@@ -138,7 +138,13 @@ export default class Tutorial extends Component {
 
                 <i className="fas fa-arrow-left back arrow" onClick={this.goBack}/>
 
+                {this.state.currentIndex === 4 ? 
+                <button type="button" className="btn btn-dark done-button"
+                onClick={() => hideTutorial()}>Done</button>
+                :
                 <i className="fas fa-arrow-right forward arrow" onClick={this.goForward}/>
+                }
+                
 
 
                  {/* Bottom Navigation */}

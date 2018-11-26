@@ -82,3 +82,10 @@
 .unfill {
     background: #9b9b9b;
 }
+
+.done-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-family: 'Open Sans';
+}
