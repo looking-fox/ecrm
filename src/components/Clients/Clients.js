@@ -228,8 +228,8 @@ class Clients extends Component {
       return (
         <div className="no-client-container">
           <i className="fas fa-campground"/>
-          <h1>welcome to looking fox!</h1>
-          <p>head on over to settings > sessions to get started</p>
+          <h1>Welcome to Looking Fox!</h1>
+          <p>Head on over to settings > sessions to get started.</p>
         </div>
       )
     }
