@@ -164,7 +164,11 @@ class ClientModal extends Component {
 
             else {
                 axios.put('/api/updatefullclient', {clientInfo} )
-                .then( () => this.clearForm(allClients) )
+                .then( (response) => {
+                    let newActions = response.data.actions[0]
+                    let actionInfo = {newActions, sessionId}
+                    this.clearForm(allClients, actionInfo) 
+                })
             }
 
             function compareValues(obj, otherObj){
@@ -251,12 +255,29 @@ class ClientModal extends Component {
         return index
     }
 
-    clearForm = (newClientList) => {
-        this.props.updateClientModal({
-            clientModalOpen: false,
-            clientSettingsModal: { open: false, newClient: true, client: {} },
-            clients: newClientList
-          })
+    clearForm = (newClientList, actionInfo) => {
+        if(actionInfo){
+            const {newActions, sessionId} = actionInfo
+            let allActions = (() => {
+                let prevActions = Object.assign({}, this.props.actions)
+                prevActions[sessionId] = newActions
+                return prevActions
+            })()
+            this.props.updateClientModal({
+                clientModalOpen: false,
+                clientSettingsModal: { open: false, newClient: true, client: {} },
+                clients: newClientList,
+                actions: allActions
+            })
+        }
+        else {
+            this.props.updateClientModal({
+                clientModalOpen: false,
+                clientSettingsModal: { open: false, newClient: true, client: {} },
+                clients: newClientList
+            })
+        }
+        
     }
 
     closeAndResetModal = () => {

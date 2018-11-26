@@ -109,7 +109,9 @@ module.exports = {
                         addActions()
                     }
                     else {
-                        res.sendStatus(200)
+                        dbInstance.get_updated_client_actions([sub,session_id]).then(resp => {
+                            res.status(200).send({ actions: resp })
+                        }) 
                     }
                 })
             }
