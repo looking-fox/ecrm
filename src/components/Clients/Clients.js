@@ -140,16 +140,46 @@ class Clients extends Component {
               if(this.props.listId === -1) return true
               else return e.list_id===this.props.listId  
               })
-
+            
+            //Sort completed clients to bottom of list
             .sort((a,b) => {
               return a.completed - b.completed
             })
-
-            // .sort((a,b) => {
-            //   if(a.name < b.name) return -1
-            //   else return 1
-            // })
             
+            //Sort by most recent (default if not sorted), by client name, and by date. 
+            .sort((a,b) => {
+                    const {sort} = this.props.filterBar
+
+                    if(sort === 'name'){
+                      if(a.name < b.name) return -1
+                      else return 1
+                    }
+
+                    if(sort === 'date'){
+                      let aArr = a.date.split("/")
+                      let bArr = b.date.split("/")
+
+                        if(aArr[2] < bArr[2]) return -1
+
+                        else if (aArr[2] === bArr[2]){
+                              if(aArr[0] < bArr[0]) return -1
+
+                              else if(aArr[0] === bArr[0]){
+                                  if(aArr[1] < bArr[1]) return -1
+                                  else if(aArr[1] === bArr[1]){
+                                      if(a.name < b.name) return -1
+                                      else return 1
+                                  }
+                                  else return 1
+                              }
+
+                              else return 1
+                        }
+
+                        else return 1
+                    }
+            })
+
             .map( (e, i) => {    
               if(this.props.actions[Object.keys(this.props.actions)[0]]){
                 var id = e.session_id
