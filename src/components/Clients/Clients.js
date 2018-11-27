@@ -43,14 +43,15 @@ class Clients extends Component {
   componentDidUpdate(prevProps){
     if(prevProps !== this.props){
 
-      if(this.props.listId === -1){
-        this.getClients()
-      }
-      else {
-      const {clients} = this.props
-      this.setState({clients})
-      }
-
+        if(prevProps.listId !== this.props.listId){
+          if(this.props.listId === -1){
+            this.getClients()
+          }
+        }
+        else if (prevProps.clients !== this.props.clients) {
+          const {clients} = this.props
+          this.setState({clients})
+        }
     }
     
   }
@@ -262,7 +263,6 @@ class Clients extends Component {
   }
 
   render() {
-    
     return (
       <div className="clientdashboard">
 
