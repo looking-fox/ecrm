@@ -41,19 +41,19 @@ class Clients extends Component {
   }
 
   componentDidUpdate(prevProps){
-    if(prevProps !== this.props){
-
-        if(prevProps.listId !== this.props.listId){
-          if(this.props.listId === -1){
-            this.getClients()
+      if(prevProps !== this.props){
+          //If we change to All Clients--get new clients.
+          if(prevProps.listId !== this.props.listId){
+            if(this.props.listId === -1){
+              this.getClients()
+            }
           }
-        }
-        else if (prevProps.clients !== this.props.clients) {
-          const {clients} = this.props
-          this.setState({clients})
-        }
-    }
-    
+          //If Props.Clients change, update state. 
+          else if (prevProps.clients !== this.props.clients) {
+            const {clients} = this.props
+            this.setState({clients})
+          }
+      }
   }
 
   getClients(){
@@ -145,6 +145,15 @@ class Clients extends Component {
               if(this.props.listId === -1) return true
               else return e.list_id===this.props.listId  
               })
+            
+            .filter(e => {
+              const {sortSession} = this.props.filterBar
+              if(sortSession.value !== 0){
+                if(e.session_name === sortSession.value) return true
+                else return false
+              }
+              else return true
+            })
 
             //Sort completed clients to bottom of list
             .sort((a,b) => {
@@ -189,7 +198,7 @@ class Clients extends Component {
             })
 
             .map( (e, i) => {    
-              
+                
                 var id = e.session_id
                 var actionList = this.props.actions[id]["actions"]
           
@@ -268,7 +277,7 @@ class Clients extends Component {
 
         <FilterBar/>
 
-        { this.renderClients() }
+        { this.renderClients().length > 0 ? this.renderClients() : <div></div> }
       
       
         {/* ------Modals------ */}
