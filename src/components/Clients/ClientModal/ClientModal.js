@@ -100,14 +100,14 @@ class ClientModal extends Component {
 
     isEditingClient = () => {
        //Updates local state with Client variables, if editing.
-        const {name, clientEmail, sessionLocation, sessionPrice, sessionId} = this.props.clientSettingsModal.client
+        const {name, client_email, location, session_price, session_id} = this.props.clientSettingsModal.client.client
        
         this.setState({
             clientName: name,
-            clientEmail: clientEmail,
-            clientLocation: sessionLocation,
-            price: sessionPrice,
-            sessionId: sessionId
+            clientEmail: client_email,
+            clientLocation: location,
+            price: session_price,
+            sessionId: session_id
         })
     }
 
@@ -136,16 +136,16 @@ class ClientModal extends Component {
        
         if(!newClient){
             //Editing and saving client if Id is stored in props.
-            const { clientId, sessionId } = this.props.clientSettingsModal.client
+            const { client_id, session_id } = this.props.clientSettingsModal.client.client
             
-            var index = this.getIndex(clientId)
+            var index = this.getIndex(client_id)
             var current = this.props.currentActions
 
             var clientOldActions = this.props.clients[index]["actions"]
             var sameValues = compareValues(clientOldActions, current)
 
-            clientInfo["client_id"] = clientId
-            clientInfo["session_id"] =  sessionId
+            clientInfo["client_id"] = client_id
+            clientInfo["session_id"] =  session_id
             clientInfo["actions"] = current
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
@@ -166,7 +166,7 @@ class ClientModal extends Component {
                 axios.put('/api/updatefullclient', {clientInfo} )
                 .then( (response) => {
                     let newActions = response.data.actions[0]
-                    let actionInfo = {newActions, sessionId}
+                    let actionInfo = {newActions, session_id}
                     this.clearForm(allClients, actionInfo) 
                 })
             }
@@ -231,9 +231,8 @@ class ClientModal extends Component {
 
     //Convert DB date to MUI for user display.
     convertDateToMUI = () => {
-        const {sessionDate} = this.props.clientSettingsModal.client
-
-        var newString = sessionDate.replace(/[/]+/g, "-").split('-')
+        let clientDate = this.props.clientSettingsModal.client.client.date
+        var newString = clientDate.replace(/[/]+/g, "-").split('-')
         var year = newString.pop()
         newString.unshift(year)
         newString = newString.join("-")
@@ -258,10 +257,10 @@ class ClientModal extends Component {
     clearForm = (newClientList, actionInfo) => {
     //If we changed Client Actions, update Props.Actions with new items. Else just update Props.Clients. 
         if(actionInfo){
-            const {newActions, sessionId} = actionInfo
+            const {newActions, session_id} = actionInfo
             let allActions = (() => {
                 let prevActions = Object.assign({}, this.props.actions)
-                prevActions[sessionId] = newActions
+                prevActions[session_id] = newActions
                 return prevActions
             })()
             this.props.updateClientModal({

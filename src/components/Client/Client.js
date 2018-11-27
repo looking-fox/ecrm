@@ -7,8 +7,8 @@ export default class Client extends Component {
        this.state = {
          optionsMenu: false
        }
-       window.addEventListener("click", (event) => {
-        if(event.target.id !== `client-edit-icon-${this.props.clientId}` && this.state.optionsMenu){
+       window.addEventListener("click", event => {
+        if(event.target.id !== `client-edit-icon-${this.props.client.client_id}` && this.state.optionsMenu){
             this.setState({optionsMenu: false}) 
         }
       });
@@ -18,42 +18,44 @@ export default class Client extends Component {
      openOptionsMenu = () => {
       this.setState({optionsMenu: !this.state.optionsMenu})
       this.props.openClientSettingsModal(this.props)
+      
      }
 
   render(){
-  const openMenu = this.state.optionsMenu ? 'flex' : 'none'
-
+    const {name, client_id, session_name, session_color, session_price, date, location} = this.props.client
+    var openMenu = this.state.optionsMenu ? 'flex' : 'none'
+    
   return (
     <div className="clientcontainer">
 
         <div className="client">
 
             <div className="name item">
-            <p>{this.props.name}</p>
+            <p>{name}</p>
             </div>
 
             <div className="package item">
-            <span className={`bubble ${this.props.sessionColor}`}>{this.props.sessionName}</span>
+            <span className={`bubble ${session_color}`}>{session_name}</span>
             </div>
 
             <div className="date item">
-            <p>{this.props.sessionDate}</p>
+            <p>{date}</p>
             </div>
 
             <div className="location item"
-            onClick={() => this.props.goToMap(this.props.sessionLocation)}>
-            <p><i className="far fa-map"/>{this.props.sessionLocation}</p>
+            onClick={() => this.props.goToMap(location)}>
+            <p><i className="far fa-map"/>{location}</p>
             </div>
 
             <div className="total item">
-            <p>{this.props.sessionPrice}</p>
+            <p>{session_price}</p>
             </div>
 
             <div className="settings">
             <i className="fas fa-ellipsis-h"
-            id={`client-edit-icon-${this.props.clientId}`}
+            id={`client-edit-icon-${client_id}`}
             onClick={this.openOptionsMenu}/>
-
+ 
                   <div className="options-menu client-edit" 
                     style={{display: openMenu}}>
 

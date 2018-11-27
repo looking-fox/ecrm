@@ -68,6 +68,7 @@ class Clients extends Component {
                 this.props.updateClients({noClients: true})
               }
               else {
+
                 this.props.updateClients({ clients })
               }
         }
@@ -135,12 +136,15 @@ class Clients extends Component {
 
         if(firstClient.client_id !==null){
 
+          if(this.props.actions[Object.keys(this.props.actions)[0]]){
+
             return this.props.clients
+            //Filter clients based on List ID.
             .filter(e => {
               if(this.props.listId === -1) return true
               else return e.list_id===this.props.listId  
               })
-            
+
             //Sort completed clients to bottom of list
             .sort((a,b) => {
               return a.completed - b.completed
@@ -148,22 +152,25 @@ class Clients extends Component {
             
             //Sort by most recent (default if not sorted), by client name, and by date. 
             .sort((a,b) => {
-                    const {sort} = this.props.filterBar
+                    const {value} = this.props.filterBar.sort
+                    if(value === 'recent') return 
 
-                    if(sort === 'name'){
+                    if(value === 'name'){
                       if(a.name < b.name) return -1
                       else return 1
                     }
 
-                    if(sort === 'date'){
-                      let aArr = a.date.split("/")
+                    if(value === 'date'){
+                      let aArr = a.date.split("/") //['04', '30', '2019]
                       let bArr = b.date.split("/")
-
+                        //sort by year
                         if(aArr[2] < bArr[2]) return -1
 
+                        //same year, sort by month
                         else if (aArr[2] === bArr[2]){
                               if(aArr[0] < bArr[0]) return -1
 
+                              //same month, sort by day
                               else if(aArr[0] === bArr[0]){
                                   if(aArr[1] < bArr[1]) return -1
                                   else if(aArr[1] === bArr[1]){
@@ -181,26 +188,17 @@ class Clients extends Component {
             })
 
             .map( (e, i) => {    
-              if(this.props.actions[Object.keys(this.props.actions)[0]]){
+              
                 var id = e.session_id
                 var actionList = this.props.actions[id]["actions"]
-              }
-
-              if(e.completed===false){
-                return (
+          
+              return e.completed===false ?
+                
                   <div className="bar" key={e.client_id}>
             
                         <Client 
-                        name={e.name}
+                        client={e}
                         index={i}
-                        clientId={e.client_id}
-                        clientEmail={e.client_email}
-                        sessionName={e.session_name}
-                        sessionColor={e.session_color}
-                        sessionPrice={e.session_price}
-                        sessionId={e.session_id}
-                        sessionDate={e.date}
-                        sessionLocation={e.location}
                         actionList={actionList}
                         goToMap={this.goToMap}
                         openClientModal={this.openClientModal}
@@ -216,23 +214,13 @@ class Clients extends Component {
                         />
             
                   </div>
-                  )
-              }
-              else {
-                return (
+              :
+             
                   <div className="bar completed" key={e.client_id}>
             
                         <Client 
-                        name={e.name}
+                        client={e}
                         index={i}
-                        clientId={e.client_id}
-                        clientEmail={e.client_email}
-                        sessionName={e.session_name}
-                        sessionColor={e.session_color}
-                        sessionPrice={e.session_price}
-                        sessionId={e.session_id}
-                        sessionDate={e.date}
-                        sessionLocation={e.location}
                         actionList={actionList}
                         goToMap={this.goToMap}
                         openClientModal={this.openClientModal}
@@ -248,13 +236,10 @@ class Clients extends Component {
                         />
             
                   </div>
-                  )
-              }
-              
-            })
+              })
+            }
         }
-    }
-   
+      }
     if(this.props.noClients) {
       return (
         <div className="no-client-container">
