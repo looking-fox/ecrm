@@ -4,6 +4,7 @@ import Client from '../Client/Client'
 import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
+import FilterBar from './FilterBar/FilterBar'
 import PaymentModal from './PaymentModal/PaymentModal'
 import axios from 'axios';
 import keyBy from 'lodash.keyby'
@@ -249,6 +250,8 @@ class Clients extends Component {
     
     return (
       <div className="clientdashboard">
+
+        <FilterBar/>
 
         { this.renderClients() }
       

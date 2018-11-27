@@ -256,6 +256,7 @@ class ClientModal extends Component {
     }
 
     clearForm = (newClientList, actionInfo) => {
+    //If we changed Client Actions, update Props.Actions with new items. Else just update Props.Clients. 
         if(actionInfo){
             const {newActions, sessionId} = actionInfo
             let allActions = (() => {

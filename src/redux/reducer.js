@@ -9,6 +9,7 @@ const initialState = {
     {"name": "booked!"} ],
     lists: [],
     sessionTypes: [],
+    filterBar: {sort: 'recent', filter: 'none'},
     clientModalOpen: false,
     sessionModal: { open : false, newSession: true },
     clientSettingsModal: { open: false, newClient: true, client: {} },
