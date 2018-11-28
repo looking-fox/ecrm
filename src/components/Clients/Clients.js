@@ -277,7 +277,7 @@ class Clients extends Component {
 
         <FilterBar/>
 
-        { this.renderClients().length > 0 ? this.renderClients() : <div></div> }
+        { this.renderClients()[0] ? this.renderClients() : <div></div> }
       
       
         {/* ------Modals------ */}

@@ -3,9 +3,11 @@
 .clientdashboard {
     width: 85vw;
     height: fit-content;
+    min-height: 500px;
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: relative;
     padding: 0px 0px;
     margin-bottom: 50px;
     margin-left: 250px;

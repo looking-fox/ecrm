@@ -5,16 +5,13 @@ import {connect} from 'react-redux'
 import {updateProps} from '../../../redux/reducer'
 import axios from 'axios'
 
-
 //Sort Options: Sort by date, by name, by most recent, 
 //Filter Options: Completed, Incomplete, session types
-
 
 const options = [
   { value: 'date', label: <p className="menu-text"><i className="far fa-calendar"/> Chronological</p> },
   { value: 'name', label: <p className="menu-text"><i className="fas fa-sort-alpha-down"/> Name </p> }
 ]
-
 
 const customStyles = {
   container: (provided, state) => ({
@@ -50,7 +47,6 @@ class FilterBar extends Component {
       this.setState({ sessionOptions: updatedList })
     })
   }
-
 
   updateSort = (value) => {
     let newFilterBar = Object.assign({}, this.props.filterBar)
