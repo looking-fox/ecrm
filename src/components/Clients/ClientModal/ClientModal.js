@@ -304,7 +304,7 @@ class ClientModal extends Component {
     
         <h3 className="title">
         <i className="far fa-user-circle"/>
-        {newClient ?  "Add Client" : `Edit ${client.name}`}
+        {newClient ?  "Add Client" : `Edit ${client.client.name}`}
         </h3>
     <div className={isEditing}>
         <div className="addclientmodal">

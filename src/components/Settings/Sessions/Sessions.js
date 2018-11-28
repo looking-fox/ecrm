@@ -75,7 +75,7 @@ class Sessions extends Component {
 
         <p className="add" onClick={this.openModal}>
         <i className="fas fa-plus-square"/>
-        Add Session
+        Add Session Template
         </p>
         <div className="session-container"> 
             {this.props.sessionTypes.map((e,i) => {

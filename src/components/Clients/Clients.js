@@ -130,7 +130,6 @@ class Clients extends Component {
 
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
-    console.log('clients re-rendering!!!')
     const {clientSettingsModal} = this.props
     const {sort, sortSession, dateRange} = this.props.filterBar
     
