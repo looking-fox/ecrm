@@ -30,17 +30,18 @@ class Sessions extends Component {
       else {
         this.setState({ noSessions: true })
       }
+
       this.props.updateProps({sessionTypes: response.data})
     })
     
   }
 
   componentDidUpdate(prevProps){
-    if(prevProps.sessionTypes !== this.props.sessionTypes){
-      const {sessionTypes} = this.props
-      this.setState({ sessionTypes })
-    }
-  }
+      if(prevProps.sessionTypes !== this.props.sessionTypes){
+          var newTypes = this.props.sessionTypes.slice()
+          this.setState({ sessionTypes: newTypes })
+      }
+    } 
 
   openModal = (sessionInfo, index) => {
     if(sessionInfo.session_name){
@@ -72,7 +73,13 @@ class Sessions extends Component {
       let tempSessions = this.props.sessionTypes
       tempSessions.splice(i, 1)
       this.props.updateProps({ sessionTypes: tempSessions })
-      this.setState({sessionTypes: tempSessions, deleteModal: false})
+        
+        if(tempSessions.length === 0){
+          this.setState({sessionTypes: tempSessions, deleteModal: false, noSessions: true})
+        }
+        else {
+        this.setState({sessionTypes: tempSessions, deleteModal: false})
+        }
     })
     
   }
