@@ -155,11 +155,6 @@ class Clients extends Component {
               else return true
             })
 
-            //Sort completed clients to bottom of list
-            .sort((a,b) => {
-              return a.completed - b.completed
-            })
-            
             //Sort by most recent (default if not sorted), by client name, and by date. 
             .sort((a,b) => {
                     const {value} = this.props.filterBar.sort
@@ -195,6 +190,11 @@ class Clients extends Component {
 
                         else return 1
                     }
+            })
+
+            //Sort completed clients to bottom of list
+            .sort((a,b) => {
+              return a.completed - b.completed
             })
 
             .map( (e, i) => {    

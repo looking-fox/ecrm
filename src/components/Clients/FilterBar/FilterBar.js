@@ -11,9 +11,8 @@ import axios from 'axios'
 
 
 const options = [
-  { value: 'recent', label: <p className="menu-text"><i className="far fa-clock"/> Most Recent </p> },
-  { value: 'name', label: <p className="menu-text"><i className="fas fa-sort-alpha-down"/> Name </p> },
-  { value: 'date', label: <p className="menu-text"><i className="far fa-calendar"/> Date </p> }
+  { value: 'date', label: <p className="menu-text"><i className="far fa-calendar"/> Chronological</p> },
+  { value: 'name', label: <p className="menu-text"><i className="fas fa-sort-alpha-down"/> Name </p> }
 ]
 
 
@@ -22,7 +21,8 @@ const customStyles = {
     ...provided,
        width: 200,
        height: 'fit-content',
-       fontSize: '0.9em'
+       fontSize: '0.9em',
+       lineHeight: 'normal'
   }),
   control: (provided, state) => ({
     ...provided
@@ -32,7 +32,6 @@ const customStyles = {
     padding: 10
   })
 }
-
 
 class FilterBar extends Component {
   constructor(){
@@ -48,7 +47,6 @@ class FilterBar extends Component {
         return {value: e.session_name, label: e.session_name}
       })
       var updatedList = this.state.sessionOptions.slice().concat(newSessions)
-      console.log('updatedList: ', updatedList)
       this.setState({ sessionOptions: updatedList })
     })
   }

@@ -10,7 +10,7 @@ const initialState = {
     lists: [],
     sessionTypes: [],
     filterBar: {
-        sort: { value: 'recent', label: 'Most Recent' },
+        sort: { value: 'date', label: 'Chronological' },
         sortSession: { value: 0, label: 'All Sessions' }, 
         filter: 'none'},
     clientModalOpen: false,
