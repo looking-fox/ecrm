@@ -130,7 +130,10 @@ class Clients extends Component {
 
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
+    console.log('clients re-rendering!!!')
     const {clientSettingsModal} = this.props
+    const {sort, sortSession, dateRange} = this.props.filterBar
+    
     let firstClient = this.props.clients[0]
     
     if(firstClient){
@@ -146,8 +149,8 @@ class Clients extends Component {
               else return e.list_id===this.props.listId  
               })
             
+            //If actively filtering sessions, filter by session_name. IDs are per client. Name is consistent var for this case. 
             .filter(e => {
-              const {sortSession} = this.props.filterBar
               if(sortSession.value !== 0){
                 if(e.session_name === sortSession.value) return true
                 else return false
@@ -155,11 +158,30 @@ class Clients extends Component {
               else return true
             })
 
-            //Sort by most recent (default if not sorted), by client name, and by date. 
-            .sort((a,b) => {
-                    const {value} = this.props.filterBar.sort
-                    if(value === 'recent') return 
+            .filter(e => {
+              if(dateRange.start){
+                  const {start, end} = dateRange   // format: ["4", "30", "2018"]
+                  let startMonth = parseInt(start[0])
+                  let startYear = parseInt(start[2])
+                  let endMonth = parseInt(end[0])
+                  let endYear = parseInt(end[2])
+                  let clientMonth = parseInt(e.date.split("/")[0])
+                  let clientYear = parseInt(e.date.split("/")[2])
+                  
+                  if(clientYear >= startYear && clientYear <= endYear){  
+                    if(clientMonth >= startMonth && clientMonth <= endMonth){
+                      return true
+                    }
+                  }
+                  else return false
+                }
 
+                else return true
+            })
+
+            //Sort by date (default) or by name.
+            .sort((a,b) => {
+              const {value} = sort
                     if(value === 'name'){
                       if(a.name < b.name) return -1
                       else return 1
@@ -277,7 +299,8 @@ class Clients extends Component {
 
         <FilterBar/>
 
-        { this.renderClients()[0] ? this.renderClients() : <div></div> }
+
+        { this.renderClients() }
       
       
         {/* ------Modals------ */}

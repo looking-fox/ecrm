@@ -4,6 +4,7 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import {updateProps} from '../../../redux/reducer'
 import axios from 'axios'
+import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 
 //Sort Options: Sort by date, by name, by most recent, 
 //Filter Options: Completed, Incomplete, session types
@@ -34,7 +35,8 @@ class FilterBar extends Component {
   constructor(){
     super()
     this.state = {
-      sessionOptions: [{ value: 0, label: 'All Sessions' }]
+      sessionOptions: [{ value: 0, label: 'All Sessions' }],
+      date: [new Date(), new Date()]
     }
   }
   
@@ -60,7 +62,25 @@ class FilterBar extends Component {
     this.props.updateProps({ filterBar: newFilterBar})
   }
 
+  //Convert date value to ['10', '04', '2019] format and store as start, end keys on dateRange object. or Inactive if no value.
+  updateDateSort = (value) => {
+      this.setState({date: value})
+      let newFilterBar = Object.assign({}, this.props.filterBar)
+
+      if(value){
+        let start = value[0].toLocaleDateString().split('/')
+        let end = value[1].toLocaleDateString().split('/')
+        let dateRange = {start, end}
+        newFilterBar.dateRange = dateRange
+      }
+      else {
+        newFilterBar.dateRange = {inactive: true}
+      }
+      this.props.updateProps({ filterBar: newFilterBar })
+  }
+
   render() {
+    
     return (
       <div className="filter-bar">
             
@@ -82,6 +102,14 @@ class FilterBar extends Component {
             </div>
 
             <div className="menu">
+            <DateRangePicker
+            className="date-picker-menu"
+            maxDetail={"year"}
+            onChange={e => this.updateDateSort(e)}
+            value={this.state.date}/>
+           </div>
+
+            <div className="menu">
             <Select 
             onChange={ e => this.updateSort(e)}
             defaultValue={this.props.filterBar.sort}
@@ -97,7 +125,7 @@ class FilterBar extends Component {
               },
             })} />
             </div>
-
+            
       </div>
     )
   }

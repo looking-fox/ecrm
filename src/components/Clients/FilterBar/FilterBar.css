@@ -3,10 +3,11 @@
     height: 50px;
     background: #f9f6f6;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     position: relative;
-    z-index: 3
+    z-index: 3;
+    padding-right: 50px;
 }
 
 .menu {
@@ -16,4 +17,39 @@
 .menu-text i {
     margin-right: 5px;
     font-size: 1em;
+}
+
+.date-picker-menu * {
+   font-family: 'Open Sans';
+}
+
+.react-daterange-picker__wrapper {
+    padding: 4px 3px;
+    border-radius: 5px;
+    background: white;
+    align-items: center;
+    border: 1px rgb(194, 194, 194) solid !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.react-daterange-picker__wrapper * {
+    color: #3e3d3d;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: black !important;
+    font-weight: 600;
+}
+
+.react-daterange-picker__inputGroup {
+    min-width: 0px !important;
+    white-space: nowrap !important;
+    text-overflow: visible !important;
+}
+
+.react-daterange-picker__inputGroup__year {
+    width: fit-content!important;
+    margin-right: -1vw !important;
 }
