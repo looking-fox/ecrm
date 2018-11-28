@@ -97,17 +97,16 @@ class SessionModal extends Component {
         }
     
       }
-
     onCloseModal = () => {
         //Props function to close modal and clear form on state
         this.setState({
-            name: 'Session Name',
+            name: '',
             price: '',
             color: 'Blue'
         })
         this.props.updateProps({sessionModal: 
             {open: false, newSession: false}, 
-            actionList: [ {"name": "inquired"}, {"name": "emailed"},
+            currentActions: [ {"name": "inquired"}, {"name": "emailed"},
             {"name": "booked!"} ] })
       };
 

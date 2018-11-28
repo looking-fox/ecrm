@@ -15,17 +15,31 @@ class Sessions extends Component {
     this.state = {
       sessionTypes: [],
       deleteModal: false,
+      noSessions: false,
       session: {}
     }
   }
 
   componentDidMount(){
     //DB request to grab all current session types. 
+    //If no session types, display tutorial reminder.
     axios.get('/api/getsessions').then(response => {
+      if(response.data[0]){
+        this.setState({sessionTypes: response.data[0]})
+      }
+      else {
+        this.setState({ noSessions: true })
+      }
       this.props.updateProps({sessionTypes: response.data})
-      this.setState({sessionTypes: response.data})
     })
     
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.sessionTypes !== this.props.sessionTypes){
+      const {sessionTypes} = this.props
+      this.setState({ sessionTypes })
+    }
   }
 
   openModal = (sessionInfo, index) => {
@@ -36,6 +50,10 @@ class Sessions extends Component {
     else {
       this.props.updateProps({sessionModal: {open: true, newSession: true }})
     }
+  }
+
+  closeModal = () => {
+    this.setState({deleteModal: false})
   }
 
   openVerifyDelete = (item, index) => {
@@ -78,7 +96,10 @@ class Sessions extends Component {
         Add Session Template
         </p>
         <div className="session-container"> 
-            {this.props.sessionTypes.map((e,i) => {
+
+            {!this.state.noSessions ? 
+
+              this.props.sessionTypes.map((e,i) => {
              
               return (
                 <div className="session" key={i}>
@@ -101,13 +122,23 @@ class Sessions extends Component {
                     </div>
               </div>
               )
-            })}
+            })
+          :
+          <div className="no-sessions-prompt">
+              <i className="fas fa-clipboard-list"/>
+              <h1 className="title"> Time to set up your session templates! </h1>
+              <p>
+              Not every client is the same, but most clients are hiring you for a specific package/session. Setting up templates will help speed up your work flow. Once you have a session template, you can add a client list, and add your first client!
+              </p>
+          </div>
+          }
           </div>
         
         </div>
 
         <VerifyDeleteModal
         open={this.state.deleteModal}
+        close={this.closeModal}
         session={this.state.session}
         deleteSession={this.deleteSession}/>
 

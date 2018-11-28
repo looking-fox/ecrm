@@ -4,7 +4,7 @@ import Modal from 'react-responsive-modal'
 export default function VerifyDeleteModal(props) {
     const {item, index} = props.session
   return (
-    <Modal open={props.open} onClose={props.closeDeleteModal} center>
+    <Modal open={props.open} onClose={props.close} center>
          <h1 className="client-settings-modal-title">
                     Are you sure?
                     </h1> 

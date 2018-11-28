@@ -2,7 +2,7 @@ const initialState = {
     name: '',
     email: '',
     picture: '',
-    sub: '', 
+    sub: '',
     clients: [],
     actions: [],
     currentActions: [ {"name": "inquiry"}, {"name": "emailed"},
