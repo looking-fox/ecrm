@@ -40,8 +40,16 @@ class Sessions extends Component {
       if(prevProps.sessionTypes !== this.props.sessionTypes){
           var newTypes = this.props.sessionTypes.slice()
           this.setState({ sessionTypes: newTypes })
+          this.hasSessions()
       }
     } 
+  
+  hasSessions = () => {
+    //Hide tutorial if we now have sessions. 
+    if(this.state.sessionTypes.length){
+      this.setState({noSessions: false})
+    }
+  }
 
   openModal = (sessionInfo, index) => {
     if(sessionInfo.session_name){
