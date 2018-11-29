@@ -96,9 +96,10 @@ class Clients extends Component {
     window.open(url, '_blank')
   }
 
-  openPayments = (id) => {
-    this.props.updateProps({paymentModal: {open: true, clientId: id}})
-    alert(`Client ID: ${id}`)
+  openPayments = (info) => {
+    const {name, client_id} = info
+    let newPaymentInfo = {open: true, clientId: client_id, name: name}
+    this.props.updateProps({ paymentModal: newPaymentInfo })
   }
 
   openClientSettingsModal = (client) => {

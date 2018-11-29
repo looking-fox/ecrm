@@ -1,22 +1,134 @@
 .payment-container {
-    width: 500px;
-    height: 400px;
+    width: 600px;
+    height: 450px;
+    font-family: 'Open Sans';
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .payment-table {
     width: 100%;
     height: 90%;
-    padding: 20px 20px;
-    background: gray;
+    padding: 20px 10px;
+    overflow-y: scroll;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }
 
+.react-date-picker__inputGroup__month {
+    width: max-content !important;
+    text-align: center;
+}
+.react-date-picker__inputGroup__day {
+    width: max-content !important;
+    text-align: center;
+}
+
+.react-date-picker__inputGroup__year {
+    width: max-content !important;
+    text-align: center;
+}
+
+.react-date-picker__wrapper {
+    align-items: center;
+    padding: 2px;
+    border: none !important;
+}
+
+.react-date-picker__clear-button {
+    display: none;
+}
+
+.add-pay {
+    font-size: 1.3em;
+    position: absolute;
+    right: 20px;
+}
+
+.add-pay:hover {
+    color: #4b4b4b;
+}
+
+.top-row-input {
+    margin-bottom: 20px;
+}
+
+.row-input {
+    width: 80%;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.row-input:focus {
+    border-bottom: 2px solid #5959b6;
+}
+
+.progress-bar {
+    height: 20px;
+    width: 50%;
+    overflow: hidden;
+    border-radius: 3px;
+    background: #dcdcdc;
+}
+
+.progress-completed {
+    height: 100%;
+    background: #5959b6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
 .row {
     width: 100%;
     height: 40px;
-    background: white;
+    background: #f9f9f9;
     margin: 10px 0px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+}
+
+.row:nth-child(odd){
+    background: #ebebeb;
+}
+
+.pay {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.pay-amount {
+    width: 20%;
+    font-weight: 600;
+    border-right: 1px solid #cdcdcd;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.pay-date {
+    width: 30%;
+    justify-content: center;
+    border-right: 1px solid #cdcdcd;
+    position: relative;
+    overflow: visible;
+}
+
+.pay-description {
+    width: 50%;
+    padding-left: 20px;
+    justify-content: flex-start;
+    cursor: pointer;
 }

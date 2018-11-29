@@ -251,7 +251,6 @@ class ClientModal extends Component {
     }
 
     updateLocation = (locationInfo) => {
-        console.log('locationInfo: ', locationInfo)
         const {address, state, country} = locationInfo
         this.setState({
             clientLocation: address,
