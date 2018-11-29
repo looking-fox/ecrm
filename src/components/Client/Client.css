@@ -52,8 +52,17 @@
     margin-right: 5px;
 }
 
+.total i {
+    margin-right: 7px;
+}
+
 .total {
     padding-left: 3vw;
+}
+
+.total:hover * {
+    color: #676767;
+    cursor:pointer;
 }
 
 .location:hover * {

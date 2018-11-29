@@ -9,6 +9,7 @@ const path = require('path');
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const sessionActions = require('./sessionActions.controller')
+const payments = require('./payments_controller')
 
 const app = express()
 
@@ -196,6 +197,16 @@ app.delete('/api/deleteclient/:id', clients.deleteClient)
 app.put('/api/moveclients', clients.moveClients)
 
 //===============CLIENTS==================//
+
+
+
+//===============PAYMENTS==================//
+
+app.get('/api/getpayments/:id', payments.getPayments)
+
+//===============PAYMENTS==================//
+
+
 
 
 //============SENDGRID==================//

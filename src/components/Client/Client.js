@@ -7,6 +7,7 @@ export default class Client extends Component {
        this.state = {
          optionsMenu: false
        }
+       
        window.addEventListener("click", event => {
         if(event.target.id !== `client-edit-icon-${this.props.client.client_id}` && this.state.optionsMenu){
             this.setState({optionsMenu: false}) 
@@ -47,8 +48,9 @@ export default class Client extends Component {
             <p><i className="far fa-map"/>{location}</p>
             </div>
 
-            <div className="total item">
-            <p>{session_price}</p>
+            <div className="total item"
+            onClick={() => this.props.openPayments(client_id)}>
+            <p><i className="far fa-credit-card"/>{session_price}</p>
             </div>
 
             <div className="settings">

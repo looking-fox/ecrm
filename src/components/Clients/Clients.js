@@ -96,6 +96,11 @@ class Clients extends Component {
     window.open(url, '_blank')
   }
 
+  openPayments = (id) => {
+    this.props.updateProps({paymentModal: {open: true, clientId: id}})
+    alert(`Client ID: ${id}`)
+  }
+
   openClientSettingsModal = (client) => {
     this.props.updateClientSettingsModal({
       clientSettingsModal: {open: true, newClient: false,
@@ -232,6 +237,7 @@ class Clients extends Component {
                         index={i}
                         actionList={actionList}
                         goToMap={this.goToMap}
+                        openPayments={this.openPayments}
                         openClientModal={this.openClientModal}
                         optDeleteModal={this.optDeleteModal}
                         openClientSettingsModal={this.openClientSettingsModal}/>
@@ -254,6 +260,7 @@ class Clients extends Component {
                         index={i}
                         actionList={actionList}
                         goToMap={this.goToMap}
+                        openPayments={this.openPayments}
                         openClientModal={this.openClientModal}
                         optDeleteModal={this.optDeleteModal}
                         openClientSettingsModal={this.openClientSettingsModal}/>

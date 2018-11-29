@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './PaymentModal.css'
 import Modal from 'react-responsive-modal'
+import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateProps} from '../../../redux/reducer'
 
@@ -15,6 +16,18 @@ class PaymentModal extends Component {
             ]
         }
     }
+
+  componentDidUpdate(prevProps){
+    if(this.props.paymentModal.open){
+        const {clientId} = this.props.paymentModal
+
+        axios.get(`/api/getpayments/${clientId}`).then(response => {
+            console.log('Payment Response: ', response.data)
+        })
+        
+    }
+  }
+
   closeModal = () => {
     this.props.updateProps({paymentModal: {open: false, clientId: null }})
   }
