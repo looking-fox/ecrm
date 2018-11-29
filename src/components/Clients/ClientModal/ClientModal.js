@@ -137,6 +137,12 @@ class ClientModal extends Component {
             session_price: this.state.price,
             list_id: this.state.listId
         }
+
+        //If user didn't use dropdown, alert them to use dropdown.
+        if(!this.state.clientState){
+            alert('Please use the Google Search Selection for your locations! This ensures we can collect state + country information for tax purposes.')
+            return
+        }
        
         if(!newClient){
             //Editing and saving client if Id is stored in props.
@@ -245,6 +251,7 @@ class ClientModal extends Component {
     }
 
     updateLocation = (locationInfo) => {
+        console.log('locationInfo: ', locationInfo)
         const {address, state, country} = locationInfo
         this.setState({
             clientLocation: address,
