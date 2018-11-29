@@ -24,6 +24,8 @@ class ClientModal extends Component {
             clientEmail: '',
             clientDate: '2019-06-10',
             clientLocation: '',
+            clientState: '',
+            clientCountry: '',
             togglePriceEdit: false
         }
 
@@ -130,6 +132,8 @@ class ClientModal extends Component {
             client_email: this.state.clientEmail,
             date: date,
             location: this.state.clientLocation,
+            clientState: this.state.clientState,
+            clientCountry: this.state.clientCountry,
             session_price: this.state.price,
             list_id: this.state.listId
         }
@@ -240,8 +244,13 @@ class ClientModal extends Component {
         this.setState({clientDate: newString})
     }
 
-    updateLocation = (address) => {
-        this.setState({clientLocation: address})
+    updateLocation = (locationInfo) => {
+        const {address, state, country} = locationInfo
+        this.setState({
+            clientLocation: address,
+            clientState: state,
+            clientCountry: country
+        })
     }
 
     getIndex = (id) => {

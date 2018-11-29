@@ -11,13 +11,13 @@ module.exports = {
     addclient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, date, location, list_id, session_name, session_color, client_email, actions, session_price} = req.body.clientInfo
+        const {name, date, location, list_id, session_name, session_color, client_email, actions, session_price, clientState, clientCountry} = req.body.clientInfo
          
         dbInstance.store_session([session_name, session_color, session_price, actions, sub, false]).then(response => {
             const {session_id} = response[0]
         
          dbInstance
-        .add_client([sub, name, session_id, client_email, date, location, list_id])
+        .add_client([sub, name, session_id, client_email, date, location, list_id, clientState, clientCountry])
         .then((response) => {
             var client = response
 
@@ -74,9 +74,9 @@ module.exports = {
     updateClient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, session_id, client_email, date, location, client_id, session_price} = req.body.clientInfo
+        const {name, session_id, client_email, date, location, client_id, session_price, clientState, clientCountry} = req.body.clientInfo
         
-        dbInstance.update_client([sub, client_id, name, client_email, session_id, date, location, session_price])
+        dbInstance.update_client([sub, client_id, name, client_email, session_id, date, location, session_price, clientState, clientCountry])
         .then(() => {
             res.sendStatus(200)
         })
@@ -85,10 +85,10 @@ module.exports = {
     updateFullClient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, session_id, date, client_email, location, client_id, session_price, actions} = req.body.clientInfo
+        const {name, session_id, date, client_email, location, client_id, session_price, actions, clientState, clientCountry} = req.body.clientInfo
         var filteredActions = actions.map(e => e.name)
         
-        dbInstance.update_full_client([sub, client_id, name, session_id, client_email, date, location, session_price, filteredActions])
+        dbInstance.update_full_client([sub, client_id, name, session_id, client_email, date, location, session_price, filteredActions, clientState, clientCountry])
         .then(() => {
             dbInstance.delete_actions([sub, session_id])
         .then(() => {

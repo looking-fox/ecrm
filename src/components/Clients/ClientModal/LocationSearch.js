@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng,
-  } from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
+import filter from 'lodash.filter'
 
 export default class LocationSearch extends Component {
     constructor(props) {
@@ -21,9 +19,20 @@ export default class LocationSearch extends Component {
       this.setState({ address });
     };
   
+    
     handleSelect = address => {
-        this.setState({ address })
-        this.props.updateLocation(address)
+      //Determine State and Country via JSON response using lodash filter.
+      //Admin_Area_Level_1 is state, short_name example: 'MT'
+        geocodeByAddress(address).then(result => {
+          var addProps = result[0].address_components
+          var state = filter(addProps, {types: ["administrative_area_level_1"] })[0].short_name
+          var country = filter(addProps, {types: ["country"] })[0].short_name
+
+          this.setState({ address })
+          
+          let locationInfo = {address, state, country}
+          this.props.updateLocation(locationInfo)
+        })
     };
   
     render() {

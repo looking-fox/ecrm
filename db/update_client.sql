@@ -1,5 +1,5 @@
 update clients
-set name = $3, client_email = $4, session_id = $5, date = $6, location = $7
+set name = $3, client_email = $4, session_id = $5, date = $6, location = $7, state = $9, country = $10
 where user_id = $1 and client_id = $2;
 
 update sessions
