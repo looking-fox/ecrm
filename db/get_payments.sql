@@ -1,2 +1,3 @@
 select * from payments
-where user_id = $1 and client_id = $2;
+where user_id = $1 and client_id = $2
+order by payment_id;

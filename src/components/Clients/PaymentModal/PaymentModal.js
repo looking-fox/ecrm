@@ -13,7 +13,10 @@ class PaymentModal extends Component {
         super()
         this.state = {
             payments: [],
-            date: new Date()
+            amount: '',
+            date: new Date(),
+            description: ''
+            
         }
     }
   
@@ -25,6 +28,16 @@ class PaymentModal extends Component {
         })
         
     }
+  }
+
+  savePayment = () => {
+      const {amount, date, description} = this.state
+      const {clientId} = this.props.paymentModal
+      axios.post('/api/savepayment', {amount, date, description, clientId}).then((response) => {
+         var prevPayments = this.state.payments.slice()
+         prevPayments.push(response.data[0])
+         this.setState({payments: prevPayments})
+      })
   }
 
   closeModal = () => {
@@ -52,8 +65,10 @@ class PaymentModal extends Component {
                 <div className="row top-row-input">
                     <div className="pay pay-amount">
 
-                    <input className="row-input amount-input"
-                    placeholder="$50"/>
+                    <input 
+                    className="row-input amount-input"
+                    placeholder="$50"
+                    onChange={e => this.setState({amount: e.target.value})}/>
 
                     </div>
 
@@ -65,9 +80,13 @@ class PaymentModal extends Component {
 
                     <div className="pay pay-description">
 
-                       <input className="row-input"
-                       placeholder="Deposit"/>
-                       <i className="fas fa-plus-square add-pay"/>
+                       <input 
+                       className="row-input"
+                       placeholder="Deposit"
+                       onChange={e => this.setState({description: e.target.value})}/>
+
+                       <i className="fas fa-plus-square add-pay"
+                       onClick={this.savePayment}/>
                     </div>
                 </div>
 
