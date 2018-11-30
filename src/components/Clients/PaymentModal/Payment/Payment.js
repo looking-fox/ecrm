@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-date-picker'
-import axios from 'axios'
+
 
 export default class Payment extends Component {
   constructor(){
@@ -8,8 +8,7 @@ export default class Payment extends Component {
       this.state = {
           amount: '', 
           description: '',
-          date: new Date(), 
-          saved: false
+          date: new Date()
       }
   }
 
@@ -21,22 +20,22 @@ export default class Payment extends Component {
       }
   }
 
-  updatePayment = () => {
-      if(this.state.saved){
-          this.setState({saved: false})
-      }
-      const {amount, date, description} = this.state
-      const {client_id, payment_id} = this.props.payment
-      axios.put('/api/updatepayment', {amount, date, description, client_id, payment_id}).then(() => {
-          this.setState({saved: true})
-      })
-    
+  updateDate = (date, id) => {
+      this.setState({ date })
+      const {amount, description} = this.state
+      let newInfo = {amount, date, description}
+      this.props.updatePayment(id, newInfo)
   }
 
+
   render() {
-     const {saved} = this.state
+      const {payment, index} = this.props
+      const {amount, description, date} = this.state
+      let newInfo = {amount, description, date}
+      let id = payment.payment_id
+
     return (
-        <div className={saved ? "row save-payment" : "row"}>
+        <div className="row">
 
             <div className="pay pay-amount">
 
@@ -44,13 +43,14 @@ export default class Payment extends Component {
                 className="row-input amount-input"
                 placeholder="$50"
                 onChange={e => this.setState({amount: e.target.value})}
+                onBlur={e => this.props.updatePayment(id, newInfo, index) }
                 value={this.state.amount}/>
 
             </div>
 
             <div className="pay pay-date">
                 <DatePicker
-                onChange={e => this.setState({date: e})}
+                onChange={e => this.updateDate(e, id)}
                 value={this.state.date}/>
             </div>
 
@@ -60,10 +60,8 @@ export default class Payment extends Component {
                 className="row-input"
                 placeholder="Deposit"
                 value={this.state.description}
-                onChange={e => this.setState({description: e.target.value})}/>
-
-                <i className="fas fa-save add-pay"
-                onClick={this.updatePayment}/>
+                onChange={e => this.setState({description: e.target.value})}
+                onBlur={e => this.props.updatePayment(id, newInfo) }/>
 
             </div>
 

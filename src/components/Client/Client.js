@@ -49,7 +49,7 @@ export default class Client extends Component {
             </div>
 
             <div className="total item"
-            onClick={() => this.props.openPayments({name,client_id})}>
+            onClick={() => this.props.openPayments({name,client_id, session_price, session_color})}>
             <p><i className="far fa-credit-card"/>{session_price}</p>
             </div>
 

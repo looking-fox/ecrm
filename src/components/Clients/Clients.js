@@ -97,8 +97,8 @@ class Clients extends Component {
   }
 
   openPayments = (info) => {
-    const {name, client_id} = info
-    let newPaymentInfo = {open: true, clientId: client_id, name: name}
+    const {name, client_id, session_price, session_color} = info
+    let newPaymentInfo = {open: true, clientId: client_id, name: name, sessionPrice: session_price, sessionColor: session_color}
     this.props.updateProps({ paymentModal: newPaymentInfo })
   }
 

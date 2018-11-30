@@ -206,7 +206,7 @@ app.get('/api/getpayments/:id', payments.getPayments)
 
 app.post('/api/savepayment', payments.savePayment)
 
-app.put('/api/updatepayment', payments.updatePayment)
+app.put('/api/updatepayments', payments.updatePayments)
 
 //===============PAYMENTS==================//
 

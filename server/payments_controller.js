@@ -18,10 +18,26 @@ module.exports = {
         })
     }, 
 
-    updatePayment: (req, res) => {
+    updatePayments: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {amount, date, description, client_id, payment_id} = req.body
-        dbInstance.update_payment([sub, client_id, payment_id, amount, date, description]).then(() => res.sendStatus(200) )
+        const {updates} = req.body
+       
+        var arrayIDs = Object.keys(updates)
+        var length = arrayIDs.length -1 
+        var currentIndex = 0
+        
+        function storeUpdates(){
+            let index = arrayIDs[currentIndex]
+            const {payment_id, amount, date, description} = updates[index]
+            dbInstance.update_payment([sub, payment_id, amount, date, description]).then(() => {
+                currentIndex++
+
+                if(currentIndex <= length) storeUpdates()
+                else res.sendStatus(200)
+            })
+        }
+
+        storeUpdates()
     }
 }
