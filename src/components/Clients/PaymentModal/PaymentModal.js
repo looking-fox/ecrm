@@ -37,15 +37,18 @@ class PaymentModal extends Component {
   updateProgressBar = () => {
       if(this.state.payments[0]){
       const {sessionPrice} = this.props.paymentModal
-      const {payments} = this.state
-      let paid = payments.reduce((a,b) => {
+      let currentPayments = JSON.parse(JSON.stringify(this.state.payments.slice()))
+      let paid = currentPayments.reduce((a,b) => {
           a.amount += b.amount
           return a
       }).amount
+
       let filterSessionPrice = parseInt(sessionPrice.replace(/[$,]+/g, "") )
      
       let percentage = Math.round( paid / filterSessionPrice * 100 )
+     
       this.setState({paid: percentage, total: filterSessionPrice, noPayments: false})
+  
     }
     else {
         const {sessionPrice} = this.props.paymentModal
@@ -74,12 +77,14 @@ class PaymentModal extends Component {
   updatePayment = (id, newInfo, index) => {
     const {updates, payments} = this.state
     updates[id] = {...newInfo, ...{payment_id: id}}
-    console.log('index: ', index)
+    
     if(index){
         let newPayments = payments.slice()
         let newAmount = parseInt(newInfo.amount)
+        
         newPayments[index].amount = newAmount
         this.setState({ payments: newPayments, updates })
+        
         this.updateProgressBar()
     }
     else {
