@@ -46,6 +46,10 @@
     display: none;
 }
 
+.react-date-picker__calendar * {
+    font-family: 'Open Sans';
+}
+
 .add-pay {
     font-size: 1.3em;
     position: absolute;
@@ -81,6 +85,7 @@
 
 .progress-completed {
     height: 100%;
+    max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

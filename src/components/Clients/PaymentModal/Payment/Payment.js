@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-date-picker'
-
+import {convertRawMoney, convertToRawMoney} from '../../../../redux/functions'
 
 export default class Payment extends Component {
   constructor(){
@@ -16,8 +16,24 @@ export default class Payment extends Component {
       if(this.props.payment){
       const {amount, description, date} = this.props.payment
       var filterDate = new Date(date)
-      this.setState({ amount, description, date: filterDate })
+      var filterAmount = convertRawMoney(amount)
+      this.setState({ amount: filterAmount, description, date: filterDate })
       }
+  }
+
+  //Convert string input to raw integer on change. Set state to string value with commas/$ symbol. But pass up integer to store.
+  updateAmount = () => { 
+    if(this.state.amount){
+        const {amount, description, date} = this.state
+        let id = this.props.payment.payment_id
+        let intAmount = convertToRawMoney(amount)
+        let filterAmount = convertRawMoney(intAmount)
+
+        this.setState({amount: filterAmount}, () => {
+            let newInfo = {amount: intAmount, description, date}
+            this.props.updatePayment(id, newInfo, this.props.index)
+        })   
+    }
   }
 
   updateDate = (date, id) => {
@@ -43,7 +59,7 @@ export default class Payment extends Component {
                 className="row-input amount-input"
                 placeholder="$50"
                 onChange={e => this.setState({amount: e.target.value})}
-                onBlur={e => this.props.updatePayment(id, newInfo, index) }
+                onBlur={() => this.updateAmount() }
                 value={this.state.amount}/>
 
             </div>

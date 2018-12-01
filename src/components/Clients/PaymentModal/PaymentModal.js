@@ -6,7 +6,7 @@ import DatePicker from 'react-date-picker'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateProps} from '../../../redux/reducer'
-
+import {convertToRawMoney, convertRawMoney} from '../../../redux/functions'
 
 class PaymentModal extends Component {
     constructor(){
@@ -26,6 +26,7 @@ class PaymentModal extends Component {
   componentDidUpdate(prevProps){
     if(prevProps.paymentModal !== this.props.paymentModal){
         const {clientId} = this.props.paymentModal
+       
         axios.get(`/api/getpayments/${clientId}`).then(response => {
             this.setState({payments: response.data})
             this.updateProgressBar()
@@ -34,17 +35,18 @@ class PaymentModal extends Component {
   }
 
   //Determine perecent of amount paid vs session price. Update UI.
+  //currentPayments makes deep copy of [{}] to avoid changing state.
   updateProgressBar = () => {
       if(this.state.payments[0]){
       const {sessionPrice} = this.props.paymentModal
       let currentPayments = JSON.parse(JSON.stringify(this.state.payments.slice()))
+      
       let paid = currentPayments.reduce((a,b) => {
           a.amount += b.amount
           return a
       }).amount
 
       let filterSessionPrice = parseInt(sessionPrice.replace(/[$,]+/g, "") )
-     
       let percentage = Math.round( paid / filterSessionPrice * 100 )
      
       this.setState({paid: percentage, total: filterSessionPrice, noPayments: false})
@@ -57,20 +59,32 @@ class PaymentModal extends Component {
     }
   }
 
+  convertAmount = () => {
+      if(this.state.amount){
+      const {amount} = this.state
+      let intAmount = convertToRawMoney(amount)
+      let filterAmount = convertRawMoney(intAmount)
+      this.setState({ amount: filterAmount })
+      }
+  }
+
   savePayment = () => {
       const {amount, date, description} = this.state
+      let intAmount = convertToRawMoney(amount)
       const {clientId} = this.props.paymentModal
-      axios.post('/api/savepayment', {amount, date, description, clientId}).then((response) => {
+      axios.post('/api/savepayment', {amount: intAmount, date, description, clientId}).then((response) => {
          var prevPayments = this.state.payments.slice()
          prevPayments.push(response.data[0])
-         this.setState({
-            payments: prevPayments, 
-            initialPayments: prevPayments,
-            amount: '', 
-            date: new Date(), 
-            description: ''
-        })
-         this.updateProgressBar()
+
+            this.setState({
+                payments: prevPayments, 
+                initialPayments: prevPayments,
+                amount: '', 
+                date: new Date(), 
+                description: ''
+            }, () => {
+                this.updateProgressBar()
+            })
       })
   }
 
@@ -78,22 +92,19 @@ class PaymentModal extends Component {
     const {updates, payments} = this.state
     updates[id] = {...newInfo, ...{payment_id: id}}
     
-    if(index){
-        let newPayments = payments.slice()
-        let newAmount = parseInt(newInfo.amount)
-        
+    if(index >= 0){
+        let newPayments = JSON.parse(JSON.stringify(payments.slice()))
+        let newAmount = newInfo.amount
         newPayments[index].amount = newAmount
-        this.setState({ payments: newPayments, updates })
-        
-        this.updateProgressBar()
+
+        this.setState({ payments: newPayments, updates }, () => {
+            this.updateProgressBar()
+        })
     }
     else {
         this.setState({ updates })
     }
-    
   }
-
-  
 
   saveAllPayments = () => {
       const {updates} = this.state
@@ -113,6 +124,10 @@ class PaymentModal extends Component {
       return false
   }
 
+  isReturnKey = e => {
+    if(e.keyCode === 13) this.savePayment()
+  }
+
   closeModal = () => {
     this.setState({
         payments: [],
@@ -127,7 +142,6 @@ class PaymentModal extends Component {
 
   render() {
     const {open, name, sessionColor} = this.props.paymentModal
-
     return (
         <Modal open={open} onClose={this.closeModal}>
             <div className="payment-container">
@@ -158,7 +172,9 @@ class PaymentModal extends Component {
                         <input 
                         className="row-input amount-input"
                         placeholder="$50"
-                        onChange={e => this.setState({amount: e.target.value})}/>
+                        value={this.state.amount}
+                        onChange={e => this.setState({amount: e.target.value})}
+                        onBlur={ () => this.convertAmount() }/>
 
                         </div>
 
@@ -173,7 +189,9 @@ class PaymentModal extends Component {
                         <input 
                         className="row-input"
                         placeholder="Deposit"
-                        onChange={e => this.setState({description: e.target.value})}/>
+                        value={this.state.description}
+                        onChange={e => this.setState({description: e.target.value})}
+                        onKeyDown={e => this.isReturnKey(e)}/>
 
                         <i className="fas fa-plus-square add-pay"
                         onClick={this.savePayment}/>
