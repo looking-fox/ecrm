@@ -39,5 +39,14 @@ module.exports = {
         }
 
         storeUpdates()
+    },
+
+    deletePayment: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {id} = req.params
+        dbInstance.delete_payment([sub, id]).then(() => {
+            res.sendStatus(200)
+        })
     }
 }

@@ -78,7 +78,8 @@ export default class Payment extends Component {
                 value={this.state.description}
                 onChange={e => this.setState({description: e.target.value})}
                 onBlur={e => this.props.updatePayment(id, newInfo) }/>
-
+                <i className="far fa-trash-alt row-delete"
+                onClick={() => this.props.verifyDelete(index, payment)}/>
             </div>
 
         </div>

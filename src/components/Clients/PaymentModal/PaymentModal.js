@@ -19,7 +19,10 @@ class PaymentModal extends Component {
             date: new Date(),
             description: '',
             noPayments: false,
-            updates: {}   
+            updates: {},
+            deletes: [],
+            verifyDelete: false,
+            deleteInfo: {}
         }
     }
   
@@ -124,6 +127,23 @@ class PaymentModal extends Component {
       return false
   }
 
+  verifyDelete = (index, payment) => {
+    const {amount, client_id, payment_id} = payment
+    let filterAmount = convertRawMoney(amount)
+    let deleteInfo = {index, amount: filterAmount, client_id, payment_id}
+    this.setState({verifyDelete: true, deleteInfo})
+  }
+
+  deletePayment = () => {
+    const {payments, deletes, deleteInfo} = this.state
+    let prevPayments = JSON.parse( JSON.stringify(payments) ) 
+    prevPayments.splice(deleteInfo.index, 1)
+    deletes.push( {id: deleteInfo.payment_id} )
+    this.setState({payments: prevPayments, deletes, verifyDelete: false, deleteInfo: {} }, () => {
+        this.updateProgressBar()
+    })
+  }
+
   isReturnKey = e => {
     if(e.keyCode === 13) this.savePayment()
   }
@@ -208,7 +228,9 @@ class PaymentModal extends Component {
                                 payment={e}
                                 index={i}
                                 key={e.payment_id}
-                                updatePayment={this.updatePayment}/>
+                                updatePayment={this.updatePayment}
+                                deletePayment={this.deletePayment}
+                                verifyDelete={this.verifyDelete}/>
                             ) 
                           })
                         }
@@ -222,6 +244,24 @@ class PaymentModal extends Component {
                 </button>
 
             </div>
+
+             <Modal open={this.state.verifyDelete} onClose={() => this.setState({verifyDelete: false, deleteInfo: {} })}>
+            <div className="client-options">
+
+             <h1 className="client-settings-modal-title">
+             Delete payment of {this.state.deleteInfo.amount}?
+             </h1>
+
+             <button type="button" 
+            className="btn btn-danger options"
+            onClick={this.deletePayment}>
+              Yes, Delete Payment
+            </button>
+            
+            </div>
+             </Modal>
+
+
         </Modal>
     )
   }

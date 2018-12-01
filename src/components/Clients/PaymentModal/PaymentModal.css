@@ -150,16 +150,17 @@
     cursor: pointer;
 }
 
-.save-payment {
-    animation: savePayment 0.4s linear;
-}
-
 .payment-save-btn {
     padding-bottom: 10px;
 }
 
-@keyframes savePayment {
-    0% {height: 40px}
-    50% {height: 0px}
-    100% {height: 40px}
+.row-delete {
+    position: absolute;
+    right: 20px;
+    font-size: 0.9em;
+    color: #606060;
+}
+
+.row-delete:hover {
+    color: black;
 }

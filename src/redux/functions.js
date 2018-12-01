@@ -25,9 +25,5 @@ export function convertRawMoney(amount){
   }
 
 export function convertToRawMoney(amount){
-    if(isNaN(amount)){
-        alert('Please use numerical values.')
-        return amount
-    } 
     return parseInt( amount.replace(/[$," "]+/g, "") )
   }
