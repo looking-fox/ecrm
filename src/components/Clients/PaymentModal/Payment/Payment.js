@@ -39,7 +39,8 @@ export default class Payment extends Component {
   updateDate = (date, id) => {
       this.setState({ date })
       const {amount, description} = this.state
-      let newInfo = {amount, date, description}
+      let intAmount = convertToRawMoney(amount)
+      let newInfo = {amount: intAmount, date, description}
       this.props.updatePayment(id, newInfo)
   }
 
@@ -47,7 +48,8 @@ export default class Payment extends Component {
   render() {
       const {payment, index} = this.props
       const {amount, description, date} = this.state
-      let newInfo = {amount, description, date}
+      let filterAmount = convertToRawMoney(amount)
+      let newInfo = {amount: filterAmount, description, date}
       let id = payment.payment_id
 
     return (

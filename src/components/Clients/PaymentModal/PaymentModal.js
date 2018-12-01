@@ -20,7 +20,8 @@ class PaymentModal extends Component {
             description: '',
             noPayments: false,
             updates: {},
-            deletes: [],
+            deletes: {},
+            notSavedPayments: {},
             verifyDelete: false,
             deleteInfo: {}
         }
@@ -77,11 +78,16 @@ class PaymentModal extends Component {
       const {clientId} = this.props.paymentModal
       axios.post('/api/savepayment', {amount: intAmount, date, description, clientId}).then((response) => {
          var prevPayments = this.state.payments.slice()
-         prevPayments.push(response.data[0])
+         var notSaved = JSON.parse(JSON.stringify(this.state.notSavedPayments) )
+         const {payment_id} = response.data[0]
 
+         notSaved[payment_id] = payment_id
+         prevPayments.push(response.data[0])
+         
             this.setState({
                 payments: prevPayments, 
                 initialPayments: prevPayments,
+                notSavedPayments: notSaved,
                 amount: '', 
                 date: new Date(), 
                 description: ''
@@ -110,13 +116,17 @@ class PaymentModal extends Component {
   }
 
   saveAllPayments = () => {
-      const {updates} = this.state
+      const {updates, deletes} = this.state
       if( this.hasKeys(updates) ){
         axios.put('/api/updatepayments', {updates} )
         .then(() => this.closeModal() )
       }
       else {
           this.closeModal()
+      }
+      //---Handle Deletes---//
+      for(var key in deletes){
+          axios.delete(`/api/deletepayment/${key}`)
       }
   }
 
@@ -136,12 +146,13 @@ class PaymentModal extends Component {
 
   deletePayment = () => {
     const {payments, deletes, deleteInfo} = this.state
-    let prevPayments = JSON.parse( JSON.stringify(payments) ) 
+    const {payment_id} = deleteInfo
+    let prevPayments = JSON.parse( JSON.stringify(payments) )
+
     prevPayments.splice(deleteInfo.index, 1)
-    deletes.push( {id: deleteInfo.payment_id} )
-    this.setState({payments: prevPayments, deletes, verifyDelete: false, deleteInfo: {} }, () => {
-        this.updateProgressBar()
-    })
+    deletes[payment_id] = payment_id
+
+    this.setState({payments: prevPayments, deletes, verifyDelete: false, deleteInfo: {} }, () => this.updateProgressBar() )
   }
 
   isReturnKey = e => {
@@ -149,6 +160,14 @@ class PaymentModal extends Component {
   }
 
   closeModal = () => {
+    //If user adds payment, but doesn't want to save--delete added payments.
+    const {notSavedPayments} = this.state
+    if( this.hasKeys(notSavedPayments) ){
+        for (var key in notSavedPayments){
+            axios.delete(`/api/deletepayment/${key}`)
+        }
+    }
+
     this.setState({
         payments: [],
         paid: 0,
@@ -238,7 +257,7 @@ class PaymentModal extends Component {
                     
                 </div>
 
-                <button className="btn btn-primary save full payment-save-btn"
+                <button className="btn btn-dark save full payment-save-btn"
                 onClick={this.saveAllPayments}>
                     <p>Save</p>
                 </button>
