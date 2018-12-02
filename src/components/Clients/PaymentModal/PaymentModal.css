@@ -97,12 +97,13 @@
     align-items: center;
     font-size: 0.8em;
     font-weight: 600;
+    transition: width 1s;
+    transition-timing-function: ease-in-out;
 }
 
 .progress-completed p {
     margin: 0px 2px;
 }
-
 
 .no-progress {
     display: flex;

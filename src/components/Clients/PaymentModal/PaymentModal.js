@@ -117,18 +117,22 @@ class PaymentModal extends Component {
   }
 
   saveAllPayments = () => {
-      const {updates, deletes} = this.state
+      const { updates } = this.state
       if( this.hasKeys(updates) ){
         axios.put('/api/updatepayments', {updates} )
-        .then(() => this.closeModal() )
+        .then(() => this.handleDeletes() )
       }
       else {
-          this.closeModal()
+          this.handleDeletes()
       }
-      //---Handle Deletes---//
-      for(var key in deletes){
-          axios.delete(`/api/deletepayment/${key}`)
-      }
+  }
+
+  handleDeletes = () => {
+    const {deletes} = this.state
+    for(var key in deletes){
+        axios.delete(`/api/deletepayment/${key}`)
+    }
+    this.clearAndClose()
   }
 
   hasKeys(updates){
@@ -168,14 +172,18 @@ class PaymentModal extends Component {
             axios.delete(`/api/deletepayment/${key}`)
         }
     }
+    this.clearAndClose()
+  }
 
+  clearAndClose = () => {
     this.setState({
         payments: [],
         paid: 0,
         total: 0,
         amount: '',
         date: new Date(),
-        description: ''
+        description: '',
+        notSavedPayments: {}
     })
     this.props.updateProps({paymentModal: {open: false, clientId: null }})
   }
