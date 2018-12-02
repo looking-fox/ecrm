@@ -103,6 +103,7 @@ class PaymentModal extends Component {
     updates[id] = {...newInfo, ...{payment_id: id}}
     
     if(index >= 0){
+        if(typeof newInfo.amount === 'number'){
         let newPayments = JSON.parse(JSON.stringify(payments.slice()))
         let newAmount = newInfo.amount
         newPayments[index].amount = newAmount
@@ -110,6 +111,7 @@ class PaymentModal extends Component {
         this.setState({ payments: newPayments, updates }, () => {
             this.updateProgressBar()
         })
+      }
     }
     else {
         this.setState({ updates })
