@@ -15,6 +15,7 @@ class PaymentModal extends Component {
             payments: [],
             paid: 0,
             total: 0,
+            totalPaid: 0,
             amount: '',
             date: new Date(),
             description: '',
@@ -53,7 +54,7 @@ class PaymentModal extends Component {
       let filterSessionPrice = parseInt(sessionPrice.replace(/[$,]+/g, "") )
       let percentage = Math.round( paid / filterSessionPrice * 100 )
      
-      this.setState({paid: percentage, total: filterSessionPrice, noPayments: false})
+      this.setState({paid: percentage, total: filterSessionPrice, totalPaid: paid, noPayments: false})
   
     }
     else {
@@ -198,10 +199,12 @@ class PaymentModal extends Component {
                     :
                     <div className={`progress-completed ${sessionColor}`}
                     style={{width: `${this.state.paid}%`}}>
-                        {this.state.paid}%  
+                        <p>{convertRawMoney(this.state.totalPaid)}</p>
+                        <p>/</p>
+                        <p> {convertRawMoney(this.state.total)} </p>  
                     </div>
                     }
-
+                    
                 </div>
                 
                 <div className="payment-top-row-container">
