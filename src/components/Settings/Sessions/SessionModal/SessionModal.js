@@ -7,6 +7,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import { updateProps } from '../../../../redux/reducer'
 import {DragDropContext} from 'react-beautiful-dnd'
+import {convertRawMoney, convertToRawMoney} from '../../../../redux/functions'
 
 class SessionModal extends Component {
     constructor(){
@@ -119,6 +120,12 @@ class SessionModal extends Component {
         return tempSessions
         }
 
+     convertAmount = () => {
+         let intAmount = convertToRawMoney(this.state.price)
+         let filterAmount = convertRawMoney(intAmount)
+         this.setState({price: filterAmount})
+     }
+
 
   render() {
     const {sessionModal} = this.props
@@ -166,7 +173,8 @@ class SessionModal extends Component {
           placeholder="Price ($1,000)"
           value={this.state.price}
           fullWidth={true}
-          onChange={e => this.setState({price: e.target.value})}/>
+          onChange={e => this.setState({price: e.target.value})}
+          onBlur={this.convertAmount}/>
 
           </div>
 

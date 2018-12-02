@@ -7,6 +7,7 @@ import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
+import {convertRawMoney, convertToRawMoney} from '../../../redux/functions'
 import axios from 'axios'
 
 
@@ -89,14 +90,7 @@ class ClientModal extends Component {
             if(newClient === false){
                  this.isEditingClient()
             }
-            else {
-                if(!this.props.clients[0]){
-            //TODO: Properly resolve if no sessions/lists
-                //     if(!this.props.clients[0]["client_id"]){
-                //     alert("You'll first want to head over to Settings > Sessions and add a few session types.")
-                // }
-            }
-         }
+            
         })
     }
 
@@ -303,7 +297,12 @@ class ClientModal extends Component {
     }
 
     toggleEdit = () => {
-        this.setState({togglePriceEdit: !this.state.togglePriceEdit})
+        let intAmount = convertToRawMoney(this.state.price)
+        let filterAmount = convertRawMoney(intAmount)
+        this.setState({
+            togglePriceEdit: !this.state.togglePriceEdit,
+            price: filterAmount
+        })
     }
 
     
