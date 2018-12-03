@@ -74,3 +74,29 @@ jsonb_build_object('user_id', session_actions.user_id, 'session_id', session_act
 ) as actions from session_actions
 where user_id='google-oauth2|103947273324697076686'
 group by session_actions.client_id;
+
+
+<!-- Payment Totals -->
+
+select client_id, sum(amount) as total from payments
+where user_id = 'google-oauth2|103947273324697076686'
+group by client_id
+
+
+<!-- Payment Total per client with id and name -->
+select payments.client_id, sum(amount) as total, clients.name from payments
+left join clients
+on clients.client_id = payments.client_id
+where payments.user_id = 'google-oauth2|103947273324697076686'
+group by payments.client_id, clients.name
+
+
+<!-- Payment Total | Client ID | Session ID | Session Price  -->
+
+select payments.client_id, sum(amount) as total, clients.name, clients.session_id, sessions.session_price  from payments
+left join clients
+on clients.client_id = payments.client_id
+left join sessions
+on sessions.session_id = clients.session_id
+where payments.user_id = 'google-oauth2|103947273324697076686'
+group by payments.client_id, clients.name, clients.session_id, sessions.session_price

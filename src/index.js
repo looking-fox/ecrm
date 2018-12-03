@@ -13,7 +13,7 @@ import Home from './components/Home/Home'
 import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
 import Settings from './components/Settings/Settings'
-import Subscription from './components/Settings/Subscription/Subscription'
+import Finances from './components/Settings/Finances/Finances'
 import Sessions from './components/Settings/Sessions/Sessions'
 
 ReactDOM.render(
@@ -50,26 +50,17 @@ ReactDOM.render(
                 )
             }}/>
 
-            <Route exact path="/settings" render={(props) => {
-                return (
-                    <div style={{display: 'flex'}}>
-                        <Sidebar {...props}/>
-                        <Settings/>
-                    </div>
-                )
-            }}/>
-
-            <Route exact path="/settings/subscription" 
+            <Route exact path="/tools/finances" 
             render={(props) => {
                 return (
                     <div style={{display: 'flex'}}>
                         <Sidebar {...props}/>
-                        <Subscription/>
+                        <Finances/>
                     </div>
                 )
             }}/>
 
-            <Route exact path="/settings/sessions" 
+            <Route exact path="/tools/templates" 
             render={(props) => {
                 return (
                     <div style={{display: 'flex'}}>

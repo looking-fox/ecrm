@@ -5,19 +5,15 @@ import {Link} from 'react-router-dom'
 export default function Nav() {
   return (
     <div className="menubar">
-        <Link to="/settings">
-        <li className="navitem">General</li>
+  
+        <Link to="/tools/templates">
+        <li className="navitem">Templates</li>
         </Link>
 
-        <Link to="/settings/subscription">
-        <li className="navitem">Subscription</li>
+        <Link to="/tools/finances">
+        <li className="navitem">Finances</li>
         </Link>
-
-        <Link to="/settings/sessions">
-        <li className="navitem">Sessions</li>
-        </Link>
-
-        
+   
       </div>
   )
 }

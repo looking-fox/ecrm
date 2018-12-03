@@ -3,7 +3,7 @@
     height: 50px;
     background: #f9f6f6;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     position: relative;
     z-index: 3;

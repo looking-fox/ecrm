@@ -147,7 +147,7 @@ class Sidebar extends Component {
           }
         } 
         else {
-        alert("You'll first want to head over to Settings > Sessions and add a few session types.")
+        alert("You'll first want to head over to Tools > Templates and add a few session types.")
              }
         })
   }
@@ -246,7 +246,7 @@ class Sidebar extends Component {
 
         {/* Normally I'd use Link. But props is not updating location. Currently reviewing MJacksons notes on blocked location props.  */}
         
-         <i onClick={() => this.props.history.push('/settings')}
+         <i onClick={() => this.props.history.push('/tools/templates')}
          className="fas fa-cog"/>
           </div>
 

@@ -27,10 +27,10 @@ class Clients extends Component {
     }
     
   }
-
-  //TODO AFTER USER TEST: 
-        //Currency needs to check/add comma + currency
        
+  // MVP:
+    //Generate totals paid per client, total paid, total remaining
+
   //NON-MVP:
         //User icon will be new menu for settings, logout
         //Ability to add multiple "clients" big lists
@@ -57,7 +57,7 @@ class Clients extends Component {
   }
 
   getClients(){
-        //IF: we have 0 clients, we want to update noClients to true to conditionally render basecamp animation.
+        //IF: we have 0 clients, we want to update noClients to true to conditionally render tutorial animation.
 
         //ElSE: Async task where we map clientIds to object storing all clients. Then store those clients in Redux.
     axios.get('/api/getclients').then(response => {
