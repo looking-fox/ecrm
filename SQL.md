@@ -100,3 +100,25 @@ left join sessions
 on sessions.session_id = clients.session_id
 where payments.user_id = 'google-oauth2|103947273324697076686'
 group by payments.client_id, clients.name, clients.session_id, sessions.session_price
+
+
+<!-- Select payments within a certain time frame -->
+
+SELECT 
+CASE WHEN date > '2018-10-05T05:00:00.000Z' THEN amount END AS payments 
+from payments
+
+
+
+<!-- Find paid, total billed, and due for all payments in a year.  -->
+
+SELECT sum(amount) as paid, 
+sum( TO_NUMBER( session_price , 'L9G999g999.99' )) as total,
+sum( TO_NUMBER( session_price , 'L9G999g999.99' )) - 
+sum(amount) as due
+FROM payments
+left join clients on 
+clients.client_id = payments.client_id
+left join sessions on
+sessions.session_id = clients.session_id
+WHERE payments.date LIKE '%2018%'
