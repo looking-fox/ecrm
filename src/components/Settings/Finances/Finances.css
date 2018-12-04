@@ -4,13 +4,24 @@
     width: 85vw;
     height: 100vh;
     margin-left: 250px;
-    background-color: #ffffff;
+    background: linear-gradient(#9bb182, #606f57);
     display: flex;
     flex-direction: column;
 }
 
 .subdashboard * {
     font-family: 'Open Sans';
+}
+
+.year-dropdown {
+    position: absolute;
+    top: 0px;
+    right: 4%;
+    width: 200px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .finance-container {
@@ -28,6 +39,7 @@
    justify-content: center;
    align-items: center;
    padding: 20px;
+   padding-top: 8%;
    margin: 0% 5%;
 }
 
@@ -45,6 +57,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    color: white;
 }
 
 .tax-container {
@@ -84,12 +97,8 @@
     margin-top: 5px;
 }
 
-.paid {
-    color: #879a71;
-}
-
 .monthly-container {
-    width: 80%;
+    width: 90%;
     height: 80%;
     background: #f0f0f0;
     border-radius: 5px;
