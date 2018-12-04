@@ -122,3 +122,24 @@ clients.client_id = payments.client_id
 left join sessions on
 sessions.session_id = clients.session_id
 WHERE payments.date LIKE '%2018%'
+
+
+<!-- Convert date to date data format -->
+
+select cast(date as date) from payments
+
+
+<!-- Group payment amount as object by month -->
+SELECT json_agg( 
+jsonb_build_object('date', date, 'amount', amount)
+), EXTRACT(MONTH FROM date) AS Month
+FROM payments
+group by EXTRACT(MONTH FROM date)
+
+
+
+<!-- Select monthly paid totals with payment count  -->
+SELECT sum(amount) as amount, count(*) as quantity, EXTRACT(MONTH FROM date) AS Month
+FROM payments
+group by EXTRACT(MONTH FROM date)
+
