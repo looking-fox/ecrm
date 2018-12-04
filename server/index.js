@@ -212,6 +212,8 @@ app.delete('/api/deletepayment/:id', payments.deletePayment)
 
 app.get('/api/yearlypayments/:year', payments.yearlyPayments)
 
+app.get('/api/yearlymacro/:year', payments.yearlyMacro)
+
 //===============PAYMENTS==================//
 
 

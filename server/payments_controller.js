@@ -57,5 +57,14 @@ module.exports = {
         dbInstance.get_yearly_payments([sub, year]).then(response => {
             res.status(200).send(response)
         })
+    },
+
+    yearlyMacro: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {year} = req.params
+        dbInstance.get_yearly_macro([sub, year]).then(response => {
+            res.status(200).send(response)
+        })
     }
 }
