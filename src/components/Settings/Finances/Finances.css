@@ -107,8 +107,25 @@
     height: 45%;
     margin: 0px 2px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+    flex-direction: column;
+    animation: 0.5s fadeUp ease-in-out;
+}
+
+.month-name {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.7em;
+}
+
+.month-total {
+    font-size: 1.1em;
+}
+
+@keyframes fadeUp {
+    from {transform: translateY(30px) scale(0.9)}
+    to {transform: translateY(0px) scale(1)}
 }
 
 
