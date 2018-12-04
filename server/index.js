@@ -210,6 +210,8 @@ app.put('/api/updatepayments', payments.updatePayments)
 
 app.delete('/api/deletepayment/:id', payments.deletePayment)
 
+app.get('/api/yearlypayments/:year', payments.yearlyPayments)
+
 //===============PAYMENTS==================//
 
 
