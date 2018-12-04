@@ -16,7 +16,7 @@ export default class Finances extends Component {
     this.state = {
       yearlyPayments: [],
       yearPayStrings: [],
-      totalPaid: ''
+      totalPaid: 0
     }
  
   }
@@ -27,8 +27,7 @@ export default class Finances extends Component {
       let intAmount = response.data.map(e => parseInt(e.total))
       let stringAmount = intAmount.map(e => convertRawMoney(e))
       let sum = intAmount.reduce((acc, e) => acc += e)
-      let sumStr = convertRawMoney(sum)
-      this.setState({ yearlyPayments: intAmount, yearPayStrings: stringAmount, totalPaid: sumStr })
+      this.setState({ yearlyPayments: intAmount, yearPayStrings: stringAmount, totalPaid: sum })
     })
   }
 
@@ -53,12 +52,17 @@ export default class Finances extends Component {
 
         <div className="finance-container">
 
-            {/* <div className="macro-dashboard">
+            <div className="macro-dashboard">
                 <div className="macro-category">
                   <p className="small-title">paid</p>
-                  <p className="big-number paid">{totalPaid}</p>
+                  <p className="big-number paid">{convertRawMoney(totalPaid)}</p>
                 </div>
-            </div> */}
+
+                <div className="macro-category">
+                  <p className="small-title">AVG / MO</p>
+                  <p className="big-number">{convertRawMoney(Math.round(totalPaid/12))}</p>
+                </div>
+            </div>
 
             <div className="year-graph">
               <Bar
@@ -68,14 +72,14 @@ export default class Finances extends Component {
             </div>
 
 
-            {/* <div className="tax-container">
+            <div className="tax-container">
               <div className="tax-bubble">
                 <p style={{fontSize: '1.1em', paddingBottom: '20px'}}>Generate Your Yearly Taxes!</p>
                 <button className="btn btn-dark" disabled>
                     Coming Soon
                 </button>
               </div>
-            </div> */}
+            </div>
 
 
             <div className="monthly-figures">
@@ -92,7 +96,6 @@ export default class Finances extends Component {
                 })}
               </div>
             </div>
-
 
         </div>
       </div>

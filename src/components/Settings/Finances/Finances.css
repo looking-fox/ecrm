@@ -28,6 +28,7 @@
    justify-content: center;
    align-items: center;
    padding: 20px;
+   margin: 0% 5%;
 }
 
 .monthly-figures {
@@ -42,11 +43,8 @@
     grid-row: span 7;
     grid-column: span 4;
     display: flex;
-    justify-content: flex-start;
-    align-items: left;
-    padding-left: 35%;
-    padding-top: 10%;
-    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .tax-container {
@@ -72,7 +70,7 @@
     margin: 20px 0px;
     display: flex;
     justify-content: center;
-    align-items: left;
+    align-items: center;
     flex-direction: column;
 }
 
