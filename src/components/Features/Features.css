@@ -103,7 +103,6 @@ img.finance-dash {
   z-index: 4;
 }
 
-
 .pricing {
     height: 50vh;
     background-color: #f9f6f6;
@@ -153,17 +152,24 @@ img.finance-dash {
         height: 75vh;
         grid-template-columns: 1;
         grid-template-rows: 50% 50%;
-        padding-top: -10px;
-        padding-bottom: 30px;
+        padding: 5% 0%;
+        padding-top: 10%;
     }
-    .action-list-text{
+
+    .browser-dash {
         grid-row: 1;
-        grid-column: auto;
-        min-width: 100vw;
-        padding-right: 0;
-        padding: 20px 20px;
+        grid-column: span 12;
     }
-    
+
+    .action-list-text{
+        grid-row: 2;
+        grid-column: span 12;
+        min-width: 100%;
+        padding-right: 0;
+        align-items: flex-start;
+        padding: 10%;
+        font-size: 25px;
+    }
 
     .pricing {
         height: 40vh;
