@@ -16,7 +16,9 @@ export default function Home(props){
             <h3 className="introtext">Keep organized. <br/>Stay adventurous.</h3>
             </Fade>
 
-            <img className ="mainimage" src={Workspace} alt="Yosemite Elopement"/>
+            <Fade>
+              <img className ="mainimage" src={Workspace} alt="Yosemite Elopement"/>
+            </Fade>
         </div>
 
         <Features {...props}/>
