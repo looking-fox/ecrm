@@ -62,14 +62,16 @@ class FilterBar extends Component {
     this.props.updateProps({ filterBar: newFilterBar})
   }
 
-  //Convert date value to ['10', '04', '2019] format and store as start, end keys on dateRange object. or Inactive if no value.
+  //Convert date value to ISO format and store as start, end keys on dateRange object. or Inactive if no value.
   updateDateSort = (value) => {
+      //Store value in normal date format on state for DatePicker.
       this.setState({date: value})
       let newFilterBar = Object.assign({}, this.props.filterBar)
 
       if(value){
-        let start = value[0].toLocaleDateString().split('/')
-        let end = value[1].toLocaleDateString().split('/')
+        //Convert to ISO and store on props.
+        let start = new Date(value[0]).toISOString()
+        let end = new Date(value[1]).toISOString()
         let dateRange = {start, end}
         newFilterBar.dateRange = dateRange
       }

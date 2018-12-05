@@ -165,23 +165,11 @@ class Clients extends Component {
 
             .filter(e => {
               if(dateRange.start){
-                  const {start, end} = dateRange   // format: ["4", "30", "2018"]
-                  let startMonth = parseInt(start[0])
-                  let startYear = parseInt(start[2])
-                  let endMonth = parseInt(end[0])
-                  let endYear = parseInt(end[2])
-                  let clientMonth = parseInt(e.date.split("/")[0])
-                  let clientYear = parseInt(e.date.split("/")[2])
-                  
-                  if(clientYear >= startYear && clientYear <= endYear){  
-                    if(clientMonth >= startMonth && clientMonth <= endMonth){
-                      return true
-                    }
-                  }
+                  const {start, end} = dateRange  
+                  if(e.date >= start && e.date <= end) return true
                   else return false
-                }
-
-                else return true
+              }
+              else return true
             })
 
             //Sort by date (default) or by name.

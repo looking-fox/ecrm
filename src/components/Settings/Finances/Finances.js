@@ -62,7 +62,7 @@ export default class Finances extends Component {
   }
 
   render() { 
-    const {yearlyPayments, totalPaid, currentYear} = this.state
+    const { yearlyPayments, totalPaid } = this.state
     var paymentsData = {
       labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       datasets: [
