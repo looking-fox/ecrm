@@ -52,6 +52,7 @@
     font-weight: 200;
     font-size: 0.9em;
     cursor: pointer;
+    margin: 0 auto;
 }
 
 .listitem:hover {
@@ -62,7 +63,7 @@
 
 .current-list {
     background-color: #f9f6f6;
-    border-right: 4px solid #808080;
+    border-right: 4px solid #e2e2e2;
 }
 
 .current-list:hover .menu-icon {

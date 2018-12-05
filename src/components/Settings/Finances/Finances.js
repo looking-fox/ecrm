@@ -6,9 +6,6 @@ import {Line} from 'react-chartjs-2';
 import Select from 'react-select'
 import {convertRawMoney} from '../../../redux/functions'
 
-//TODO: 
-  //text added underneath tax title to explain what it does
-  //dropdown in nav menu to select year for generating finance info
   const options = [
     { value: 2018, label: '2018' },
     { value: 2019, label: '2019' },
@@ -41,8 +38,6 @@ export default class Finances extends Component {
       totalPaid: 0,
       currentYear: null
     }
-    
-    this.myChart = React.createRef();
   }
 
   componentDidMount(){
@@ -50,6 +45,8 @@ export default class Finances extends Component {
     this.setState({ currentYear }, () => this.getYearInfo() )
   }
 
+  //Retrieves payments within a year, returned as array of monthly sums for every MO of year. 
+  // Example: [{1: 240}] = January: $240 total payments. 
   getYearInfo = () => {
     const {currentYear} = this.state
     axios.get(`/api/yearlypayments/${currentYear}`).then(response => {
@@ -64,15 +61,13 @@ export default class Finances extends Component {
     this.setState({currentYear: year}, () => this.getYearInfo() )
   }
 
-  render() {
-    console.log(this.myChart) 
+  render() { 
     const {yearlyPayments, totalPaid, currentYear} = this.state
     var paymentsData = {
       labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       datasets: [
         {
           label: 'Payments',
-          color: "#fff",
           borderColor: "#fff",
           fillColor: "#fff",
           strokeColor: "#fff",
@@ -110,6 +105,7 @@ export default class Finances extends Component {
               data={paymentsData}
 	            options={{
                 maintainAspectRatio: false,
+                tooltips: {enabled: false},
                 legend: {display: false},
                 title: {
                     display: false,
@@ -137,7 +133,8 @@ export default class Finances extends Component {
 
             <div className="tax-container">
               <div className="tax-bubble">
-                <p style={{fontSize: '1.1em', paddingBottom: '20px'}}>Generate Your Yearly Taxes!</p>
+                <p style={{fontSize: '1.1em', paddingBottom: '20px'}}>Taxes!</p>
+                <p style={{paddingBottom: '20px', lineHeight: '20px'}}>Generate an organized report of all of your recorded payments for tax season.</p>
                 <button className="btn btn-dark" disabled>
                     Coming Soon
                 </button>

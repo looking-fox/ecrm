@@ -55,7 +55,7 @@ export default class Tutorial extends Component {
         switch(currentIndex){
             case 0:
             return (
-                <p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Settings > Sessions. </p>
+                <p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Tools > Templates. </p>
             )
             case 1:
             return (
@@ -74,7 +74,7 @@ export default class Tutorial extends Component {
                 <p>When adding a client, you can assign a session template and customize it to fit. Whether they have a custom price, or you need to add a couple of to-do items. You can always edit a client at any stage in the process. </p>
             )
             default: 
-            return (<p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Settings > Sessions. </p>)
+            return (<p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Tools > Templates. </p>)
         }
     }
 
