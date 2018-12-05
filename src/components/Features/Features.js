@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Features.css'
-import screenshot from '../../assets/dashboard.png'
+import financeDash from '../../assets/finance_dash.png'
+import mainDash from '../../assets/main_dash.png'
 import Fade from 'react-reveal/Fade'
 
-export default class Features extends Component {
-  render() {
+export default function Features() {
     return (
       <div className="features">
 
@@ -39,15 +39,27 @@ export default class Features extends Component {
 
             <div className="action-list">
 
-              <Fade left>
-                <div className="action-list-image">
-                  <img src={screenshot} alt="Dashboard Preview"/>
+                
+                <div className="browser-dash">
+                  <Fade left>
+                    <img className="finance-dash"
+                    src={financeDash} alt="Dashboard Preview"/>
+                  </Fade>
+
+                  <Fade right>
+                    <img className="main-dash"
+                    src={mainDash} alt="Dashboard Preview"/>
+                  </Fade>
+
                 </div>
-              </Fade>
+             
 
               <div className="action-list-text">
-                <p>Every client deserves a to-do list.</p>
-                <p>Every photographer deserves a break. </p>
+                <Fade top cascade>
+                <p>Speed up your workflow.</p>
+                <p>Keep track of your progress.</p>
+                <p>Spend more time doing what you love.</p>
+                </Fade>
               </div>
 
             </div>
@@ -68,4 +80,3 @@ export default class Features extends Component {
       </div>
     )
   }
-}

@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {updateProps} from '../../../redux/reducer'
 import axios from 'axios'
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
+import Fade from 'react-reveal/Fade'
 
 //Sort Options: Sort by date, by name, by most recent, 
 //Filter Options: Completed, Incomplete, session types
@@ -84,6 +85,7 @@ class FilterBar extends Component {
   render() {
     
     return (
+      <Fade top>
       <div className="filter-bar">
             
             <div className="menu">
@@ -129,6 +131,7 @@ class FilterBar extends Component {
             </div>
             
       </div>
+    </Fade>
     )
   }
 }

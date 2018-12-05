@@ -16,7 +16,6 @@
     display: grid;
     grid-template-rows: 1;
     grid-template-columns: 30vw 70vw;
-    animation: fadeIn 0.8s linear;
 }
 
 .introtext{

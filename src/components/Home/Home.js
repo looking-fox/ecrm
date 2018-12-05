@@ -10,7 +10,7 @@ export default function Home(props){
     return (
       <div className="home">
       <Navbar {...props}/>
-
+      
         <div className="body">
             <Fade bottom>
             <h3 className="introtext">Keep organized. <br/>Stay adventurous.</h3>

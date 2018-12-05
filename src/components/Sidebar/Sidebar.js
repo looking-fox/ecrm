@@ -3,6 +3,7 @@ import './Sidebar.css'
 import Logo from '../../assets/logo.png'
 import Tutorial from '../Clients/Tutorial/Tutorial'
 import axios from 'axios'
+import Fade from 'react-reveal/Fade'
 import {connect} from 'react-redux'
 import {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProps} from '../../redux/reducer'
 import Modal from 'react-responsive-modal'
@@ -233,6 +234,7 @@ class Sidebar extends Component {
   render() {
     const isEditing = this.state.optionsMenu ? 'flex' : 'none'
     return (
+      <Fade>
         <div className="sidebar">
 
           <div className="topbar">
@@ -399,6 +401,7 @@ class Sidebar extends Component {
           hideTutorial={this.hideTutorial}/>
           
         </div>
+      </Fade>
     )
   }
 }

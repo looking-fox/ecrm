@@ -57,7 +57,7 @@
 .action-list-text{
     grid-column: span 5;
     min-width: 500px;
-    padding-right: 50px;
+    padding-right: 15%;
     font-size: 30px;
     font-family: 'Playfair Display';
     display: flex;
@@ -71,17 +71,38 @@
     margin: 10px 0px;
 }
 
-.action-list-image{
-    grid-column: span 7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.browser-dash {
+   grid-column: span 7;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+   padding-left: 10%;
+   overflow: hidden;
 }
 
-.action-list-image img {
-    width: 95%;
+.browser-dash img {
+    -webkit-filter: drop-shadow(5px 10px 10px rgb(34, 34, 34, 0.3));
+    filter: drop-shadow(5px 10px 10px rgb(34, 34, 34, 0.3));
+    width: 60%;
     
 }
+
+img.main-dash {
+    position: relative;
+    top: 5%;
+    right: 15%;
+
+}
+
+img.finance-dash {
+  width: 50%;
+  position: relative;
+  bottom: 8%;
+  left: 5%;
+  z-index: 4;
+}
+
 
 .pricing {
     height: 50vh;
@@ -108,7 +129,6 @@
     margin-bottom: 30px;
 }
 
-
 @media (max-width: 576px) { 
    .features {
        position: relative;
@@ -117,7 +137,7 @@
     .features-grid {
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: repeat(12, 1fr);
-        height: 80vh;
+        height: 90vh;
         padding: 20px 0px;
 
     }
@@ -143,21 +163,8 @@
         padding-right: 0;
         padding: 20px 20px;
     }
-    .action-list-image {
-        grid-row: 2;
-        grid-column: auto;
-        
-        
-    }
-    .action-list-image img {
-       position: absolute;
-       z-index: 0;
-       left: 60px;
-       height: 200px;
-       width: auto;
-       box-shadow: -17px 10px 62px -14px rgba(0,0,0,0.51);
-       
-    }
+    
+
     .pricing {
         height: 40vh;
         padding: 0% 10%;
