@@ -123,12 +123,13 @@ class ClientModal extends Component {
     
       saveClient = () => {
         const {newClient} = this.props.clientSettingsModal
-        
+        let prevDate = this.state.clientDate
+        let isoDate = new Date(prevDate).toISOString()
         
         var clientInfo = {
             name: this.state.clientName,
             client_email: this.state.clientEmail,
-            date: this.state.clientDate,
+            date: isoDate,
             location: this.state.clientLocation,
             clientState: this.state.clientState,
             clientCountry: this.state.clientCountry,
@@ -157,6 +158,8 @@ class ClientModal extends Component {
             clientInfo["actions"] = current
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
+            console.log('before: ', this.props.clients[index])
+            console.log('nco: ', newClientObj)
 
             var allClients = (() => {
                 let prevClients = this.props.clients.slice()
@@ -293,7 +296,7 @@ class ClientModal extends Component {
       const {newClient, client} = this.props.clientSettingsModal
       const isEditing = newClient ? 
       '' : 'client-modal-container'
-
+    console.log(this.state.clientDate)
     return (
         <Modal 
         open={this.props.clientModalOpen} 
