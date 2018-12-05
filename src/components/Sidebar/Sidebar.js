@@ -382,9 +382,9 @@ class Sidebar extends Component {
 
             {this.state.lists.length > 1 ? 
             <div>
-              <button type="button" className="btn btn-danger save full" onClick={this.moveClients}>Yes, move clients first</button>
+              <button type="button" className="btn btn-danger save full" onClick={this.moveClients}>Yes, Move Clients First</button>
               
-              <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>No, delete everything</button>
+              <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>No, Delete Everything</button>
             </div>
             : 
             <button type="button" className="btn btn-danger save full" onClick={this.deleteList}>Delete List</button>

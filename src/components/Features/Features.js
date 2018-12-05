@@ -17,13 +17,18 @@ export default class Features extends Component {
                 </div>
 
                 <div className="featureitem">
-                  <i className="fas fa-list-ul"></i>
-                  <p className="title">CUSTOM TO-DO LISTS </p>
-                  <p>Create a customized to-do list for all of your packages/sessions. </p>
+                  <i className="fas fa-clone"/>
+                  <p className="title">TEMPLATES </p>
+                  <p>Set up clients with session templates and speed up your workflow.  </p>
+                </div>
+
+                <div className="featureitem">
+                <i className="fas fa-credit-card"/>
+                  <p className="title">Track Payments </p>
+                  <p>Record payments and quickly view monthly analytics. </p>
                 </div>
 
             </div>
-
 
             <div className="action-list">
 

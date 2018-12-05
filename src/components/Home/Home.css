@@ -54,8 +54,8 @@
         grid-template-columns: 1;
     }
     .body {
-        grid-template-columns: 100vw;
-        grid-template-rows: 50vw 50vw;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: 55vw 50vw;
     }
     .introtext{
         font-size: 2em;
