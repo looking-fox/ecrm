@@ -28,6 +28,7 @@
     "react-places-autocomplete": "^7.2.0",
     "react-redux": "^5.0.7",
     "react-responsive-modal": "^3.4.0",
+    "react-reveal": "^1.2.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
@@ -52,13 +53,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": {
-    "/api": {
-      "target": "https://www.lookingfox.com:3051"
-    },
-    "/auth/callback": {
-      "target": "https://www.lookingfox.com:3051"
-    }
-  }
+  ]
 }

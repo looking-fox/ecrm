@@ -28,8 +28,7 @@
     font-family: 'Playfair Display';
     letter-spacing: 1px;
     line-height: 1.1em;
-    position: relative;
-    animation: moveUp 0.8s linear;
+
 }
 
 .mainimage{
@@ -73,9 +72,4 @@
  @keyframes fadeIn {
      from{opacity: 0}
      to{opacity: 1}
- }
-
- @keyframes moveUp{
-     from{top: 30px}
-     to{top: 0px}
  }
