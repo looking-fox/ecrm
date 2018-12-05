@@ -5,6 +5,7 @@ import LocationSearch from './LocationSearch'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
+import DatePicker from 'react-date-picker'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
 import {convertRawMoney, convertToRawMoney} from '../../../redux/functions'
@@ -23,7 +24,7 @@ class ClientModal extends Component {
             listId: null,
             clientName: '',
             clientEmail: '',
-            clientDate: '2019-06-10',
+            clientDate: new Date(),
             clientLocation: '',
             clientState: '',
             clientCountry: '',
@@ -43,7 +44,6 @@ class ClientModal extends Component {
             this.getSessions()
 
             if(newClient === false){
-                this.convertDateToMUI()
                 this.isEditingClient()
             }
             
@@ -55,7 +55,7 @@ class ClientModal extends Component {
                         sessionId: '',
                         clientName: '',
                         clientEmail: '',
-                        clientDate: '2019-06-10',
+                        clientDate: new Date(),
                         clientLocation: '',
                         togglePriceEdit: false
                     })  
@@ -96,15 +96,19 @@ class ClientModal extends Component {
 
     isEditingClient = () => {
        //Updates local state with Client variables, if editing.
-        const {name, client_email, location, session_price, session_id} = this.props.clientSettingsModal.client.client
-       
+        const {name, client_email, location, session_price, session_id, date} = this.props.clientSettingsModal.client.client
+        
+
         this.setState({
             clientName: name,
             clientEmail: client_email,
+            clientDate: new Date(date),
             clientLocation: location,
             price: session_price,
             sessionId: session_id
         })
+
+
     }
 
     sessionPriceUpdater = (index) => {
@@ -119,12 +123,12 @@ class ClientModal extends Component {
     
       saveClient = () => {
         const {newClient} = this.props.clientSettingsModal
-        let date = this.convertDate()
+        
         
         var clientInfo = {
             name: this.state.clientName,
             client_email: this.state.clientEmail,
-            date: date,
+            date: this.state.clientDate,
             location: this.state.clientLocation,
             clientState: this.state.clientState,
             clientCountry: this.state.clientCountry,
@@ -221,27 +225,6 @@ class ClientModal extends Component {
             })
         }
  
-    }
-
-    //Convert Material UI format to display format for User.
-    //TODO: Use regex to remove front zero
-    convertDate = () => {
-        let date = this.state.clientDate.split('-')
-        let year = date.shift()
-        date.push(year)
-        date = date.join('/')
-        return date
-    }
-
-    //Convert DB date to MUI for user display.
-    convertDateToMUI = () => {
-        let clientDate = this.props.clientSettingsModal.client.client.date
-        var newString = clientDate.replace(/[/]+/g, "-").split('-')
-        var year = newString.pop()
-        newString.unshift(year)
-        newString = newString.join("-")
-
-        this.setState({clientDate: newString})
     }
 
     updateLocation = (locationInfo) => {
@@ -365,14 +348,11 @@ class ClientModal extends Component {
             </select>
           }
 
-            <TextField
-            id="date"
-            label="Date"
-            type="date"
-            defaultValue={this.state.clientDate}
-            onChange={e => this.setState({clientDate: e.target.value})}
-            InputLabelProps={{
-            shrink: true, }} />
+            <div className="date-picker-box">
+                <DatePicker
+                onChange={e => this.setState({clientDate: e})}
+                value={this.state.clientDate}/>
+            </div>
 
 
             <LocationSearch

@@ -40,6 +40,12 @@
     margin-top: 20px;
 }
 
+.date-picker-box {
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    padding: 3px 0px;
+}
+
 .location-search-input {
     width: 100%;
     margin-top: 20px;

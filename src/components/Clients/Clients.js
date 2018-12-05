@@ -193,29 +193,8 @@ class Clients extends Component {
                     }
 
                     if(value === 'date'){
-                      let aArr = a.date.split("/") //['04', '30', '2019]
-                      let bArr = b.date.split("/")
-                        //sort by year
-                        if(aArr[2] < bArr[2]) return -1
-
-                        //same year, sort by month
-                        else if (aArr[2] === bArr[2]){
-                              if(aArr[0] < bArr[0]) return -1
-
-                              //same month, sort by day
-                              else if(aArr[0] === bArr[0]){
-                                  if(aArr[1] < bArr[1]) return -1
-                                  else if(aArr[1] === bArr[1]){
-                                      if(a.name < b.name) return -1
-                                      else return 1
-                                  }
-                                  else return 1
-                              }
-
-                              else return 1
-                        }
-
-                        else return 1
+                      if(a.date < b.date) return -1
+                      else return 1
                     }
             })
 

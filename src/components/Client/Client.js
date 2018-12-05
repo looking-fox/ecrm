@@ -25,7 +25,8 @@ export default class Client extends Component {
   render(){
     const {name, client_id, session_name, session_color, session_price, date, location} = this.props.client
     var openMenu = this.state.optionsMenu ? 'flex' : 'none'
-    
+    var formatDate = new Date(date).toLocaleDateString('en-US')
+
   return (
     <div className="clientcontainer">
 
@@ -40,7 +41,7 @@ export default class Client extends Component {
             </div>
 
             <div className="date item">
-            <p>{date}</p>
+            <p>{formatDate}</p>
             </div>
 
             <div className="location item"
