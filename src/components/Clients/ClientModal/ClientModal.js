@@ -4,7 +4,6 @@ import ClientActions from './ClientActions'
 import LocationSearch from './LocationSearch'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
-import TextField from '@material-ui/core/TextField'
 import DatePicker from 'react-date-picker'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
@@ -96,16 +95,16 @@ class ClientModal extends Component {
 
     isEditingClient = () => {
        //Updates local state with Client variables, if editing.
-        const {name, client_email, location, session_price, session_id, date} = this.props.clientSettingsModal.client.client
-        
-
+        const {name, client_email, location, session_price, session_id, date, state} = this.props.clientSettingsModal.client.client
+    
         this.setState({
             clientName: name,
             clientEmail: client_email,
             clientDate: new Date(date),
             clientLocation: location,
             price: session_price,
-            sessionId: session_id
+            sessionId: session_id,
+            clientState: state
         })
 
 
@@ -158,9 +157,7 @@ class ClientModal extends Component {
             clientInfo["actions"] = current
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
-            console.log('before: ', this.props.clients[index])
-            console.log('nco: ', newClientObj)
-
+           
             var allClients = (() => {
                 let prevClients = this.props.clients.slice()
                 prevClients[index] = newClientObj
@@ -296,7 +293,7 @@ class ClientModal extends Component {
       const {newClient, client} = this.props.clientSettingsModal
       const isEditing = newClient ? 
       '' : 'client-modal-container'
-    console.log(this.state.clientDate)
+    
     return (
         <Modal 
         open={this.props.clientModalOpen} 
