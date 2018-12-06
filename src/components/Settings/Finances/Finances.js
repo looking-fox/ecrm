@@ -157,7 +157,7 @@ export default class Finances extends Component {
               </div>
             </div>
 
-            <div className="year-dropdown">
+            <div className="year-dropdown center">
                 <Select 
                 onChange={ e => this.loadNewYear(e.value)}
                 defaultValue={this.state.currentYear}

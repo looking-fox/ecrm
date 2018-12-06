@@ -65,7 +65,7 @@ export default function Features() {
             </div>
 
             
-              <div className="pricing">
+              <div className="pricing center">
                 <Fade>
                   <h1>Open for Beta!</h1>
                   <h4>Provide feedback. Get free lifetime acccess. </h4>

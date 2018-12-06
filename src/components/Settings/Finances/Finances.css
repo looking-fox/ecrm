@@ -19,9 +19,6 @@
     right: 4%;
     width: 200px;
     height: 45px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .finance-container {

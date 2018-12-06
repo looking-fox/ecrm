@@ -1,11 +1,9 @@
-.clientcontainer{
+
+.client-container{
     width: 100%;
-    display: flex;
-    position: relative;
-    animation: fadeUpIn 0.1s ease-in;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    position: relative;
+    animation: fadeUpIn 0.1s ease-in; 
 }
 
 .client{
@@ -19,7 +17,6 @@
     justify-content: flex-start;
     align-items: center;
 }
-
 
 .item {
     font-size: 0.9em;

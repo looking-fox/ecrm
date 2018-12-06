@@ -28,7 +28,7 @@ export default class Client extends Component {
     var formatDate = new Date(date).toLocaleDateString('en-US')
 
   return (
-    <div className="clientcontainer">
+    <div className="client-container center">
 
         <div className="client">
 

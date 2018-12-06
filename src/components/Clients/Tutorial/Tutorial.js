@@ -100,12 +100,12 @@ export default class Tutorial extends Component {
       const {showTutorial, hideTutorial} = this.props
     return (
         <Modal center open={showTutorial} onClose={hideTutorial}>
-            <div className="tutorial-container">
+            <div className="tutorial-container align-center">
                 <h3 className="title">
                      Welcome to Looking Fox!
                 </h3>
 
-                <div className="image-container">
+                <div className="image-container center">
                 <img 
                 className="demo-gif" 
                 alt="Settings Demonstration"
@@ -119,7 +119,7 @@ export default class Tutorial extends Component {
                 
                 {/* Bottom Navigation */}
                 
-                <div className="progress">
+                <div className="progress align-center">
                     {this.state.progress.map( e => {
                         if(e.complete){
                             return (

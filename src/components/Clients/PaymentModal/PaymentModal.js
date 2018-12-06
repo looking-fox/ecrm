@@ -203,11 +203,11 @@ class PaymentModal extends Component {
                 <div className="progress-bar">
 
                     {this.state.noPayments ? 
-                    <div className="no-progress">
+                    <div className="no-progress center">
                     No Payments
                     </div>
                     :
-                    <div className={`progress-completed ${sessionColor}`}
+                    <div className={`progress-completed center ${sessionColor}`}
                     style={{width: `${this.state.paid}%`}}>
                         <p>{convertRawMoney(this.state.totalPaid)}</p>
                         <p>/</p>
