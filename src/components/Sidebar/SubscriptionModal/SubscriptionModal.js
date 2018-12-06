@@ -6,7 +6,9 @@ export default class SubscriptionModal extends Component {
   render() {
     return (
         <Modal open={this.props.open} onClose={this.props.hide}>
-            Subscription Modal Info
+            <div className="subscription-modal">
+              <h3 className="title"> Subscription </h3>
+            </div>
         </Modal>
     )
   }

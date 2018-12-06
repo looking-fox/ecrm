@@ -198,7 +198,7 @@ class Clients extends Component {
           
               return e.completed===false ?
                 
-                  <div className="bar" key={e.client_id}>
+                  <div className="bar center" key={e.client_id}>
             
                         <Client 
                         client={e}
@@ -221,7 +221,7 @@ class Clients extends Component {
                   </div>
               :
              
-                  <div className="bar completed" key={e.client_id}>
+                  <div className="bar center completed" key={e.client_id}>
             
                         <Client 
                         client={e}
@@ -248,7 +248,7 @@ class Clients extends Component {
       }
     if(this.props.noClients) {
       return (
-        <div className="no-client-container">
+        <div className="no-client-container center">
           <i className="fas fa-campground"/>
           <h1>Welcome to Looking Fox!</h1>
           <p>Head on over to tools > templates to get started.</p>

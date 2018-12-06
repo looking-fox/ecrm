@@ -23,24 +23,20 @@
     border-radius: 25px;
     cursor: pointer;
 }
-.menuitem {
+.menu-item {
     width: 100%;
     height: 40px;
     background-color: white;
     border-bottom: 1px solid rgb(221, 221, 221);
     font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   
     cursor: pointer;
 }
 
-.menuitem:hover .menu-icon{
+.menu-item:hover .menu-icon{
     opacity: 1;
 }
 
-.menuitem i {
+.menu-item i {
     margin-right: 10px;
 }
 

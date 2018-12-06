@@ -43,16 +43,9 @@
     margin-right: 10px;
 }
 
-.done {
-    color: #663ef7;
-}
-
 .loading {
     width: 90%;
     height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
     bottom: 40px;
     animation: loadProgression 1.3s infinite;

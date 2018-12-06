@@ -287,7 +287,7 @@ class Sidebar extends Component {
             
           </div>
          
-          <div className="menuitem"
+          <div className="menu-item center"
           onClick={this.showAllClients}>
 
             <p><i className="fas fa-users"/>Clients</p>

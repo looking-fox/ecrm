@@ -1,0 +1,9 @@
+.subscription-modal {
+    width: 50vw;
+    min-width: 200px;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
