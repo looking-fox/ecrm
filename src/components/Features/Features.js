@@ -12,7 +12,7 @@ export default function Features() {
             <div className="features-grid">
 
                 <Fade bottom>
-                <div className="featureitem">
+                <div className="feature-item column">
                   <i className="fas fa-users"></i>
                   <p className="title">MANAGE CLIENTS </p>
                   <p>No overly complicated system to learn. Manage clients at ease.  </p>
@@ -20,7 +20,7 @@ export default function Features() {
                 </Fade>
 
                 <Fade bottom>
-                <div className="featureitem">
+                <div className="feature-item column">
                   <i className="fas fa-clone"/>
                   <p className="title">TEMPLATES </p>
                   <p>Set up clients with session templates and speed up your workflow.  </p>
@@ -28,7 +28,7 @@ export default function Features() {
                 </Fade>
 
                 <Fade bottom>
-                <div className="featureitem">
+                <div className="feature-item column">
                 <i className="fas fa-credit-card"/>
                   <p className="title">Track Payments </p>
                   <p>Record payments and quickly view monthly analytics. </p>

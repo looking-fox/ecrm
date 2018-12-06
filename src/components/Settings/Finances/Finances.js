@@ -93,7 +93,7 @@ export default class Finances extends Component {
                   <p className="big-number paid">{convertRawMoney(totalPaid)}</p>
                 </div>
 
-                <div className="macro-category">
+                <div className="macro-category center column">
                   <p className="small-title">AVG / MO</p>
                   <p className="big-number">{convertRawMoney(Math.round(totalPaid/12))}</p>
                 </div>

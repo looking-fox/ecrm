@@ -139,7 +139,7 @@ class Sessions extends Component {
               )
             })
           :
-          <div className="no-sessions-prompt">
+          <div className="no-sessions-prompt center column">
               <i className="fas fa-clipboard-list"/>
               <h1 className="title"> Time to set up your session templates! </h1>
               <p>

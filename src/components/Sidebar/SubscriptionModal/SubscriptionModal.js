@@ -6,7 +6,7 @@ export default class SubscriptionModal extends Component {
   render() {
     return (
         <Modal open={this.props.open} onClose={this.props.hide}>
-            <div className="subscription-modal">
+            <div className="subscription-modal align-center column">
               <h3 className="title"> Subscription </h3>
             </div>
         </Modal>
