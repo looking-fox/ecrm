@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Sidebar.css'
 import Logo from '../../assets/logo.png'
 import Tutorial from '../Clients/Tutorial/Tutorial'
+import subscriptionModal from './SubscriptionModal/SubscriptionModal'
 import axios from 'axios'
 import Fade from 'react-reveal/Fade'
 import {connect} from 'react-redux'
@@ -12,6 +13,7 @@ import flow from 'lodash/flow'
 import ListItem from './ListItem'
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
+import SubscriptionModal from './SubscriptionModal/SubscriptionModal';
 const update = require('immutability-helper')
 
 
@@ -27,13 +29,19 @@ class Sidebar extends Component {
       deleteListCheck: false,
       listInEdit: {},
       listToMove: null,
-      showTutorial: false
+      showTutorial: false,
+      userMenu: false,
+      subscriptionModal: false
     }
 
     //If options menu is open, but user clicks away--close menu.
     window.addEventListener("click", (event) => {
-      if(event.target.id !== 'menu-icon' && this.state.optionsMenu){
-          this.setState({optionsMenu: false}) 
+      const {id} = event.target
+      if(id !== 'menu-icon' && this.state.optionsMenu){
+          this.setState({ optionsMenu: false }) 
+      }
+      if(id !== 'user-menu' && this.state.userMenu){
+          this.setState({ userMenu: false })
       }
     });
   }
@@ -218,6 +226,19 @@ class Sidebar extends Component {
     }
   }
 
+  //Todo: Combine these functions (openSub && showUserMenu)
+  showUserMenu = () => {
+    this.setState(prevState => {
+      return {userMenu: !prevState.userMenu}
+    })
+  }
+
+  toggleSubscription = () => {
+    this.setState(prevState => {
+      return {subscriptionModal: !prevState.subscriptionModal}
+    })
+  }
+
   logOut = () => {
     axios.post('/api/logout').then(() => {
       this.props.logoutUser()
@@ -230,28 +251,42 @@ class Sidebar extends Component {
   }
 
   
-
   render() {
     const isEditing = this.state.optionsMenu ? 'flex' : 'none'
+    const isUserMenuOpen = this.state.userMenu ? 'flex' : 'none'
+    
     return (
       <Fade>
         <div className="sidebar">
 
           <div className="topbar">
-          <img 
-          className="profileimage"
-          src={this.props.picture} 
-          alt="profile"/>
-          <i 
-          onClick={() => this.logOut()}
-          className="fas fa-sign-out-alt"/>
 
-        {/* Normally I'd use Link. But props is not updating location. Currently reviewing MJacksons notes on blocked location props.  */}
-        
-         <i onClick={() => this.props.history.push('/tools/templates')}
-         className="fas fa-cog"/>
+              <img 
+              className="profileimage"
+              id="user-menu"
+              src={this.props.picture} 
+              alt="user profile"
+              onClick={() => this.showUserMenu()}
+              />
+
+              <div className="options-menu user-menu" 
+              style={{display: isUserMenuOpen}}>
+  
+                <p onClick={() => this.props.history.push('/tools/templates')}
+                ><i className="fas fa-wrench"/>tools</p>
+
+                <p onClick={this.toggleSubscription}>
+                <i className="fas fa-credit-card"/>subscription</p>
+               
+                <p onClick={this.logOut}>
+                <i className="fas fa-sign-in-alt"/>logout</p>
+
+              </div>
+              
+            {/* Normally I'd use Link. But props is not updating location. Currently reviewing MJacksons notes on blocked location props.  */}
+            
           </div>
-
+         
           <div className="menuitem"
           onClick={this.showAllClients}>
 
@@ -399,6 +434,10 @@ class Sidebar extends Component {
           <Tutorial 
           showTutorial={this.state.showTutorial}
           hideTutorial={this.hideTutorial}/>
+
+          <SubscriptionModal
+          open={this.state.subscriptionModal}
+          hide={this.toggleSubscription}/>
           
         </div>
       </Fade>
