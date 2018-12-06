@@ -1,7 +1,6 @@
 
 .client-container{
     width: 100%;
-    flex-direction: column;
     position: relative;
     animation: fadeUpIn 0.1s ease-in; 
 }

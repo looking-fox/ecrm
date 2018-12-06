@@ -98,7 +98,7 @@ class Sessions extends Component {
     //Modal for adding session/editing existing session
 
     return (
-      <div className="dashboard">
+      <div className="dashboard column">
 
         <Nav/>
 
@@ -118,7 +118,7 @@ class Sessions extends Component {
              
               return (
                 <div className="session" key={i}>
-                    <div className="sessionmenu">
+                    <div className="session-menu center">
                   <div className={`bubble session-type ${e.session_color}`}>
                       <h3>{e.session_name}</h3>
                     </div>
@@ -128,7 +128,7 @@ class Sessions extends Component {
                       onClick={() => this.openVerifyDelete(e,i)}/>
                     </div>
 
-                    <div className="actions">
+                    <div className="actions center">
 
                         <Actions 
                         checkValues={false}

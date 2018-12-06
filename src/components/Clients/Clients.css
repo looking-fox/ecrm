@@ -1,12 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
-.clientdashboard {
+.client-dashboard {
     width: 85vw;
     height: fit-content;
     min-height: 500px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     position: relative;
     padding: 0px 0px;
     margin-bottom: 50px;
@@ -18,7 +15,6 @@
 
 .bar{
     width: 100%;
-    flex-direction: column;
 }
 
 .completed {

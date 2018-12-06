@@ -82,13 +82,13 @@ export default class Finances extends Component {
   
 
     return (
-      <div className="subdashboard">
+      <div className="sub-dashboard column">
         <Nav/>
 
         <div className="finance-container">
 
             <div className="macro-dashboard">
-                <div className="macro-category">
+                <div className="macro-category center column">
                   <p className="small-title">paid</p>
                   <p className="big-number paid">{convertRawMoney(totalPaid)}</p>
                 </div>
@@ -99,7 +99,7 @@ export default class Finances extends Component {
                 </div>
             </div>
 
-            <div className="year-graph">
+            <div className="year-graph center">
               <Line
               ref={this.myChart}
               data={paymentsData}
@@ -132,7 +132,7 @@ export default class Finances extends Component {
 
 
             <div className="tax-container">
-              <div className="tax-bubble">
+              <div className="tax-bubble center column">
                 <p style={{fontSize: '1.1em', paddingBottom: '20px'}}>Taxes!</p>
                 <p style={{paddingBottom: '20px', lineHeight: '20px'}}>Generate an organized report of all of your recorded payments for tax season.</p>
                 <button className="btn btn-dark" disabled>
@@ -143,10 +143,10 @@ export default class Finances extends Component {
 
 
             <div className="monthly-figures">
-              <div className="monthly-container">
+              <div className="monthly-container center">
                 {this.state.yearPayStrings.map((e,i) => {
                   return (
-                    <div className="month-block" key={i}>
+                    <div className="month-block align-center column" key={i}>
                       <p className="month-total">{e}</p>
                       <p className="month-name">
                         {paymentsData.labels[i]}

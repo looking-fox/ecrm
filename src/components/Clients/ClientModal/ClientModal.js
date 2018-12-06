@@ -304,7 +304,7 @@ class ClientModal extends Component {
         {newClient ?  "Add Client" : `Edit ${client.client.name}`}
         </h3>
     <div className={isEditing}>
-        <div className="addclientmodal">
+        <div className="add-client-modal column">
               <Input
               autoFocus={true}
               className="clientinput"

@@ -1,8 +1,5 @@
 .contact {
-    display: flex;
     justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
     background-color: #f9f6f6;
 }
 
@@ -19,7 +16,6 @@
     width: 60vw;
     margin-top: 60px;
 }
-
 
 .contact-title{
     font-size: 25px;
@@ -46,6 +42,7 @@
 form {
     text-align:center;
 }
+
 .message-box{
     width: 60vw;
     height: 100px;

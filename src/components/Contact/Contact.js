@@ -28,7 +28,7 @@ export default class Contact extends Component {
 
   render() {
     return (
-      <div className="contact">
+      <div className="contact align-center column">
 
           <div className="title-header">
           <h1 className="contact-title">

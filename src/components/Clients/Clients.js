@@ -198,7 +198,7 @@ class Clients extends Component {
           
               return e.completed===false ?
                 
-                  <div className="bar center" key={e.client_id}>
+                  <div className="bar center column" key={e.client_id}>
             
                         <Client 
                         client={e}
@@ -269,7 +269,7 @@ class Clients extends Component {
 
   render() {
     return (
-      <div className="clientdashboard">
+      <div className="client-dashboard align-center column">
 
         <FilterBar/>
 
