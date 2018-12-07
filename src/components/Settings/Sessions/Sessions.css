@@ -43,12 +43,12 @@
     margin-top: 50px;
 }
 
-.sessionmenu i{
+.session-menu i{
     color: #484848;
     font-size: 0.8em;
     margin: 0px 10px;
 }
-.sessionmenu i:hover {
+.session-menu i:hover {
     cursor: pointer;
 }
 .add {
