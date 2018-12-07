@@ -2,10 +2,7 @@
     width: 600px;
     height: 450px;
     font-family: 'Open Sans';
-    display: flex;
     justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
 }
 
 .payment-top-row-container {

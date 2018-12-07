@@ -7,21 +7,11 @@
     padding-right: 20px;
  }
  
- .logo-container{
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     
- }
  .logo {
      font-weight: 700;
     letter-spacing: 5px;
     font-size: 1em;
-     display: grid;
      grid-column: 1;
-     display: flex;
-     justify-content: center;
-     align-content: center;
      font-family: 'Josefin Sans';
      cursor: pointer;
  }
@@ -73,14 +63,11 @@
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: 100%;
-        padding-right: 0px;
-        justify-items: center;
-        align-items: center;
         padding-top: 5px;
-        
     }
     .logo{
         width: 200px;
-        margin-left: -10px;
+        margin-left: -50px;
+        
     }
 }

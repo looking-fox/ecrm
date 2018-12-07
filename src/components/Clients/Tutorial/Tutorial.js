@@ -100,7 +100,7 @@ export default class Tutorial extends Component {
       const {showTutorial, hideTutorial} = this.props
     return (
         <Modal center open={showTutorial} onClose={hideTutorial}>
-            <div className="tutorial-container align-center">
+            <div className="tutorial-container align-center column">
                 <h3 className="title">
                      Welcome to Looking Fox!
                 </h3>

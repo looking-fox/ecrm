@@ -4,14 +4,14 @@ import {Link} from 'react-router-dom'
 
 export default function Nav() {
   return (
-    <div className="menubar">
+    <div className="menu-bar align-center">
   
         <Link to="/tools/templates">
-        <li className="navitem">Templates</li>
+        <li className="nav-item center">Templates</li>
         </Link>
 
         <Link to="/tools/finances">
-        <li className="navitem">Finances</li>
+        <li className="nav-item center">Finances</li>
         </Link>
    
       </div>

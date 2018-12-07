@@ -30,7 +30,7 @@ export default class Contact extends Component {
     return (
       <div className="contact align-center column">
 
-          <div className="title-header">
+          <div className="title-header center">
           <h1 className="contact-title">
           <i className="far fa-envelope"/> CONTACT US</h1>
           </div>

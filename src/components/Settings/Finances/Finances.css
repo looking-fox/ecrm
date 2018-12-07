@@ -38,9 +38,6 @@
 .monthly-figures {
     grid-row: span 5;
     grid-column: span 8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .macro-dashboard {
@@ -55,9 +52,6 @@
 .tax-container {
     grid-row: span 5;
     grid-column: span 4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .tax-bubble {

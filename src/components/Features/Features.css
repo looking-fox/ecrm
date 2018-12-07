@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
 
-/* #f9f6f6; */
-
-
 .features{
     height: fit-content;
 }
@@ -15,7 +12,7 @@
     grid-template-rows: repeat(12, 1fr);
 }
 
-.featureitem {
+.feature-item {
     height: fit-content;
     grid-column: span 4; 
     grid-row: span 12;
@@ -33,11 +30,11 @@
     text-align: center;
 }
 
-.featureitem p {
+.feature-item p {
     line-height: 25px;
 }
 
-.featureitem i {
+.feature-item i {
     font-size: 2em;
     margin-bottom: 20px;
 }
@@ -47,9 +44,7 @@
     background-color: white;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 100%;
-    justify-content: center;
-    align-content: center;
+    grid-template-rows: 100%
 }
 
 .action-list-text{
@@ -135,12 +130,12 @@ img.finance-dash {
         padding: 20px 0px;
 
     }
-    .featureitem {
+    .feature-item {
         grid-row: span 4;
         grid-column: span 12;
         padding: 0% 15%;
     }
-    .featureitem i {
+    .feature-item i {
         margin-bottom: 0px;
     }
     .action-list {

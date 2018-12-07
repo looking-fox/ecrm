@@ -59,9 +59,9 @@ export default class NavBar extends Component {
     return (
         <div className="header">
 
-          <div className="logo-container">
+          <div className="center">
               <img src={Logo} alt="Logo" className="logo-image"/>
-              <h1 className="logo"
+              <h1 className="logo center"
               onClick={() => this.props.history.push('/')}>
               LOOKING FOX</h1>
           </div>

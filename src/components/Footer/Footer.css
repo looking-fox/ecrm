@@ -2,10 +2,6 @@
 
 .footer{
     height: 15vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     font-family: 'Josefin Sans'
 }
 .footer h2 {
@@ -21,7 +17,6 @@
 
 @media (max-width: 576px) { 
     .footer {
-        height: 15vh;
         padding: 20px 0px;
     }
 }

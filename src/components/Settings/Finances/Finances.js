@@ -131,7 +131,7 @@ export default class Finances extends Component {
             </div>
 
 
-            <div className="tax-container">
+            <div className="tax-container center">
               <div className="tax-bubble center column">
                 <p style={{fontSize: '1.1em', paddingBottom: '20px'}}>Taxes!</p>
                 <p style={{paddingBottom: '20px', lineHeight: '20px'}}>Generate an organized report of all of your recorded payments for tax season.</p>
@@ -142,7 +142,7 @@ export default class Finances extends Component {
             </div>
 
 
-            <div className="monthly-figures">
+            <div className="monthly-figures center">
               <div className="monthly-container center">
                 {this.state.yearPayStrings.map((e,i) => {
                   return (

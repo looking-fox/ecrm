@@ -194,7 +194,7 @@ class PaymentModal extends Component {
     const {open, name, sessionColor} = this.props.paymentModal
     return (
         <Modal open={open} onClose={this.closeModal}>
-            <div className="payment-container">
+            <div className="payment-container align-center column">
                 <h3 className="title">
                     <i className="far fa-credit-card"/>
                     {name}

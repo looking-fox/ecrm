@@ -86,7 +86,7 @@ class FilterBar extends Component {
     
     return (
       <Fade top>
-      <div className="filter-bar">
+      <div className="filter-bar center">
             
             <div className="menu">
             <Select 
