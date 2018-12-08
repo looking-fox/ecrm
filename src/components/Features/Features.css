@@ -23,13 +23,6 @@
     padding: 0% 20%;
 }
 
-.title {
-    font-size: 1.2em;
-    letter-spacing: 2px;
-    font-weight: 700;
-    text-align: center;
-}
-
 .feature-item p {
     line-height: 25px;
 }
@@ -66,9 +59,6 @@
 
 .browser-dash {
    grid-column: span 7;
-   display: flex;
-   justify-content: center;
-   align-items: center;
    position: relative;
    padding-left: 10%;
    overflow: hidden;
@@ -85,7 +75,6 @@ img.main-dash {
     position: relative;
     top: 5%;
     right: 15%;
-
 }
 
 img.finance-dash {
@@ -101,6 +90,7 @@ img.finance-dash {
     background-color: #f9f6f6;
     flex-direction: column;
 }
+
 .pricing h1 {
     font-size: 30px;
     font-family: 'Open Sans';

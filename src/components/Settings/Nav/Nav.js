@@ -3,6 +3,7 @@ import './Nav.css'
 import {Link} from 'react-router-dom'
 
 export default function Nav() {
+  //TODO: Add active css property to current page. 
   return (
     <div className="menu-bar align-center">
   

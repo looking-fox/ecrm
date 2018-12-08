@@ -40,7 +40,7 @@ export default function Features() {
             <div className="action-list">
 
                 
-                <div className="browser-dash">
+                <div className="browser-dash center">
                   <Fade left>
                     <img className="finance-dash"
                     src={financeDash} alt="Dashboard Preview"/>

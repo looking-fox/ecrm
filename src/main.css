@@ -13,3 +13,10 @@
     display: flex;
     flex-direction: column;
 }
+
+.title {
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-align: center;
+}
