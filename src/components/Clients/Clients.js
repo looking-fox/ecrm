@@ -12,7 +12,7 @@ import keyBy from 'lodash.keyby'
 
 import {connect} from 'react-redux'
 import {updateClients, updateClientModal, updateClientSettingsModal, updateProps} from '../../redux/reducer'
-
+var loadTimeOut;
 
 class Clients extends Component {
   constructor(){
@@ -29,11 +29,7 @@ class Clients extends Component {
     
   }
        
-  // MVP:
-    //Generate totals paid per client, total paid, total remaining
-
   //NON-MVP:
-        //User icon will be new menu for settings, logout
         //Ability to add multiple "clients" big lists
 
 
@@ -57,44 +53,45 @@ class Clients extends Component {
       }
   }
 
+  componentWillUnmount(){
+    clearTimeout(loadTimeOut)
+  }
+
   getClients(){
-        //IF: we have 0 clients, we want to update noClients to true to conditionally render tutorial animation.
-
-        //ElSE: Async task where we map clientIds to object storing all clients. Then store those clients in Redux.
-  
+        //IF: 0 clients, render tutorial pop up.
+        //ELSE: map clientIds as keys for clients object (store in props)
+        //NOTE: Render Loading if axios call takes longer than 300ms via loadTimeOut variable.
     
-    this.loadClients()
+      axios.get('/api/getclients').then(response => {
+        var clients = response.data
+        let firstClient = response.data[0]
 
-    setTimeout(() => {
+        if(firstClient){
+              if(firstClient.client_id===null){
+                this.setState({loadingClients: false}, () => {
+                  this.props.updateClients({noClients: true})
+                })
+              }
+              else {
+                this.setState({loadingClients: false}, () => {
+                  this.props.updateClients({ clients })
+                }) 
+              }
+        }           
+      }) 
+
+    loadTimeOut = setTimeout(() => {
       if(!this.props.clients.length || this.props.noClients){
         this.setState({ loadingClients: true })
       }
-      else alert('not loading')
-    }, 100)
+    }, 200)
     
-
     axios.get('/api/getactions').then(response => {
       //keyBy maps session_id as key for actions array
         var actionList = keyBy(response.data, "actions[0][session_id")
         this.props.updateClients({actions: actionList})
     })
 
-  }
-
-  loadClients = () => {
-    axios.get('/api/getclients').then(response => {
-        var clients = response.data
-        let firstClient = response.data[0]
-
-        if(firstClient){
-              if(firstClient.client_id===null){
-                this.props.updateClients({noClients: true})
-              }
-              else {
-                this.props.updateClients({ clients })
-              }
-        }           
-    }) 
   }
 
   goToMap = (location) => {
@@ -286,9 +283,7 @@ class Clients extends Component {
         <FilterBar/>
 
         {this.state.loadingClients ? 
-        <Loading/>
-        :
-        ''
+        <Loading/> : null
         }
         
 
