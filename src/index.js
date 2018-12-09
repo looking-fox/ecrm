@@ -5,20 +5,25 @@ import './reset.css';
 import './main.css';
 import './index.css';
 
-import Contact from './components/Contact/Contact'
+
 import store from './redux/store'
 import { unregister } from './serviceWorker';
 
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import {Provider} from 'react-redux'
+import {StripeProvider} from 'react-stripe-elements';
+
 import Navbar from './components/NavBar/NavBar'
 import Home from './components/Home/Home'
+import Contact from './components/Contact/Contact'
 import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
 import Finances from './components/Settings/Finances/Finances'
 import Sessions from './components/Settings/Sessions/Sessions'
+import Subscription from './components/Subscription/Subscription'
 
 ReactDOM.render(
+<StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>
 <Provider store={store}>
     <Router>
         <Switch>
@@ -71,10 +76,13 @@ ReactDOM.render(
                     </div>
                 )
             }}/>
+
+            <Route exact path="/sub" component={Subscription}/>
  
         </Switch>
     </Router>
 </Provider>
+</StripeProvider>
 
 , document.getElementById('root'));
 
