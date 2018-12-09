@@ -20,11 +20,12 @@ class Clients extends Component {
     this.state = {
       clients: [],
       noClients: false,
+      loadingClients: false,
       sessions: [],
       sessionTypes: [],
       sessionPrice: '',
       deleteVerify: false,
-      showTutorial: false
+      showTutorial: false,
     }
     
   }
@@ -282,11 +283,11 @@ class Clients extends Component {
 
         <FilterBar/>
 
-        {this.state.loadingClients ? 
-        <Loading/> : null
-        }
+        { this.state.loadingClients ? 
+        <div className="client-loading center">
+        <Loading/>
+        </div> : null }
         
-
         { this.renderClients() }
       
       

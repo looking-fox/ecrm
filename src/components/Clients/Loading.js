@@ -8,10 +8,7 @@ const styles = theme => ({
     },
     loading: {
       color: 'black',
-      animationDuration: '800ms',
-      position: 'absolute',
-      top: '50%',
-      zIndex: 5
+      animationDuration: '800ms'
     },
   });
 

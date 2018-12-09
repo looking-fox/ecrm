@@ -69,3 +69,17 @@
     background: #292929;
     padding: 10px 15px;
 }
+
+.loading-container {
+    width: 95%;
+    height: 400px;
+    position: absolute;
+    z-index: 1;
+    background: white;
+    animation: fadeIn 0.7s linear;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}

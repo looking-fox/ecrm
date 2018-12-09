@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './ClientModal.css'
 import ClientActions from './ClientActions'
 import LocationSearch from './LocationSearch'
+import Loading from '../Loading'
 import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import DatePicker from 'react-date-picker'
@@ -27,7 +28,8 @@ class ClientModal extends Component {
             clientLocation: '',
             clientState: '',
             clientCountry: '',
-            togglePriceEdit: false
+            togglePriceEdit: false,
+            loading: false
         }
 
     }
@@ -56,7 +58,9 @@ class ClientModal extends Component {
                         clientEmail: '',
                         clientDate: new Date(),
                         clientLocation: '',
-                        togglePriceEdit: false
+                        togglePriceEdit: false,
+                        loading: false
+                        
                     })  
             }
             
@@ -104,10 +108,9 @@ class ClientModal extends Component {
             clientLocation: location,
             price: session_price,
             sessionId: session_id,
-            clientState: state
+            clientState: state,
+            loading: false
         })
-
-
     }
 
     sessionPriceUpdater = (index) => {
@@ -119,8 +122,12 @@ class ClientModal extends Component {
         })
       }
 
+      saveClientLoading = () => {
+          this.setState({loading: true}, () => this.saveClient() )
+      }
     
       saveClient = () => {
+        
         const {newClient} = this.props.clientSettingsModal
         let prevDate = this.state.clientDate
         let isoDate = new Date(prevDate).toISOString()
@@ -293,7 +300,7 @@ class ClientModal extends Component {
       const {newClient, client} = this.props.clientSettingsModal
       const isEditing = newClient ? 
       '' : 'client-modal-container'
-    
+      
     return (
         <Modal 
         open={this.props.clientModalOpen} 
@@ -303,8 +310,17 @@ class ClientModal extends Component {
         <i className="far fa-user-circle"/>
         {newClient ?  "Add Client" : `Edit ${client.client.name}`}
         </h3>
-    <div className={isEditing}>
-        <div className="add-client-modal column">
+
+        {this.state.loading ? 
+         <div className="loading-container center">
+            <Loading />
+        </div>
+        : 
+        null
+        }
+       
+        <div className={isEditing}>
+            <div className="add-client-modal column">
               <Input
               autoFocus={true}
               className="clientinput"
@@ -398,7 +414,7 @@ class ClientModal extends Component {
             <footer>
                 <button type="button" 
                 className="btn btn-primary save full" 
-                onClick={this.saveClient}>
+                onClick={this.saveClientLoading}>
 
                 {newClient ? "+ Add Client" : "Save Client"}
 
