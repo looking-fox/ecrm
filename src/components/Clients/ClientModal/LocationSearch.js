@@ -51,7 +51,7 @@ export default class LocationSearch extends Component {
                 })}
               />
               <div className="autocomplete-dropdown-container">
-                {loading && <div>Loading...</div>}
+                {loading && <React.Fragment>Loading...</React.Fragment>}
                 {suggestions.map(suggestion => {
                   const className = suggestion.active
                     ? 'suggestion-item--active'
