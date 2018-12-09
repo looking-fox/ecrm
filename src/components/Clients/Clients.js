@@ -6,6 +6,7 @@ import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import FilterBar from './FilterBar/FilterBar'
 import PaymentModal from './PaymentModal/PaymentModal'
+import Loading from './Loading'
 import axios from 'axios';
 import keyBy from 'lodash.keyby'
 
@@ -60,21 +61,17 @@ class Clients extends Component {
         //IF: we have 0 clients, we want to update noClients to true to conditionally render tutorial animation.
 
         //ElSE: Async task where we map clientIds to object storing all clients. Then store those clients in Redux.
-    axios.get('/api/getclients').then(response => {
-        var clients = response.data
-        
-        let firstClient = response.data[0]
-        if(firstClient){
-              if(firstClient.client_id===null){
-                this.props.updateClients({noClients: true})
-              }
-              else {
+  
+    
+    this.loadClients()
 
-                this.props.updateClients({ clients })
-              }
-        }
-                 
-    })
+    setTimeout(() => {
+      if(!this.props.clients.length || this.props.noClients){
+        this.setState({ loadingClients: true })
+      }
+      else alert('not loading')
+    }, 100)
+    
 
     axios.get('/api/getactions').then(response => {
       //keyBy maps session_id as key for actions array
@@ -82,6 +79,22 @@ class Clients extends Component {
         this.props.updateClients({actions: actionList})
     })
 
+  }
+
+  loadClients = () => {
+    axios.get('/api/getclients').then(response => {
+        var clients = response.data
+        let firstClient = response.data[0]
+
+        if(firstClient){
+              if(firstClient.client_id===null){
+                this.props.updateClients({noClients: true})
+              }
+              else {
+                this.props.updateClients({ clients })
+              }
+        }           
+    }) 
   }
 
   goToMap = (location) => {
@@ -136,7 +149,6 @@ class Clients extends Component {
 
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
-    const {clientSettingsModal} = this.props
     const {sort, sortSession, dateRange} = this.props.filterBar
     
     let firstClient = this.props.clients[0]
@@ -273,6 +285,12 @@ class Clients extends Component {
 
         <FilterBar/>
 
+        {this.state.loadingClients ? 
+        <Loading/>
+        :
+        ''
+        }
+        
 
         { this.renderClients() }
       
