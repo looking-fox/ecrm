@@ -10,6 +10,7 @@ const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const sessionActions = require('./sessionActions.controller')
 const payments = require('./payments_controller')
+const subscription = require('./stripe_controller')
 
 const app = express()
 
@@ -215,6 +216,14 @@ app.get('/api/yearlypayments/:year', payments.yearlyPayments)
 app.get('/api/yearlymacro/:year', payments.yearlyMacro)
 
 //===============PAYMENTS==================//
+
+
+
+//===============STRIPE==================//
+
+app.post('/api/stripe/addpayment', subscription.addPayment)
+
+//===============STRIPE==================//
 
 
 

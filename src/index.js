@@ -20,7 +20,7 @@ import Sidebar from './components/Sidebar/Sidebar'
 import Clients from './components/Clients/Clients'
 import Finances from './components/Settings/Finances/Finances'
 import Sessions from './components/Settings/Sessions/Sessions'
-import Subscription from './components/Subscription/Subscription'
+import SignUp from './components/Subscription/SignUp'
 
 ReactDOM.render(
 <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>
@@ -77,7 +77,7 @@ ReactDOM.render(
                 )
             }}/>
 
-            <Route exact path="/sub" component={Subscription}/>
+            <Route exact path="/sub" component={SignUp}/>
  
         </Switch>
     </Router>

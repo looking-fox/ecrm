@@ -1,5 +1,57 @@
 const stripe = require('stripe')(process.env.STRIPE_KEY)
   
+module.exports = {
+  addPayment: (req, res) => {
+      const {email, name, sub} = req.session.user
+      
+          //Create Customer on Stripe
+          var customer_id;
+          const customer = stripe.customers.create({
+              description: name, 
+              email: email  
+          })
+          .then( response => {
+          const dbInstance = req.app.get('db')
+              //add Stripe Customer ID to DB
+                customer_id = response.id
+          dbInstance.stripe_add_customer([sub, customer_id])
+          
+          .then( user => {
+              //create source 
+              stripe.customers.createSource(
+                  customer_id,
+                  {source: req.body.token.id, }).then( () => {
+              //create subscription
+                      stripe.subscriptions.create({
+                          customer: customer_id,
+                          items: [
+                            {
+                              plan: process.env.PLAN_ID,
+                            },
+                          ]
+                        }).catch(error => {
+                            console.log('sub-error: ', error.message)
+                        })
+                              
+                         
+                       }).catch(error => {
+                           //Insufficient funds || Card Declines
+                           console.log('error: ', error.message)
+                           res.sendStatus(402)
+                           
+                       })
+                       
+                  }).catch(error => {
+                      console.log('addstripeid-error: ', error)
+                  })
+                  
+              })
+             
+          }
+      }
+
+
+
   //Grab Stripe ID using Google Sub
 
 //    dbInstance.get_stripe(sub).then(customer => {
