@@ -26,20 +26,16 @@ class SubForm extends Component {
   render() {
     return (
       <form >
-      <Fade top>
-        <h3>7 day free trial.</h3>
-        <h3>Lock in $3/month pricing during beta.</h3>
-        <h3>Cancel anytime.</h3>
-      </Fade>
 
-          <CardSection />
+        <CardSection />
 
-      <Fade bottom>
-        <button type="button" className="btn btn-dark full"
-        onClick={this.handleSubmit}>
-        Sign Up
-        </button>
-      </Fade>
+        <Fade bottom>
+          <button type="button" className="btn btn-dark full"
+          onClick={this.handleSubmit}>
+          Sign Up
+          </button>
+        </Fade>
+        
     </form>
     )
   }
