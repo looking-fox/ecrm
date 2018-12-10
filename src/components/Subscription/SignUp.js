@@ -5,7 +5,7 @@ import Fade from 'react-reveal'
 import logo from '../../assets/logo.png'
 
 export default class SignUp extends Component {
-  render() {
+  render(props) {
     return (
       <div className="sign-up-container center column">
 
@@ -19,7 +19,7 @@ export default class SignUp extends Component {
               </Fade>
           </div>
 
-            <Subscription/>
+            <Subscription {...this.props}/>
             <i className="fab fa-stripe icon-stripe"/> 
            
             

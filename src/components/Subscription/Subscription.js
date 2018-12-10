@@ -8,12 +8,11 @@ const fonts = [{ cssSrc: "https://fonts.googleapis.com/css?family=Open+Sans" }]
 
 class Subscription extends Component {
   render() {
-    const {name, email} = this.props
     return (
         <div className="sub-container center column">
-        <Elements fonts={fonts} >
-            <InjectedSubForm  name={name} email={email}/>
-        </Elements>
+            <Elements fonts={fonts} >
+                <InjectedSubForm {...this.props} />
+            </Elements>
         </div>
     )
   }

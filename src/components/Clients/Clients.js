@@ -35,7 +35,7 @@ class Clients extends Component {
 
 
   componentDidMount(){
-      this.getClients()
+    this.getClients()
   }
 
   componentDidUpdate(prevProps){

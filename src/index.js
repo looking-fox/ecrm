@@ -77,7 +77,9 @@ ReactDOM.render(
                 )
             }}/>
 
-            <Route exact path="/sub" component={SignUp}/>
+            <Route exact path="/signup" render={props => (
+                <SignUp {...props}/>
+            )}/>
  
         </Switch>
     </Router>

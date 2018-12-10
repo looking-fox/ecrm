@@ -6,6 +6,7 @@ const axios = require('axios')
 require('dotenv').config()
 var sessionId = 54;
 const path = require('path');
+const stripe = require('stripe')(process.env.STRIPE_KEY)
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const sessionActions = require('./sessionActions.controller')
@@ -61,21 +62,51 @@ app.get('/auth/callback', async (req, res) => {
     req.session.user.id = sessionId;
     sessionId++
     
-
     const {sub, name, email} = req.session.user
-   
     const dbInstance = req.app.get('db')
-
-    //If already in DB, redirect to dashboard.
-    //If not, add them to DB first before redirecting.
     
+    //If user 
+        //If subscription => Go to Dashboard
+        //No subscription => Go to SignUp
+
+    //If no user
+        // => Go to SignUp
+
     dbInstance.check_user(sub).then( response => {
+        // Previous User
         if(response[0]){
-            res.redirect('/#/dashboard')
+            // Check Subscription
+            dbInstance.stripe_check_status(sub).then(resp => {
+                
+                if(resp.length){
+                    const {customer_id} = resp[0]
+                    stripe.customers.retrieve(customer_id)
+                    .then(customer => {
+                    const {total_count} = customer.subscriptions
+                    console.log(customer.subscriptions)
+                    // Active Subscription
+                    if (total_count === 1){
+                        res.redirect('/#/dashboard')
+                    }
+                    // Not Active
+                    else {
+                        console.log('not activo')
+                        res.redirect('/#/signup') 
+                    }  
+                    })
+                }
+                
+                else {
+                    console.log('default to sign up')
+                    res.redirect('/#/signup')
+                }
+            })
+
         }
+        // New User
         else {
             dbInstance.store_user([sub, name, email]).then( () => {
-                res.redirect('/#/dashboard/welcome')
+                res.redirect('/#/signup')
             })
         }
     })
@@ -220,6 +251,8 @@ app.get('/api/yearlymacro/:year', payments.yearlyMacro)
 
 
 //===============STRIPE==================//
+
+app.get('/api/stripe/checkstatus', subscription.checkStatus)
 
 app.post('/api/stripe/addpayment', subscription.addPayment)
 
