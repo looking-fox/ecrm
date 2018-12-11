@@ -25,7 +25,7 @@ class SessionModal extends Component {
         
             if(sessionModal.session){
                 if(sessionModal.session.session_name){
-                const {session_name, session_price, session_color, actions} = this.props.sessionModal.session
+                const { session_name, session_price, session_color } = this.props.sessionModal.session
                 this.setState({
                     name: session_name,
                     price: session_price,

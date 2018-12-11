@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './Sidebar.css'
 import Logo from '../../assets/logo.png'
 import Tutorial from '../Clients/Tutorial/Tutorial'
-import subscriptionModal from './SubscriptionModal/SubscriptionModal'
+import SubscriptionModal from './SubscriptionModal/SubscriptionModal';
 import axios from 'axios'
 import Fade from 'react-reveal/Fade'
 import {connect} from 'react-redux'
@@ -13,7 +13,6 @@ import flow from 'lodash/flow'
 import ListItem from './ListItem'
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
-import SubscriptionModal from './SubscriptionModal/SubscriptionModal';
 const update = require('immutability-helper')
 
 

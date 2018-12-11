@@ -33,7 +33,7 @@ export default class SignUp extends Component {
 
               <div className="center column" style={ inProgress ? {display: 'none'} : {} }>
 
-              <img src={logo} className="payment-logo"/>
+              <img src={logo} alt="looking fox logo" className="payment-logo"/>
               <div className="info-desc center column">
                   <Fade top>
                     <h3>One week free trial.</h3>

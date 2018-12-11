@@ -6,7 +6,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import Fade from 'react-reveal'
 import flow from 'lodash/flow'
-import { stat } from 'fs';
+
 
 class SubForm extends Component {
   constructor(){
