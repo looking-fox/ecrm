@@ -4,18 +4,16 @@ import Subscription from '../../Subscription/Subscription'
 import Modal from 'react-responsive-modal'
 import axios from 'axios'
 import Fade from 'react-reveal'
+
 const styles = { modal: {background: '#f2f2f2'} }
+const initialState = {brand: '', last4: null, nextPayment: '',
+updateCard: false, cancelCheckModal: false}
+
 
 export default class SubscriptionModal extends Component {
   constructor(){
     super()
-      this.state = {
-        brand: '', 
-        last4: null, 
-        nextPayment: '',
-        updateCard: false,
-        cancelCheckModal: false
-      }
+      this.state = initialState
   }
 
   componentDidMount(){
@@ -34,7 +32,9 @@ export default class SubscriptionModal extends Component {
   }
 
   cancelSubscription = () => {
-    console.log('cancel this please')
+    axios.delete('/api/stripe/cancelsub').then(() => {
+      this.setState(initialState)
+    })
   }
 
   render() {
@@ -75,7 +75,7 @@ export default class SubscriptionModal extends Component {
               </button>
 
               <button type="button" className="btn btn-danger"
-              onClick={this.props.hide}>
+              onClick={this.toggleCancelCheckModal}>
                 <i className="fas fa-ban"/> Cancel Subscription
               </button>
 
@@ -86,19 +86,16 @@ export default class SubscriptionModal extends Component {
 
           <Modal open={this.state.cancelCheckModal}
           onClose={this.toggleCancelCheckModal}>
-              <div className="client-options">
+              <div className="cancel-sub-modal center column">
 
-              <h1 className="client-settings-modal-title">
-                Are you sure?
+              <h1 className="mod-title">
+                We're sad to see you go 🌧
               </h1> 
 
-              <p 
-              style={{marginBottom: '20px', textAlign: 'center'}}>
-                We're sad to see you go! You will still have access for the remainder of this month's subscription. We'll keep your client + session information in case you come back. 
-              </p>
+              <p>You will still have access for the remainder of this month's subscription. We'll keep your client + session information in case you come back.</p>
 
               <button type="button" 
-                className="btn btn-danger options"
+                className="btn btn-danger full"
                 onClick={this.cancelSubscription}>
                   It's Not You...It's Me (Cancel)
               </button>

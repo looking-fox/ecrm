@@ -111,26 +111,15 @@ module.exports = {
                 
             })   
             
-          }
-      }
+          },
+
+    cancelSub: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+    }
 
 
-// app.get('/api/customerid', (req, res) => {
-//     //get the Customer ID from DB
-//     const {sub} = req.session.user
-
-//     const dbInstance = req.app.get('db');
-
-//     dbInstance.get_stripe(sub).then(customer => {
-        
-//     const {customer_id} = customer[0]
-
-//     //retrieve a Customer
-//     stripe.customers.retrieve(customer_id).then(stripecust => {
-        
-//         res.status(200).send({stripecust: stripecust, name: req.session.user})
-//          })  
-//     })
+}
 
     
 // app.post('/api/customersub', (req, res) => {

@@ -37,6 +37,19 @@
     margin-top: 3%;
 }
 
+.cancel-sub-modal {
+    width: 30vw;
+    padding: 5%;
+}
+
+.cancel-sub-modal p {
+    font-size: 1.2em;
+    line-height: 150%;
+    margin-top: 5%;
+    margin-bottom: 10%;
+
+}
+
 .sub-info {
     font-size: 1.2em;
     margin: 30px 0px;
