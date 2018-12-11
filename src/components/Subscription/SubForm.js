@@ -29,6 +29,8 @@ class SubForm extends Component {
 
     else {
       //Setting Up Initial Subscription 
+      this.props.paymentProgress()
+      
       this.props.stripe.createToken().then( token => {
         axios.post('/api/stripe/addpayment', {token} ).then(() => {
           this.props.history.push('/dashboard')

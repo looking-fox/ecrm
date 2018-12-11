@@ -12,7 +12,8 @@ class Subscription extends Component {
         <div className="sub-container center column">
             <Elements fonts={fonts} >
                 <InjectedSubForm {...this.props}
-                updateCardUI={this.props.updateCardUI} />
+                updateCardUI={this.props.updateCardUI}
+                paymentProgress={this.props.paymentProgress} />
             </Elements>
         </div>
     )
