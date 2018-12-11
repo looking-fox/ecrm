@@ -5,6 +5,7 @@ import Navbar from '../NavBar/NavBar'
 import Features from '../Features/Features'
 import Footer from '../Footer/Footer'
 import Fade from 'react-reveal/Fade'
+import { mobileCheck } from '../../redux/functions'
 
 export default function Home(props){
     return (
@@ -12,13 +13,13 @@ export default function Home(props){
       <Navbar {...props}/>
       
         <div className="body">
-            <Fade bottom>
+            <Fade left>
 
             <div className="intro-container">
                 <h3 className="intro-text">
                   Keep organized. 
                   <br/>
-                  Stay adventurous.
+                  Stay {window.mobileCheck ? 'true' : 'false'}
                 </h3>
 
                 <h5 className="join-now">

@@ -114,20 +114,38 @@ img.finance-dash {
        overflow-x: hidden;
    }
     .features-grid {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: repeat(12, 1fr);
-        height: 90vh;
-        padding: 20px 0px;
+        height: fit-content;
+        width: 100%;
+        padding: 10% 0%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 
-    }
     .feature-item {
-        grid-row: span 4;
-        grid-column: span 12;
-        padding: 0% 15%;
+        height: fit-content;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
     }
+
+    .feature-item .title {
+       margin-bottom: 3%;
+    }
+
+    .feature-item p {
+        font-size: 5vw;
+    }
+
     .feature-item i {
         margin-bottom: 0px;
     }
+
     .action-list {
         height: 75vh;
         grid-template-columns: 1;
@@ -144,11 +162,12 @@ img.finance-dash {
     .action-list-text{
         grid-row: 2;
         grid-column: span 12;
-        min-width: 100%;
+        height: fit-content;
         padding-right: 0;
         align-items: flex-start;
-        padding: 10%;
-        font-size: 25px;
+        padding-left: 5%;
+        font-size: 5vw;
+        margin-top: 10%;
     }
 
     .pricing {
