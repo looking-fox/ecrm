@@ -252,7 +252,7 @@ app.get('/api/yearlymacro/:year', payments.yearlyMacro)
 
 //===============STRIPE==================//
 
-app.get('/api/stripe/checkstatus', subscription.checkStatus)
+app.get('/api/stripe/subinfo', subscription.getInfo)
 
 app.post('/api/stripe/addpayment', subscription.addPayment)
 

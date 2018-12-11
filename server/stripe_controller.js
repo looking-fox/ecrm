@@ -2,17 +2,30 @@ const stripe = require('stripe')(process.env.STRIPE_KEY)
   
 module.exports = {
 
-  checkStatus: (req, res) => {
-        const dbInstance = req.app.get('db')
-        const {sub} = req.session.user
-        dbInstance.stripe_check_status(sub).then(response => {
-            if(response[0].customer_id){
-                return response[0].customer_id
-            }
-            else {
-                return 'not active'
-            }
+  getInfo: (req, res) => {
+    const dbInstance = req.app.get('db')
+    const {sub} = req.session.user
+    dbInstance.stripe_check_status(sub).then(response => {
+        const {customer_id} = response[0]
+
+        stripe.customers.retrieve(customer_id).then(customer => {
+        const {default_source} = customer
+        const {current_period_end} = customer.subscriptions.data[0]
+        let nextPayment = new Date(current_period_end * 1000).toDateString()
+            stripe.customers.retrieveCard(
+                customer_id,
+                default_source,
+                ).then(card => {
+                    const {brand, last4} = card
+                    let intLast4 = parseInt(last4)
+                    res.status(200).send({
+                        brand, 
+                        last4: intLast4,
+                        nextPayment
+                    })
+                })
         })
+    })
   },
 
   addPayment: (req, res) => {
@@ -20,8 +33,8 @@ module.exports = {
       const dbInstance = req.app.get('db')
       const {token} = req.body.token
       var customer_id;
-        //Check if previous account
-        
+
+        //Check for Previous Account
        dbInstance.stripe_check_status(sub).then(resp => {
            //Has Account
            if(resp.length){
@@ -102,34 +115,6 @@ module.exports = {
       }
 
 
-
-//   Grab Stripe ID using Google Sub
-
-//    dbInstance.get_stripe(sub).then(customer => {
-       
-//     if (customer[0].customer_id){
-
-//         const {customer_id} = customer[0]
-//     stripe.customers.retrieve(customer_id).then(customer => {
-      
-//         const {total_count} = customer.subscriptions
-       
-//         if (total_count === 1){
-//             res.status(200).send('active')
-//         }
-//         else {
-//             res.status(200).send('notactive')
-//                       }
-//                 })
-//              }
-//       else {
-//           res.status(200).send('noaccount')
-//             } 
-//          })
-//      }
-          
-//     })
-
 // app.get('/api/customerid', (req, res) => {
 //     //get the Customer ID from DB
 //     const {sub} = req.session.user
@@ -153,13 +138,13 @@ module.exports = {
 
 // // retrieve a Customer's card
 
-//     stripe.customers.retrieveCard(
-//     id,
-//     default_source,
-//     ).then(card => {
-//         const {brand, last4} = card
-//         res.status(200).send({brand: brand, last4: last4})
-//     })
+    // stripe.customers.retrieveCard(
+    // id,
+    // default_source,
+    // ).then(card => {
+    //     const {brand, last4} = card
+    //     res.status(200).send({brand: brand, last4: last4})
+    // })
 // }),
 
 // app.put('/api/renewsubscription', (req, res, next) => {
