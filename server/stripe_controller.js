@@ -126,13 +126,16 @@ module.exports = {
             .then(customer => {
                 const {id} = customer.subscriptions.data[0]
 
-                stripe.subscriptions
-                .update(customer_id, {
-                    cancel_at_period_end: false,
-                    items: [{ id, plan: process.env.PLAN_ID }]
-                })
-                .then( () => res.sendStatus(200) )
-                
+                stripe.subscriptions.retrieve(id).then(response => {
+
+                    stripe.subscriptions.update(id, {
+                        cancel_at_period_end: false,
+                        items: [{
+                          id: response.items.data[0].id,
+                          plan: process.env.PLAN_ID,
+                        }]
+                      }).then( () => res.sendStatus(200) )     
+                })         
             }) 
         })
     },
