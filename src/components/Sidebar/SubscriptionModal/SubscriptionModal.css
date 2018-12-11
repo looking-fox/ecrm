@@ -1,6 +1,5 @@
 .subscription-modal {
     width: fit-content;
-    min-width: 400px;
     position: relative;
     display: flex;
     background: #f2f2f2;
