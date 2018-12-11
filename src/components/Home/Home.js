@@ -19,7 +19,7 @@ export default function Home(props){
                 <h3 className="intro-text">
                   Keep organized. 
                   <br/>
-                  Stay {window.mobileCheck ? 'true' : 'false'}
+                  Stay adventurous.
                 </h3>
 
                 <h5 className="join-now">

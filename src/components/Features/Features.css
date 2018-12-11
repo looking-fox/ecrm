@@ -130,7 +130,7 @@ img.finance-dash {
         justify-content: flex-end;
         align-items: center;
         flex-direction: column;
-        padding: 0;
+        padding: 10% 5%;
         margin: 0;
     }
 
@@ -146,18 +146,33 @@ img.finance-dash {
         margin-bottom: 0px;
     }
 
-    .action-list {
+    .action-list{
         height: 75vh;
         grid-template-columns: 1;
         grid-template-rows: 50% 50%;
-        padding: 5% 0%;
-        padding-top: 10%;
+        padding-top: 15%;
     }
 
     .browser-dash {
         grid-row: 1;
         grid-column: span 12;
     }
+
+    img.main-dash { 
+        width: 80vw;
+        right: 10%;
+    }
+
+    img.finance-dash {
+        width: 60vw;
+        left: 10%;
+    }
+
+    .browser-dash img {
+        -webkit-filter: drop-shadow(5px 10px 10px rgb(34, 34, 34, 0.3));
+        filter: drop-shadow(0px 0px 5px rgb(34, 34, 34, 0.3));
+    }
+
 
     .action-list-text{
         grid-row: 2;
