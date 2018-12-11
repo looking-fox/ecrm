@@ -1,7 +1,6 @@
 .subscription-modal {
     width: fit-content;
-    min-width: 200px;
-    height: fit-content;
+    min-width: 400px;
     position: relative;
     display: flex;
     background: #f2f2f2;
@@ -20,6 +19,7 @@
     border-radius: 5px;
     padding: 0% 5%;
     min-width: 400px;  
+    margin-bottom: 5%;
 }
 
 .button-container {
@@ -30,8 +30,11 @@
 
 .button-container button {
     font-family: 'Open Sans';
-    width: 45%;
-    
+    width: fit-content;
+}
+
+.cancel-update {
+    margin-top: 3%;
 }
 
 .sub-info {

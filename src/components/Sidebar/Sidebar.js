@@ -436,6 +436,7 @@ class Sidebar extends Component {
           hideTutorial={this.hideTutorial}/>
 
           <SubscriptionModal
+          {...this.props}
           open={this.state.subscriptionModal}
           hide={this.toggleSubscription}/>
           

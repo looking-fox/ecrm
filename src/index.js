@@ -78,7 +78,7 @@ ReactDOM.render(
             }}/>
 
             <Route exact path="/signup" render={props => (
-                <SignUp {...props}/>
+                <SignUp {...props} />
             )}/>
  
         </Switch>

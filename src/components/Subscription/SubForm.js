@@ -21,15 +21,16 @@ class SubForm extends Component {
   };
   
   render() {
+    const {pathname} = this.props.history.location
     return (
       <form >
 
         <CardSection />
 
-        <Fade bottom>
+        <Fade>
           <button type="button" className="btn btn-dark full"
           onClick={this.handleSubmit}>
-          Sign Up
+          {pathname === '/dashboard' ? 'Update Card' : 'Sign Up'}
           </button>
         </Fade>
         
