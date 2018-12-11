@@ -2,9 +2,7 @@ import React from 'react'
 import './Nav.css'
 import { NavLink } from 'react-router-dom'
 
-export default function Nav(props) {
-  //TODO: Add active css property to current page.
-  console.log('props: ', props) 
+export default function Nav() { 
   return (
     <div className="menu-bar align-center">
   

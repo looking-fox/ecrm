@@ -1,6 +1,45 @@
 .subscription-modal {
-    width: 50vw;
+    width: fit-content;
     min-width: 200px;
     height: fit-content;
     position: relative;
+    display: flex;
+    background: #f2f2f2;
+    padding: 5%;
+}
+
+.mod-title {
+    font-size: 1.5em;
+    font-family: 'Open Sans';
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.sub-card-container {
+    border: 2px solid #878787;
+    border-radius: 5px;
+    padding: 0% 5%;
+    min-width: 400px;  
+}
+
+.button-container {
+    width: 400px;
+    justify-content: space-evenly;
+    margin-top: 10%;
+}
+
+.button-container button {
+    font-family: 'Open Sans';
+    width: 45%;
+    
+}
+
+.sub-info {
+    font-size: 1.2em;
+    margin: 30px 0px;
+    color: black;
+}
+
+.subscription-modal i {
+    margin: 0px 5px;
 }

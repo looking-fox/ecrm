@@ -83,21 +83,19 @@ app.get('/auth/callback', async (req, res) => {
                     stripe.customers.retrieve(customer_id)
                     .then(customer => {
                     const {total_count} = customer.subscriptions
-                    console.log(customer.subscriptions)
+                    
                     // Active Subscription
                     if (total_count === 1){
                         res.redirect('/#/dashboard')
                     }
                     // Not Active
                     else {
-                        console.log('not activo')
                         res.redirect('/#/signup') 
                     }  
                     })
                 }
                 
                 else {
-                    console.log('default to sign up')
                     res.redirect('/#/signup')
                 }
             })
