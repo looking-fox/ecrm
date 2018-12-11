@@ -20,9 +20,9 @@ class SubForm extends Component {
       //Updaitng User's Default Payment Method
       this.props.stripe.createToken().then( token => {
         axios.post('/api/stripe/updatecard', {token} )
-        .then( () => {
+        .then( response => {
           this.cardHolderRef.current.cardRef.current._element.clear()
-          this.props.updateCardUI() 
+          this.props.updateCardUI(response.data) 
         })
       })
     }
@@ -39,7 +39,6 @@ class SubForm extends Component {
   
   render() {
     const {pathname} = this.props.history.location
-    console.log(this.cardHolderRef)
     return (
       <form >
 

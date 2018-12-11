@@ -146,7 +146,7 @@ module.exports = {
         const {sub} = req.session.user
         const {token} = req.body.token
         var customer_id;
-        
+        var defaultSrc;
         //Grab Customer ID
         dbInstance.stripe_check_status(sub).then(resp => {
              customer_id = resp[0].customer_id
@@ -159,10 +159,23 @@ module.exports = {
                  stripe.customers.retrieve(customer_id)
                  .then( customer  => {
                  //Set New Card to Default Source
-                     let defaultSrc = customer.sources.data[1].id
+                     defaultSrc = customer.sources.data[1].id
                      stripe.customers.update(customer_id, {
                      default_source: defaultSrc })
-                     .then( () => res.sendStatus(200) )
+                     .then( customer => {
+                        
+                    stripe.customers.retrieveCard(
+                    customer_id, defaultSrc)
+                    .then(card => {
+                        const {brand, last4} = card
+                        let intLast4 = parseInt(last4)
+                        res.status(200).send({
+                            brand,
+                            last4: intLast4
+                        })
+                    })
+                        
+                    })
                  })
              })
         })

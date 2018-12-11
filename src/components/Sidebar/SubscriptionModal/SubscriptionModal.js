@@ -22,10 +22,6 @@ export default class SubscriptionModal extends Component {
   }
 
   componentDidMount(){
-    this.getSubInfo()
-  }
-
-  getSubInfo = () => {
     axios.get('/api/stripe/subinfo').then(response => {
       const {brand, last4, nextPayment, canceledSub} = response.data
       this.setState({brand, last4, nextPayment, canceledSub})
@@ -46,8 +42,9 @@ export default class SubscriptionModal extends Component {
     })
   }
 
-  updateCardUI = () => {
-    this.getSubInfo()
+  updateCardUI = (newCard) => {
+    const {brand, last4} = newCard
+    this.setState({brand, last4})
   }
 
   cancelSubscription = () => {
