@@ -6,6 +6,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import Fade from 'react-reveal'
 import flow from 'lodash/flow'
+import { stat } from 'fs';
 
 class SubForm extends Component {
   constructor(){
@@ -42,8 +43,15 @@ class SubForm extends Component {
       this.props.paymentProgress()
       
       this.props.stripe.createToken().then( token => {
-        axios.post('/api/stripe/addpayment', {token} ).then(() => {
-          this.props.history.push('/dashboard')
+        axios.post('/api/stripe/addpayment', {token} )
+        .then(status => {
+          if(status.data === "new"){
+            //First Time User
+            this.props.history.push('/dashboard/welcome')
+          }
+            //Returning User That Cancelled
+          else this.props.history.push('/dashboard')
+
         }).catch(() => alert("Payment failed.") ) 
       })
     }

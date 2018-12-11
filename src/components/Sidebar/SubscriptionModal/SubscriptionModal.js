@@ -58,7 +58,9 @@ export default class SubscriptionModal extends Component {
     return (
         <Modal open={this.props.open} onClose={this.props.hide}
         styles={styles}>
-            <div className="subscription-modal align-center column">
+            <div style={nextPayment ? {} : {display: 'none'} }
+            className="subscription-modal align-center column">
+            
             <h3 className="mod-title">Subscription</h3>
 
             <div className="sub-card-container">

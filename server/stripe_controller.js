@@ -72,7 +72,7 @@ module.exports = {
                             stripe.subscriptions.create({
                                 customer: customer_id,
                                 items: [ { plan: process.env.PLAN_ID } ]
-                              }).then( () => res.redirect('/#/dashboard'))
+                              }).then( () => res.status(200).send('previous'))
                         } 
                     })
                 })
@@ -100,20 +100,16 @@ module.exports = {
                       stripe.subscriptions.create({
                           customer: customer_id,
                           items: [ { plan: process.env.PLAN_ID } ]
-                        }).then( () => res.sendStatus(200) )
-                        .catch(error => { console.log('sub-error: ', error.message) }) 
-                        
+                        }).then( () => res.status(200).send('new'))
+                        .catch(error => { console.log('sub-error: ', error.message) })         
                   })
-                       
+
          }).catch(error => console.log('addstripeid-error: ', error) )
-            
-        })          
-        
-                }
-                
-            })   
-            
-          },
+         
+                 })          
+            }     
+       })     
+    },
     
     renewSub: (req, res) => {
         const dbInstance = req.app.get('db')
