@@ -7,11 +7,12 @@ module.exports = {
     const {sub} = req.session.user
     dbInstance.stripe_check_status(sub).then(response => {
         const {customer_id} = response[0]
-
+        //Use cust_id to get customer object
         stripe.customers.retrieve(customer_id).then(customer => {
         const {default_source} = customer
-        const {current_period_end} = customer.subscriptions.data[0]
+        const {current_period_end, cancel_at_period_end} = customer.subscriptions.data[0]
         let nextPayment = new Date(current_period_end * 1000).toDateString()
+            //Retrieve Card & Subscription Info
             stripe.customers.retrieveCard(
                 customer_id,
                 default_source,
@@ -21,7 +22,8 @@ module.exports = {
                     res.status(200).send({
                         brand, 
                         last4: intLast4,
-                        nextPayment
+                        nextPayment,
+                        canceledSub: cancel_at_period_end
                     })
                 })
         })
@@ -112,29 +114,52 @@ module.exports = {
             })   
             
           },
+    
+    renewSub: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+
+        dbInstance.stripe_check_status(sub).then(customer => {
+            const {customer_id} = customer[0]
+    
+            stripe.customers.retrieve(customer_id)
+            .then(customer => {
+                const {id} = customer.subscriptions.data[0]
+
+                stripe.subscriptions
+                .update(customer_id, {
+                    cancel_at_period_end: false,
+                    items: [{ id, plan: process.env.PLAN_ID }]
+                })
+                .then( () => res.sendStatus(200) )
+                
+            }) 
+        })
+    },
 
     cancelSub: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
+
+        dbInstance.stripe_check_status(sub).then(customer => {
+            const {customer_id} = customer[0]
+    
+            stripe.customers.retrieve(customer_id)
+            .then(customer => {
+                const {id} = customer.subscriptions.data[0]
+                   
+                stripe.subscriptions
+                .update(id, {cancel_at_period_end: true})
+                .then(() => res.sendStatus(200) )
+            }) 
+        })
     }
 
 
 }
 
     
-// app.post('/api/customersub', (req, res) => {
-// const {id, default_source} = req.body.customer
 
-// // retrieve a Customer's card
-
-    // stripe.customers.retrieveCard(
-    // id,
-    // default_source,
-    // ).then(card => {
-    //     const {brand, last4} = card
-    //     res.status(200).send({brand: brand, last4: last4})
-    // })
-// }),
 
 // app.put('/api/renewsubscription', (req, res, next) => {
 // const {customer} = req.body;
@@ -151,9 +176,3 @@ module.exports = {
 //       }).then(customer => {
 //           res.status(200).send(customer)
 //       })
-
-    
-// })
-
-
-// })

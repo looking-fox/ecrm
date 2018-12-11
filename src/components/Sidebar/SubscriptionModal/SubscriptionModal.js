@@ -4,22 +4,27 @@ import Subscription from '../../Subscription/Subscription'
 import Modal from 'react-responsive-modal'
 import axios from 'axios'
 import Fade from 'react-reveal'
-
 const styles = { modal: {background: '#f2f2f2'} }
-const initialState = {brand: '', last4: null, nextPayment: '',
-updateCard: false, cancelCheckModal: false}
+
 
 
 export default class SubscriptionModal extends Component {
   constructor(){
     super()
-      this.state = initialState
+      this.state = {
+        brand: '', 
+        last4: null, 
+        nextPayment: '',
+        canceledSub: false,
+        updateCard: false, 
+        cancelCheckModal: false
+      }
   }
 
   componentDidMount(){
     axios.get('/api/stripe/subinfo').then(response => {
-      const {brand, last4, nextPayment} = response.data
-      this.setState({brand, last4, nextPayment})
+      const {brand, last4, nextPayment, canceledSub} = response.data
+      this.setState({brand, last4, nextPayment, canceledSub})
     })
   }
 
@@ -31,14 +36,20 @@ export default class SubscriptionModal extends Component {
     this.setState({cancelCheckModal: !this.state.cancelCheckModal})
   }
 
+  renewSubscription = () => {
+    axios.put('/api/stripe/renewsub').then(() => {
+      this.setState({ canceledSub: false })
+    })
+  }
+
   cancelSubscription = () => {
     axios.delete('/api/stripe/cancelsub').then(() => {
-      this.setState(initialState)
+      this.setState({ cancelCheckModal: false, canceledSub: true })
     })
   }
 
   render() {
-    const { brand, last4, nextPayment, updateCard } = this.state
+    const { brand, last4, nextPayment, updateCard, canceledSub } = this.state
     return (
         <Modal open={this.props.open} onClose={this.props.hide}
         styles={styles}>
@@ -51,7 +62,9 @@ export default class SubscriptionModal extends Component {
                 </p>
 
                 <p className="sub-info">
-                  Next Payment: {nextPayment}
+                  {canceledSub ? 
+                  'Access Until: ' : 'Next Payment: '}
+                  {nextPayment}
                 </p>
             </div>
 
@@ -74,10 +87,17 @@ export default class SubscriptionModal extends Component {
               <i className="fas fa-pen"/> Update Card
               </button>
 
+              {canceledSub ? 
+              <button type="button" 
+              className="btn btn-dark renew-sub"
+              onClick={this.renewSubscription}>
+                Renew Subscription
+              </button>
+              :
               <button type="button" className="btn btn-danger"
               onClick={this.toggleCancelCheckModal}>
                 <i className="fas fa-ban"/> Cancel Subscription
-              </button>
+              </button>}
 
             </div>
           }
