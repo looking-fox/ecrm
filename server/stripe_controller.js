@@ -140,6 +140,34 @@ module.exports = {
         })
     },
 
+
+    updateCard: (req, res) => {
+        const dbInstance = req.app.get('db')
+        const {sub} = req.session.user
+        const {token} = req.body.token
+        var customer_id;
+        
+        //Grab Customer ID
+        dbInstance.stripe_check_status(sub).then(resp => {
+             customer_id = resp[0].customer_id
+             
+             //Add New Card
+             stripe.customers.createSource(customer_id,
+             {source: token.id })
+             .then(() => {
+                 //Grab Customer Object
+                 stripe.customers.retrieve(customer_id)
+                 .then( customer  => {
+                 //Set New Card to Default Source
+                     let defaultSrc = customer.sources.data[1].id
+                     stripe.customers.update(customer_id, {
+                     default_source: defaultSrc })
+                     .then( () => res.sendStatus(200) )
+                 })
+             })
+        })
+    },
+
     cancelSub: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user

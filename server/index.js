@@ -254,6 +254,8 @@ app.get('/api/stripe/subinfo', subscription.getInfo)
 
 app.post('/api/stripe/addpayment', subscription.addPayment)
 
+app.post('/api/stripe/updatecard', subscription.updateCard)
+
 app.put('/api/stripe/renewsub', subscription.renewSub)
 
 app.delete('/api/stripe/cancelsub', subscription.cancelSub)

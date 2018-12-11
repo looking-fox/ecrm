@@ -22,6 +22,10 @@ export default class SubscriptionModal extends Component {
   }
 
   componentDidMount(){
+    this.getSubInfo()
+  }
+
+  getSubInfo = () => {
     axios.get('/api/stripe/subinfo').then(response => {
       const {brand, last4, nextPayment, canceledSub} = response.data
       this.setState({brand, last4, nextPayment, canceledSub})
@@ -40,6 +44,10 @@ export default class SubscriptionModal extends Component {
     axios.put('/api/stripe/renewsub').then(() => {
       this.setState({ canceledSub: false })
     })
+  }
+
+  updateCardUI = () => {
+    this.getSubInfo()
   }
 
   cancelSubscription = () => {
@@ -70,7 +78,8 @@ export default class SubscriptionModal extends Component {
 
           {updateCard ? 
             <Fade>
-               <Subscription {...this.props} /> 
+               <Subscription {...this.props}
+               updateCardUI={this.updateCardUI} /> 
                
                <button type="button" 
                 className="btn btn-secondary full center cancel-update"

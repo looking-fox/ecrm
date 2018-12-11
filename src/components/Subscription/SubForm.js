@@ -7,25 +7,43 @@ import Fade from 'react-reveal'
 import flow from 'lodash/flow'
 
 class SubForm extends Component {
+  constructor(){
+    super()
+    this.cardHolderRef = React.createRef()
+  }
   
   handleSubmit = (ev) => {
     ev.preventDefault();
-    
-    this.props.stripe.createToken().then( token => {
-      axios.post('/api/stripe/addpayment', {token} ).then(() => {
-        this.props.history.push('/dashboard')
+    const {pathname} = this.props.history.location
+
+    if(pathname === '/dashboard'){
+      //Updaitng User's Default Payment Method
+      this.props.stripe.createToken().then( token => {
+        axios.post('/api/stripe/updatecard', {token} )
+        .then( () => {
+          this.cardHolderRef.current.cardRef.current._element.clear()
+          this.props.updateCardUI() 
+        })
       })
-      .catch(() => alert("Payment failed."))
-      
-    });
+    }
+
+    else {
+      //Setting Up Initial Subscription 
+      this.props.stripe.createToken().then( token => {
+        axios.post('/api/stripe/addpayment', {token} ).then(() => {
+          this.props.history.push('/dashboard')
+        }).catch(() => alert("Payment failed.") ) 
+      })
+    }
   };
   
   render() {
     const {pathname} = this.props.history.location
+    console.log(this.cardHolderRef)
     return (
       <form >
 
-        <CardSection />
+        <CardSection ref={this.cardHolderRef}/>
 
         <Fade>
           <button type="button" className="btn btn-dark full"
