@@ -13,11 +13,27 @@ export default function Home(props){
       
         <div className="body">
             <Fade bottom>
-            <h3 className="introtext">Keep organized. <br/>Stay adventurous.</h3>
+
+            <div className="intro-container">
+                <h3 className="intro-text">
+                  Keep organized. 
+                  <br/>
+                  Stay adventurous.
+                </h3>
+
+                <h5 className="join-now">
+                Join beta. Lock in <b>$3/month</b> pricing.
+                </h5>
+
+                 <button className="btn btn-outline-dark join-btn">
+                Sign Up
+                </button>
+            </div>
+            
             </Fade>
 
             <Fade>
-              <img className ="mainimage" src={Workspace} alt="Yosemite Elopement"/>
+              <img className ="main-image" src={Workspace} alt="Yosemite Elopement"/>
             </Fade>
         </div>
 
