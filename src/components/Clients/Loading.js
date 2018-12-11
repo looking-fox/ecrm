@@ -18,7 +18,7 @@ function Loading(props) {
     <React.Fragment>
         <CircularProgress
         className={loading}
-        size={48}
+        size={props.small ? 24 : 48}
         thickness={2}/>
     </React.Fragment>
   )

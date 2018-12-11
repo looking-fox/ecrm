@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CardSection from './CardSection'
+import Loading from '../Clients/Loading'
 import {injectStripe} from 'react-stripe-elements';
 import axios from 'axios'
 import {connect} from 'react-redux'
@@ -9,6 +10,7 @@ import flow from 'lodash/flow'
 class SubForm extends Component {
   constructor(){
     super()
+    this.state = { loading : false }
     this.cardHolderRef = React.createRef()
   }
   
@@ -18,12 +20,20 @@ class SubForm extends Component {
 
     if(pathname === '/dashboard'){
       //Updaitng User's Default Payment Method
-      this.props.stripe.createToken().then( token => {
-        axios.post('/api/stripe/updatecard', {token} )
-        .then( response => {
-          this.cardHolderRef.current.cardRef.current._element.clear()
-          this.props.updateCardUI(response.data) 
+      this.setState({loading: true}, () => {
+
+        this.props.stripe.createToken().then( token => {
+          axios.post('/api/stripe/updatecard', {token} )
+          .then( response => {
+            this.setState({loading: false}, () => {
+              
+              this.cardHolderRef.current.cardRef.current._element.clear()
+              this.props.updateCardUI(response.data)
+            })
+             
+          })
         })
+
       })
     }
 
@@ -41,10 +51,19 @@ class SubForm extends Component {
   
   render() {
     const {pathname} = this.props.history.location
+    const {loading} = this.state
     return (
       <form >
-
+        
+        <div style={ loading ? {display: 'none'} : {} }>
         <CardSection ref={this.cardHolderRef}/>
+        </div>
+
+        <div style={ loading ? {} : {display: 'none'} }
+        className="update-card center column">
+          <Loading small />
+          <p style={{marginTop: '10px'}}> Updating Card... </p>
+        </div>
 
         <Fade>
           <button type="button" className="btn btn-dark full"

@@ -45,14 +45,15 @@ button.renew-sub {
 
 .cancel-sub-modal {
     width: 30vw;
-    min-width: 400px;
-    padding: 5%;
+    min-width: 450px;
+    padding: 10%;
+    text-align: center;
 }
 
 .cancel-sub-modal p {
     font-size: 1.2em;
     line-height: 150%;
-    margin-top: 5%;
+    margin-top: 0%;
     margin-bottom: 10%;
 
 }

@@ -44,7 +44,7 @@ export default class SubscriptionModal extends Component {
 
   updateCardUI = (newCard) => {
     const {brand, last4} = newCard
-    this.setState({brand, last4})
+    this.setState({brand, last4, updateCard: false})
   }
 
   cancelSubscription = () => {
