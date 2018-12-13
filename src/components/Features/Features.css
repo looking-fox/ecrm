@@ -87,7 +87,20 @@ img.finance-dash {
 
 .about {
     height: 60vh;
-    background: black;
+    background-image: url('../../assets/cabin.jpg');
+    background-size: cover;
+    background-position: center center;
+}
+
+.about h1 {
+    font-size: 2vw;
+    line-height: 150%;
+    font-weight: 600;
+    background: rgb(0, 0, 0, 0.5);
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 0% 15%;
 }
 
 .pricing {
@@ -103,7 +116,9 @@ img.finance-dash {
 }
 
 .pricing p {
-    font-size: 1.5vw;
+    font-size: 1vw;
+    letter-spacing: 3px;
+    font-weight: 300;
 }
 
 
@@ -172,7 +187,6 @@ img.finance-dash {
         filter: drop-shadow(0px 0px 5px rgb(34, 34, 34, 0.3));
     }
 
-
     .action-list-text{
         grid-row: 2;
         grid-column: span 12;
@@ -184,12 +198,25 @@ img.finance-dash {
         margin-top: 10%;
     }
 
-    .pricing {
-        height: 40vh;
-        padding: 0% 10%;
+    .about {
+        height: 70vh;
     }
-    .pricing h4 {
+    .about h1 {
+        padding: 5% 15%;
+        font-size: 5vw;
+        line-height: 180%;
+    }
+
+    .pricing {
+        padding: 0% 5%;
+    }
+    .pricing h1 {
+        font-size: 7vw;
         text-align: center;
     }
 
+    .pricing p {
+        display: none;
+    }
+    
 }

@@ -63,15 +63,18 @@ export default function Features() {
               </div>
 
             </div>
-
-            <div className="about">
             
-            </div>
-            
-              <div className="pricing center column">
+                <div className="about center">
                 <Fade>
+                <h1 className="center">As our photography business grew, so did our time managing clients. We created Looking Fox to keep growing our business without overworking ourselves. Now we're helping other photographers spend more time doing what they love--and less time doing what they don't.</h1>
+                </Fade>
+                </div>
+            
+
+              <div className="pricing center column">
+                <Fade bottom>
                   
-                  <h1>🏃 We're on the move. More features to come.</h1>
+                  <h1><i className="fas fa-map-signs"/> We're on the move. More features to come.</h1>
                   <p> ANALYTICS | QUESTIONNAIRES | REVIEWS | EMAIL TEMPLATES | MARKETING CAMPAIGNS | TAX INFO GENERATOR </p>
 
                 </Fade>
