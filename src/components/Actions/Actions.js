@@ -108,9 +108,9 @@ export default class Actions extends Component {
 }
 
 Actions.propTypes = {
-    id: PropTypes.number.isRequired,
-    actionsComplete: PropTypes.bool.isRequired,
+    id: PropTypes.number,
+    actionsComplete: PropTypes.bool,
     checkValues: PropTypes.bool.isRequired,
-    allChecked: PropTypes.func.isRequired,
+    allChecked: PropTypes.func,
     actionList: PropTypes.array.isRequired
 }

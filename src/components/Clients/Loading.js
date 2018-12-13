@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -22,6 +23,10 @@ function Loading(props) {
         thickness={2}/>
     </React.Fragment>
   )
+}
+
+Loading.propTypes = {
+  small: PropTypes.bool
 }
 
 export default withStyles(styles)(Loading)

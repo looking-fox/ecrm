@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 import flow from 'lodash/flow'
+import PropTypes from 'prop-types'
 
 const itemSource = {
 	beginDrag(props) {
@@ -116,6 +117,18 @@ class ListItem extends Component {
     }
          
   }
+}
+
+
+ListItem.propTypes = {
+	item: PropTypes.object.isRequired,
+	index: PropTypes.number.isRequired,
+	id: PropTypes.number.isRequired,
+	active: PropTypes.bool.isRequired,
+	clickList: PropTypes.func.isRequired,
+	openClient: PropTypes.func,
+	moveListItem: PropTypes.func.isRequired,
+	optionsMenu: PropTypes.func
 }
 
 export default flow(

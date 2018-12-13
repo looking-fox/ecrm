@@ -6,7 +6,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import Fade from 'react-reveal'
 import flow from 'lodash/flow'
-
+import PropTypes from 'prop-types'
 
 class SubForm extends Component {
   constructor(){
@@ -105,6 +105,11 @@ class SubForm extends Component {
   }
 }
 
+SubForm.propTypes = {
+  history: PropTypes.object.isRequired,
+  updateCardUI: PropTypes.func,
+  paymentProgress: PropTypes.func
+}
 
 function mapStateToProps(state){
   return {
