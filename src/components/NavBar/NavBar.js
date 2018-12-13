@@ -1,23 +1,14 @@
 import React, { Component } from 'react'
 // import { PropTypes } from 'react'
 import './NavBar.css'
+import { login } from '../../redux/functions'
 import Logo from '../../assets/logo.png'
 var smoothScroll = require('smoothscroll');
 
 
 export default class NavBar extends Component {
     
-    login = () => {
     
-        let {REACT_APP_AUTH0_DOMAIN,
-          REACT_APP_AUTH0_CLIENT_ID
-        } = process.env;
-      
-        let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
-    
-        window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_url=${url}&response_type=code`
-      
-      }
 
     handleClick(location){
         
@@ -59,7 +50,7 @@ export default class NavBar extends Component {
     return (
         <div className="header">
 
-          <div className="center">
+          <div className="logo-container center">
               <img src={Logo} alt="Logo" className="logo-image"/>
               <h1 className="logo center"
               onClick={() => this.props.history.push('/')}>
@@ -68,9 +59,9 @@ export default class NavBar extends Component {
 
             <nav>
               <li onClick={() => this.handleClick('features')}>FEATURES</li>
-              <li onClick={() => this.handleClick('pricing')}>PRICING</li>
+              <li onClick={() => this.handleClick('about')}>ABOUT</li>
               <li onClick={this.goToContact}>CONTACT</li>
-              <button type="button" className="btn btn-sm btn-outline-dark log-in-button" onClick={() => this.login()}>LOG IN</button>
+              <button type="button" className="btn btn-sm btn-outline-dark log-in-button" onClick={login}>LOG IN</button>
             </nav>
      </div>
     )

@@ -7,13 +7,19 @@
     padding-right: 20px;
  }
  
+ .logo-container {
+    grid-column: 1;
+    
+
+ }
+
  .logo {
      font-weight: 700;
     letter-spacing: 5px;
     font-size: 1em;
-     grid-column: 1;
      font-family: 'Josefin Sans';
      cursor: pointer;
+     
  }
 
  .logo-image {
@@ -60,14 +66,15 @@
         display: none;
     }
     .header{
-        display: grid;
-        grid-template-columns: 100%;
-        grid-template-rows: 100%;
-        padding-top: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .logo{
-        width: 200px;
-        margin-left: -50px;
-        
+    .logo-container {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    
 }

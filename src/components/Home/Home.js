@@ -1,5 +1,6 @@
 import React from 'react'
 import './Home.css'
+import { login } from '../../redux/functions'
 import Workspace from '../../assets/Workspace5.png'
 import Navbar from '../NavBar/NavBar'
 import Features from '../Features/Features'
@@ -26,9 +27,11 @@ export default function Home(props){
                 Join beta. Lock in <b>$3/month</b> pricing.
                 </h5>
 
-                 <button className="btn btn-outline-dark join-btn">
-                Sign Up
-                </button>
+                <button className="btn btn-outline-dark join-btn"
+                onClick={login}>
+                  Sign Up
+              </button>
+
             </div>
             
             </Fade>

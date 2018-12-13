@@ -220,3 +220,8 @@ img.finance-dash {
     }
     
 }
+
+@media screen and (device-aspect-ratio: 40/71) {
+    /* Future media query for iPhone 5 aspect ratio */
+}
+
