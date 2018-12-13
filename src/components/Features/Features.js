@@ -30,7 +30,7 @@ export default function Features() {
                 <Fade bottom>
                 <div className="feature-item column">
                 <i className="fas fa-credit-card"/>
-                  <p className="title">Track Payments </p>
+                  <p className="title"> TRACK PAYMENTS </p>
                   <p>Record payments and quickly view monthly analytics. </p>
                 </div>
                 </Fade>
@@ -64,16 +64,16 @@ export default function Features() {
 
             </div>
 
+            <div className="about">
             
-              <div className="pricing center">
+            </div>
+            
+              <div className="pricing center column">
                 <Fade>
-                  <h1>Open for Beta!</h1>
-                  <h4>Provide feedback. Get free lifetime acccess. </h4>
-                  <p>Limited spots available.</p>
-                  <button type="button" className="btn btn-primary"
-                  onClick={() => this.props.history.push('/contact')}>
-                  <i className="far fa-envelope"/> Contact Us 
-                  </button>
+                  
+                  <h1>🏃 We're on the move. More features to come.</h1>
+                  <p> ANALYTICS | QUESTIONNAIRES | REVIEWS | EMAIL TEMPLATES | MARKETING CAMPAIGNS | TAX INFO GENERATOR </p>
+
                 </Fade>
               </div>
       
