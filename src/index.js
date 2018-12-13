@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './reset.css';
-import './main.css';
 import './index.css';
+import './Main/Main.css';
 
 
 import store from './redux/store'

@@ -17,10 +17,11 @@ class SubForm extends Component {
   
   handleSubmit = (ev) => {
     //User Agrees to Terms/Conditions => Can Subscribe.
-    if(this.state.agreeCheck){
-    ev.preventDefault();
     const {pathname} = this.props.history.location
 
+    if(this.state.agreeCheck || pathname === '/dashboard'){
+    ev.preventDefault();
+    
     if(pathname === '/dashboard'){
       //Updaitng User's Default Payment Method
       this.setState({loading: true}, () => {

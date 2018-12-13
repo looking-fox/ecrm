@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import './Client.css'
 
 export default class Client extends Component {
@@ -76,4 +77,15 @@ export default class Client extends Component {
     </div>
   )
 }
+}
+
+Client.propTypes = {
+  index: PropTypes.number.isRequired,
+  client: PropTypes.object.isRequired,
+  actionList: PropTypes.array.isRequired,
+  goToMap: PropTypes.func.isRequired,
+  openPayments: PropTypes.func.isRequired,
+  openClientModal: PropTypes.func.isRequired,
+  optDeleteModal: PropTypes.func.isRequired,
+  openClientSettingsModal: PropTypes.func.isRequired
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Actions.css'
 import axios from 'axios'
-
+import PropTypes from 'prop-types';
 
 export default class Actions extends Component {
     constructor(){
@@ -105,4 +105,12 @@ export default class Actions extends Component {
      }     
      return <div className="loading center">Loading...</div>
     }
+}
+
+Actions.propTypes = {
+    id: PropTypes.number.isRequired,
+    actionsComplete: PropTypes.bool.isRequired,
+    checkValues: PropTypes.bool.isRequired,
+    allChecked: PropTypes.func.isRequired,
+    actionList: PropTypes.array.isRequired
 }

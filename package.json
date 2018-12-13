@@ -18,6 +18,7 @@
     "lodash.flow": "^3.5.0",
     "lodash.keyby": "^4.6.0",
     "massive": "^5.5.1",
+    "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-beautiful-dnd": "^10.0.1",
     "react-chartjs-2": "^2.7.4",
@@ -55,13 +56,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": {
-    "/api": {
-      "target": "https://www.lookingfox.com:3051"
-    },
-    "/auth/callback": {
-      "target": "https://www.lookingfox.com:3051"
-    }
-  }
+  ]
 }

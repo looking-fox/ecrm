@@ -7,7 +7,6 @@ import Features from '../Features/Features'
 import Footer from '../Footer/Footer'
 import Fade from 'react-reveal/Fade'
 
-
 export default function Home(props){
     return (
       <div className="home">

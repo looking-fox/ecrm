@@ -17,6 +17,10 @@ describe('convertRawMoney Func', () => {
     it('Should contain comma for values > 1000', () => {
         expect(convertRawMoney(4500)).toMatch(',')
     })
+
+    it('Should correctly place comma for values > 10,000', () => {
+        expect( convertRawMoney(12000) ).toBe('$12,000')
+    })
 })
 
 describe('convertToRawMoney Func', () => {
