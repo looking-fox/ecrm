@@ -1,12 +1,12 @@
 import React from 'react'
 import './Home.css'
-import { login } from '../../Main/MainLogic'
+import {login} from '../../Main/MainLogic'
 import Workspace from '../../assets/Workspace5.png'
 import Navbar from '../NavBar/NavBar'
 import Features from '../Features/Features'
 import Footer from '../Footer/Footer'
 import Fade from 'react-reveal/Fade'
-import { mobileCheck } from '../../redux/functions'
+
 
 export default function Home(props){
     return (

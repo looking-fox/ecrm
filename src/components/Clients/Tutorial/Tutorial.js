@@ -6,6 +6,7 @@ import secondDemo from '../../../assets/demo2.png'
 import thirdDemo from '../../../assets/demo3.png'
 import fourthDemo from '../../../assets/demo4.png'
 import fifthDemo from '../../../assets/demo5.png'
+import sixthDemo from '../../../assets/demo6.png'
 
 export default class Tutorial extends Component {
     constructor(){
@@ -16,7 +17,8 @@ export default class Tutorial extends Component {
                 {complete: false, id: 'b'},
                 {complete: false, id: 'c'},
                 {complete: false, id: 'd'},
-                {complete: false, id: 'e'}
+                {complete: false, id: 'e'},
+                {complete: false, id: 'f'}
             ],
             currentIndex: 0
         }
@@ -33,7 +35,7 @@ export default class Tutorial extends Component {
 
     goForward = () => {
         const {currentIndex, progress} = this.state
-    if(currentIndex < 4){
+    if(currentIndex < 5){
        let newIndex = currentIndex + 1
        progress[newIndex].complete = true
        this.setState({ progress, currentIndex: newIndex })
@@ -55,7 +57,7 @@ export default class Tutorial extends Component {
         switch(currentIndex){
             case 0:
             return (
-                <p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Tools > Templates. </p>
+                <p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head over to your <i className="fas fa-wrench"/> tools to set up your first session template. </p>
             )
             case 1:
             return (
@@ -63,7 +65,7 @@ export default class Tutorial extends Component {
             )
             case 2: 
             return (
-                <center><p>To create a client list, hover over Clients and click the + symbol.</p></center>
+                <center><p>To create a client list, hover over Clients and click the + symbol. You can drag and drop these lists to rearrange them, and transfer clients to other lists if you want to delete a list.</p></center>
             )
             case 3:
             return (
@@ -72,6 +74,10 @@ export default class Tutorial extends Component {
             case 4:
             return (
                 <p>When adding a client, you can assign a session template and customize it to fit. Whether they have a custom price, or you need to add a couple of to-do items. You can always edit a client at any stage in the process. </p>
+            )
+            case 5:
+            return (
+                <p>You can also keep track of payments made by clients by clicking on the <i className="far fa-credit-card"/> symbol for each client. Going to the Finance Dashboard, you can get a quick view of your total income. </p>
             )
             default: 
             return (<p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Tools > Templates. </p>)
@@ -91,6 +97,8 @@ export default class Tutorial extends Component {
             return fourthDemo
             case 4:
             return fifthDemo
+            case 5: 
+            return sixthDemo
             default:
             return firstDemo
         }
@@ -138,7 +146,7 @@ export default class Tutorial extends Component {
 
                 <i className="fas fa-arrow-left back arrow" onClick={this.goBack}/>
 
-                {this.state.currentIndex === 4 ? 
+                {this.state.currentIndex === 5 ? 
                 <button type="button" className="btn btn-dark done-button"
                 onClick={() => hideTutorial()}>Done</button>
                 :
