@@ -63,7 +63,7 @@ textarea {
 @media (max-width: 576px) { 
     .contact {
         width: 100vw;
-        height: 130vh;
+        height: 100vh;
     }
     .title-header {
         width: 100vw;
@@ -71,12 +71,12 @@ textarea {
     .contact-form{
         height: 60vh;
         width: 90vw;
-        margin-top: 130px;
+        margin-top: 20%;
     }
     .contact-form-title {
         width: 90vw;
         padding: 0px 20px;
-        margin-top: 120px;
+        margin-top: 20%;
     }
     #contact-form-control {
        display: grid;

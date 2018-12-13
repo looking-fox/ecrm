@@ -36,7 +36,7 @@ export default class Contact extends Component {
           </div>
 
           <div className="contact-form-title">
-            <p>We're currently looking for beta testers to help guide Looking Fox into the future. If you're a professional photographer who joins beta, you'll have lifetime access to the software! Limited spots available, so reach out soon!</p>
+            <p>If you have any questions about Looking Fox, or curious about becoming a brand ambassador--please fill out our contact form. We'll get back to you as soon as we can.</p>
           </div>
 
 
