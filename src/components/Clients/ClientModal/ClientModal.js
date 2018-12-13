@@ -8,7 +8,7 @@ import Input from '@material-ui/core/Input'
 import DatePicker from 'react-date-picker'
 import {connect} from 'react-redux'
 import {updateClientModal} from '../../../redux/reducer'
-import {convertRawMoney, convertToRawMoney} from '../../../redux/functions'
+import {convertRawMoney, convertToRawMoney} from '../../../Main/MainLogic'
 import axios from 'axios'
 
 

@@ -30,13 +30,8 @@ class Clients extends Component {
     
   }
        
-  //NON-MVP:
-        //Ability to add multiple "clients" big lists
-
-
   componentDidMount(){
     this.getClients()
-    axios.post('/api/email/signup')
   }
 
   componentDidUpdate(prevProps){

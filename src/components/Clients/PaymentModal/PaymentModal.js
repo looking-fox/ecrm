@@ -6,7 +6,7 @@ import DatePicker from 'react-date-picker'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateProps} from '../../../redux/reducer'
-import {convertToRawMoney, convertRawMoney} from '../../../redux/functions'
+import {convertToRawMoney, convertRawMoney} from '../../../Main/MainLogic'
 
 class PaymentModal extends Component {
     constructor(){

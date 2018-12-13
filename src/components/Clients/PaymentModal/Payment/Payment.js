@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-date-picker'
-import {convertRawMoney, convertToRawMoney} from '../../../../redux/functions'
+import {convertRawMoney, convertToRawMoney} from '../../../../Main/MainLogic'
 
 export default class Payment extends Component {
   constructor(){

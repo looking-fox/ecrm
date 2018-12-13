@@ -4,7 +4,7 @@ import Nav from '../Nav/Nav'
 import axios from 'axios'
 import {Line} from 'react-chartjs-2';
 import Select from 'react-select'
-import {convertRawMoney} from '../../../redux/functions'
+import {convertRawMoney} from '../../../Main/MainLogic'
 
   const options = [
     { value: 2018, label: '2018' },

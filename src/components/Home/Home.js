@@ -1,6 +1,6 @@
 import React from 'react'
 import './Home.css'
-import { login } from '../../redux/functions'
+import { login } from '../../Main/MainLogic'
 import Workspace from '../../assets/Workspace5.png'
 import Navbar from '../NavBar/NavBar'
 import Features from '../Features/Features'

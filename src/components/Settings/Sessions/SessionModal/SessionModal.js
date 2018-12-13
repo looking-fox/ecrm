@@ -7,7 +7,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import { updateProps } from '../../../../redux/reducer'
 import {DragDropContext} from 'react-beautiful-dnd'
-import {convertRawMoney, convertToRawMoney} from '../../../../redux/functions'
+import {convertRawMoney, convertToRawMoney} from '../../../../Main/MainLogic'
 
 class SessionModal extends Component {
     constructor(){

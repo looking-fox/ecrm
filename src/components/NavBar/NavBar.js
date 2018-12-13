@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import { PropTypes } from 'react'
 import './NavBar.css'
-import { login } from '../../redux/functions'
+import { login } from '../../Main/MainLogic'
 import Logo from '../../assets/logo.png'
 var smoothScroll = require('smoothscroll');
 
