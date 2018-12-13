@@ -31,6 +31,10 @@ module.exports = {
   },
 
   addPayment: (req, res) => {
+      
+      //Cannot make payment if not logged in.
+      if(!req.session.user) res.redirect('/')
+
       const {email, name, sub} = req.session.user
       const dbInstance = req.app.get('db')
       const {token} = req.body.token

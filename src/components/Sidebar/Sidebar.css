@@ -179,6 +179,10 @@
     cursor: pointer;
 }
 
+.sidebar-footer a {
+    font-size: 0.5em;
+}
+
 @keyframes fadeUp {
     from {opacity: 0}
     to {opacity: 1}

@@ -12,6 +12,7 @@ const clients = require('./clients_controller')
 const sessionActions = require('./sessionActions.controller')
 const payments = require('./payments_controller')
 const subscription = require('./stripe_controller')
+const email = require('./email_controller')
 
 const app = express()
 
@@ -285,8 +286,7 @@ app.post('/api/sendcontactemail', (req, res) => {
 
 })
 
-// sgMail.send(msg);
-
+app.post('/api/email/signup', email.subscribed)
 //============SENDGRID==================//
 
 

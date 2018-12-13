@@ -36,6 +36,7 @@ class Clients extends Component {
 
   componentDidMount(){
     this.getClients()
+    axios.post('/api/email/signup')
   }
 
   componentDidUpdate(prevProps){

@@ -88,6 +88,7 @@ b {
 
     .intro-text {
         font-size: 10vw;
+        border: 0px;
     }
 
     .join-now {
@@ -102,7 +103,8 @@ b {
     }
 
     .join-btn {
-        width: 50vw;
+        /* width: 50vw; */
+        display: none;
     }
 
  }
