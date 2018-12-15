@@ -5,7 +5,14 @@ module.exports = {
   getInfo: (req, res) => {
     const dbInstance = req.app.get('db')
     const {sub} = req.session.user
+
     dbInstance.stripe_check_status(sub).then(response => {
+        //User has lifetime access. Other checks are in place to verify user has subscription or has lifetime access. No response means user has lifetime access. 
+        if(response.length === 0 ){
+            res.status(200).send('lifetime')
+        }
+        else {
+        //Regular user
         const {customer_id} = response[0]
         //Use cust_id to get customer object
         stripe.customers.retrieve(customer_id).then(customer => {
@@ -26,8 +33,10 @@ module.exports = {
                         canceledSub: cancel_at_period_end
                     })
                 })
-        })
+            })
+        }
     })
+    
   },
 
   addPayment: (req, res) => {

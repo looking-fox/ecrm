@@ -73,9 +73,24 @@ app.get('/auth/callback', async (req, res) => {
     //If no user
         // => Go to SignUp
 
-    dbInstance.check_user(sub).then( response => {
+    dbInstance.check_user([sub, email]).then( response => {
         // Previous User
+
         if(response[0]){
+            // Has Access Without Subscription
+            if(response[0].lifetime){
+                // First time logging in
+                if(!response[0].user_id){
+                    dbInstance.store_user_id([sub, name, email]).then(() => {
+                        req.session.user.lifetime = true
+                        return res.redirect('/#/dashboard')
+                    })
+                }
+                // Returning user with stored id
+                else {
+                    return res.redirect('/#/dashboard')
+                }
+            } 
             // Check Subscription
             dbInstance.stripe_check_status(sub).then(resp => {
                 
@@ -87,25 +102,26 @@ app.get('/auth/callback', async (req, res) => {
                     
                     // Active Subscription
                     if (total_count === 1){
-                        res.redirect('/#/dashboard')
+                        return res.redirect('/#/dashboard')
                     }
                     // Not Active
                     else {
-                        res.redirect('/#/signup') 
+                        return res.redirect('/#/signup') 
                     }  
                     })
                 }
                 
                 else {
-                    res.redirect('/#/signup')
+                    return res.redirect('/#/signup')
                 }
             })
 
-        }
+          }
+        
         // New User
         else {
             dbInstance.store_user([sub, name, email]).then( () => {
-                res.redirect('/#/signup')
+                return res.redirect('/#/signup')
             })
         }
     })

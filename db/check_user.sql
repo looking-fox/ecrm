@@ -1,2 +1,2 @@
 select * from users
-where user_id=$1;
+where user_id=$1 or email = $2;

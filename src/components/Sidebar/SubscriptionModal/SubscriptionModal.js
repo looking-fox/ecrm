@@ -17,15 +17,29 @@ export default class SubscriptionModal extends Component {
         nextPayment: '',
         canceledSub: false,
         updateCard: false, 
-        cancelCheckModal: false
+        cancelCheckModal: false,
+        lifetimeUser: false
       }
   }
 
-  componentDidMount(){
+  componentDidMount = () => {
     axios.get('/api/stripe/subinfo').then(response => {
+      console.log(response.data)
+      if(response.data === 'lifetime'){
+        this.setState({ lifetimeUser: true })
+      }
+      else {
       const {brand, last4, nextPayment, canceledSub} = response.data
       this.setState({brand, last4, nextPayment, canceledSub})
+      }
     })
+  }
+
+  componentDidUpdate = () => {
+    if(this.props.open === true && this.state.lifetimeUser){
+      this.props.hide()
+      alert("You have free access. No subscription to check! 🤷")
+    }
   }
 
   toggleUpdateCard = () => {
