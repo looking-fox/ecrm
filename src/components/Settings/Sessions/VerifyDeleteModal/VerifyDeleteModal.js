@@ -1,5 +1,6 @@
 import React from 'react'
 import Modal from 'react-responsive-modal'
+import PropTypes from 'prop-types'
 
 export default function VerifyDeleteModal(props) {
     const {item, index} = props.session
@@ -18,4 +19,11 @@ export default function VerifyDeleteModal(props) {
             </button>
     </Modal>
   )
+}
+
+VerifyDeleteModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+  deleteSession: PropTypes.func.isRequired
 }
