@@ -26,7 +26,7 @@ module.exports = {
               "email": "lookingfoxco@gmail.com",
               "name": "Looking Fox"
             },
-            "template_id": "d-59c8ff0327f74630913bb01beef55d0a"
+            "template_id": "d-fbd3f49297cb441eaf9ea3888eb63d85"
           }
 
         sgMail.send(msg).then(() => {
