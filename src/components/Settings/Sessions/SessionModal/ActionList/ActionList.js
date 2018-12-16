@@ -83,14 +83,7 @@ deleteItem = (i) => {
   render() {
     return (
         <div className="action-container">
-                <Input 
-                placeholder="Add Action"
-                fullWidth={true}
-                classes={{root: 'inputfield'}}
-                onChange={e => this.setState({action: e.target.value})}
-                onKeyDown={e => this.addItem(e)}
-                />
-
+        
             <Droppable droppableId={'action-area'}>
             {provided => (
             <div ref={provided.innerRef}

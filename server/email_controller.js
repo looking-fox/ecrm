@@ -14,7 +14,8 @@ module.exports = {
                   }
                 ],
                 "dynamic_template_data": {
-                  "name": given_name
+                  "name": given_name,
+                  "asmGroupUnsubscribeUrl": '%asm_group_unsubscribe_url%'
                 }
               }
             ],
@@ -26,7 +27,11 @@ module.exports = {
               "email": "lookingfoxco@gmail.com",
               "name": "Looking Fox"
             },
-            "template_id": "d-fbd3f49297cb441eaf9ea3888eb63d85"
+            "template_id": "d-fbd3f49297cb441eaf9ea3888eb63d85",
+            
+            "asm": {
+              "groupId": 7582
+            }
           }
 
         sgMail.send(msg).then(() => {

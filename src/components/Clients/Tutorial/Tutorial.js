@@ -57,7 +57,7 @@ export default class Tutorial extends Component {
         switch(currentIndex){
             case 0:
             return (
-                <p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head over to your <i className="fas fa-wrench"/> tools to set up your first session template. </p>
+                <p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, click on your user icon, and then the  <i className="fas fa-wrench"/> symbol to set up your first session template. </p>
             )
             case 1:
             return (
@@ -65,11 +65,11 @@ export default class Tutorial extends Component {
             )
             case 2: 
             return (
-                <center><p>To create a client list, hover over Clients and click the + symbol. You can drag and drop these lists to rearrange them, and transfer clients to other lists if you want to delete a list.</p></center>
+                <center><p>To create a client list, hover over Clients and click the + symbol. You can drag and drop these lists to rearrange them, and transfer clients to other lists.</p></center>
             )
             case 3:
             return (
-                <p>Once you've created a client list, you can add clients by selecting a list, and clicking on the + symbol. You can also edit, delete, or rearrange your lists from here, too.</p>
+                <p>Once you've created a client list, you can add clients by selecting a list, and clicking on the add symbol. You can also edit, delete, or rearrange your lists from here too.</p>
             )
             case 4:
             return (
@@ -77,7 +77,7 @@ export default class Tutorial extends Component {
             )
             case 5:
             return (
-                <p>You can also keep track of payments made by clients by clicking on the <i className="far fa-credit-card"/> symbol for each client. Going to the Finance Dashboard, you can get a quick view of your total income. </p>
+                <p>You can also keep track of payments made by clients by clicking on the  <i className="far fa-credit-card"/> symbol for each client. Going to the Finance Dashboard, you can get a quick view of your total income. </p>
             )
             default: 
             return (<p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Tools > Templates. </p>)
@@ -153,8 +153,6 @@ export default class Tutorial extends Component {
                 <i className="fas fa-arrow-right forward arrow" onClick={this.goForward}/>
                 }
                 
-
-
                  {/* Bottom Navigation */}
 
             </div>

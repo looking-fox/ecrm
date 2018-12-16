@@ -399,9 +399,18 @@ class ClientModal extends Component {
                ( () => {
                     if(!newClient){
                     return (
+                <div className="action-container-client center column">
+                    <Input 
+                    placeholder="Add Action"
+                    
+                    classes={{root: 'add-action-item'}}
+                    onChange={e => this.setState({action: e.target.value})}
+                    onKeyDown={e => this.addItem(e)}
+                    />
                     <div className="action-panel">
                         <ClientActions/>
                     </div>
+                </div>
                       )
                     }   
                 } )()
