@@ -47,48 +47,65 @@ class ActionList extends Component {
         }
     }
 
-  componentDidUpdate(prevProps){
-      if(prevProps !== this.props){
-          const {currentActions} = this.props
-          this.setState({actionList: currentActions})
-      }
-  }
+    componentDidUpdate(prevProps){
+        if(prevProps !== this.props){
+            const {currentActions} = this.props
+            this.setState({actionList: currentActions})
+        }
+    }
 
-  addItem = (e) => {
-    //Modal list of action items, adding to array
-    if(e.key==="Enter"){
+  
+    deleteItem = (i) => {
+        //Modal list of action items, delete from array
         var updated = this.state.actionList
-        var newItem = {"name": this.state.action}
-    
-        updated.push(newItem)
-        this.setState({ actionList: updated, action: '' })
-        e.target.value = ''
-
+        updated.splice(i, 1)
+        this.setState({actionList: updated})
         this.updateActionItems(updated)
     }
-}
+    
+    addItem = (e) => {
+        //Modal list of action items, adding to array
+    
+        if(e.key==="Enter" || !e.key){
+            var updated = this.props.currentActions
+            var newItem = {"name": this.state.action}
+        
+            updated.push(newItem)
+            this.setState({ action: '' })
+            e.target.value = ''
+    
+            this.updateActionItems(updated)
+        }
+    }
+    
+    updateActionItems = (newList) => {
+        this.props.updateProps({currentActions: newList})
+    }
 
-updateActionItems = (newList) => {
-    this.props.updateProps({currentActions: newList})
-}
-
-deleteItem = (i) => {
-    //Modal list of action items, delete from array
-    var updated = this.state.actionList
-    updated.splice(i, 1)
-    this.setState({actionList: updated})
-    this.updateActionItems(updated)
-}
+    
 
   render() {
     return (
+        <div className="action-container-client center column">
+            <div className="add-input-container center">
+                <Input 
+                placeholder="Add Action"
+                classes={{root: 'add-action-item'}}
+                onChange={e => this.setState({action: e.target.value})}
+                onKeyDown={e => this.addItem(e)}
+                />
+
+                <i className="fas fa-plus-square add-action-button"
+                onClick={this.addItem}/>
+            </div>
+            
         <div className="action-container">
         
             <Droppable droppableId={'action-area'}>
             {provided => (
             <div ref={provided.innerRef}
             {...provided.droppableProps}>
-                {this.props.currentActions.map( (e,i) => (
+                {this.state.actionList.map( (e,i) => (
                     <ActionItem 
                     key={i}
                     item={e} 
@@ -103,6 +120,7 @@ deleteItem = (i) => {
             </Droppable>
 
         </div>
+    </div>
     )
   }
 }

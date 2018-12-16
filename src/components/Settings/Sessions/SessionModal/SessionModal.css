@@ -12,7 +12,11 @@
 }
 
 .action-container {
-    padding: 20px 30px;
+    width: 90%;
+    height: 300px;
+    overflow-y: scroll;
+    padding: 0px 20px;
+    margin-top: 20px;
 }
 
 .session-action-panel {

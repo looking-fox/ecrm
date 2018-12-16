@@ -21,9 +21,10 @@
 .action-container-client {
     grid-column: 2;
     width: 25vw;
-    height: 350px;
+    height: 375px;
     padding-top: 20px;
     justify-content: flex-start;
+    position: relative;
 }
 
 .action-panel {
@@ -46,6 +47,17 @@
 
 .clientinput {
     margin-top: 20px;
+}
+
+.add-input-container {
+    position: relative;
+    width: 100%;
+}
+
+.add-action-button {
+    position: absolute;
+    right: 12%;
+    font-size: 1.5vw;
 }
 
 .date-picker-box {

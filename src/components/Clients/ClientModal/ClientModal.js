@@ -7,7 +7,7 @@ import Modal from 'react-responsive-modal'
 import Input from '@material-ui/core/Input'
 import DatePicker from 'react-date-picker'
 import {connect} from 'react-redux'
-import {updateClientModal} from '../../../redux/reducer'
+import { updateClientModal, updateProps } from '../../../redux/reducer'
 import {convertRawMoney, convertToRawMoney} from '../../../Main/MainLogic'
 import axios from 'axios'
 
@@ -294,8 +294,7 @@ class ClientModal extends Component {
             price: filterAmount
         })
     }
-
-    
+ 
   render() {
       const {newClient, client} = this.props.clientSettingsModal
       const isEditing = newClient ? 
@@ -399,18 +398,9 @@ class ClientModal extends Component {
                ( () => {
                     if(!newClient){
                     return (
-                <div className="action-container-client center column">
-                    <Input 
-                    placeholder="Add Action"
                     
-                    classes={{root: 'add-action-item'}}
-                    onChange={e => this.setState({action: e.target.value})}
-                    onKeyDown={e => this.addItem(e)}
-                    />
-                    <div className="action-panel">
                         <ClientActions/>
-                    </div>
-                </div>
+                    
                       )
                     }   
                 } )()
@@ -441,4 +431,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {updateClientModal})(ClientModal)
+export default connect(mapStateToProps, {updateClientModal, updateProps})(ClientModal)
