@@ -2,29 +2,29 @@
 
 .client-modal-container {
     width: 50vw;
+    min-width: 700px;
     display: grid;
     grid-template-columns: 50% 50%;
-    grid-template-rows: 100%;
-    column-gap: 20px;
-    padding: 0px 20px;
+    grid-template-rows: 375px;
+    padding: 2% 0%;
+    margin-left: 2%;
+    margin-bottom: 5%;
     font-family: 'Open Sans';
 }
 
 .add-client-modal{ 
-    width:25vw;
-    height: 400px;
+    width:100%;
     font-family: 'Open Sans';
     padding-bottom: 20px;
-    grid-column: 1;
+    grid-column: 1;    
 }
 
 .action-container-client {
     grid-column: 2;
-    width: 25vw;
-    height: 375px;
+    width: 100%;
     padding-top: 20px;
     justify-content: flex-start;
-    position: relative;
+    position: relative;    
 }
 
 .action-panel {
@@ -34,7 +34,9 @@
 }
 
 .add-action-item {
-    width: 80%;
+    width: 98%;
+    padding-right: 20%;
+    
 }
 
 .sessionmenu{
@@ -51,13 +53,17 @@
 
 .add-input-container {
     position: relative;
-    width: 100%;
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .add-action-button {
     position: absolute;
-    right: 12%;
-    font-size: 1.5vw;
+    right: 5%;
+    cursor: pointer;
+    font-size: 1.3vw;
+    padding: 3%;
 }
 
 .date-picker-box {

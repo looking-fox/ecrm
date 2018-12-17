@@ -8,12 +8,13 @@ export default class ActionItem extends Component {
         draggableId={String(this.props.index)}
         index={this.props.index}>
         {provided => (
-            <div className="actionitem" id={this.props.index}
+            <div className="action-item" id={this.props.index}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}>
         
-        <i className="far fa-check-circle"/>{this.props.item.name}
+        <i className="far fa-check-circle"/>
+        <p> {this.props.item.name} </p>
         <i className="far fa-trash-alt deleteitem"
         onClick={() => this.props.deleteItem(this.props.index)}/>
         

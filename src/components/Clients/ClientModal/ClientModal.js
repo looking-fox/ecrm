@@ -398,7 +398,7 @@ class ClientModal extends Component {
                ( () => {
                     if(!newClient){
                     return (
-                    
+             
                         <ClientActions/>
                     
                       )
