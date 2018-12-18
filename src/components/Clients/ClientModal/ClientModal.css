@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-
 .client-modal-container {
     width: 50vw;
     min-width: 700px;
@@ -9,12 +7,10 @@
     padding: 2% 0%;
     margin-left: 2%;
     margin-bottom: 5%;
-    font-family: 'Open Sans';
 }
 
 .add-client-modal{ 
     width:100%;
-    font-family: 'Open Sans';
     padding-bottom: 20px;
     grid-column: 1;    
 }

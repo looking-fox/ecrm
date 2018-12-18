@@ -1,11 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-
 .dashboard {
     width: 85vw;
     height: 100vh;
     margin-left: 250px;
     background-color: #dadada;
-    font-family: 'Open Sans';
 }
 
 .sessionsdashboard{
@@ -68,14 +65,12 @@
     min-width: 700px;
     height: 375px;
     margin-bottom: 5%;
-    font-family: 'Open Sans';
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 1;
 
 }
 .title{
-    font-family: 'Open Sans';
     font-size: 1.3em;
     font-weight: 700;
     text-align: center;
@@ -97,7 +92,6 @@
 }
 
 button.save {
-    font-family: 'Open Sans';
     font-weight: 600;
     margin-top: 20px;
     display: flex;
@@ -128,8 +122,6 @@ button.save:hover {
     padding-top: 20px;
     
 }
-
-
 
 .action-item{
     width: 100%;

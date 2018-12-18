@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:200,400,600,700');
-
 .sidebar{
     width: 250px;
     height: 100vh;
     border-right: 1px solid #e2e2e2;
-    font-family: 'Open Sans';
     position: fixed;
 }
 .topbar{
@@ -93,12 +90,10 @@
     min-width: 400px;
     height: fit-content;
     padding-bottom: 10px;
-    font-family: 'Open Sans';
     text-align: center;
 }
 
 .modal-title {
-    font-family: 'Open Sans';
     font-size: 20px;
     font-weight: 700;
     text-align: center;

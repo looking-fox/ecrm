@@ -1,14 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-
 .sub-dashboard {
     width: 85vw;
     height: 100vh;
     margin-left: 250px;
     background: linear-gradient(#9bb182, #606f57);
-}
-
-.sub-dashboard * {
-    font-family: 'Open Sans';
 }
 
 .year-dropdown {

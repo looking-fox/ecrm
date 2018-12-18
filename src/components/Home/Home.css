@@ -1,14 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:200,400,600,700');
-
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display: 300');
-
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700');
 
 .home{
     display: grid;
     overflow-x: hidden;
     grid-template-rows: 10vh 90vh;
-    font-family: 'Open Sans';
   }
 
 .body{
@@ -39,7 +34,6 @@ b {
 }
 
 .join-now {
-   font-family: 'Open Sans';
    font-size: 1.3em;
    line-height: 1.3em;
    margin-top: 10%;

@@ -24,7 +24,6 @@
 .description {
     width: 80%;
     height: fit-content;
-    font-family: 'Open Sans';
     text-align: center;
     font-size: 1em;
     line-height: 30px;
@@ -83,5 +82,4 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    font-family: 'Open Sans';
 }
