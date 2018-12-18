@@ -145,10 +145,10 @@ class SessionModal extends Component {
                 </div>
                 </h3>}
            
-            <div className="sessionform">
+            <div className="session-form">
           
 
-          <div className="sessioninfo">
+          <div className="session-info">
           <Input 
           autoFocus={true}
           className="clientinput"

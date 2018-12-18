@@ -63,9 +63,11 @@
     color: #727272;
     cursor: pointer;
 }
-.sessionform{
-    width: 700px;
-    height: 400px;
+.session-form{
+    width: 50vw;
+    min-width: 700px;
+    height: 375px;
+    margin-bottom: 5%;
     font-family: 'Open Sans';
     display: grid;
     grid-template-columns: 50% 50%;
@@ -82,7 +84,7 @@
     letter-spacing: 0;
 }
 
-.sessioninfo{
+.session-info{
     grid-column: 1;
     padding: 2px 30px;
     display: flex;
@@ -94,7 +96,7 @@
     margin-bottom: 20px;
 }
 
-button.save{
+button.save {
     font-family: 'Open Sans';
     font-weight: 600;
     margin-top: 20px;
@@ -123,9 +125,11 @@ button.save:hover {
 
 .actioninfo{
     grid-column: 2;
-    padding: 20px 30px;
-    overflow-y: scroll;
+    padding-top: 20px;
+    
 }
+
+
 
 .action-item{
     width: 100%;
@@ -144,6 +148,7 @@ button.save:hover {
     max-width: 70%;
     height: fit-content;
     padding: 1% 0%;
+    font-size: 0.8em;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
