@@ -20,3 +20,18 @@
     font-weight: 700;
     text-align: center;
 }
+
+.input-box {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 2%;
+    margin: 10px 0px;
+}
+
+.input-box:focus {
+    outline: none;
+    border: 1px solid #9a9a9a;
+}
+
+

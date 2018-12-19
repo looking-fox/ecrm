@@ -18,7 +18,6 @@
 .action-container-client {
     grid-column: 2;
     width: 100%;
-    padding-top: 20px;
     justify-content: flex-start;
     position: relative;    
 }
@@ -29,22 +28,12 @@
    overflow-y: scroll;
 }
 
-.add-action-item {
-    width: 98%;
-    padding-right: 20%;
-    
-}
-
 .sessionmenu{
     width: 100%;
     height: fit-content;
     margin-top: 10px;
     margin-bottom: 20px;
     padding-bottom: 0px;
-}
-
-.clientinput {
-    margin-top: 20px;
 }
 
 .add-input-container {

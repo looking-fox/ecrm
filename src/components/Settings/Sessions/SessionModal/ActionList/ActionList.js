@@ -88,10 +88,11 @@ class ActionList extends Component {
     return (
         <div className="action-container-client center column">
             <div className="add-input-container center">
-                <Input 
+                
+                <input 
+                className="input-box"
                 placeholder="Add Action"
                 value={this.state.action}
-                classes={{root: 'add-action-item'}}
                 onChange={e => this.setState({action: e.target.value})}
                 onKeyDown={e => this.addItem(e)}
                 />

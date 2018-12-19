@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './SessionModal.css'
 import ActionList from './ActionList/ActionList'
 import Modal from 'react-responsive-modal'
-import Input from '@material-ui/core/Input'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import { updateProps } from '../../../../redux/reducer'
@@ -149,16 +148,16 @@ class SessionModal extends Component {
           
 
           <div className="session-info">
-          <Input 
-          autoFocus={true}
-          className="clientinput"
+          
+
+          <input 
+          className="input-box" autoFocus
           placeholder="Session Name"
           value={this.state.name}
-          fullWidth={true}
-          classes={{ root: 'input' }}
-          onChange={e => this.setState({name: e.target.value})}/>
+          onChange={e => this.setState({name: e.target.value})}
+          />
  
-          <select className="colormenu" 
+          <select className="color-menu" 
           value={this.state.color}
           onChange={e => this.setState({color: e.target.value})}>
               <option value="Blue">Blue</option>
@@ -169,12 +168,13 @@ class SessionModal extends Component {
               <option value="Sandstone">Sandstone</option>
           </select>  
 
-          <Input 
+          <input 
+          className="input-box"
           placeholder="Price ($1,000)"
           value={this.state.price}
-          fullWidth={true}
           onChange={e => this.setState({price: e.target.value})}
-          onBlur={this.convertAmount}/>
+          onBlur={this.convertAmount}
+          />
 
           </div>
 
