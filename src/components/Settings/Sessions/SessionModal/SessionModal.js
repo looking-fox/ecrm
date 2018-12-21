@@ -107,8 +107,9 @@ class SessionModal extends Component {
         })
         this.props.updateProps({sessionModal: 
             {open: false, newSession: false}, 
-            currentActions: [ {"name": "inquired"}, {"name": "emailed"},
-            {"name": "booked!"} ] })
+            currentActions: [ {name: 'inquired', check: false},
+            {name: 'sent online guide', check: false},
+            {name: 'booked!', check: false} ] })
       };
 
       getNewActions = () => {
@@ -145,37 +146,35 @@ class SessionModal extends Component {
                 </div>
                 </h3>}
            
-            <div className="session-form">
+        <div className="session-form">
+
+            <div className="session-info">
           
+            <input 
+            className="input-box" autoFocus
+            placeholder="Session Name"
+            value={this.state.name}
+            onChange={e => this.setState({name: e.target.value})}
+            />
+    
+            <select className="color-menu" 
+            value={this.state.color}
+            onChange={e => this.setState({color: e.target.value})}>
+                <option value="Blue">Blue</option>
+                <option value="LightBlue">Light Blue</option>
+                <option value="Green">Green</option>
+                <option value="LightGreen">Light Green</option>
+                <option value="Goldenrod">Goldenrod</option>
+                <option value="Sandstone">Sandstone</option>
+            </select>  
 
-          <div className="session-info">
-          
-
-          <input 
-          className="input-box" autoFocus
-          placeholder="Session Name"
-          value={this.state.name}
-          onChange={e => this.setState({name: e.target.value})}
-          />
- 
-          <select className="color-menu" 
-          value={this.state.color}
-          onChange={e => this.setState({color: e.target.value})}>
-              <option value="Blue">Blue</option>
-              <option value="LightBlue">Light Blue</option>
-              <option value="Green">Green</option>
-              <option value="LightGreen">Light Green</option>
-              <option value="Goldenrod">Goldenrod</option>
-              <option value="Sandstone">Sandstone</option>
-          </select>  
-
-          <input 
-          className="input-box"
-          placeholder="Price ($1,000)"
-          value={this.state.price}
-          onChange={e => this.setState({price: e.target.value})}
-          onBlur={this.convertAmount}
-          />
+            <input 
+            className="input-box"
+            placeholder="Price ($1,000)"
+            value={this.state.price}
+            onChange={e => this.setState({price: e.target.value})}
+            onBlur={this.convertAmount}
+            />
 
           </div>
 
@@ -187,11 +186,10 @@ class SessionModal extends Component {
         
         </div>
 
-        <footer className="session-footer">
-        <button type="button" className="btn btn-primary save full" 
-        onClick={this.saveSession}
-        >Save</button>
-        </footer>
+            <footer className="session-footer">
+            <button type="button" className="btn btn-primary save full" onClick={this.saveSession}
+            >Save</button>
+            </footer>
         
         </Modal>
     )
