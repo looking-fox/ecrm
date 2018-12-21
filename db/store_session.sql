@@ -6,9 +6,9 @@ insert into sessions(
     "user_id",
     "template")
 
-values ( $1, $2, $3, array_to_json($4), $5, $6 );
+values ( $1, $2, $3, to_jsonb($4), $5, $6 );
 
-select session_id from sessions
-where user_id=$5
+select * from sessions
+where user_id= $5
 order by session_id desc
 limit 1;

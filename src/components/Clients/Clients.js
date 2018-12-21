@@ -7,9 +7,9 @@ import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import FilterBar from './FilterBar/FilterBar'
 import PaymentModal from './PaymentModal/PaymentModal'
 import Loading from './Loading'
+
 import axios from 'axios';
 import keyBy from 'lodash.keyby'
-
 import {connect} from 'react-redux'
 import {updateClients, updateClientModal, updateClientSettingsModal, updateProps} from '../../redux/reducer'
 var loadTimeOut;
@@ -83,12 +83,6 @@ class Clients extends Component {
       }
     }, 200)
     
-    axios.get('/api/getactions').then(response => {
-      //keyBy maps session_id as key for actions array
-        var actionList = keyBy(response.data, "actions[0][session_id")
-        this.props.updateClients({actions: actionList})
-    })
-
   }
 
   goToMap = (location) => {
@@ -151,8 +145,6 @@ class Clients extends Component {
 
         if(firstClient.client_id !==null){
 
-          if(this.props.actions[Object.keys(this.props.actions)[0]]){
-
             return this.props.clients
             //Filter clients based on List ID.
             .filter(e => {
@@ -198,18 +190,14 @@ class Clients extends Component {
             })
 
             .map( (e, i) => {    
-                
-                var id = e.session_id
-                var actionList = this.props.actions[id]["actions"]
-          
               return e.completed===false ?
                 
                   <div className="bar center column" key={e.client_id}>
-            
+
                         <Client 
                         client={e}
                         index={i}
-                        actionList={actionList}
+                        actionList={e.actions}
                         goToMap={this.goToMap}
                         openPayments={this.openPayments}
                         openClientModal={this.openClientModal}
@@ -221,7 +209,7 @@ class Clients extends Component {
                         actionsComplete={e.completed}
                         checkValues={true}
                         allChecked={this.allItemsChecked}
-                        actionList={actionList}
+                        actionList={e.actions}
                         />
             
                   </div>
@@ -232,7 +220,7 @@ class Clients extends Component {
                         <Client 
                         client={e}
                         index={i}
-                        actionList={actionList}
+                        actionList={e.actions}
                         goToMap={this.goToMap}
                         openPayments={this.openPayments}
                         openClientModal={this.openClientModal}
@@ -244,14 +232,14 @@ class Clients extends Component {
                         actionsComplete={e.completed}
                         checkValues={true}
                         allChecked={this.allItemsChecked}
-                        actionList={actionList}
+                        actionList={e.actions}
                         />
             
                   </div>
               })
             }
-        }
       }
+
     if(this.props.noClients) {
       return (
         <div className="no-client-container center">

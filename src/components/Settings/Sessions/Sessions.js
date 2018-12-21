@@ -24,13 +24,14 @@ class Sessions extends Component {
     //DB request to grab all current session types. 
     //If no session types, display tutorial reminder.
     axios.get('/api/getsessions').then(response => {
+      
       if(response.data[0]){
-        this.setState({sessionTypes: response.data[0]})
+        this.setState({sessionTypes: response.data})
       }
       else {
         this.setState({ noSessions: true })
       }
-
+      
       this.props.updateProps({sessionTypes: response.data})
     })
     

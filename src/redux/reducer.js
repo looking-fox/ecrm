@@ -5,8 +5,9 @@ const initialState = {
     sub: '',
     clients: [],
     actions: [],
-    currentActions: [ {"name": "inquiry"}, {"name": "emailed"},
-    {"name": "booked!"} ],
+    currentActions: [ {name: 'inquired', check: false},
+    {name: 'sent online guide', check: false},
+    {name: 'booked!', check: false} ],
     lists: [],
     sessionTypes: [],
     filterBar: {

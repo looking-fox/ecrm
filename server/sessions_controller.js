@@ -39,30 +39,8 @@ module.exports = {
         const {name, price, color, actionList} = req.body.sessionInfo
         const {sub} = req.session.user
 
-        dbInstance.store_session([name, color, price, actionList, sub, true])
-        .then( (response) => {
-            const {session_id} = response[0]
-            const {actionList} = req.body.sessionInfo
-            const {sub} = req.session.user
-            var itemIndex = 0
-            
-            function addDefaultActions(){
-    //Recursively add items in order and avoid async issues
-                const {name} = actionList[itemIndex]
-                dbInstance.create_default_actions([name, session_id, sub, true]).then(() => {
-                    itemIndex++
-                    if(itemIndex <= actionList.length-1){
-                        addDefaultActions()
-                    }
-                })
-            }
-            addDefaultActions()
-            dbInstance.get_new_session(sub).then(response => {
-                res.status(200).send(response)
-            })
-            
-            
-        })
+        dbInstance.store_session_template([name, color, price, actionList, sub, true])
+        .then( response => res.status(200).send(response) )
     },
 
     updateSession: (req, res) => {

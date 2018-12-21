@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ActionItem from './ActionItem'
-import Input from '@material-ui/core/Input'
 import {connect} from 'react-redux'
 import { updateProps } from '../../../../../redux/reducer'
 import { Droppable } from 'react-beautiful-dnd'
@@ -9,81 +8,75 @@ class ActionList extends Component {
     constructor(){
         super()
         this.state = {
-            actionList: [
-                {"name": "inquired"},
-                {"name": "emailed"},
-                {"name": "booked!"}
-              ],
-            action: ''
+            action: '',
+            actionList: []
         }
     }
 
   componentDidMount =() => {
       //If editing a client or a sessionType, put those actions on state and update props.
-      
       const {sessionModal, clientSettingsModal} = this.props
       if(sessionModal.session){
           const {session} = sessionModal
           if(session.session_name){
               const {actions} = session
-              var newNames = getNames(actions)
-              this.setState({ actionList: newNames })
-              this.props.updateProps({currentActions: newNames })
+              this.setState({actionList: actions}, () => {
+                this.props.updateProps({currentActions: actions })
+              })
           }
         
       }   
 
-      if(!clientSettingsModal.newClient){
+      else if(!clientSettingsModal.newClient){
         const {actionList} = clientSettingsModal.client
-        this.setState({actionList})
-        this.props.updateProps({currentActions: actionList})
-     }
-      
+        this.setState({ actionList }, () => {
+            this.props.updateProps({currentActions: actionList})
+        })  
+      }
 
-        function getNames(actions){
-            return actions.map(e => {
-                return {name: e.name}
-            } )
-        }
+      else {
+        const {currentActions} = this.props
+        this.setState({actionList: currentActions})
+      }
+
     }
 
     componentDidUpdate(prevProps){
-        if(prevProps !== this.props){
+        if(prevProps.currentActions !== this.props.currentActions){
             const {currentActions} = this.props
             this.setState({actionList: currentActions})
         }
     }
 
-  
     deleteItem = (i) => {
         //Modal list of action items, delete from array
-        var updated = this.state.actionList
-        updated.splice(i, 1)
-        this.setState({actionList: updated})
-        this.updateActionItems(updated)
+        const {currentActions} = this.props
+        currentActions.splice(i, 1)
+        this.setState({actionList: currentActions}, () => {
+            this.updateActionItems(currentActions)
+        })
     }
     
     addItem = (e) => {
         //Modal list of action items, adding to array
     
         if(e.key==="Enter" || !e.key){
-            var updated = this.props.currentActions
-            var newItem = {"name": this.state.action}
+            const {currentActions} = this.props
+            var newItem = {name: this.state.action, check: false}
         
-            updated.push(newItem)
+            currentActions.push(newItem)
             this.setState({ action: '' })
             e.target.value = ''
     
-            this.updateActionItems(updated)
+            this.updateActionItems(currentActions)
         }
     }
     
-    updateActionItems = (newList) => {
-        this.props.updateProps({currentActions: newList})
+    updateActionItems = (currentActions) => {
+        this.props.updateProps({ currentActions })
     }
 
     
-
   render() {
     return (
         <div className="action-container-client center column">
@@ -107,14 +100,17 @@ class ActionList extends Component {
             {provided => (
             <div ref={provided.innerRef}
             {...provided.droppableProps}>
-                {this.state.actionList.map( (e,i) => (
+                {this.state.actionList.map( (e,i) => {
+                    
+                    return (
                     <ActionItem 
                     key={i}
                     item={e} 
                     index={i}
                     deleteItem={this.deleteItem}
                     />
-                  )
+                    )
+                }
                 )}
                 {provided.placeholder}
             </div>
@@ -133,3 +129,4 @@ function mapStateToProps(state){
     }
 }
 export default connect(mapStateToProps, {updateProps} )(ActionList)
+

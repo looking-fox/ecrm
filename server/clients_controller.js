@@ -13,42 +13,13 @@ module.exports = {
         const {sub} = req.session.user
         const {name, date, location, list_id, session_name, session_color, client_email, actions, session_price, clientState, clientCountry} = req.body.clientInfo
          
-        dbInstance.store_session([session_name, session_color, session_price, actions, sub, false]).then(response => {
+        dbInstance
+        .store_session([session_name, session_color, session_price, actions, sub, false]).then(response => {
             const {session_id} = response[0]
         
-         dbInstance
+        dbInstance
         .add_client([sub, name, session_id, client_email, date, location, list_id, clientState, clientCountry])
-        .then((response) => {
-            var client = response
-
-            
-            const {sub} = req.session.user
-            var actionItems = response[0]["actions"]
-            var itemIndex = 0
-
-            function addActions(){
-                //Recursively add items in order and avoid async issues
-                let e = JSON.parse(actionItems[itemIndex])
-                const {name} = e
-
-                dbInstance.create_actions([name, session_id, sub, false]).then(() => {
-                    itemIndex++
-                    if(itemIndex <= actionItems.length-1){
-                        addActions()
-                    }
-                })
-            }
-            
-            addActions()
-
-                dbInstance.get_new_client_actions(sub).then(resp => {
-                    res.status(200).send({
-                        client: client,
-                        actions: resp
-                    })
-                })
-
-            })
+        .then( client => res.status(200).send(client) )
         })
     },
 

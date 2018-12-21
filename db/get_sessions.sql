@@ -1,11 +1,16 @@
-select distinct on (sessions.session_id) sessions.session_id, session_name, 
-session_color, session_price, sessions.user_id, 
-array_agg( 
-jsonb_build_object('name', session_actions.name, 'completed', session_actions.completed,
-'id', session_actions.action_id) 
-order by action_id
-) as actions  from sessions
-left join session_actions
-on session_actions.session_id = sessions.session_id
-where sessions.user_id=$1 and sessions.template=true
-group by sessions.session_id;
+with exports as (
+    select session_id, jsonb_array_elements_text(actions)::jsonb as doc from sessions
+)
+select exports.session_id, sessions.user_id, sessions.session_name, 
+sessions.session_color, sessions.session_price,
+jsonb_agg(doc) as actions, sessions.template from exports
+
+left join sessions on
+sessions.session_id = exports.session_id
+
+where sessions.user_id = $1
+and sessions.template = true
+
+group by exports.session_id, sessions.user_id, 
+sessions.session_name, sessions.session_color, sessions.session_price, sessions.template;
+

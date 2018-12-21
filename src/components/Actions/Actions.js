@@ -11,13 +11,6 @@ export default class Actions extends Component {
         }
     }
 
-    componentDidMount(props){
-        let newList = this.props.actionList
-        this.setState({
-            actionItems: newList
-        })
-    }
-
     //If all items are complete, change complete to true in DB.
     allItemsComplete = () => {
        
@@ -25,7 +18,7 @@ export default class Actions extends Component {
         var allComplete = true
             this.state.actionItems.map(e => {
                 
-                if(e.completed===false){
+                if(e.check===false){
                     allComplete = false
                 } 
             })
@@ -38,7 +31,7 @@ export default class Actions extends Component {
             if(value !== this.props.actionsComplete){
                 var clientId = this.props.id
                 this.props.allChecked(clientId, value)
-                axios.put('/api/clientcomplete', {clientId, completed: value})
+                axios.put('/api/clientcomplete', {clientId, check: value})
             }
             
         })
@@ -46,14 +39,14 @@ export default class Actions extends Component {
     }
 
     //Status variable passed as arguement! Heads up.
-    actionCheck = (id, index, completed, status=null) => {
+    actionCheck = (index, check, status=null) => {
         
         if(this.props.checkValues){
 
-            if(completed===true) status=false
+            if(check===true) status=false
             else status=true
 
-        axios.put('/api/updateaction', {id, status}).then(() => {
+        axios.put('/api/updateaction', {index, status}).then(() => {
            
             
             var updatedActions = this.props.actionList.slice()
@@ -71,29 +64,27 @@ export default class Actions extends Component {
         
     }
     
- render(props) {
-    if(this.props.actionList){
+ render() {
         return (
             
             <div className="list">
                 
                 {this.props.actionList.map((e,i) => {
-                    
-            //NOTE: String not boolean for true in order to use aggregate function in SQL. 
-                    if(e.completed===true && this.props.checkValues===true){
-            //NOTE: Index value will not change since the order is important. So index will work as a key in this instance.
+                    console.log('al', this.props.actionList)
+                    if(e.check===true && this.props.checkValues===true){
                         return (
-                            <div className="action" key={e.id}
-                            onClick={() => this.actionCheck(e.id, i, e.completed)}>
+                            <div className="action" key={i}
+                            onClick={() => this.actionCheck(i, e.check)}>
                                 <i className="fas fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>
                         )
                     }
+                    
                     else {
                         return (
-                            <div className="action" key={e.id}
-                        onClick={() => this.actionCheck(e.id, i, e.completed)}>
+                            <div className="action" key={i}
+                        onClick={() => this.actionCheck(i, e.check)}>
                                 <i className="far fa-check-circle"/>
                                 <p>{e.name}</p>
                             </div>
@@ -102,8 +93,6 @@ export default class Actions extends Component {
                 })}
             </div>
         )    
-     }     
-     return <div className="loading center">Loading...</div>
     }
 }
 
@@ -114,3 +103,5 @@ Actions.propTypes = {
     allChecked: PropTypes.func,
     actionList: PropTypes.array.isRequired
 }
+
+

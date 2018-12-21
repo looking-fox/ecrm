@@ -24,7 +24,6 @@ export default class SubscriptionModal extends Component {
 
   componentDidMount = () => {
     axios.get('/api/stripe/subinfo').then(response => {
-      console.log(response.data)
       if(response.data === 'lifetime'){
         this.setState({ lifetimeUser: true })
       }
