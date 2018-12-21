@@ -33,18 +33,16 @@ export default class Actions extends Component {
             if(check===true) status=false
             else status=true
 
-        axios.put('/api/updateaction', {index, status}).then(() => {
-           
-            
             var updatedActions = this.props.actionList.slice()
-            updatedActions[index]["check"] = status
-            this.setState({ actionItems: updatedActions })
+            updatedActions[index].check = status
+            this.setState({ actionItems: updatedActions }, () => {
+            const {sessionId} = this.props
+            const {actionItems} = this.state
+            axios.put('/api/updateaction', {sessionId, actionItems})
+                .then(  () => this.allItemsComplete()  )
+            })
+        }
 
-            this.allItemsComplete()
-            
-        })
-
-    }
         else {
             alert("You can't complete something in your settings 🤷‍")
         }

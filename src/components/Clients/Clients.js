@@ -206,6 +206,7 @@ class Clients extends Component {
             
                         <Actions 
                         id={e.client_id}
+                        sessionId={e.session_id}
                         actionsComplete={e.completed}
                         checkValues={true}
                         allChecked={this.allItemsChecked}
