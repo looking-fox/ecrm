@@ -222,7 +222,7 @@ class ClientModal extends Component {
     //IF newClientList argument, update clients.
     //ELSE Clear form and close modal.
 
-        if(newClientList){
+        if(newClientList[0]){
             this.props.updateClientModal({
                 clientModalOpen: false,
                 clientSettingsModal: { open: false, newClient: true, client: {} },

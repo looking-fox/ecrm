@@ -45,9 +45,9 @@ module.exports = {
     updateClient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, session_id, client_email, date, location, client_id, session_price, clientState, clientCountry, actions} = req.body.clientInfo
+        const {name, session_id, client_email, date, location, client_id, session_price, clientState, clientCountry, actions, list_id} = req.body.clientInfo
         
-        dbInstance.update_client([sub, client_id, name, client_email, session_id, date, location, session_price, clientState, clientCountry, actions])
+        dbInstance.update_client([sub, client_id, name, client_email, session_id, date, location, session_price, clientState, clientCountry, actions, list_id])
         .then(() => res.sendStatus(200) )
     },
 

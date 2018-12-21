@@ -4,7 +4,6 @@ const initialState = {
     picture: '',
     sub: '',
     clients: [],
-    actions: [],
     currentActions: [ {name: 'inquired', check: false},
     {name: 'sent online guide', check: false},
     {name: 'booked!', check: false} ],
