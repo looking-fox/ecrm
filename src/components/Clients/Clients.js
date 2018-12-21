@@ -188,12 +188,12 @@ class Clients extends Component {
             .sort((a,b) => {
               return a.completed - b.completed
             })
-
+  
             .map( (e, i) => {    
-              return e.completed===false ?
-                
-                  <div className="bar center column" key={e.client_id}>
-
+              
+              return (
+                  <div key={e.client_id}
+                  className={e.completed === false ? "bar center column" : "bar center column completed"} >
                         <Client 
                         client={e}
                         index={i}
@@ -212,31 +212,8 @@ class Clients extends Component {
                         allChecked={this.allItemsChecked}
                         actionList={e.actions}
                         />
-            
                   </div>
-              :
-             
-                  <div className="bar center completed" key={e.client_id}>
-            
-                        <Client 
-                        client={e}
-                        index={i}
-                        actionList={e.actions}
-                        goToMap={this.goToMap}
-                        openPayments={this.openPayments}
-                        openClientModal={this.openClientModal}
-                        optDeleteModal={this.optDeleteModal}
-                        openClientSettingsModal={this.openClientSettingsModal}/>
-            
-                        <Actions 
-                        id={e.client_id}
-                        actionsComplete={e.completed}
-                        checkValues={true}
-                        allChecked={this.allItemsChecked}
-                        actionList={e.actions}
-                        />
-            
-                  </div>
+                  )
               })
             }
       }

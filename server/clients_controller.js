@@ -112,12 +112,10 @@ module.exports = {
     clientComplete: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {clientId, completed} = req.body
-        dbInstance.complete_client([sub, clientId, completed])
-        .then(() => {
-            res.sendStatus(200)
-        })
-
+        const {clientId, check} = req.body
+        
+        dbInstance.complete_client([sub, clientId, check])
+        .then( () => res.sendStatus(200) )
     }
 
 }
