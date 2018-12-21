@@ -61,19 +61,19 @@ class SessionModal extends Component {
           name: this.state.name,
           price: this.state.price,
           color: this.state.color,
-          actionList: currentActions
+          actionList: JSON.parse(JSON.stringify(currentActions))
         }
     
         //TODO: add a condition to check for user input. If user inputs all fields, make axios.post. Otherwise warn user.
         
         if(this.props.sessionModal.newSession === true){
             //If new client
-            axios.post('/api/storesession', {sessionInfo} ).then((response) => {
+            axios.post('/api/storesession', {sessionInfo} )
+            .then( response => {
                 var newSessions = this.props.sessionTypes.slice()
                 newSessions.push(response.data[0])
                 this.props.updateProps({sessionTypes: newSessions})
-    
-                //Close modal
+
                 this.onCloseModal()
             })
         
@@ -97,6 +97,7 @@ class SessionModal extends Component {
         }
     
       }
+
     onCloseModal = () => {
         //Props function to close modal and clear form on state
         this.setState({

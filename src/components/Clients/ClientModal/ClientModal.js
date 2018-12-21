@@ -60,7 +60,6 @@ class ClientModal extends Component {
                         clientLocation: '',
                         togglePriceEdit: false,
                         loading: false
-                        
                     })  
             }
             
@@ -184,7 +183,7 @@ class ClientModal extends Component {
             
             clientInfo["session_name"] = session_name
             clientInfo["session_color"] = session_color
-            clientInfo["actions"] = actions
+            clientInfo["actions"] = JSON.parse(JSON.stringify(actions))
 
             axios.post('/api/addclient', {clientInfo} )
             .then( response => {
@@ -271,18 +270,20 @@ class ClientModal extends Component {
        
         <div className={isEditing}>
             <div className="add-client-modal column">
-              <Input
-              autoFocus={true}
-              className="clientinput"
-              placeholder="Client's Name"
-              defaultValue={this.state.clientName}
-              onChange={e => this.setState({clientName: e.target.value})}/>
+              
+                <input 
+                className="input-box" autoFocus
+                placeholder="Client's Name"
+                value={this.state.clientName}
+                onChange={e => this.setState({clientName: e.target.value})}
+                />
 
-              <Input
-              className="clientinput"
-              placeholder="Client's Email"
-              defaultValue={this.state.clientEmail}
-              onChange={e => this.setState({clientEmail: e.target.value})}/>
+                <input 
+                className="input-box"
+                placeholder="Client's Email"
+                value={this.state.clientEmail}
+                onChange={e => this.setState({clientEmail: e.target.value})}
+                />
     
         
         {/* If new client, select menu for choosing session type. If editing client, select menu for changing lists. Ternary "selected" value sets default to current list for client. */}
@@ -328,18 +329,21 @@ class ClientModal extends Component {
 
             {this.state.togglePriceEdit ? 
 
-            <Input className="clientinput"
+            <input 
+            className="input-box" 
             placeholder={this.state.price}
-            autoFocus={true}
-            defaultValue={this.state.price}
+            value={this.state.price}
+            onChange={e => this.setState({price: e.target.value})}
             onBlur={this.toggleEdit}
-            onChange={e => this.setState({price: e.target.value})}/>
+            />
             :
-            <div className="clientprice" onClick={this.toggleEdit}> 
+            <div className="client-price" 
+            onClick={this.toggleEdit}> 
              {this.state.price}
             </div> 
             
-            }                  
+            }       
+
         </div>
             
             {!newClient ? <ClientActions/> : ''}

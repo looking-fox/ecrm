@@ -57,6 +57,17 @@
     padding: 3px 0px;
 }
 
+.client-price{
+    width: 100%;
+    height: 40px;
+    background-color: black;
+    color: white;
+    margin: 20px 0px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
 .location-search-input {
     width: 100%;
     margin-top: 20px;
