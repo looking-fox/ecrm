@@ -13,28 +13,15 @@ export default class Actions extends Component {
 
     //If all items are complete, change complete to true in DB.
     allItemsComplete = () => {
-       
-       var checkPromise = new Promise(resolve => {
-        var allComplete = true
-            this.state.actionItems.map(e => {
-                
-                if(e.check===false){
-                    allComplete = false
-                } 
-            })
+       const {actionItems} = this.state
+       let index = actionItems.findIndex(e => !e.check)
+       let completed = index === -1 ? true : false
 
-            resolve(allComplete)
-       })
-        
-        checkPromise.then((value) => {
-            
-            if(value !== this.props.actionsComplete){
-                var clientId = this.props.id
-                this.props.allChecked(clientId, value)
-                axios.put('/api/clientcomplete', {clientId, check: value})
-            }
-            
-        })
+       if(completed !== this.props.actionsComplete){
+        var clientId = this.props.id
+        this.props.allChecked(clientId, completed)
+        axios.put('/api/clientcomplete', {clientId, check: completed})
+    }
 
     }
 
@@ -50,7 +37,7 @@ export default class Actions extends Component {
            
             
             var updatedActions = this.props.actionList.slice()
-            updatedActions[index]["completed"] = status
+            updatedActions[index]["check"] = status
             this.setState({ actionItems: updatedActions })
 
             this.allItemsComplete()
@@ -70,7 +57,6 @@ export default class Actions extends Component {
             <div className="list">
                 
                 {this.props.actionList.map((e,i) => {
-                    console.log('al', this.props.actionList)
                     if(e.check===true && this.props.checkValues===true){
                         return (
                             <div className="action" key={i}
