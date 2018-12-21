@@ -45,48 +45,10 @@ module.exports = {
     updateClient: (req, res) => {
         const dbInstance = req.app.get('db')
         const {sub} = req.session.user
-        const {name, session_id, client_email, date, location, client_id, session_price, clientState, clientCountry} = req.body.clientInfo
+        const {name, session_id, client_email, date, location, client_id, session_price, clientState, clientCountry, actions} = req.body.clientInfo
         
-        dbInstance.update_client([sub, client_id, name, client_email, session_id, date, location, session_price, clientState, clientCountry])
-        .then(() => {
-            res.sendStatus(200)
-        })
-    },
-
-    updateFullClient: (req, res) => {
-        const dbInstance = req.app.get('db')
-        const {sub} = req.session.user
-        const {name, session_id, date, client_email, location, client_id, session_price, actions, clientState, clientCountry} = req.body.clientInfo
-        var filteredActions = actions.map(e => e.name)
-        
-        dbInstance.update_full_client([sub, client_id, name, session_id, client_email, date, location, session_price, filteredActions, clientState, clientCountry])
-        .then(() => {
-            dbInstance.delete_actions([sub, session_id])
-        .then(() => {
-            addActions()
-        })
-        })
-            var itemIndex = 0
-            // (name, session_id, user_id, completed)
-            function addActions(){
-                //Recursively add items in order and avoid async issues
-                const {name} = actions[itemIndex]
-                let checked = actions[itemIndex]["completed"] ? 
-                true : false
-
-                dbInstance.replace_actions([name, session_id, sub, checked]).then(() => {
-                    itemIndex++
-                    if(itemIndex <= actions.length-1){
-                        addActions()
-                    }
-                    else {
-                        dbInstance.get_updated_client_actions([sub,session_id]).then(resp => {
-                            res.status(200).send({ actions: resp })
-                        }) 
-                    }
-                })
-            }
-            
+        dbInstance.update_client([sub, client_id, name, client_email, session_id, date, location, session_price, clientState, clientCountry, actions])
+        .then(() => res.sendStatus(200) )
     },
 
     deleteClient: (req, res) => {

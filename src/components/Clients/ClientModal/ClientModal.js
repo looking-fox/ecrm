@@ -125,6 +125,14 @@ class ClientModal extends Component {
       saveClientLoading = () => {
           this.setState({loading: true}, () => this.saveClient() )
       }
+
+      mergeClient = (index, newClientObj) => {
+        //Helper Function to Modify Clients in Props
+        let prevClients = this.props.clients.slice()
+        prevClients[index] = newClientObj
+        return prevClients
+      }
+
     
       saveClient = () => {
         
@@ -143,21 +151,19 @@ class ClientModal extends Component {
             list_id: this.state.listId
         }
 
-        //If user didn't use dropdown, alert them to use dropdown.
+        
         if(!this.state.clientState){
+            //If user didn't select a location via Google Places.
             alert('Please use the Google Search Selection for your locations! This ensures we can collect state + country information for tax purposes.')
             return
         }
        
         if(!newClient){
-            //Editing and saving client if Id is stored in props.
+            //Editing and Saving Previous Client
             const { client_id, session_id } = this.props.clientSettingsModal.client.client
             
             var index = this.getIndex(client_id)
             var current = this.props.currentActions
-
-            var clientOldActions = this.props.clients[index]["actions"]
-            var sameValues = compareValues(clientOldActions, current)
 
             clientInfo["client_id"] = client_id
             clientInfo["session_id"] =  session_id
@@ -165,74 +171,32 @@ class ClientModal extends Component {
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
            
-            var allClients = (() => {
-                let prevClients = this.props.clients.slice()
-                prevClients[index] = newClientObj
-                return prevClients
-            })()
-            
-           if(sameValues){
-               delete clientInfo.actions
+            var allClients = this.mergeClient(index, newClientObj)
+
             axios.put('/api/updateclient', {clientInfo} )
-             .then( () => this.clearForm(allClients) )
-            }
-
-            else {
-                axios.put('/api/updatefullclient', {clientInfo} )
-                .then( (response) => {
-                    let newActions = response.data.actions[0]
-                    let actionInfo = {newActions, session_id}
-                    this.clearForm(allClients, actionInfo) 
-                })
-            }
-
-            function compareValues(obj, otherObj){
-                if(obj.length !== otherObj.length) return false
-                
-                for(let i = 0; i < obj.length; i++){
-                    if(typeof obj[i] === "string"){
-                        if(obj[i] !== otherObj[i].name){
-                            return false
-                        }
-                    }
-                    else {
-                        if(obj[i].name !== otherObj[i].name){
-                            return false
-                        }
-                    }
-                }
-                    return true
-                }  
+            .then( () => this.clearForm(allClients) )
+      
             }
 
         else {
-            //Client added to DB. Receive new Client (w/ ID) and client's actions. Updating front end via props.
-            // session_name, session_color, actions, session_price
+            //Adding New Client
             const {session_name, session_color, actions} = this.state.sessionTypes[this.state.sessionIndex]
             
             clientInfo["session_name"] = session_name
             clientInfo["session_color"] = session_color
             clientInfo["actions"] = actions
 
-            axios.post('/api/addclient', {clientInfo} ).then( response => {
+            axios.post('/api/addclient', {clientInfo} )
+            .then( response => {
               
                 var allClients = this.props.clients
                 var newClient = response.data[0]
                 allClients.unshift(newClient)
 
-                const {session_id} = response.data[0]
-                var allActions = this.props.actions
-                var Id = String(session_id)
-                allActions[Id] = { actions: response.data[0].actions}
-
-                this.props.updateClientModal({
-                    clientModalOpen: false,
-                    clients: allClients, 
-                    actions: allActions
-                })
+                this.clearForm(allClients)
+                
             })
         }
- 
     }
 
     updateLocation = (locationInfo) => {
@@ -254,37 +218,23 @@ class ClientModal extends Component {
         return index
     }
 
-    clearForm = (newClientList, actionInfo) => {
-    //If we changed Client Actions, update Props.Actions with new items. Else just update Props.Clients. 
-        if(actionInfo){
-            const {newActions, session_id} = actionInfo
-            let allActions = (() => {
-                let prevActions = Object.assign({}, this.props.actions)
-                prevActions[session_id] = newActions
-                return prevActions
-            })()
-            this.props.updateClientModal({
-                clientModalOpen: false,
-                clientSettingsModal: { open: false, newClient: true, client: {} },
-                clients: newClientList,
-                actions: allActions
-            })
-        }
-        else {
+    clearForm = (newClientList) => {  
+    //IF newClientList argument, update clients.
+    //ELSE Clear form and close modal.
+
+        if(newClientList){
             this.props.updateClientModal({
                 clientModalOpen: false,
                 clientSettingsModal: { open: false, newClient: true, client: {} },
                 clients: newClientList
-            })
+            })  
         }
-        
-    }
-
-    closeAndResetModal = () => {
-        this.props.updateClientModal({
-            clientSettingsModal: {open: false, newClient: true, client: {}},
-            clientModalOpen: false,
-        })                           
+        else {
+            this.props.updateClientModal({
+                clientSettingsModal: {open: false, newClient: true, client: {}},
+                clientModalOpen: false,
+            })  
+        }
     }
 
     toggleEdit = () => {
@@ -304,7 +254,7 @@ class ClientModal extends Component {
     return (
         <Modal 
         open={this.props.clientModalOpen} 
-        onClose={this.closeAndResetModal} center>
+        onClose={this.clearForm} center>
     
         <h3 className="title">
         <i className="far fa-user-circle"/>
@@ -391,24 +341,9 @@ class ClientModal extends Component {
             
             }                  
         </div>
-    
-         {/* Session Actions DnD */}
-            {/* If editing a client, render ClientActions */}
             
-            {
-               ( () => {
-                    if(!newClient){
-                    return (
-             
-                        <ClientActions/>
-                    
-                      )
-                    }   
-                } )()
-            }
+            {!newClient ? <ClientActions/> : ''}
             
-        {/* Session Actions DnD */}
-
         </div>
 
             <footer>
