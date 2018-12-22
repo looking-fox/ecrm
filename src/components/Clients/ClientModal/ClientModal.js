@@ -259,18 +259,19 @@ class ClientModal extends Component {
         {newClient ?  "Add Client" : `Edit ${client.client.name}`}
         </h3>
 
+
+
         {this.state.loading ? 
          <div className="loading-container center">
             <Loading />
         </div>
         : 
-        null
-        }
-       
+
         <div className={isEditing}>
             <div className="add-client-modal column">
               
                 <input 
+                type="text"
                 className="input-box" autoFocus
                 placeholder="Client's Name"
                 value={this.state.clientName}
@@ -348,8 +349,10 @@ class ClientModal extends Component {
             {!newClient ? <ClientActions/> : ''}
             
         </div>
+        }
 
             <footer>
+                {!this.state.loading ? 
                 <button type="button" 
                 className="btn btn-primary save full" 
                 onClick={this.saveClientLoading}>
@@ -357,6 +360,9 @@ class ClientModal extends Component {
                 {newClient ? "+ Add Client" : "Save Client"}
 
                 </button>
+                : 
+                ''
+                }
             </footer>
     
         </Modal>

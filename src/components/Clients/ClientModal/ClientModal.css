@@ -11,6 +11,7 @@
 
 .add-client-modal{ 
     width:100%;
+    min-width: 20vw;
     padding-bottom: 20px;
     grid-column: 1;    
 }
@@ -100,10 +101,10 @@
 }
 
 .loading-container {
-    width: 95%;
-    height: 400px;
-    position: absolute;
-    z-index: 1;
+    width: 100%;
+    min-width: 20vw;
+    height: 150px;
+    margin: 40px 0px;
     background: white;
     animation: fadeIn 0.7s linear;
 }
