@@ -12,5 +12,7 @@ where sessions.user_id = $1
 and sessions.template = true
 
 group by exports.session_id, sessions.user_id, 
-sessions.session_name, sessions.session_color, sessions.session_price, sessions.template;
+sessions.session_name, sessions.session_color, sessions.session_price, sessions.template
+order by session_id;
+
 

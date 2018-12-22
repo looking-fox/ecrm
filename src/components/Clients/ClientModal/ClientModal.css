@@ -85,6 +85,10 @@
     color: white;
 }
 
+.autocomplete-dropdown-container:hover {
+    cursor: pointer;
+}
+
 .suggestion-item {
     background: black;
     padding: 10px 15px;
