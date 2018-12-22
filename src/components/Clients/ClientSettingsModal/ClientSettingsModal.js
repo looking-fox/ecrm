@@ -14,17 +14,16 @@ class ClientSettingsModal extends Component {
   }
 
   deleteClient = () => {
-    const {clientId, sessionId} = this.props.clientSettingsModal.client
-
+    const {client_id, session_id} = this.props.deleteInfo
     var updatedClients = this.props.clients.slice()
     var index = updatedClients.findIndex(element => {
-      return element.client_id === clientId
+      return element.client_id === client_id
     })
 
     updatedClients.splice(index, 1)
     this.props.updateClients({ clients: updatedClients })
 
-    axios.delete(`/api/deleteclient/${sessionId}`).then(() => {
+    axios.delete(`/api/deleteclient/${session_id}`).then(() => {
       this.props.updateClientSettingsModal({ 
         clientSettingsModal: {open: false, newClient: true, client: {}},
         clientModalOpen: false

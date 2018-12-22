@@ -1,7 +1,7 @@
-delete from session_actions
+delete from clients
 where user_id = $1
 and session_id = $2;
 
-delete from clients
+delete from sessions
 where user_id = $1
 and session_id = $2;

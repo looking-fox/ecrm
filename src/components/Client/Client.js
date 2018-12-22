@@ -24,7 +24,7 @@ export default class Client extends Component {
      }
 
   render(){
-    const {name, client_id, session_name, session_color, session_price, date, location} = this.props.client
+    const {name, client_id, session_name, session_color, session_price, date, location, session_id} = this.props.client
     var openMenu = this.state.optionsMenu ? 'flex' : 'none'
     var formatDate = new Date(date).toLocaleDateString('en-US')
 
@@ -66,7 +66,7 @@ export default class Client extends Component {
                       <p onClick={() => this.props.openClientModal()}>
                         <i className="far fa-edit"/>edit</p>
 
-                      <p onClick={() => this.props.optDeleteModal()}
+                      <p onClick={() => this.props.optDeleteModal(client_id, session_id)}
                       ><i className="far fa-trash-alt"/>delete</p>
 
                   </div>

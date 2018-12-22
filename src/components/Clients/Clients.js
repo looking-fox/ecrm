@@ -25,6 +25,7 @@ class Clients extends Component {
       sessionTypes: [],
       sessionPrice: '',
       deleteVerify: false,
+      deleteInfo: {},
       showTutorial: false,
     }
     
@@ -115,8 +116,21 @@ class Clients extends Component {
     this.props.updateClientModal({clientModalOpen: true})
   }
 
-  optDeleteModal = () => {
-    this.setState({deleteVerify: !this.state.deleteVerify})
+  optDeleteModal = (client_id, session_id) => {
+    this.setState(() => {
+      if(client_id && session_id){
+        return {
+          deleteVerify: !this.state.deleteVerify,
+          deleteInfo: {client_id, session_id}
+        }
+      }
+      else {
+        return {
+          deleteVerify: !this.state.deleteVerify,
+          deleteInfo: {}
+        }
+      }
+    })
   }
 
   deleteClient = (clientId) => {
@@ -260,7 +274,8 @@ class Clients extends Component {
               <ClientSettingsModal {...this.props}
               deleteClient={this.deleteClient}
               optDeleteModal={this.optDeleteModal}
-              deleteVerify={this.state.deleteVerify}/>
+              deleteVerify={this.state.deleteVerify}
+              deleteInfo={this.state.deleteInfo}/>
 
               <PaymentModal/>
 
