@@ -29,11 +29,10 @@
    overflow-y: scroll;
 }
 
-.sessionmenu{
+.session-menu{
     width: 100%;
-    height: fit-content;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    min-height: 20px;
+    margin: 20px 0px;
     padding-bottom: 0px;
 }
 

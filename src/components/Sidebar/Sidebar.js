@@ -357,13 +357,21 @@ class Sidebar extends Component {
            <i className="fas fa-users"/> Add Client List
            </h3>}
 
-          <Input
+          {/* <Input
           className="clientinput"
           placeholder="Client List Name"
           autoFocus={true}
           value={this.state.listName}
           onChange={e => this.setState({listName: e.target.value})}
-          onKeyDown={e => this.returnSave(e)}/>
+          onKeyDown={e => this.returnSave(e)}/> */}
+
+            <input 
+            className="input-box" autoFocus
+            placeholder="Session Name"
+            value={this.state.listName}
+            onChange={e => this.setState({listName: e.target.value})}
+            onKeyDown={e => this.returnSave(e)}
+            />
 
           <div className="list-modal">
 
@@ -392,14 +400,14 @@ class Sidebar extends Component {
             }
             
             </h3>
-            <div className="list-modal">
+            <div>
             
             {/* select list to transfer */}
 
             {this.state.lists.length > 1 ? 
             <React.Fragment>
             <p> Move Clients to: </p>
-            <select className="sessionmenu"
+            <select className="session-menu"
             onChange={e => this.setState({listToMove: parseInt(e.target.value)})}> 
                 {this.state.lists
                 .filter(e => {
