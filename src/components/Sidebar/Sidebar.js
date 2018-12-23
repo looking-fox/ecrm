@@ -74,6 +74,8 @@ class Sidebar extends Component {
     
     //Else splice and move to new position & update props
     let movingItem = this.state.lists[draggableId]
+    let previousItem = this.state.lists[source.index]
+
     var newList = this.state.lists.slice()
     newList.splice(source.index, 1)
     newList.splice(destination.index, 0, movingItem)
@@ -81,11 +83,17 @@ class Sidebar extends Component {
     console.log('dest: ', destination)
     console.log('source: ', source)
     console.log('newList: ', newList)
-    // let swap = { dragId, hoverId, dragIndex, hoverIndex}
 
-    // axios.post('/api/changelistorder', {swap} )
+    let swap = { 
+      dragId: movingItem.list_id,
+      hoverId: previousItem.list_id,
+      dragIndex: source.index, 
+      hoverIndex: destination.index
+    }
 
-    // .then( () => this.setState({lists: swap}))
+    axios.post('/api/changelistorder', {swap} )
+
+    .then( () => this.setState({lists: swap}))
         
   }
 
