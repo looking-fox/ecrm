@@ -3,18 +3,13 @@ import './Sidebar.css'
 import Logo from '../../assets/logo.png'
 import Tutorial from '../Clients/Tutorial/Tutorial'
 import SubscriptionModal from './SubscriptionModal/SubscriptionModal';
+import Lists from './Lists'
 import axios from 'axios'
 import Fade from 'react-reveal/Fade'
 import {connect} from 'react-redux'
 import {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProps} from '../../redux/reducer'
 import Modal from 'react-responsive-modal'
-import Input from '@material-ui/core/Input'
-import flow from 'lodash/flow'
-import ListItem from './ListItem'
-import HTML5Backend from 'react-dnd-html5-backend'
-import {DragDropContext} from 'react-dnd'
-const update = require('immutability-helper')
-
+import {DragDropContext} from 'react-beautiful-dnd'
 
 class Sidebar extends Component {
   
@@ -24,12 +19,12 @@ class Sidebar extends Component {
       open: false,
       lists: [],
       listName: '',
-      optionsMenu: false,
       deleteListCheck: false,
       listInEdit: {},
       listToMove: null,
       showTutorial: false,
       userMenu: false,
+      optionsMenu: false,
       subscriptionModal: false
     }
 
@@ -69,29 +64,54 @@ class Sidebar extends Component {
     })
   }
 
-  moveListItem = (dragIndex, hoverIndex) => {
-		const { lists } = this.state
-    const dragList = lists[dragIndex]
+  onDragEnd = result => {
+    const {destination, source, draggableId} = result
+
+    //If dropped outside droppable or same index just return
+    if(!destination) return
+    if(destination.droppableId === source.droppableId &&
+    destination.index === source.index) return 
     
-		this.setState(
-			update(this.state, {
-				lists: {
-					$splice: [[dragIndex, 1], [hoverIndex, 0, dragList]],
-				},
-			}),
-    )
-
-    lists[dragIndex]["index_id"] = hoverIndex
-    lists[hoverIndex]["index_id"] = dragIndex
-
-    let dragId = lists[dragIndex]["list_id"]
-    let hoverId = lists[hoverIndex]["list_id"]
-
-    let swap = { dragId, hoverId, dragIndex, hoverIndex}
-
-    axios.post('/api/changelistorder', {swap} )
+    //Else splice and move to new position & update props
+    let movingItem = this.state.lists[draggableId]
+    var newList = this.state.lists.slice()
+    newList.splice(source.index, 1)
+    newList.splice(destination.index, 0, movingItem)
     
+    console.log('dest: ', destination)
+    console.log('source: ', source)
+    console.log('newList: ', newList)
+    // let swap = { dragId, hoverId, dragIndex, hoverIndex}
+
+    // axios.post('/api/changelistorder', {swap} )
+
+    // .then( () => this.setState({lists: swap}))
+        
   }
+
+  // moveListItem = (dragIndex, hoverIndex) => {
+	// 	const { lists } = this.state
+  //   const dragList = lists[dragIndex]
+    
+	// 	this.setState(
+	// 		update(this.state, {
+	// 			lists: {
+	// 				$splice: [[dragIndex, 1], [hoverIndex, 0, dragList]],
+	// 			},
+	// 		}),
+  //   )
+
+  //   lists[dragIndex]["index_id"] = hoverIndex
+  //   lists[hoverIndex]["index_id"] = dragIndex
+
+  //   let dragId = lists[dragIndex]["list_id"]
+  //   let hoverId = lists[hoverIndex]["list_id"]
+
+  //   let swap = { dragId, hoverId, dragIndex, hoverIndex}
+
+  //   axios.post('/api/changelistorder', {swap} )
+    
+  // }
   
   //Hit enter key on input box to save list.
   returnSave = (event) => {
@@ -146,12 +166,9 @@ class Sidebar extends Component {
 
                   this.props.updateClientModal({
                     clientModalOpen: true
-                    // sessionTypes: response.data,
-                    // sessionPrice: response.data[0].session_price
                   })
   
                 }
-            
           }
         } 
         else {
@@ -251,7 +268,6 @@ class Sidebar extends Component {
 
   
   render() {
-    const isEditing = this.state.optionsMenu ? 'flex' : 'none'
     const isUserMenuOpen = this.state.userMenu ? 'flex' : 'none'
     
     return (
@@ -295,47 +311,21 @@ class Sidebar extends Component {
 
           </div>
 
-          {this.state.lists.map((e,i) => {
-        //If propsId is itemId, this list is currently selected.
-            
-            if(this.props.listId===e.list_id){
-              return (
-                <div key={e.list_id}>
-                <ListItem
-                item={e}
-                index={i}
-                id={e.list_id}
-                active={true}
-                clickList={this.clickList}
-                openClient={this.openClient}
-                moveListItem={this.moveListItem}
-                optionsMenu={this.optionsMenu}
-                />
-                <div className="options-menu sidebar-edit" 
-                style={{ display: isEditing }}>
-                <p onClick={() => this.updateList(e, i)}
-                ><i className="far fa-edit"/>edit</p>
-                <p onClick={() => this.deleteListCheck(e, i)}
-                ><i className="far fa-trash-alt"/>delete</p>
-                </div>
-                </div>
-              )
-            }
-            else {
-              return (
-               <ListItem
-               item={e}
-               index={i}
-               id={e.list_id}
-               key={e.list_id}
-               active={false}
-               clickList={this.clickList}
-               moveListItem={this.moveListItem}
-               />
-              )
-            }
 
-          })}
+          <DragDropContext onDragEnd={this.onDragEnd}>
+
+            <Lists
+            lists={this.state.lists}
+            listId={this.props.listId}
+            optionsMenu={this.optionsMenu}
+            optionsMenuOpen={this.state.optionsMenu}
+            clickList={this.clickList}
+            openClient={this.openClient}
+            updateList={this.updateList}
+            deleteListCheck={this.deleteListCheck}/>
+
+          </DragDropContext>
+
 
           <div className="sidebar-footer">
             <img src={Logo} alt="Fox Logo"/>  
@@ -356,14 +346,6 @@ class Sidebar extends Component {
            <h3 className='modal-title'>
            <i className="fas fa-users"/> Add Client List
            </h3>}
-
-          {/* <Input
-          className="clientinput"
-          placeholder="Client List Name"
-          autoFocus={true}
-          value={this.state.listName}
-          onChange={e => this.setState({listName: e.target.value})}
-          onKeyDown={e => this.returnSave(e)}/> */}
 
             <input 
             className="input-box" autoFocus
@@ -462,9 +444,4 @@ function mapStateToProps(state){
   }
 }
 
-export default flow(
-  DragDropContext(HTML5Backend),
-
-  connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProps})
-
-)(Sidebar)
+export default connect(mapStateToProps, {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProps})(Sidebar)

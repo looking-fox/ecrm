@@ -19,7 +19,7 @@ export default class Actions extends Component {
 
        if(completed !== this.props.actionsComplete){
         var clientId = this.props.id
-        console.log(clientId, completed)
+        
         this.props.allChecked(clientId, completed)
         axios.put('/api/clientcomplete', {clientId, check: completed})
     }
