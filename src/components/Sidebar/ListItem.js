@@ -58,18 +58,13 @@ export default class ListItem extends Component {
 }
 
 
-ListItem.defaultProps = {
-	item: {list_id: 5}
-};
-
-// ListItem.propTypes = {
-// 	item: PropTypes.object.isRequired,
-// 	index: PropTypes.number.isRequired,
-// 	id: PropTypes.number.isRequired,
-// 	active: PropTypes.bool.isRequired,
-// 	clickList: PropTypes.func.isRequired,
-// 	openClient: PropTypes.func,
-// 	moveListItem: PropTypes.func.isRequired,
-// 	optionsMenu: PropTypes.func
-// }
+ListItem.propTypes = {
+	item: PropTypes.object.isRequired,
+	index: PropTypes.number.isRequired,
+	id: PropTypes.number.isRequired,
+	active: PropTypes.bool.isRequired,
+	clickList: PropTypes.func.isRequired,
+	openClient: PropTypes.func,
+	optionsMenu: PropTypes.func
+}
 
