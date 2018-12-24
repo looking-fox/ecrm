@@ -37,22 +37,30 @@
     margin-right: 10px;
 }
 
-.listitem{
+.list-item{
     width: 100%;
+    min-width: 250px;
+    background: white;
     height: 45px;
     display: flex;
+    position: relative;
     align-items: center;
-    padding-left: 18%;
+    padding-left: 40px;
     font-weight: 200;
     font-size: 0.9em;
-    cursor: pointer;
-    margin: 0 auto;
 }
 
-.listitem:hover {
+.list-item:active {
+    border: 1px solid #808080;
+}
+
+.list-item i {
+    cursor: pointer;
+}
+
+.list-item:hover {
     background-color: #f9f6f6;
     border-right: 4px solid #808080;
-    position: relative;
 }
 
 .current-list {

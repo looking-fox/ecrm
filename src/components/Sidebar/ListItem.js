@@ -12,22 +12,23 @@ export default class ListItem extends Component {
 			draggableId={String(this.props.index)}
 			index={this.props.index}>
 			{provided => (
-				<div className="listitem current-list" 
+				<div className="list-item current-list" 
+				id={this.props.index}
 				{...provided.draggableProps}
 				{...provided.dragHandleProps}
 				ref={provided.innerRef}
 				key={this.props.item.list_id} onClick={() => this.props.clickList(this.props.item)}>
-					<p>
+					
 
 					<i id="menu-icon" className="fas fa-ellipsis-v menu-icon options-icon"
 					onClick={this.props.optionsMenu}/>
 
-						{this.props.item.list_name}
+						<p>{this.props.item.list_name}</p>
 						
 						<i onClick={() => this.props.openClient(this.props.item)}
 				className="fas fa-plus-circle menu-icon add-icon"/>
 
-					</p>
+					
 				</div>
 			)}
 			</Draggable>
@@ -40,7 +41,9 @@ export default class ListItem extends Component {
 			draggableId={String(this.props.index)}
 			index={this.props.index}>
 			{provided => (
-				<div className="listitem" key={this.props.item.list_id}
+				<div className="list-item" 
+				key={this.props.item.list_id}
+				id={this.props.index}
 				{...provided.draggableProps}
 				{...provided.dragHandleProps}
 				ref={provided.innerRef}
