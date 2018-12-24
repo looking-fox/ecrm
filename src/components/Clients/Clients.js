@@ -7,7 +7,6 @@ import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import FilterBar from './FilterBar/FilterBar'
 import PaymentModal from './PaymentModal/PaymentModal'
 import Loading from './Loading'
-
 import axios from 'axios';
 import keyBy from 'lodash.keyby'
 import {connect} from 'react-redux'
@@ -59,31 +58,37 @@ class Clients extends Component {
         //IF: 0 clients, render tutorial pop up.
         //ELSE: map clientIds as keys for clients object (store in props)
         //NOTE: Render Loading if axios call takes longer than 300ms via loadTimeOut variable.
-    
+     
       axios.get('/api/getclients').then(response => {
         var clients = response.data
         let firstClient = response.data[0]
 
         if(firstClient){
-              if(firstClient.client_id===null){
-                this.setState({loadingClients: false}, () => {
-                  this.props.updateClients({noClients: true})
-                })
-              }
+              if(firstClient.client_id===null) loadIntro()
+              
               else {
                 this.setState({loadingClients: false}, () => {
                   this.props.updateClients({ clients })
                 }) 
               }
-        }           
+        }     
+        else loadIntro()     
       }) 
 
+
+    //-----Get Client Functions----//
+    var loadIntro = () => {
+      this.setState({loadingClients: false}, () => {
+        this.props.updateClients({noClients: true})
+      })
+    }
+
     loadTimeOut = setTimeout(() => {
-      if(!this.props.clients.length || this.props.noClients){
+      if(!this.props.clients.length){
         this.setState({ loadingClients: true })
       }
     }, 200)
-    
+     //-----Get Client Functions----//
   }
 
   goToMap = (location) => {
