@@ -74,52 +74,24 @@ class Sidebar extends Component {
     
     //Else splice and move to new position & update props
     let movingItem = this.state.lists[draggableId]
-    let previousItem = this.state.lists[source.index]
-
+    let previousItem = this.state.lists[destination.index]
+    
     var newList = this.state.lists.slice()
     newList.splice(source.index, 1)
     newList.splice(destination.index, 0, movingItem)
     
-    console.log('dest: ', destination)
-    console.log('source: ', source)
-    console.log('newList: ', newList)
-
     let swap = { 
       dragId: movingItem.list_id,
       hoverId: previousItem.list_id,
       dragIndex: source.index, 
       hoverIndex: destination.index
     }
-
+    
     axios.post('/api/changelistorder', {swap} )
-
-    .then( () => this.setState({lists: swap}))
+    .then( () => this.setState({ lists: newList }))
         
   }
 
-  // moveListItem = (dragIndex, hoverIndex) => {
-	// 	const { lists } = this.state
-  //   const dragList = lists[dragIndex]
-    
-	// 	this.setState(
-	// 		update(this.state, {
-	// 			lists: {
-	// 				$splice: [[dragIndex, 1], [hoverIndex, 0, dragList]],
-	// 			},
-	// 		}),
-  //   )
-
-  //   lists[dragIndex]["index_id"] = hoverIndex
-  //   lists[hoverIndex]["index_id"] = dragIndex
-
-  //   let dragId = lists[dragIndex]["list_id"]
-  //   let hoverId = lists[hoverIndex]["list_id"]
-
-  //   let swap = { dragId, hoverId, dragIndex, hoverIndex}
-
-  //   axios.post('/api/changelistorder', {swap} )
-    
-  // }
   
   //Hit enter key on input box to save list.
   returnSave = (event) => {
