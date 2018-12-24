@@ -36,6 +36,7 @@ class Clients extends Component {
 
   componentDidUpdate(prevProps){
       if(prevProps !== this.props){
+          
           //If we change to All Clients--get new clients.
           if(prevProps.listId !== this.props.listId){
             if(this.props.listId === -1){
@@ -84,7 +85,7 @@ class Clients extends Component {
     }
 
     loadTimeOut = setTimeout(() => {
-      if(!this.props.clients.length){
+      if(!this.props.clients.length && !this.props.noClients){
         this.setState({ loadingClients: true })
       }
     }, 200)
