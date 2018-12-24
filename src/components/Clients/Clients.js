@@ -8,7 +8,6 @@ import FilterBar from './FilterBar/FilterBar'
 import PaymentModal from './PaymentModal/PaymentModal'
 import Loading from './Loading'
 import axios from 'axios';
-import keyBy from 'lodash.keyby'
 import {connect} from 'react-redux'
 import {updateClients, updateClientModal, updateClientSettingsModal, updateProps} from '../../redux/reducer'
 var loadTimeOut;

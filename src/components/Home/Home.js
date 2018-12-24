@@ -36,7 +36,7 @@ export default function Home(props){
             </Fade>
 
             <Fade>
-              <img className ="main-image" src={Workspace} alt="Yosemite Elopement"/>
+              <img className ="main-image" src={Workspace} alt="Home office workspace"/>
             </Fade>
         </div>
 
