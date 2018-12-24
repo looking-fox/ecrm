@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css'
 import {login} from '../../Main/MainLogic'
-import Workspace from '../../assets/Workspace5.png'
+import Workspace from '../../assets/Workspace5.jpg'
 import Navbar from '../NavBar/NavBar'
 import Features from '../Features/Features'
 import Footer from '../Footer/Footer'
