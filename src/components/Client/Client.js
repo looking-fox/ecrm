@@ -2,6 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import './Client.css'
 
+//TODO: 
+
+//Payments Input to Native Input
+//Payments Input to include cents. 
+
+//Edit-click to-do item on ActionList. 
+//On Client, payment + icon turn green on full payment. 
+
+//Month search for Date Picker to be gray (not baby blue)
+//Search Input Bar for Filter Bar
+
 export default class Client extends Component {
      constructor(){
        super()
