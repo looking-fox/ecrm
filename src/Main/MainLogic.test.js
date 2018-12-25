@@ -37,6 +37,19 @@ describe('convertRawMoney Func', () => {
     it('Should maintain decimals with 7 digits', () => {
         expect(convertRawMoney(45000.50)).toBe('$45,000.50')
     })
+
+    it('Should maintain decimals with 8 digits', () => {
+        expect(convertRawMoney(450000.50)).toBe('$450,000.50')
+    })
+
+    it('Should work with single decimal given', () => {
+        expect(convertRawMoney(450.3)).toBe('$450.30')
+    })
+
+    it('Should keep the second decimal if given', () => {
+        expect(convertRawMoney(450.32)).toBe('$450.32')
+    })
+
 })
 
 describe('convertToRawMoney Func', () => {
@@ -66,5 +79,5 @@ describe('convertToRawMoney Func', () => {
     it('Should work for non-decimal values', () => {
         expect(convertToRawMoney('$45,000')).toBe(45000)
     })
-    
+
 })

@@ -45,11 +45,21 @@ export function convertToRawMoney(amount){
     let len = strValue.length
     let arr = strValue.split("")
     let index = strValue.indexOf('.')
-    
+    let pro = arr.slice(index).length
+    let dif = len - pro
+    //If number(string format) is >= 1,000
     if(len >= 6){
-        arr.splice(len-5, 0, ",")
+        //If excluding the decimals, the value is still >= 1,000
+        if(dif >= 4){
+            //Add comma at dynamically appropriate spot 
+            //Example: 4,500 vs 45,000
+            arr.splice(dif-3, 0, ",") 
+        }  
     }
-    arr.push("0")
+
+    //If only one decimal place, add zero
+    if(pro <= 2) arr.push("0")
+    
     arr.unshift("$")
     return arr.join("")
   }
