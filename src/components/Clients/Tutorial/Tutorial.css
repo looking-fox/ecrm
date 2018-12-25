@@ -35,6 +35,11 @@
     margin-bottom: 75px;
 }
 
+.description p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .arrow {
     color: #393939;
     font-size: 1.8em;

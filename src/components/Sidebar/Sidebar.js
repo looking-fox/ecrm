@@ -152,7 +152,7 @@ class Sidebar extends Component {
           }
         } 
         else {
-        alert("You'll first want to head over to Tools > Templates and add a few session types.")
+        alert("You'll first want to click on your user icon and go to Tools > Templates and add a few session types.")
              }
         })
   }

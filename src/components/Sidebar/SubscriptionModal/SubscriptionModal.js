@@ -37,7 +37,7 @@ export default class SubscriptionModal extends Component {
   componentDidUpdate = () => {
     if(this.props.open === true && this.state.lifetimeUser){
       this.props.hide()
-      alert("You have free access. No subscription to check! 🤷")
+      alert("You have free access. No subscription to check!")
     }
   }
 

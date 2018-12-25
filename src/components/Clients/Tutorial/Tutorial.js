@@ -57,27 +57,27 @@ export default class Tutorial extends Component {
         switch(currentIndex){
             case 0:
             return (
-                <p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, click on your user icon, and then the  <i className="fas fa-wrench"/> symbol to set up your first session template. </p>
+                <p>We have a few things to set up. Once we're done, it should be easier to keep track of your clients! To start, click on your user icon, and then  <i className="fas fa-wrench"/> to set up your first session template. </p>
             )
             case 1:
             return (
-                <p>Now you'll want to set up your sessions, which act like templates. You can set up a default price, color, and to-do list. Every client is customizable. But having templates makes life easier. </p>
+                <p>You can set up a default price, color, and to-do list. Every client is customizable. But having templates makes life easier. </p>
             )
             case 2: 
             return (
-                <center><p>To create a client list, hover over Clients and click the + symbol. You can drag and drop these lists to rearrange them, and transfer clients to other lists.</p></center>
+                <center><p>To create a client list, hover over Clients and click  <i className="fas fa-plus-circle"/>. You can edit, delete, or rearrange your lists from here too.</p></center>
             )
             case 3:
             return (
-                <p>Once you've created a client list, you can add clients by selecting a list, and clicking on the add symbol. You can also edit, delete, or rearrange your lists from here too.</p>
+                <p>Once you've created a list, you can add clients by selecting it, and clicking <i className="fas fa-plus-circle"/>.</p>
             )
             case 4:
             return (
-                <p>When adding a client, you can assign a session template and customize it to fit. Whether they have a custom price, or you need to add a couple of to-do items. You can always edit a client at any stage in the process. </p>
+                <p>You can always edit a client at any stage in the process. When adding one, assign a session template, date, location, and custom price if needed.</p>
             )
             case 5:
             return (
-                <p>You can also keep track of payments made by clients by clicking on the  <i className="far fa-credit-card"/> symbol for each client. Going to the Finance Dashboard, you can get a quick view of your total income. </p>
+                <p>Keep track of payments by clicking on  <i className="far fa-credit-card"/> for each client.</p>
             )
             default: 
             return (<p>We have a few things to set up to get started. But once we complete these steps, it should be a lot easier to keep track of clients! To start, you'll head to Tools > Templates. </p>)
@@ -122,7 +122,7 @@ export default class Tutorial extends Component {
                 </div>
 
                 <div className="description">
-                   {this.renderDescription()}
+                   <p>{this.renderDescription()}</p>
                 </div>
                 
                 {/* Bottom Navigation */}
