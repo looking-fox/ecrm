@@ -7,8 +7,8 @@ import axios from 'axios'
 import DateRangePicker from '@wojtekmaj/react-daterange-picker'
 import Fade from 'react-reveal/Fade'
 
-//Sort Options: Sort by date, by name, by most recent, 
-//Filter Options: Completed, Incomplete, session types
+//Sort Options: Sort by date, by name, by most recent
+//Filter Options: Session types, custom search
 
 const options = [
   { value: 'date', label: <p className="menu-text"><i className="far fa-calendar"/> Chronological</p> },
@@ -54,6 +54,12 @@ class FilterBar extends Component {
   updateSort = (value) => {
     let newFilterBar = Object.assign({}, this.props.filterBar)
     newFilterBar.sort = value
+    this.props.updateProps({ filterBar: newFilterBar })
+  }
+
+  updateNameSort = (value) => {
+    let newFilterBar = Object.assign({}, this.props.filterBar)
+    newFilterBar.sortName = value
     this.props.updateProps({ filterBar: newFilterBar })
   }
 
@@ -128,6 +134,12 @@ class FilterBar extends Component {
                 primary: 'black'
               },
             })} />
+            </div>
+
+            <div className="menu">
+            <input className="input-box"
+            placeholder="Search for a client..."
+            onChange={e => this.updateNameSort(e.target.value)}/>
             </div>
             
       </div>

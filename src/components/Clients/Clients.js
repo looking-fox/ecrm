@@ -156,7 +156,7 @@ class Clients extends Component {
 
   renderClients(){
     //If we have zero clients, we don't want to map and render the Client or Actions components
-    const {sort, sortSession, dateRange} = this.props.filterBar
+    const {sort, sortSession, sortName, dateRange} = this.props.filterBar
     
     let firstClient = this.props.clients[0]
     
@@ -185,6 +185,13 @@ class Clients extends Component {
                   const {start, end} = dateRange  
                   if(e.date >= start && e.date <= end) return true
                   else return false
+              }
+              else return true
+            })
+
+            .filter(e => {
+              if(sortName){
+                return e.name.toUpperCase().includes(sortName.toUpperCase())
               }
               else return true
             })

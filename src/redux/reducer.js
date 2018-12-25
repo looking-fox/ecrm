@@ -12,6 +12,7 @@ const initialState = {
     filterBar: {
         sort: { value: 'date', label: 'Chronological' },
         sortSession: { value: 0, label: 'All Sessions' }, 
+        sortName: '',
         dateRange: {inactive: true},
         filter: 'none'},
     clientModalOpen: false,
