@@ -21,6 +21,22 @@ describe('convertRawMoney Func', () => {
     it('Should correctly place comma for values > 10,000', () => {
         expect( convertRawMoney(12000) ).toBe('$12,000')
     })
+
+    it('Should maintain decimals with 4 digits', () => {
+        expect(convertRawMoney(43.50)).toBe('$43.50')
+    })
+
+    it('Should maintain decimals with 5 digits', () => {
+        expect(convertRawMoney(435.50)).toBe('$435.50')
+    })
+
+    it('Should maintain decimals with 6 digits', () => {
+        expect(convertRawMoney(4500.50)).toBe('$4,500.50')
+    })
+
+    it('Should maintain decimals with 7 digits', () => {
+        expect(convertRawMoney(45000.50)).toBe('$45,000.50')
+    })
 })
 
 describe('convertToRawMoney Func', () => {
@@ -28,7 +44,7 @@ describe('convertToRawMoney Func', () => {
         expect(convertToRawMoney).toBeDefined()
     })
     it('Should return number value', () => {
-        expect(typeof convertToRawMoney('$55')).toBe('number')
+        expect(typeof convertToRawMoney('$55.34')).toBe('number')
     })
 
     it('Should remove money related characters', () => {
@@ -38,4 +54,17 @@ describe('convertToRawMoney Func', () => {
     it('Should convert instances greater than 1000', () => {
         expect(convertToRawMoney('$5500')).not.toContain(',')
     })
+
+    it('Should not remove decimal values', () => {
+        expect(convertToRawMoney('$5,500.50')).toBe(5500.50)
+    })
+
+    it('Should account for decimals', () => {
+        expect(convertToRawMoney('$5,500.50')).toBe(5500.50)
+    })
+
+    it('Should work for non-decimal values', () => {
+        expect(convertToRawMoney('$45,000')).toBe(45000)
+    })
+    
 })
