@@ -75,6 +75,11 @@ class PaymentModal extends Component {
 
   savePayment = () => {
       const {amount, date, description} = this.state
+      
+      if(!amount || !description){
+          alert('Please fill in the payment information before adding it.')
+          return
+      }
       let intAmount = convertToRawMoney(amount)
       const {clientId} = this.props.paymentModal
       axios.post('/api/savepayment', {amount: intAmount, date, description, clientId}).then((response) => {
@@ -199,7 +204,7 @@ class PaymentModal extends Component {
                     <i className="far fa-credit-card"/>
                     {name}
                 </h3>
-                
+
                 <div className="progress-bar">
 
                     {this.state.noPayments ? 
@@ -305,4 +310,5 @@ function mapStateToProps(state){
     }
   }
   
-  export default connect(mapStateToProps, {updateProps})(PaymentModal)
+
+export default connect(mapStateToProps, {updateProps})(PaymentModal)
