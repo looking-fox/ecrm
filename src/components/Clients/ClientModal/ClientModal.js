@@ -53,6 +53,7 @@ class ClientModal extends Component {
                         sessionIndex: 0,
                         price: 0,
                         sessionId: '',
+                        listId: this.props.listId,
                         clientName: '',
                         clientEmail: '',
                         clientDate: new Date(),
@@ -97,8 +98,8 @@ class ClientModal extends Component {
 
     isEditingClient = () => {
        //Updates local state with Client variables, if editing.
-        const {name, client_email, location, session_price, session_id, date, state} = this.props.clientSettingsModal.client.client
-    
+        const {name, client_email, location, session_price, session_id, date, list_id, state} = this.props.clientSettingsModal.client.client
+        
         this.setState({
             clientName: name,
             clientEmail: client_email,
@@ -106,6 +107,7 @@ class ClientModal extends Component {
             clientLocation: location,
             price: session_price,
             sessionId: session_id,
+            listId: list_id,
             clientState: state,
             loading: false
         })
