@@ -113,7 +113,13 @@ module.exports = {
                       stripe.subscriptions.create({
                           customer: customer_id,
                           items: [ { plan: process.env.PLAN_ID } ]
-                        }).then( () => res.status(200).send('new'))
+                        })
+                        .then( () => {
+                            //Agreed to Terms of Service
+                            dbInstance.agreed_terms(sub).then(() => {
+                                res.status(200).send('new')
+                            })
+                        })
                         .catch(error => { console.log('sub-error: ', error.message) })         
                   })
 

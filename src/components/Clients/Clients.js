@@ -54,7 +54,7 @@ class Clients extends Component {
     clearTimeout(loadTimeOut)
   }
 
-  getClients(){
+  getClients = () => {
         //IF: 0 clients, render tutorial pop up.
         //ELSE: map clientIds as keys for clients object (store in props)
         //NOTE: Render Loading if axios call takes longer than 300ms via loadTimeOut variable.

@@ -61,6 +61,7 @@ app.get('/auth/callback', async (req, res) => {
     //-----user data-----//
     req.session.user = receiveUser.data;
     req.session.user.id = sessionId;
+    req.session.user.terms = false
     sessionId++
     
     const {sub, name, email} = req.session.user
@@ -83,7 +84,7 @@ app.get('/auth/callback', async (req, res) => {
                 if(!response[0].user_id){
                     dbInstance.store_user_id([sub, name, email]).then(() => {
                         req.session.user.lifetime = true
-                        return res.redirect('/#/dashboard')
+                        return res.redirect('/#/signup')
                     })
                 }
                 // Returning user with stored id
@@ -133,6 +134,24 @@ app.get('/auth/callback', async (req, res) => {
 
 //========Auth0==========//
 
+app.get('/api/checklifetime', (req, res) => {
+    const {sub, email} = req.session.user
+    const dbInstance = req.app.get('db')
+
+    dbInstance.check_user([sub, email]).then(user => {
+        const {lifetime, termsofservice} = user[0]
+        res.status(200).send({lifetime, termsofservice})
+    })
+})
+
+app.post('/api/agreedtoterms', (req, res) => {
+    const dbInstance = req.app.get('db')
+    const {sub} = req.session.user
+
+    dbInstance.agreed_terms(sub).then(() => {
+        res.sendStatus(200)
+    })
+})
 
 
 //===============DB==================//
@@ -141,16 +160,22 @@ app.get('/api/user-info', (req, res) => {
     const {name, email, sub, picture} = req.session.user
     
     const dbInstance = req.app.get('db')
-    dbInstance.get_client_lists(sub).then(response => {
-        var lists = response
-        res.status(200).send({
-            name,
-            email,
-            sub,
-            picture,
-            lists
+
+    dbInstance.check_user([sub, email]).then(user => {
+        const { termsofservice } = user[0]
+
+        dbInstance.get_client_lists(sub).then(response => {
+            var lists = response
+            res.status(200).send({
+                name,
+                email,
+                sub,
+                picture,
+                lists,
+                termsofservice
+            })
         })
-    })
+    })    
 })
 
 app.post('/api/logout', (req, res) => {

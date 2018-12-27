@@ -11,6 +11,9 @@ import {updateUser, logoutUser, updateCurrentList, updateClientModal, updateProp
 import Modal from 'react-responsive-modal'
 import {DragDropContext} from 'react-beautiful-dnd'
 
+//TODO: Move Delete List Check into Separate Component
+
+
 class Sidebar extends Component {
   
   constructor(){
@@ -44,7 +47,11 @@ class Sidebar extends Component {
   componentDidMount(){
     axios.get('/api/user-info').then( res => {
       const {pathname} = this.props.history.location
-      const {lists} = res.data
+      const {lists, termsofservice} = res.data
+
+      if(!termsofservice) this.props.history.push('/signup')
+      
+
       this.setState({ lists }) 
       this.props.updateUser(res.data)
       
