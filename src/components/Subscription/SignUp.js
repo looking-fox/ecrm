@@ -21,6 +21,7 @@ export default class SignUp extends Component {
   componentDidMount(){
     axios.get('/api/checklifetime').then(user => {
       const { lifetime } = user.data
+      if(!lifetime) this.props.history.push('/')
       this.setState({ lifetime })
     })
 
