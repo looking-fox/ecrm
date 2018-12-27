@@ -46,7 +46,7 @@ export default class SignUp extends Component {
     const {agreeCheck} = this.state
     if(agreeCheck){
       axios.post('/api/agreedtoterms').then(() => {
-        this.props.history.push('/dashboard')
+        this.props.history.push('/dashboard/welcome')
       })
     } 
     else alert("Please agree to the terms of service")
