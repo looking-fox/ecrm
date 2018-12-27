@@ -218,6 +218,7 @@ app.delete('/api/deletelist/:id', (req, res) => {
     const dbInstance = req.app.get('db')
     const {id} = req.params
     const {sub} = req.session.user
+    
     dbInstance.delete_client_list([sub, id]).then(() => {
         res.sendStatus(200)
     })

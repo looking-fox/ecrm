@@ -7,6 +7,7 @@ import thirdDemo from '../../../assets/3.gif'
 import fourthDemo from '../../../assets/4.gif'
 import fifthDemo from '../../../assets/5.gif'
 
+//Gif Sizes: Small (618 x 300 px) Large (1444 x 688px)
 
 export default class Tutorial extends Component {
     constructor(){

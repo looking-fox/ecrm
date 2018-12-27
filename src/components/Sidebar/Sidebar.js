@@ -181,7 +181,7 @@ class Sidebar extends Component {
     })[0].list_id
     :
     this.state.lists[0].list_id
-
+    
     this.setState({ 
       listInEdit: listWithIndex, 
       deleteListCheck: true,
@@ -197,8 +197,9 @@ class Sidebar extends Component {
 
   deleteList = () => {
     const {index, list_id} = this.state.listInEdit
-    
-      axios.delete(`/api/deletelist/${list_id}`).then(() => {
+  
+      axios.delete(`/api/deletelist/${list_id}`)
+      .then(() => {
       let newList = this.state.lists
       newList.splice(index, 1)
 
