@@ -27,7 +27,7 @@ export default function Home(props){
                 </h5>
 
                 <button className="btn btn-outline-dark join-btn"
-                onClick={login}>
+                onClick={login} data-test="log-in-btn">
                   Sign Up
               </button>
 

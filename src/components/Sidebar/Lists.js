@@ -14,7 +14,7 @@ export default class Lists extends Component {
     const isEditing = this.props.optionsMenuOpen ? 'flex' : 'none'
     
     return (
-        <Droppable droppableId={'action-area'}>
+        <Droppable droppableId={'action-area'} data-test="comp-lists">
             {provided => (
             <div ref={provided.innerRef}
             {...provided.droppableProps}>
