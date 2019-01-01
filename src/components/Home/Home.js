@@ -9,7 +9,7 @@ import Fade from 'react-reveal/Fade'
 
 export default function Home(props){
     return (
-      <div className="home">
+      <div className="home" data-test="comp-home">
       <Navbar {...props}/>
       
         <div className="body">
