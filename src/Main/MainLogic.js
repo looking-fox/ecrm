@@ -1,4 +1,4 @@
-export function convertRawMoney(amount){
+function convertRawMoney(amount){
     var amountString = JSON.stringify(amount)
     var hasDecimals = amountString.includes('.')
     var len = amountString.length
@@ -19,7 +19,7 @@ export function convertRawMoney(amount){
     return arr.join("")
   }
 
-export function convertToRawMoney(amount){
+function convertToRawMoney(amount){
     if(isNaN(
         parseFloat( amount.replace(/[$," "]+/g, "") )) 
       ){
@@ -29,7 +29,9 @@ export function convertToRawMoney(amount){
     return parseFloat(amount.replace(/[$," "]+/g, ""))
   }
 
-  export function login(){
+
+
+function login(){
     
     let {REACT_APP_AUTH0_DOMAIN,
       REACT_APP_AUTH0_CLIENT_ID
@@ -63,3 +65,5 @@ export function convertToRawMoney(amount){
     arr.unshift("$")
     return arr.join("")
   }
+
+  module.exports = {convertRawMoney, convertToRawMoney, login}
