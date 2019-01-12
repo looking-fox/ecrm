@@ -169,6 +169,8 @@ class PaymentModal extends Component {
 
     changeDate = date => {
         let localDate = convertToLocalDate(date);
+        console.log('first date: ', date)
+        console.log('converted: ', localDate)
         this.setState({ date: localDate })
     }
 
