@@ -5,16 +5,16 @@ import LocationSearch from './LocationSearch'
 import Loading from '../Loading'
 import Modal from 'react-responsive-modal'
 import DatePicker from 'react-date-picker'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { updateClientModal, updateProps } from '../../../redux/reducer'
-import {convertRawMoney, convertToRawMoney} from '../../../Main/MainLogic'
+import { convertRawMoney, convertToRawMoney, convertToLocalDate } from '../../../Main/MainLogic'
 import axios from 'axios'
 
 
 class ClientModal extends Component {
-    constructor(){
+    constructor() {
         super()
-        
+
         this.state = {
             sessionTypes: [],
             sessionIndex: 0,
@@ -33,77 +33,77 @@ class ClientModal extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getSessions()
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps !== this.props){
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
 
-            const {newClient} = this.props.clientSettingsModal
+            const { newClient } = this.props.clientSettingsModal
             this.getSessions()
 
-            if(newClient === false){
+            if (newClient === false) {
                 this.isEditingClient()
             }
-            
-            if(newClient === true){
-                    this.setState({
-                        sessionTypes: [],
-                        sessionIndex: 0,
-                        price: 0,
-                        sessionId: '',
-                        listId: this.props.listId,
-                        clientName: '',
-                        clientEmail: '',
-                        clientDate: new Date(),
-                        clientLocation: '',
-                        togglePriceEdit: false,
-                        loading: false
-                    })  
+
+            if (newClient === true) {
+                this.setState({
+                    sessionTypes: [],
+                    sessionIndex: 0,
+                    price: 0,
+                    sessionId: '',
+                    listId: this.props.listId,
+                    clientName: '',
+                    clientEmail: '',
+                    clientDate: new Date(),
+                    clientLocation: '',
+                    togglePriceEdit: false,
+                    loading: false
+                })
             }
-            
-        } 
+
+        }
     }
 
     getSessions = () => {
         axios.get('/api/getsessiontypes').then(response => {
             const sessions = response.data
-           
+
             //If user has no session types, they can't add a client. 
             //If user has no lists, they can't add clients. 
-            if(sessions[0]){
-                  if(sessions[0].session_id !== null){
-                      if(this.props.lists){
+            if (sessions[0]) {
+                if (sessions[0].session_id !== null) {
+                    if (this.props.lists) {
                         this.setState({
-                          sessionTypes: sessions,
-                          sessionIndex: 0,
-                          sessionId: sessions[0]["session_id"],
-                          price: sessions[0]["session_price"],
-                          listId: this.props.listId
+                            sessionTypes: sessions,
+                            sessionIndex: 0,
+                            sessionId: sessions[0]["session_id"],
+                            price: sessions[0]["session_price"],
+                            listId: this.props.listId
                         })
-                      }       
-                  }
-              }
+                    }
+                }
+            }
 
             //If user is editing a previous client, update State to reflect their sessionPrice--not the default session price.
-            const {newClient} = this.props.clientSettingsModal
-            
-            if(newClient === false){
-                 this.isEditingClient()
+            const { newClient } = this.props.clientSettingsModal
+
+            if (newClient === false) {
+                this.isEditingClient()
             }
-            
+
         })
     }
 
     isEditingClient = () => {
-       //Updates local state with Client variables, if editing.
-        const {name, client_email, location, session_price, session_id, date, list_id, state} = this.props.clientSettingsModal.client.client
-        
+        //Updates local state with Client variables, if editing.
+        const { name, client_email, location, session_price, session_id, date, list_id, state } = this.props.clientSettingsModal.client.client
+
         this.setState({
             clientName: name,
             clientEmail: client_email,
-            clientDate: new Date(date),
+            clientDate: convertToLocalDate(new Date(date)),
             clientLocation: location,
             price: session_price,
             sessionId: session_id,
@@ -114,32 +114,32 @@ class ClientModal extends Component {
     }
 
     sessionPriceUpdater = (index) => {
-        const {sessionTypes} = this.state
+        const { sessionTypes } = this.state
         this.setState({
-          sessionIndex: index,
-          sessionId: sessionTypes[index]["session_id"],
-          price: sessionTypes[index]["session_price"]
+            sessionIndex: index,
+            sessionId: sessionTypes[index]["session_id"],
+            price: sessionTypes[index]["session_price"]
         })
-      }
+    }
 
-      saveClientLoading = () => {
-          this.setState({loading: true}, () => this.saveClient() )
-      }
+    saveClientLoading = () => {
+        this.setState({ loading: true }, () => this.saveClient())
+    }
 
-      mergeClient = (index, newClientObj) => {
+    mergeClient = (index, newClientObj) => {
         //Helper Function to Modify Clients in Props
         let prevClients = this.props.clients.slice()
         prevClients[index] = newClientObj
         return prevClients
-      }
+    }
 
-    
-      saveClient = () => {
-        
-        const {newClient} = this.props.clientSettingsModal
+
+    saveClient = () => {
+
+        const { newClient } = this.props.clientSettingsModal
         let prevDate = this.state.clientDate
         let isoDate = new Date(prevDate).toISOString()
-        
+
         var clientInfo = {
             name: this.state.clientName,
             client_email: this.state.clientEmail,
@@ -151,56 +151,56 @@ class ClientModal extends Component {
             list_id: this.state.listId
         }
 
-        
-        if(!this.state.clientState){
+
+        if (!this.state.clientState) {
             //If user didn't select a location via Google Places.
             alert('Please use the Google Search Selection for your locations! This ensures we can collect state + country information for tax purposes.')
             return
         }
-       
-        if(!newClient){
+
+        if (!newClient) {
             //Editing and Saving Previous Client
             const { client_id, session_id } = this.props.clientSettingsModal.client.client
-            
+
             var index = this.getIndex(client_id)
             var current = this.props.currentActions
 
             clientInfo["client_id"] = client_id
-            clientInfo["session_id"] =  session_id
+            clientInfo["session_id"] = session_id
             clientInfo["actions"] = current
 
             var newClientObj = Object.assign({}, this.props.clients[index], clientInfo)
-           
+
             var allClients = this.mergeClient(index, newClientObj)
 
-            axios.put('/api/updateclient', {clientInfo} )
-            .then( () => this.clearForm(allClients) )
-      
-            }
+            axios.put('/api/updateclient', { clientInfo })
+                .then(() => this.clearForm(allClients))
+
+        }
 
         else {
             //Adding New Client
-            const {session_name, session_color, actions} = this.state.sessionTypes[this.state.sessionIndex]
-            
+            const { session_name, session_color, actions } = this.state.sessionTypes[this.state.sessionIndex]
+
             clientInfo["session_name"] = session_name
             clientInfo["session_color"] = session_color
             clientInfo["actions"] = JSON.parse(JSON.stringify(actions))
 
-            axios.post('/api/addclient', {clientInfo} )
-            .then( response => {
-              
-                var allClients = this.props.clients
-                var newClient = response.data[0]
-                allClients.unshift(newClient)
+            axios.post('/api/addclient', { clientInfo })
+                .then(response => {
 
-                this.clearForm(allClients)
-                
-            })
+                    var allClients = this.props.clients
+                    var newClient = response.data[0]
+                    allClients.unshift(newClient)
+
+                    this.clearForm(allClients)
+
+                })
         }
     }
 
     updateLocation = (locationInfo) => {
-        const {address, state, country} = locationInfo
+        const { address, state, country } = locationInfo
         this.setState({
             clientLocation: address,
             clientState: state,
@@ -209,31 +209,31 @@ class ClientModal extends Component {
     }
 
     getIndex = (id) => {
-        let index; 
-        this.props.clients.map((e,i) => {
-            if(e.client_id === id){
+        let index;
+        this.props.clients.map((e, i) => {
+            if (e.client_id === id) {
                 index = i
             }
         })
         return index
     }
 
-    clearForm = (newClientList) => {  
-    //IF newClientList argument, update clients.
-    //ELSE Clear form and close modal.
+    clearForm = (newClientList) => {
+        //IF newClientList argument, update clients.
+        //ELSE Clear form and close modal.
 
-        if(newClientList[0]){
+        if (newClientList[0]) {
             this.props.updateClientModal({
                 clientModalOpen: false,
                 clientSettingsModal: { open: false, newClient: true, client: {} },
                 clients: newClientList
-            })  
+            })
         }
         else {
             this.props.updateClientModal({
-                clientSettingsModal: {open: false, newClient: true, client: {}},
+                clientSettingsModal: { open: false, newClient: true, client: {} },
                 clientModalOpen: false,
-            })  
+            })
         }
     }
 
@@ -245,137 +245,137 @@ class ClientModal extends Component {
             price: filterAmount
         })
     }
- 
-  render() {
-      const {newClient, client} = this.props.clientSettingsModal
-      const isEditing = newClient ? 
-      '' : 'client-modal-container'
-      
-    return (
-        <Modal 
-        open={this.props.clientModalOpen} 
-        onClose={this.clearForm} center>
-    
-        <h3 className="title">
-        <i className="far fa-user-circle"/>
-        {newClient ?  "Add Client" : `Edit ${client.client.name}`}
-        </h3>
+
+    render() {
+        const { newClient, client } = this.props.clientSettingsModal
+        const isEditing = newClient ?
+            '' : 'client-modal-container'
+
+        return (
+            <Modal
+                open={this.props.clientModalOpen}
+                onClose={this.clearForm} center>
+
+                <h3 className="title">
+                    <i className="far fa-user-circle" />
+                    {newClient ? "Add Client" : `Edit ${client.client.name}`}
+                </h3>
 
 
 
-        {this.state.loading ? 
-         <div className="loading-container center">
-            <Loading />
-        </div>
-        : 
+                {this.state.loading ?
+                    <div className="loading-container center">
+                        <Loading />
+                    </div>
+                    :
 
-        <div className={isEditing}>
-            <div className="add-client-modal column">
-              
-                <input 
-                type="text"
-                className="input-box" autoFocus
-                placeholder="Client's Name"
-                value={this.state.clientName}
-                onChange={e => this.setState({clientName: e.target.value})}
-                />
+                    <div className={isEditing}>
+                        <div className="add-client-modal column">
 
-                <input 
-                className="input-box"
-                placeholder="Client's Email"
-                value={this.state.clientEmail}
-                onChange={e => this.setState({clientEmail: e.target.value})}
-                />
-    
-        
-        {/* If new client, select menu for choosing session type. If editing client, select menu for changing lists. Ternary "selected" value sets default to current list for client. */}
+                            <input
+                                type="text"
+                                className="input-box" autoFocus
+                                placeholder="Client's Name"
+                                value={this.state.clientName}
+                                onChange={e => this.setState({ clientName: e.target.value })}
+                            />
 
-          {newClient ? 
-                <select className="sessionmenu" 
-                onChange={e => this.sessionPriceUpdater(e.target.value)}>
-                        {this.state.sessionTypes.map( (e,i) => {
-                        return (
-                            <option value={i} key={e.session_id}>      
-                            {e.session_name} 
-                            </option>
-                            )
-                        })}      
-                </select> 
-            :
-            <select className="sessionmenu" 
-            onChange={e => this.setState({listId: parseInt(e.target.value)})}>
-                        {this.props.lists.map(e => {
-                            return e.list_id === this.props.listId ? 
-                            <option value={e.list_id} key={e.list_id} selected="selected">
-                                {e.list_name} 
-                            </option>
-                            :
-                            <option value={e.list_id} key={e.list_id}>      
-                            {e.list_name} 
-                            </option>
-                        })}      
-            </select>
-          }
-
-            <div className="date-picker-box">
-                <DatePicker
-                onChange={e => this.setState({clientDate: e})}
-                value={this.state.clientDate}/>
-            </div>
+                            <input
+                                className="input-box"
+                                placeholder="Client's Email"
+                                value={this.state.clientEmail}
+                                onChange={e => this.setState({ clientEmail: e.target.value })}
+                            />
 
 
-            <LocationSearch
-            updateLocation={this.updateLocation}
-            location={this.state.clientLocation}/>
-          
+                            {/* If new client, select menu for choosing session type. If editing client, select menu for changing lists. Ternary "selected" value sets default to current list for client. */}
 
-            {this.state.togglePriceEdit ? 
+                            {newClient ?
+                                <select className="sessionmenu"
+                                    onChange={e => this.sessionPriceUpdater(e.target.value)}>
+                                    {this.state.sessionTypes.map((e, i) => {
+                                        return (
+                                            <option value={i} key={e.session_id}>
+                                                {e.session_name}
+                                            </option>
+                                        )
+                                    })}
+                                </select>
+                                :
+                                <select className="sessionmenu"
+                                    onChange={e => this.setState({ listId: parseInt(e.target.value) })}>
+                                    {this.props.lists.map(e => {
+                                        return e.list_id === this.props.listId ?
+                                            <option value={e.list_id} key={e.list_id} selected="selected">
+                                                {e.list_name}
+                                            </option>
+                                            :
+                                            <option value={e.list_id} key={e.list_id}>
+                                                {e.list_name}
+                                            </option>
+                                    })}
+                                </select>
+                            }
 
-            <input 
-            className="input-box" 
-            placeholder={this.state.price}
-            value={this.state.price}
-            onChange={e => this.setState({price: e.target.value})}
-            onBlur={this.toggleEdit}
-            />
-            :
-            <div className="client-price" 
-            onClick={this.toggleEdit}> 
-             {this.state.price}
-            </div> 
-            
-            }       
+                            <div className="date-picker-box">
+                                <DatePicker
+                                    onChange={e => this.setState({ clientDate: e })}
+                                    value={this.state.clientDate} />
+                            </div>
 
-        </div>
-            
-            {!newClient ? <ClientActions/> : ''}
-            
-        </div>
-        }
 
-            <footer>
-                {!this.state.loading ? 
-                <button type="button" 
-                className="btn btn-primary save full" 
-                onClick={this.saveClientLoading}>
+                            <LocationSearch
+                                updateLocation={this.updateLocation}
+                                location={this.state.clientLocation} />
 
-                {newClient ? "+ Add Client" : "Save Client"}
 
-                </button>
-                : 
-                ''
+                            {this.state.togglePriceEdit ?
+
+                                <input
+                                    className="input-box"
+                                    placeholder={this.state.price}
+                                    value={this.state.price}
+                                    onChange={e => this.setState({ price: e.target.value })}
+                                    onBlur={this.toggleEdit}
+                                />
+                                :
+                                <div className="client-price"
+                                    onClick={this.toggleEdit}>
+                                    {this.state.price}
+                                </div>
+
+                            }
+
+                        </div>
+
+                        {!newClient ? <ClientActions /> : ''}
+
+                    </div>
                 }
-            </footer>
-    
-        </Modal>
-    )
-  }
+
+                <footer>
+                    {!this.state.loading ?
+                        <button type="button"
+                            className="btn btn-primary save full"
+                            onClick={this.saveClientLoading}>
+
+                            {newClient ? "+ Add Client" : "Save Client"}
+
+                        </button>
+                        :
+                        ''
+                    }
+                </footer>
+
+            </Modal>
+        )
+    }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         ...this.props, ...state
     }
 }
 
-export default connect(mapStateToProps, {updateClientModal, updateProps})(ClientModal)
+export default connect(mapStateToProps, { updateClientModal, updateProps })(ClientModal)
