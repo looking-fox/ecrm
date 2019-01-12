@@ -99,11 +99,12 @@ class ClientModal extends Component {
     isEditingClient = () => {
         //Updates local state with Client variables, if editing.
         const { name, client_email, location, session_price, session_id, date, list_id, state } = this.props.clientSettingsModal.client.client
-
+        console.log('date: ', date)
+        console.log('datefunc: ', convertToLocalDate(date))
         this.setState({
             clientName: name,
             clientEmail: client_email,
-            clientDate: convertToLocalDate(date),
+            clientDate: date,
             clientLocation: location,
             price: session_price,
             sessionId: session_id,
