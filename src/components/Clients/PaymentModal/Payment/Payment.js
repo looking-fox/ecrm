@@ -8,15 +8,19 @@ export default class Payment extends Component {
         this.state = {
             amount: '',
             description: '',
-            date: new Date()
+            date: null
         }
     }
 
     componentDidMount() {
         if (this.props.payment) {
             const { amount, description, date } = this.props.payment
+            console.log('raw props date: ', date)
             var filterAmount = convertRawMoney(amount)
-            this.setState({ amount: filterAmount, description, date })
+            this.setState({ amount: filterAmount, description, date }, () => {
+                console.log('date in state: ', this.state.date)
+            })
+
         }
     }
 
