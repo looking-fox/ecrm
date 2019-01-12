@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-date-picker'
-import { convertRawMoney, convertToRawMoney } from '../../../../Main/MainLogic'
+import { convertRawMoney, convertToRawMoney, convertToLocalDate } from '../../../../Main/MainLogic'
 
 export default class Payment extends Component {
     constructor() {
@@ -15,9 +15,10 @@ export default class Payment extends Component {
     componentDidMount() {
         if (this.props.payment) {
             const { amount, description, date } = this.props.payment
-            console.log('raw props date: ', date)
+            let filterDate = convertToLocalDate(date)
+            console.log('raw: ', date, 'filterDate: ', filterDate)
             var filterAmount = convertRawMoney(amount)
-            this.setState({ amount: filterAmount, description, date }, () => {
+            this.setState({ amount: filterAmount, description, date: filterDate }, () => {
                 console.log('date in state: ', this.state.date)
             })
 
@@ -71,7 +72,6 @@ export default class Payment extends Component {
 
                 <div className="pay pay-date">
                     <DatePicker
-                        utcOffset={0}
                         onChange={e => this.updateDate(e, id)}
                         value={this.state.date} />
                 </div>
