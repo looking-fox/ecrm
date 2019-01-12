@@ -140,11 +140,11 @@ class ClientModal extends Component {
         const { newClient } = this.props.clientSettingsModal
         let prevDate = this.state.clientDate
         let isoDate = new Date(prevDate).toISOString()
-        let filterDate = convertToLocalDate(isoDate)
+        console.log('prevDate: ', prevDate, 'isoDate: ', isoDate)
         var clientInfo = {
             name: this.state.clientName,
             client_email: this.state.clientEmail,
-            date: filterDate,
+            date: isoDate,
             location: this.state.clientLocation,
             clientState: this.state.clientState,
             clientCountry: this.state.clientCountry,
