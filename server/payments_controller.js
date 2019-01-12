@@ -12,7 +12,6 @@ module.exports = {
         const dbInstance = req.app.get('db')
         const { sub } = req.session.user
         const { amount, date, description, clientId } = req.body
-        console.log('date value: ', date)
 
         dbInstance.save_payment([sub, clientId, amount, date, description]).then(response => {
             res.status(200).send(response)

@@ -86,7 +86,7 @@ class PaymentModal extends Component {
             var prevPayments = this.state.payments.slice()
             var notSaved = JSON.parse(JSON.stringify(this.state.notSavedPayments))
             const { payment_id } = response.data[0]
-
+            console.log('resp: ', response.data[0])
             notSaved[payment_id] = payment_id
             prevPayments.push(response.data[0])
 
