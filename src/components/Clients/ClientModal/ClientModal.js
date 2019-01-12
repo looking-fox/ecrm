@@ -208,13 +208,6 @@ class ClientModal extends Component {
         })
     }
 
-    changeDate = date => {
-        console.log('date', date)
-        let filterDate = convertToLocalDate(new Date(date))
-        console.log('filterDate: ', filterDate)
-        this.setState({ clientDate: filterDate })
-    }
-
     getIndex = (id) => {
         let index;
         this.props.clients.map((e, i) => {
@@ -326,7 +319,7 @@ class ClientModal extends Component {
 
                             <div className="date-picker-box">
                                 <DatePicker
-                                    onChange={(e) => this.changeDate(e)}
+                                    onChange={(e) => this.setState({ clientDate: e })}
                                     value={this.state.clientDate} />
                             </div>
 
