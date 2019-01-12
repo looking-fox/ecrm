@@ -6,7 +6,7 @@ import DatePicker from 'react-date-picker'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateProps } from '../../../redux/reducer'
-import { convertToRawMoney, convertRawMoney } from '../../../Main/MainLogic'
+import { convertToRawMoney, convertRawMoney, convertToLocalDate } from '../../../Main/MainLogic'
 
 class PaymentModal extends Component {
     constructor() {
@@ -17,7 +17,7 @@ class PaymentModal extends Component {
             total: 0,
             totalPaid: 0,
             amount: '',
-            date: new Date(),
+            date: convertToLocalDate(new Date()),
             description: '',
             noPayments: false,
             updates: {},
@@ -168,7 +168,8 @@ class PaymentModal extends Component {
     }
 
     changeDate = date => {
-        console.log('date value: ', date)
+        let localDate = convertToLocalDate(date);
+        this.setState({ date: localDate })
     }
 
     isReturnKey = e => {
