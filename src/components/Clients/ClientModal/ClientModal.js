@@ -103,7 +103,7 @@ class ClientModal extends Component {
         this.setState({
             clientName: name,
             clientEmail: client_email,
-            clientDate: convertToLocalDate(new Date(date)),
+            clientDate: convertToLocalDate(date),
             clientLocation: location,
             price: session_price,
             sessionId: session_id,
