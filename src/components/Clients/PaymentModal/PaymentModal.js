@@ -171,7 +171,7 @@ class PaymentModal extends Component {
         let localDate = convertToLocalDate(date);
         console.log('first date: ', date)
         console.log('converted: ', localDate)
-        this.setState({ date: localDate })
+        this.setState({ date })
     }
 
     isReturnKey = e => {
