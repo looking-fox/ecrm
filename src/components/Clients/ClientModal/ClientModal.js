@@ -209,7 +209,9 @@ class ClientModal extends Component {
     }
 
     changeDate = date => {
+        console.log('date', date)
         let filterDate = convertToLocalDate(new Date(date))
+        console.log('filterDate: ', filterDate)
         this.setState({ clientDate: filterDate })
     }
 
