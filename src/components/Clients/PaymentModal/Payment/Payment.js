@@ -71,6 +71,7 @@ export default class Payment extends Component {
 
                 <div className="pay pay-date">
                     <DatePicker
+                        utcOffset={0}
                         onChange={e => this.updateDate(e, id)}
                         value={this.state.date} />
                 </div>
