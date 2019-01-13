@@ -30,15 +30,9 @@ function convertToRawMoney(amount) {
 }
 
 function convertToLocalDate(date) {
-
-    var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-
-    var offset = date.getTimezoneOffset() / 60;
-    var hours = date.getHours();
-
-    newDate.setHours(hours - offset);
-
-    return newDate;
+    //Split date string into array based on - symbol, and join again as string to pass in as arguments to Date, which is converted to Local Str.
+    let dateArguments = date.split("-").toLocaleString()
+    return new Date(dateArguments).toLocaleDateString('en-US')
 }
 
 

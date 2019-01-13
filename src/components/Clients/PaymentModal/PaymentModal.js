@@ -17,7 +17,7 @@ class PaymentModal extends Component {
             total: 0,
             totalPaid: 0,
             amount: '',
-            date: convertToLocalDate(new Date()),
+            date: new Date(),
             description: '',
             noPayments: false,
             updates: {},

@@ -15,7 +15,7 @@ export default class Payment extends Component {
     componentDidMount() {
         if (this.props.payment) {
             const { amount, description, date } = this.props.payment
-            let filterDate = new Date(date).toLocaleDateString('en-US')
+            let filterDate = convertToLocalDate(date)
             var filterAmount = convertRawMoney(amount)
             this.setState({ amount: filterAmount, description, date: filterDate })
         }
