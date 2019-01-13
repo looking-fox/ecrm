@@ -140,7 +140,7 @@ class ClientModal extends Component {
         const { newClient } = this.props.clientSettingsModal
         let prevDate = this.state.clientDate
         let isoDate = new Date(prevDate).toISOString()
-        console.log('prevDate: ', prevDate, 'isoDate: ', isoDate)
+
         var clientInfo = {
             name: this.state.clientName,
             client_email: this.state.clientEmail,
