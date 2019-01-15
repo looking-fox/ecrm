@@ -96,16 +96,15 @@ class ClientModal extends Component {
         })
     }
 
+    //NOTE: Returning evaluation of convertDate FN inside of setState.
     isEditingClient = () => {
         //Updates local state with Client variables, if editing.
         const { name, client_email, location, session_price, session_id, date, list_id, state } = this.props.clientSettingsModal.client.client
 
-        let filterDate = new Date(date)
-
         this.setState({
             clientName: name,
             clientEmail: client_email,
-            clientDate: filterDate,
+            clientDate: convertToLocalDate(date),
             clientLocation: location,
             price: session_price,
             sessionId: session_id,
