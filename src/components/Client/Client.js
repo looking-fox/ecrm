@@ -38,7 +38,8 @@ export default class Client extends Component {
   render() {
     const { name, client_id, session_name, session_color, session_price, date, location, session_id } = this.props.client
     var openMenu = this.state.optionsMenu ? 'flex' : 'none'
-    var formatDate = convertToLocalDate(date)
+    let formatDate = date;
+    // var formatDate = new Date(date).toLocaleDateString('en-US')
 
     return (
       <div className="client-container center column">

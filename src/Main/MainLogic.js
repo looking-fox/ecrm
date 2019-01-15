@@ -31,7 +31,9 @@ function convertToRawMoney(amount) {
 
 function convertToLocalDate(date) {
     //Split date string into array based on - symbol, and join again as string to pass in as arguments to Date, which is converted to Local Str.
+    console.log('date: ', date)
     let dateArguments = date.split("-").toLocaleString()
+    console.log(dateArguments)
     return new Date(dateArguments).toLocaleDateString('en-US')
 }
 
