@@ -38,9 +38,10 @@ export default class Client extends Component {
   render() {
     const { name, client_id, session_name, session_color, session_price, date, location, session_id } = this.props.client
     var openMenu = this.state.optionsMenu ? 'flex' : 'none'
+    let formatDate;
     if (date) {
       let filterDate = date.replace(/Z/g, "")
-      let formatDate = new Date(filterDate).toLocaleDateString('en-US')
+      formatDate = new Date(filterDate).toLocaleDateString('en-US')
     } else {
       formatDate = ''
     }
