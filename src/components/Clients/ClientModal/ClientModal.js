@@ -211,7 +211,7 @@ class ClientModal extends Component {
 
     getIndex = (id) => {
         let index;
-        this.props.clients.map((e, i) => {
+        this.props.clients.forEach((e, i) => {
             if (e.client_id === id) {
                 index = i
             }

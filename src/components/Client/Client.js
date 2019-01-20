@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { convertToLocalDate } from '../../Main/MainLogic'
 import './Client.css'
 
 //TODO: 
