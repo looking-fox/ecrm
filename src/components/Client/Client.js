@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import Select from 'react-select'
 import './Client.css'
 
-//TODO: 
-
-//Payments Input to Native Input
-//Payments Input to include cents. 
-
-//Edit-click to-do item on ActionList. 
-//On Client, payment + icon turn green on full payment. 
-
-//Month search for Date Picker to be gray (not baby blue)
-//Search Input Bar for Filter Bar
+const customStyles = {
+  container: (provided, state) => ({
+    ...provided,
+    width: 200,
+    height: 'fit-content',
+    fontSize: '0.9em',
+    lineHeight: 'normal'
+  }),
+  control: (provided, state) => ({
+    ...provided
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    padding: 10
+  })
+}
 
 export default class Client extends Component {
   constructor() {
@@ -36,9 +43,14 @@ export default class Client extends Component {
 
   render() {
     const { name, client_id, session_name, session_color, session_price, date, location, session_id } = this.props.client
+    const { actionList } = this.props;
     var openMenu = this.state.optionsMenu ? 'flex' : 'none'
     let formatDate;
     if (date) {
+
+      //Removing the Z keeps the date from reverting back to prior day. 
+      //Without removing Z 1/16/18 becomes 1/15/18. 
+
       let filterDate = date.replace(/Z/g, "")
       formatDate = new Date(filterDate).toLocaleDateString('en-US')
     } else {
@@ -55,11 +67,11 @@ export default class Client extends Component {
             <p>{name}</p>
           </div>
 
-          <div className="package item">
+          <div className="package item small-item">
             <span className={`bubble ${session_color}`}>{session_name}</span>
           </div>
 
-          <div className="date item">
+          <div className="date item small-item">
             <p>{formatDate}</p>
           </div>
 
@@ -68,12 +80,27 @@ export default class Client extends Component {
             <p><i className="far fa-map" />{location}</p>
           </div>
 
-          <div className="total item"
+          <div className="total item small-item"
             onClick={() => this.props.openPayments({ name, client_id, session_price, session_color })}>
             <p><i className="far fa-credit-card" />{session_price}</p>
           </div>
 
-          <div className="settings">
+          <Select
+            onChange={e => this.updateSort(e)}
+            options={actionList}
+            defaultValue={actionList[0] || 'hello'}
+            styles={customStyles}
+            isSearchable={false}
+            theme={(theme) => ({
+              ...theme,
+              colors: {
+                ...theme.colors,
+                primary25: '#eeeeee',
+                primary: 'black'
+              },
+            })} />
+
+          {/* <div className="settings">
             <i className="fas fa-ellipsis-h"
               id={`client-edit-icon-${client_id}`}
               onClick={this.openOptionsMenu} />
@@ -88,7 +115,7 @@ export default class Client extends Component {
               ><i className="far fa-trash-alt" />delete</p>
 
             </div>
-          </div>
+          </div> */}
 
         </div>
 
