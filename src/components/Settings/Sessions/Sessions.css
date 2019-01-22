@@ -19,23 +19,24 @@
     overflow-x: hidden;
     padding: 15px;
     display: flex;
-    
+    align-items: center;
     flex-direction: column;
     
 }
 
 .session{
-    width: 55%;    
+    width: 75%;    
     height: 75px;
     background: #f4f4f4;
-    border-radius: 5px;
     margin: 15px;
     padding: 10px;
-    padding-left: 25px;
+    padding-left: 0px;
+    padding-right: 100px;
     position: relative;
-    animation: fadeUp 100ms ease-in;
+    animation: fadeSessionsUp 100ms ease-in;
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
 }
 
 .session-menu {
@@ -59,21 +60,18 @@
 
 .session-price-list {
     color: #5b5b5b;
-    margin-left: 20px;
     width: 50px;
 }
 
 .session-bubble-container {
-    width: 200px;
+    width: 150px;
 }
 .steps-bubble {
-    background: #dddddd;
+   
     padding: 5px;
     border-radius: 5px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.8em;
-    margin-left: 80px;
+   
+
 }
 
 .add {
@@ -220,7 +218,7 @@ footer{
 
 
 
-@keyframes fadeUp {
+@keyframes fadeSessionsUp {
     from {top: 20px; opacity: 0;}
     to {top: 0px; opacity: 1;}
 }

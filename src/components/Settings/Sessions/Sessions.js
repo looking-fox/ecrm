@@ -3,10 +3,27 @@ import './Sessions.css'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateProps } from '../../../redux/reducer'
-
+import Select from 'react-select'
 import Nav from '../Nav/Nav'
 import SessionModal from './SessionModal/SessionModal'
 import VerifyDeleteModal from './VerifyDeleteModal/VerifyDeleteModal'
+
+const customStyles = {
+  container: (provided, state) => ({
+    ...provided,
+    width: 200,
+    height: 'fit-content',
+    fontSize: '0.9em',
+    lineHeight: 'normal'
+  }),
+  control: (provided, state) => ({
+    ...provided
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    padding: 10
+  })
+}
 
 class Sessions extends Component {
   constructor() {
@@ -129,6 +146,20 @@ class Sessions extends Component {
                     <div className="steps-bubble">
                       {e.actions.length} steps
                     </div>
+                    <Select
+                      onChange={e => this.updateSort(e)}
+                      options={e.actions}
+                      defaultValue={e.actions[0]}
+                      styles={customStyles}
+                      isSearchable={false}
+                      theme={(theme) => ({
+                        ...theme,
+                        colors: {
+                          ...theme.colors,
+                          primary25: '#eeeeee',
+                          primary: 'black'
+                        },
+                      })} />
                     <div className="session-menu center">
                       <i className="far fa-edit"
                         onClick={() => this.openModal(e, i)} />

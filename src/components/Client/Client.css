@@ -9,10 +9,10 @@
 .client{
     width: 90%;
     height: 60px;
-    background-color: #e7e7e7;
+    background-color: #f1f1f1;
     margin: 2% 0%;
     padding: 0px 30px;
-    border-radius: 5px;
+    
     display: flex;
     justify-content: flex-start;
     align-items: center;
