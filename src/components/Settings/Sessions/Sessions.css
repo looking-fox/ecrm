@@ -17,33 +17,37 @@
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 4fr);
-    grid-template-rows: 200px;
+    padding: 15px;
+    display: flex;
+    
+    flex-direction: column;
+    
 }
 
 .session{
-    width: 90%;    
-    height: 150px;
+    width: 55%;    
+    height: 75px;
     background: #f4f4f4;
     border-radius: 5px;
-    margin: 30px 30px;
+    margin: 15px;
     padding: 10px;
-    flex-direction: column;   
+    padding-left: 25px;
     position: relative;
     animation: fadeUp 100ms ease-in;
+    display: flex;
+    align-items: center;
 }
 
-.session-menu{
-    grid-row: 1;
+.session-menu {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    transform: translateY(50%);
 }
-
-.actions {
-    grid-row: 2;
-    margin-top: 50px;
-}
-
 .session-menu i{
     color: #484848;
     font-size: 0.8em;
@@ -52,6 +56,26 @@
 .session-menu i:hover {
     cursor: pointer;
 }
+
+.session-price-list {
+    color: #5b5b5b;
+    margin-left: 20px;
+    width: 50px;
+}
+
+.session-bubble-container {
+    width: 200px;
+}
+.steps-bubble {
+    background: #dddddd;
+    padding: 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8em;
+    margin-left: 80px;
+}
+
 .add {
     position: absolute;
     top: 15px;
@@ -197,6 +221,6 @@ footer{
 
 
 @keyframes fadeUp {
-    from {top: 20px; opacity: 0.8;}
+    from {top: 20px; opacity: 0;}
     to {top: 0px; opacity: 1;}
 }
