@@ -45,7 +45,6 @@ function login() {
     let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
 
     window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_url=${url}&response_type=code`
-
 }
 
 var convertRawDecimal = (strValue) => {
@@ -71,4 +70,16 @@ var convertRawDecimal = (strValue) => {
     return arr.join("")
 }
 
-module.exports = { convertRawMoney, convertToRawMoney, convertToLocalDate, login }
+function goToMap(location) {
+    //Format for Google URL String and Open in New Tab
+    let convertedLocation = location
+        .replace(/[,]+/g, "")
+        .replace(/[ ]+/g, "+")
+        .replace(/[&]+/g, "%26")
+
+    let url = `https://www.google.com/maps/place/${convertedLocation}`
+
+    window.open(url, '_blank')
+}
+
+module.exports = { convertRawMoney, convertToRawMoney, convertToLocalDate, login, goToMap }

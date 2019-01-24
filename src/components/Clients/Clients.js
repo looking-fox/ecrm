@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './Clients.css'
 import Client from '../Client/Client'
-import Actions from '../Actions/Actions'
 import ClientModal from './ClientModal/ClientModal'
 import ClientSettingsModal from './ClientSettingsModal/ClientSettingsModal'
 import FilterBar from './FilterBar/FilterBar'
@@ -9,6 +8,7 @@ import PaymentModal from './PaymentModal/PaymentModal'
 import Loading from './Loading'
 import axios from 'axios';
 import { connect } from 'react-redux'
+import { goToMap } from '../../Main/MainLogic'
 import { updateClients, updateClientModal, updateClientSettingsModal, updateProps } from '../../redux/reducer'
 var loadTimeOut;
 
@@ -89,18 +89,6 @@ class Clients extends Component {
       }
     }, 200)
     //-----Get Client Functions----//
-  }
-
-  goToMap = (location) => {
-    //Format for Google URL String and Open in New Tab
-    var convertedLocation = location
-      .replace(/[,]+/g, "")
-      .replace(/[ ]+/g, "+")
-      .replace(/[&]+/g, "%26")
-
-    let url = `https://www.google.com/maps/place/${convertedLocation}`
-
-    window.open(url, '_blank')
   }
 
   openPayments = (info) => {
@@ -228,7 +216,7 @@ class Clients extends Component {
                   client={e}
                   index={i}
                   actionList={e.actions}
-                  goToMap={this.goToMap}
+                  goToMap={goToMap}
                   openPayments={this.openPayments}
                   openClientModal={this.openClientModal}
                   optDeleteModal={this.optDeleteModal}

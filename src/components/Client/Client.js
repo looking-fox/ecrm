@@ -38,7 +38,6 @@ export default class Client extends Component {
   openOptionsMenu = () => {
     this.setState({ optionsMenu: !this.state.optionsMenu })
     this.props.openClientSettingsModal(this.props)
-
   }
 
   render() {
@@ -86,9 +85,9 @@ export default class Client extends Component {
           </div>
 
           <Select
-            onChange={e => this.updateSort(e)}
+            onChange={e => this.updateProgress(e)}
             options={actionList}
-            defaultValue={actionList[0] || 'hello'}
+            defaultValue={actionList[0] || 'error'}
             styles={customStyles}
             isSearchable={false}
             theme={(theme) => ({
