@@ -8,7 +8,6 @@ b as (
 
 select b.session_id, sessions.user_id, sessions.session_name, 
 sessions.session_color, sessions.session_price,
-sessions.progress,
 b.actions, sessions.template from b
 
 left join sessions on
