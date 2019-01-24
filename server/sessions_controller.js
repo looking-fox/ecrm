@@ -64,8 +64,8 @@ module.exports = {
     updateProgress: (req, res) => {
         const dbInstance = req.app.get('db');
         const { index, session_id } = req.body;
-        const { sub } = req.session.user
-        dbInstance.update_progress(sub, session_id, index)
+
+        dbInstance.update_progress(session_id, index)
             .then(() => res.sendStatus(200))
             .catch(err => console.log('error: ', err))
     }

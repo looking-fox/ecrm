@@ -51,14 +51,13 @@ export default class Client extends Component {
       return obj.value === value;
     })
 
-    axios.post('/api/updateprogress', { index, session_id }).then(() => {
-      alert('we are back!')
-    })
+    axios.post('/api/updateprogress', { index, session_id })
   }
 
   render() {
-    const { name, client_id, session_name, session_color, session_price, date, location, session_id } = this.props.client
+    const { name, client_id, session_name, session_color, session_price, date, location, session_id, progress } = this.props.client
     const { actionList } = this.props;
+
     var openMenu = this.state.optionsMenu ? 'flex' : 'none'
     let formatDate;
     if (date) {
@@ -101,8 +100,9 @@ export default class Client extends Component {
           </div>
 
           <Select
-            onChange={e => this.updateProgress(e)}
+            defaultValue={actionList[progress]}
             options={actionList}
+            onChange={e => this.updateProgress(e)}
             styles={customStyles}
             isSearchable={false}
             theme={(theme) => ({

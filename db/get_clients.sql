@@ -9,7 +9,7 @@ select clients.user_id, b.session_id, clients.client_id,
 clients.name, clients.date, clients.location, clients.list_id,
 clients.completed, clients.client_email, clients.state, clients.country, 
 sessions.session_name, sessions.session_color, sessions.session_price, 
-sessions.template, b.actions
+sessions.template, sessions.progress, b.actions
 from b
 right join clients on
 clients.session_id = b.session_id
