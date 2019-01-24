@@ -19,7 +19,7 @@ const app = express()
 
 //----------- MIDDLEWARE -----------//
 
-app.use( express.static( `${__dirname}/../build` ) );
+app.use(express.static(`${__dirname}/../build`));
 
 app.use(bodyParser.json())
 
@@ -42,46 +42,46 @@ app.use(session({
 //========Auth0==========//
 
 app.get('/auth/callback', async (req, res) => {
-    const {PROTOCOL} = process.env
-        const payload = {
-            client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
-            client_secret: process.env.AUTH0_CLIENT_SECRET,
-            code: req.query.code,
-            grant_type: 'authorization_code',
-            redirect_uri: `${PROTOCOL}://${req.headers.host}/auth/callback`
-        };
+    const { PROTOCOL } = process.env
+    const payload = {
+        client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+        client_secret: process.env.AUTH0_CLIENT_SECRET,
+        code: req.query.code,
+        grant_type: 'authorization_code',
+        redirect_uri: `${PROTOCOL}://${req.headers.host}/auth/callback`
+    };
     //----get token---//
-    
-        let receiveToken = await axios.post(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/oauth/token`, payload)
-    
+
+    let receiveToken = await axios.post(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/oauth/token`, payload)
+
     //----exchange token---//
-    
+
     let receiveUser = await axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo?access_token=${receiveToken.data.access_token}`)
-    
+
     //-----user data-----//
     req.session.user = receiveUser.data;
     req.session.user.id = sessionId;
     req.session.user.terms = false
     sessionId++
-    
-    const {sub, name, email} = req.session.user
+
+    const { sub, name, email } = req.session.user
     const dbInstance = req.app.get('db')
-    
+
     //If user 
-        //If subscription => Go to Dashboard
-        //No subscription => Go to SignUp
+    //If subscription => Go to Dashboard
+    //No subscription => Go to SignUp
 
     //If no user
-        // => Go to SignUp
+    // => Go to SignUp
 
-    dbInstance.check_user([sub, email]).then( response => {
+    dbInstance.check_user([sub, email]).then(response => {
         // Previous User
 
-        if(response[0]){
+        if (response[0]) {
             // Has Access Without Subscription
-            if(response[0].lifetime){
+            if (response[0].lifetime) {
                 // First time logging in
-                if(!response[0].user_id){
+                if (!response[0].user_id) {
                     dbInstance.store_user_id([sub, name, email]).then(() => {
                         req.session.user.lifetime = true
                         return res.redirect('/#/signup')
@@ -91,62 +91,62 @@ app.get('/auth/callback', async (req, res) => {
                 else {
                     return res.redirect('/#/dashboard')
                 }
-            } 
+            }
             // Check Subscription
             dbInstance.stripe_check_status(sub).then(resp => {
-                
-                if(resp.length){
-                    const {customer_id} = resp[0]
+
+                if (resp.length) {
+                    const { customer_id } = resp[0]
                     stripe.customers.retrieve(customer_id)
-                    .then(customer => {
-                    const {total_count} = customer.subscriptions
-                    
-                    // Active Subscription
-                    if (total_count === 1){
-                        return res.redirect('/#/dashboard')
-                    }
-                    // Not Active
-                    else {
-                        return res.redirect('/#/signup') 
-                    }  
-                    })
+                        .then(customer => {
+                            const { total_count } = customer.subscriptions
+
+                            // Active Subscription
+                            if (total_count === 1) {
+                                return res.redirect('/#/dashboard')
+                            }
+                            // Not Active
+                            else {
+                                return res.redirect('/#/signup')
+                            }
+                        })
                 }
-                
+
                 else {
                     return res.redirect('/#/signup')
                 }
             })
 
-          }
-        
+        }
+
         // New User
         else {
-            dbInstance.store_user([sub, name, email]).then( () => {
+            dbInstance.store_user([sub, name, email]).then(() => {
                 return res.redirect('/#/signup')
             })
         }
     })
 
 
-    
+
 
 })
 
 //========Auth0==========//
 
 app.get('/api/checklifetime', (req, res) => {
-    const {sub, email} = req.session.user
+    const { sub, email } = req.session.user
     const dbInstance = req.app.get('db')
 
     dbInstance.check_user([sub, email]).then(user => {
-        const {lifetime, termsofservice} = user[0]
-        res.status(200).send({lifetime, termsofservice})
+        const { lifetime, termsofservice } = user[0]
+        res.status(200).send({ lifetime, termsofservice })
     })
 })
 
 app.post('/api/agreedtoterms', (req, res) => {
     const dbInstance = req.app.get('db')
-    const {sub} = req.session.user
+    const { sub } = req.session.user
 
     dbInstance.agreed_terms(sub).then(() => {
         res.sendStatus(200)
@@ -157,8 +157,8 @@ app.post('/api/agreedtoterms', (req, res) => {
 //===============DB==================//
 
 app.get('/api/user-info', (req, res) => {
-    const {name, email, sub, picture} = req.session.user
-    
+    const { name, email, sub, picture } = req.session.user
+
     const dbInstance = req.app.get('db')
 
     dbInstance.check_user([sub, email]).then(user => {
@@ -175,7 +175,7 @@ app.get('/api/user-info', (req, res) => {
                 termsofservice
             })
         })
-    })    
+    })
 })
 
 app.post('/api/logout', (req, res) => {
@@ -212,28 +212,28 @@ app.get('/api/getactions', sessions.getactions)
 
 app.put('/api/updateaction', sessionActions.putaction)
 
-
+app.post('/api/updateprogress', sessions.updateProgress)
 
 //===============ACTIONS==================//
 
 app.post('/api/changelistorder', (req, res) => {
     //Swaps Index Ids to swap list order.
     const dbInstance = req.app.get('db')
-    const { dragId, hoverId, dragIndex, hoverIndex} = req.body.swap
-     
+    const { dragId, hoverId, dragIndex, hoverIndex } = req.body.swap
+
     dbInstance.swap_lists([hoverIndex, dragId]).then(() => {
 
         dbInstance.swap_lists([dragIndex, hoverId]).then(() => {
             res.sendStatus(200)
         })
     })
-  
+
 })
 
 app.put('/api/updatelist', (req, res) => {
     const dbInstance = req.app.get('db')
-    const {list_id, listName} = req.body
-    const {sub} = req.session.user
+    const { list_id, listName } = req.body
+    const { sub } = req.session.user
     dbInstance.update_list([sub, list_id, listName]).then(() => {
         res.sendStatus(200)
     })
@@ -241,9 +241,9 @@ app.put('/api/updatelist', (req, res) => {
 
 app.delete('/api/deletelist/:id', (req, res) => {
     const dbInstance = req.app.get('db')
-    const {id} = req.params
-    const {sub} = req.session.user
-    
+    const { id } = req.params
+    const { sub } = req.session.user
+
     dbInstance.delete_client_list([sub, id]).then(() => {
         res.sendStatus(200)
     })
@@ -313,7 +313,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 app.post('/api/sendcontactemail', (req, res) => {
-    const {name, email, inputMessage} = req.body.message
+    const { name, email, inputMessage } = req.body.message
     const msg = {
         to: 'lookingfoxco@gmail.com',
         from: email,
@@ -331,7 +331,7 @@ app.post('/api/email/signup', email.subscribed)
 
 
 
-app.get('*', (req, res)=>{
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 

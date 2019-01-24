@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import Select from 'react-select'
 import './Client.css'
+import axios from 'axios';
 
 const customStyles = {
   container: (provided, state) => ({
@@ -9,7 +10,8 @@ const customStyles = {
     width: 200,
     height: 'fit-content',
     fontSize: '0.9em',
-    lineHeight: 'normal'
+    lineHeight: 'normal',
+    marginRight: '20px'
   }),
   control: (provided, state) => ({
     ...provided
@@ -38,6 +40,20 @@ export default class Client extends Component {
   openOptionsMenu = () => {
     this.setState({ optionsMenu: !this.state.optionsMenu })
     this.props.openClientSettingsModal(this.props)
+  }
+
+  updateProgress = item => {
+    const { value } = item;
+    const { actionList } = this.props;
+    const { session_id } = this.props.client;
+
+    let index = actionList.findIndex(obj => {
+      return obj.value === value;
+    })
+
+    axios.post('/api/updateprogress', { index, session_id }).then(() => {
+      alert('we are back!')
+    })
   }
 
   render() {
@@ -87,7 +103,6 @@ export default class Client extends Component {
           <Select
             onChange={e => this.updateProgress(e)}
             options={actionList}
-            defaultValue={actionList[0] || 'error'}
             styles={customStyles}
             isSearchable={false}
             theme={(theme) => ({
@@ -99,7 +114,7 @@ export default class Client extends Component {
               },
             })} />
 
-          {/* <div className="settings">
+          <div className="settings">
             <i className="fas fa-ellipsis-h"
               id={`client-edit-icon-${client_id}`}
               onClick={this.openOptionsMenu} />
@@ -114,7 +129,7 @@ export default class Client extends Component {
               ><i className="far fa-trash-alt" />delete</p>
 
             </div>
-          </div> */}
+          </div>
 
         </div>
 

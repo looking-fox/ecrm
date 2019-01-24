@@ -221,15 +221,6 @@ class Clients extends Component {
                   openClientModal={this.openClientModal}
                   optDeleteModal={this.optDeleteModal}
                   openClientSettingsModal={this.openClientSettingsModal} />
-
-                {/* <Actions
-                  id={e.client_id}
-                  sessionId={e.session_id}
-                  actionsComplete={e.completed}
-                  checkValues={true}
-                  allChecked={this.allItemsChecked}
-                  actionList={e.actions}
-                /> */}
               </div>
             )
           })

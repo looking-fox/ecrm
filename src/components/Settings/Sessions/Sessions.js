@@ -134,7 +134,7 @@ class Sessions extends Component {
               this.props.sessionTypes.map((e, i) => {
 
                 return (
-                  <div className="session" key={i} data-itemInd={i}>
+                  <div className="session" key={i} data-itemindex={i}>
                     <div className="session-bubble-container">
                       <div className={`bubble session-type ${e.session_color}`}>
                         <h3>{e.session_name}</h3>
