@@ -85,7 +85,7 @@ export default class Client extends Component {
             <p>{name}</p>
           </div>
 
-          <div className="package item small-item">
+          <div className="item small-item">
             <span className={`bubble ${session_color}`}>{session_name}</span>
           </div>
 

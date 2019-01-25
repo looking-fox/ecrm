@@ -198,3 +198,9 @@ div.delete-list-modal-check select {
     from {opacity: 0}
     to {opacity: 1}
 }
+
+@media (max-width: 576px) { 
+    .sidebar {
+        display: none;
+    }
+}

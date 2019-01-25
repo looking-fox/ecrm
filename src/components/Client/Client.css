@@ -8,30 +8,32 @@
 
 .client{
     width: 90%;
-    height: 60px;
+    height: fit-content;
+    min-height: 60px;
     background-color: #f1f1f1;
     margin: 2% 0%;
-    padding: 0px 30px;
+    padding: 0px 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .item {
+    flex-grow: 1;
     font-size: 0.9em;
     font-weight: 400;
     letter-spacing: 0;
     line-height: normal;
-    width: 180px;
-    max-width: 180px;
-    margin: 0px 5px;
+    width: 150px;
+    max-width: 150px;
+    margin: 10px 0px;
 }
 
 .small-item {
     width: 120px;
     max-width: 120px;
     min-width: 120px;
-    justify-content: center;
 }
 
 .item p {
@@ -55,10 +57,6 @@
     margin-right: 5px;
 }
 
-.total {
-    padding-left: 10px;
-}
-
 .total i {
     margin-right: 7px;
 }
@@ -73,10 +71,6 @@
     cursor:pointer;
 }
 
-
-.package {
-   margin-right: 30px;
-}
 .bubble {
     width: fit-content;
     padding: 2px 10px;
@@ -115,6 +109,22 @@
 
 .client-edit {
    right: 0;
+}
+
+@media (max-width: 576px) { 
+    .client-container {
+        overflow-x: hidden;
+    }
+    .client {
+        padding: 20px;
+        overflow-y: visible;
+    }
+    .item {
+        display: flex;
+        
+        flex-grow: 0.5;
+        margin: 20px 0px;
+    }
 }
 
 @keyframes fadeUpIn {
