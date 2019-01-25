@@ -47,7 +47,6 @@ class Sessions extends Component {
       else {
         this.setState({ noSessions: true })
       }
-
       this.props.updateProps({ sessionTypes: response.data })
     })
 
@@ -55,9 +54,10 @@ class Sessions extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.sessionTypes !== this.props.sessionTypes) {
-      var newTypes = this.props.sessionTypes.slice()
-      this.setState({ sessionTypes: newTypes })
-      this.hasSessions()
+      let newTypes = [...this.props.sessionTypes]
+      this.setState({ sessionTypes: newTypes }, () => {
+        this.hasSessions()
+      })
     }
   }
 
@@ -127,7 +127,7 @@ class Sessions extends Component {
                 //Mapping over session types
                 //TODO: Needs to be pulled out into separate Session.js component.
                 return (
-                  <div className="session" key={i} data-itemindex={i}>
+                  <div className="session" key={i}>
                     <div className="session-bubble-container">
                       <div className={`bubble session-type ${e.session_color}`}>
                         <h3>{e.session_name}</h3>
@@ -142,7 +142,7 @@ class Sessions extends Component {
                     <Select
                       onChange={e => this.updateSort(e)}
                       options={e.actions}
-                      defaultValue={e.actions[0]}
+                      value={e.actions[0]}
                       styles={customStyles}
                       isSearchable={false}
                       theme={(theme) => ({

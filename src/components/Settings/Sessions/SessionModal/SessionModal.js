@@ -55,53 +55,44 @@ class SessionModal extends Component {
 
     saveSession = () => {
         //Axios call to store session in DB: name, color, price, actionList
-
+        const { newSession } = this.props.sessionModal;
         const { currentActions } = this.props
-        var sessionInfo = {
-            name: this.state.name,
-            price: this.state.price,
-            color: this.state.color,
+        let sessionInfo = {
+            session_name: this.state.name,
+            session_price: this.state.price,
+            session_color: this.state.color,
             actionList: JSON.parse(JSON.stringify(currentActions))
         }
-
-        if (this.props.sessionModal.newSession === true) {
-            //If new client
+        if (newSession === true) {
             axios.post('/api/storesession', { sessionInfo })
                 .then(response => {
-                    var newSessions = this.props.sessionTypes.slice()
+                    let newSessions = [...this.props.sessionTypes]
                     newSessions.push(response.data[0])
                     this.props.updateProps({ sessionTypes: newSessions })
-
                     this.onCloseModal()
                 })
         }
         else {
             //If updating previous client
-
-            const newSessions = this.getNewActions()
-            this.props.updateProps({ sessionTypes: newSessions })
-
             const { session_id } = this.props.sessionModal.session
             sessionInfo = addId(session_id)
+            const newSessions = this.addUpdatedSession(sessionInfo)
 
             axios.put('/api/updatesession', { sessionInfo })
-                .then(() => this.onCloseModal())
+                .then(() => {
+                    this.props.updateProps({ sessionTypes: newSessions })
+                    this.onCloseModal()
+                })
 
             function addId(id) {
                 return { ...sessionInfo, ...{ session_id: id } }
             }
-
         }
-
     }
 
     onCloseModal = () => {
         //Props function to close modal and clear form on state
-        this.setState({
-            name: '',
-            price: '',
-            color: 'Blue'
-        })
+        this.setState({ name: '', price: '', color: 'Blue' })
         this.props.updateProps({
             sessionModal:
                 { open: false, newSession: false },
@@ -111,12 +102,12 @@ class SessionModal extends Component {
         })
     };
 
-    getNewActions = () => {
+    addUpdatedSession = session => {
         //Returns new sessionType with updated actions
         const { index } = this.props.sessionModal.session
-        let tempSessions = this.props.sessionTypes.slice()
-        const list = this.props.currentActions
-        tempSessions[index]["actions"] = list
+        let tempSessions = [...this.props.sessionTypes]
+        let newSession = { ...tempSessions[index], ...session }
+        tempSessions[index] = newSession;
         return tempSessions
     }
 

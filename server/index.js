@@ -197,7 +197,7 @@ app.get('/api/getsessions', sessions.getsessions)
 
 app.get('/api/getsessiontypes', sessions.getsessiontypes)
 
-app.post('/api/storesession', sessions.storesession)
+app.post('/api/storesession', sessions.storeSession)
 
 app.put('/api/updatesession', sessions.updateSession)
 

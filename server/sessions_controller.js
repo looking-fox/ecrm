@@ -34,21 +34,21 @@ module.exports = {
         })
     },
 
-    storesession: (req, res) => {
+    storeSession: (req, res) => {
         const dbInstance = req.app.get('db')
-        const { name, price, color, actionList } = req.body.sessionInfo
+        const { session_name, session_price, session_color, actionList } = req.body.sessionInfo
         const { sub } = req.session.user
 
-        dbInstance.store_session_template([name, color, price, actionList, sub, true])
+        dbInstance.store_session_template([session_name, session_color, session_price, actionList, sub, true])
             .then(response => res.status(200).send(response))
     },
 
     updateSession: (req, res) => {
         const dbInstance = req.app.get('db')
-        const { name, price, color, actionList, session_id } = req.body.sessionInfo
+        const { session_name, session_price, session_color, actionList, session_id } = req.body.sessionInfo
         const { sub } = req.session.user
 
-        dbInstance.update_session([sub, session_id, name, color, price, actionList, true])
+        dbInstance.update_session([sub, session_id, session_name, session_color, session_price, actionList, true])
             .then(() => res.sendStatus(200))
     },
 
