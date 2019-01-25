@@ -7,12 +7,14 @@ require('dotenv').config()
 var sessionId = 54;
 const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_KEY)
+
+//------Controllers------//
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
-const sessionActions = require('./sessionActions.controller')
 const payments = require('./payments_controller')
 const subscription = require('./stripe_controller')
 const email = require('./email_controller')
+//------Controllers------//
 
 const app = express()
 
@@ -210,11 +212,9 @@ app.delete('/api/deletesession/:id', sessions.deletesession)
 
 app.get('/api/getactions', sessions.getactions)
 
-app.put('/api/updateaction', sessionActions.putaction)
-
 app.post('/api/updateprogress', sessions.updateProgress)
 
-//===============ACTIONS==================//
+//===============CLIENT LISTS==================//
 
 app.post('/api/changelistorder', (req, res) => {
     //Swaps Index Ids to swap list order.
@@ -248,6 +248,9 @@ app.delete('/api/deletelist/:id', (req, res) => {
         res.sendStatus(200)
     })
 })
+
+//===============CLIENT LISTS==================//
+
 
 //===============CLIENTS==================//
 

@@ -86,10 +86,6 @@ class Sessions extends Component {
     this.setState({ deleteModal: true, session: { item, index } })
   }
 
-  editSession = (id) => {
-    alert(`Id of Client: ${id}`)
-  }
-
   deleteSession = (item, i) => {
     //Delete session based on session_id
     const { session_id } = item
@@ -110,10 +106,6 @@ class Sessions extends Component {
   }
 
   render() {
-    //Display each session: session info, edit button, delete button
-    //Add button 
-    //Modal for adding session/editing existing session
-
     return (
       <div className="dashboard column">
 
@@ -132,7 +124,8 @@ class Sessions extends Component {
             {!this.state.noSessions ?
 
               this.props.sessionTypes.map((e, i) => {
-
+                //Mapping over session types
+                //TODO: Needs to be pulled out into separate Session.js component.
                 return (
                   <div className="session" key={i} data-itemindex={i}>
                     <div className="session-bubble-container">

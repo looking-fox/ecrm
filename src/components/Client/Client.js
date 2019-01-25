@@ -45,13 +45,17 @@ export default class Client extends Component {
   updateProgress = item => {
     const { value } = item;
     const { actionList } = this.props;
-    const { session_id } = this.props.client;
+    const { session_id, client_id } = this.props.client;
 
     let index = actionList.findIndex(obj => {
       return obj.value === value;
     })
 
-    axios.post('/api/updateprogress', { index, session_id })
+    let isFinalItem = index === actionList.length - 1 ? true : false
+
+    axios.post('/api/updateprogress', { index, session_id, isFinalItem }).then(() => {
+      this.props.allItemsChecked(client_id, isFinalItem)
+    })
   }
 
   render() {

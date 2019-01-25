@@ -217,6 +217,7 @@ class Clients extends Component {
                   index={i}
                   actionList={e.actions}
                   goToMap={goToMap}
+                  allItemsChecked={this.allItemsChecked}
                   openPayments={this.openPayments}
                   openClientModal={this.openClientModal}
                   optDeleteModal={this.optDeleteModal}
