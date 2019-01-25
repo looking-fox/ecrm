@@ -2,36 +2,36 @@ import React, { Component } from 'react'
 import './Finances.css'
 import Nav from '../Nav/Nav'
 import axios from 'axios'
-import {Line} from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import Select from 'react-select'
-import {convertRawMoney} from '../../../Main/MainLogic'
+import { convertRawMoney } from '../../../Main/MainLogic'
 
-  const options = [
-    { value: 2017, label: '2017'},
-    { value: 2018, label: '2018' },
-    { value: 2019, label: '2019' },
-    { value: 2020, label: '2020' },
-  ]
-  
-  const customStyles = {
-    container: (provided, state) => ({
-      ...provided,
-         width: 200,
-         height: 'fit-content',
-         fontSize: '0.9em',
-         lineHeight: 'normal'
-    }),
-    control: (provided, state) => ({
-      ...provided
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      padding: 10
-    })
-  }
+const options = [
+  { value: 2017, label: '2017' },
+  { value: 2018, label: '2018' },
+  { value: 2019, label: '2019' },
+  { value: 2020, label: '2020' },
+]
+
+const customStyles = {
+  container: (provided, state) => ({
+    ...provided,
+    width: 200,
+    height: 'fit-content',
+    fontSize: '0.9em',
+    lineHeight: 'normal'
+  }),
+  control: (provided, state) => ({
+    ...provided
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    padding: 10
+  })
+}
 
 export default class Finances extends Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
       yearlyPayments: [],
@@ -41,15 +41,15 @@ export default class Finances extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let currentYear = new Date().getFullYear()
-    this.setState({ currentYear }, () => this.getYearInfo() )
+    this.setState({ currentYear }, () => this.getYearInfo())
   }
 
   //Retrieves payments within a year, returned as array of monthly sums for every MO of year. 
   // Example: [{1: 240}] = January: $240 total payments. 
   getYearInfo = () => {
-    const {currentYear} = this.state
+    const { currentYear } = this.state
     axios.get(`/api/yearlypayments/${currentYear}`).then(response => {
       let intAmount = response.data.map(e => parseInt(e.total))
       let stringAmount = intAmount.map(e => convertRawMoney(e))
@@ -59,10 +59,10 @@ export default class Finances extends Component {
   }
 
   loadNewYear = (year) => {
-    this.setState({currentYear: year}, () => this.getYearInfo() )
+    this.setState({ currentYear: year }, () => this.getYearInfo())
   }
 
-  render() { 
+  render() {
     const { yearlyPayments, totalPaid } = this.state
     var paymentsData = {
       labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -80,101 +80,102 @@ export default class Finances extends Component {
         }
       ]
     };
-  
+
 
     return (
       <div className="sub-dashboard column">
-        <Nav/>
+
+        <Nav />
 
         <div className="finance-container">
 
-            <div className="macro-dashboard">
-                <div className="macro-category center column">
-                  <p className="small-title">paid</p>
-                  <p className="big-number paid">{convertRawMoney(totalPaid)}</p>
-                </div>
-
-                <div className="macro-category center column">
-                  <p className="small-title">AVG / MO</p>
-                  <p className="big-number">{convertRawMoney(Math.round(totalPaid/12))}</p>
-                </div>
+          <div className="macro-dashboard">
+            <div className="macro-category center column">
+              <p className="small-title">paid</p>
+              <p className="big-number paid">{convertRawMoney(totalPaid)}</p>
             </div>
 
-            <div className="year-graph center">
-              <Line
+            <div className="macro-category center column">
+              <p className="small-title">AVG / MO</p>
+              <p className="big-number">{convertRawMoney(Math.round(totalPaid / 12))}</p>
+            </div>
+          </div>
+
+          <div className="year-graph center">
+            <Line
               ref={this.myChart}
               data={paymentsData}
-	            options={{
+              options={{
                 maintainAspectRatio: false,
-                tooltips: {enabled: false},
-                legend: {display: false},
+                tooltips: { enabled: false },
+                legend: { display: false },
                 title: {
-                    display: false,
-                    fontColor: 'blue',
-                    text: 'Custom Chart Title'
-                }     ,
+                  display: false,
+                  fontColor: 'blue',
+                  text: 'Custom Chart Title'
+                },
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true,
-                            fontColor: 'white'
-                        },
-                    }],
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero: true,
+                      fontColor: 'white'
+                    },
+                  }],
                   xAxes: [{
-                        ticks: {
-                            fontColor: 'white'
-                        },
-                    }]
-                } 
-        
-            	}}
-              />
-            </div>
+                    ticks: {
+                      fontColor: 'white'
+                    },
+                  }]
+                }
+
+              }}
+            />
+          </div>
 
 
-            <div className="tax-container center">
-              <div className="tax-bubble center column">
-                <p style={{fontSize: '1.1em', paddingBottom: '20px'}}>Taxes!</p>
-                <p style={{paddingBottom: '20px', lineHeight: '20px'}}>Generate an organized report of all of your recorded payments for tax season.</p>
-                <button className="btn btn-dark" disabled>
-                    Coming Soon
+          <div className="tax-container center">
+            <div className="tax-bubble center column">
+              <p style={{ fontSize: '1.1em', paddingBottom: '20px' }}>Taxes!</p>
+              <p style={{ paddingBottom: '20px', lineHeight: '20px' }}>Generate an organized report of all of your recorded payments for tax season.</p>
+              <button className="btn btn-dark" disabled>
+                Coming Soon
                 </button>
-              </div>
             </div>
+          </div>
 
 
-            <div className="monthly-figures center">
-              <div className="monthly-container center">
-                {this.state.yearPayStrings.map((e,i) => {
-                  return (
-                    <div className="month-block align-center column" key={i}>
-                      <p className="month-total">{e}</p>
-                      <p className="month-name">
-                        {paymentsData.labels[i]}
-                      </p>
-                    </div>
-                  )
-                })}
-              </div>
+          <div className="monthly-figures center">
+            <div className="monthly-container center">
+              {this.state.yearPayStrings.map((e, i) => {
+                return (
+                  <div className="month-block align-center column" key={i}>
+                    <p className="month-total">{e}</p>
+                    <p className="month-name">
+                      {paymentsData.labels[i]}
+                    </p>
+                  </div>
+                )
+              })}
             </div>
+          </div>
 
-            <div className="year-dropdown center">
-                <Select 
-                onChange={ e => this.loadNewYear(e.value)}
-                defaultValue={this.state.currentYear}
-                placeholder={this.state.currentYear}
-                options={options}
-                styles={customStyles}
-                isSearchable={false}
-                theme={(theme) => ({
-                  ...theme,
-                  colors: {
+          <div className="year-dropdown center">
+            <Select
+              onChange={e => this.loadNewYear(e.value)}
+              defaultValue={this.state.currentYear}
+              placeholder={this.state.currentYear}
+              options={options}
+              styles={customStyles}
+              isSearchable={false}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
                   ...theme.colors,
-                    primary25: '#eeeeee',
-                    primary: 'black'
-                  },
-                })} />
-            </div>
+                  primary25: '#eeeeee',
+                  primary: 'black'
+                },
+              })} />
+          </div>
 
         </div>
       </div>

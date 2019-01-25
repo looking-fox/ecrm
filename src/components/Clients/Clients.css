@@ -19,9 +19,8 @@
 }
 
 .completed {
-    animation: fadeAndShrink 0.5s linear;
+    animation: fadeOutComplete 0.5s linear;
     opacity: 0.5;
-    width: 95%;
 }
 
 .addclient{
@@ -84,7 +83,7 @@
     100% {top: 0px}
 }
 
-@keyframes fadeAndShrink {
-    from{opacity: 1; width: 100%}
-    to{opacity: 0.5; width: 95%}
+@keyframes fadeOutComplete {
+    from{opacity: 1;}
+    to{opacity: 0.5;}
 }

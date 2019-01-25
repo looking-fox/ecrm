@@ -113,7 +113,7 @@ class Sessions extends Component {
 
         <SessionModal />
 
-        <div className="sessionsdashboard">
+        <div className="sessions-dashboard">
 
           <p className="add" onClick={this.openModal}>
             <i className="fas fa-plus-square" />
