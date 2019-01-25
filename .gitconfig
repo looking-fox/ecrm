@@ -1,0 +1,2 @@
+[core]
+  pager = ~/scripts/commit-emoji.sh | less --raw-control-chars -FXS -x2

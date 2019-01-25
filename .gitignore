@@ -5,6 +5,9 @@ src/setUpProxy.js
 /node_modules
 .env
 
+## lockfiles
+yarn.lock
+package-lock.json
 
 # testing
 /coverage
