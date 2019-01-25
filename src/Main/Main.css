@@ -23,6 +23,7 @@
 
 .input-box {
     width: 100%;
+    min-width: 200px;
     border-radius: 5px;
     border: 1px solid lightgray;
     padding: 5px;

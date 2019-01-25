@@ -1,11 +1,10 @@
 .client-dashboard {
-    width: 85vw;
+    width: 100%;
     height: fit-content;
     min-height: 500px;
     position: relative;
     padding: 0px 0px;
     margin-bottom: 50px;
-    margin-left: 250px;
     overflow-y: scroll;
 }
 

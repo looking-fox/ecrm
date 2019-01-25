@@ -1,8 +1,10 @@
 .sidebar{
-    width: 250px;
+    width: 20vw;
+    min-width: 200px;
     height: 100vh;
     border-right: 1px solid #e2e2e2;
-    position: fixed;
+    position: relative;
+    overflow-x: hidden;
 }
 .topbar{
     height: 50px;
@@ -158,6 +160,15 @@
     left: 15%;
     height: 105px;
     padding-right: -10px;
+}
+
+div.delete-list-modal-check p {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+div.delete-list-modal-check select {
+    margin-bottom: 20px;
 }
 
 .sidebar-footer {

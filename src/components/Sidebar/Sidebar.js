@@ -192,8 +192,8 @@ class Sidebar extends Component {
     let defaultListId =
       this.state.lists.length > 1
         ? this.state.lists.filter(e => {
-            return e.list_id !== list.list_id;
-          })[0].list_id
+          return e.list_id !== list.list_id;
+        })[0].list_id
         : this.state.lists[0].list_id;
 
     this.setState({
@@ -217,18 +217,18 @@ class Sidebar extends Component {
     const { index, list_id } = this.state.listInEdit;
 
     axios.delete(`/api/deletelist/${list_id}`)
-    .then(() => {
-      let newList = this.state.lists;
-      newList.splice(index, 1);
+      .then(() => {
+        let newList = this.state.lists;
+        newList.splice(index, 1);
 
-      this.props.updateProps({ listId: -1, lists: newList });
-      this.setState({
-        deleteListCheck: false,
-        lists: newList,
-        listInEdit: {},
-        listName: ""
+        this.props.updateProps({ listId: -1, lists: newList });
+        this.setState({
+          deleteListCheck: false,
+          lists: newList,
+          listInEdit: {},
+          listName: ""
+        });
       });
-    });
   };
 
   moveClients = () => {
@@ -361,10 +361,10 @@ class Sidebar extends Component {
             {this.state.listInEdit.list_name ? (
               <h3 className="modal-title">Update List</h3>
             ) : (
-              <h3 className="modal-title">
-                <i className="fas fa-users" /> Add Client List
+                <h3 className="modal-title">
+                  <i className="fas fa-users" /> Add Client List
               </h3>
-            )}
+              )}
 
             <input
               className="input-box"
@@ -403,17 +403,16 @@ class Sidebar extends Component {
               {this.state.lists.length > 1 ? (
                 <p>Keep clients from {this.state.listInEdit.list_name}?</p>
               ) : (
-                <p>Delete {this.state.listInEdit.list_name}?</p>
-              )}
+                  <p>Delete {this.state.listInEdit.list_name}?</p>
+                )}
             </h3>
             <div>
               {/* select list to transfer */}
 
               {this.state.lists.length > 1 ? (
-                <React.Fragment>
+                <div className="delete-list-modal-check center column">
                   <p> Move Clients to: </p>
                   <select
-                    className="session-menu"
                     onChange={e =>
                       this.setState({ listToMove: parseInt(e.target.value) })
                     }
@@ -422,7 +421,7 @@ class Sidebar extends Component {
                       .filter(e => {
                         return e.list_id !== this.state.listInEdit.list_id;
                       })
-                      .map((e, i) => {
+                      .map(e => {
                         return (
                           <option value={e.list_id} key={e.list_id}>
                             {e.list_name}
@@ -430,10 +429,10 @@ class Sidebar extends Component {
                         );
                       })}
                   </select>
-                </React.Fragment>
+                </div>
               ) : (
-                ""
-              )}
+                  ""
+                )}
 
               {/* select list to transfer */}
 
@@ -456,14 +455,14 @@ class Sidebar extends Component {
                   </button>
                 </React.Fragment>
               ) : (
-                <button
-                  type="button"
-                  className="btn btn-danger save full"
-                  onClick={this.deleteList}
-                >
-                  Delete List
+                  <button
+                    type="button"
+                    className="btn btn-danger save full"
+                    onClick={this.deleteList}
+                  >
+                    Delete List
                 </button>
-              )}
+                )}
             </div>
           </Modal>
 
