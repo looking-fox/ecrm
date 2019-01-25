@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./Sidebar.css";
-import Logo from "../../assets/logo.png";
 import Tutorial from "../Clients/Tutorial/Tutorial";
 import SubscriptionModal from "./SubscriptionModal/SubscriptionModal";
+import VerifyDeleteList from './VerifyDeleteList/VerifyDeleteList';
+import SidebarFooter from './SidebarFooter/SidebarFooter'
 import Lists from "./Lists";
 import axios from "axios";
 import Fade from "react-reveal/Fade";
@@ -147,6 +148,22 @@ class Sidebar extends Component {
     this.props.updateCurrentList({ listId: id });
   };
 
+  listTransfer = list => {
+    this.setState({ listToMove: parseInt(list.target.value) })
+  }
+
+  clearDeleteListState = () => {
+    this.setState({
+      deleteListCheck: false,
+      listName: "",
+      listInEdit: {}
+    })
+  }
+
+  toggleTutorial = () => {
+    this.setState({ showTutorial: !this.state.showTutorial })
+  }
+
   openClient = () => {
     axios.get("/api/getsessiontypes").then(response => {
       //If user has no session types, they can't add a client.
@@ -272,6 +289,7 @@ class Sidebar extends Component {
   };
 
   render() {
+    const { deleteListCheck, listInEdit, lists } = this.state;
     const isUserMenuOpen = this.state.userMenu ? "flex" : "none";
 
     return (
@@ -333,22 +351,8 @@ class Sidebar extends Component {
             />
           </DragDropContext>
 
-          <div className="sidebar-footer">
-            <img src={Logo} alt="Fox Logo" />
-            <i
-              className="far fa-question-circle"
-              onClick={() =>
-                this.setState({ showTutorial: !this.state.showTutorial })
-              }
-            />
-            <a href="https://app.termly.io/document/terms-of-use-for-saas/c574334a-93e2-4fc1-a7b4-63c6ae0b00e4">
-              Terms of Service
-            </a>
-
-            <a href="https://app.termly.io/document/privacy-policy/1eb8b9ce-5fa7-427e-8df2-157a19f61807">
-              Privacy Policy
-            </a>
-          </div>
+          <SidebarFooter
+            toggleTutorial={this.toggleTutorial} />
 
           {/* Modal to Add List or Edit Previous List */}
           <Modal
@@ -369,7 +373,7 @@ class Sidebar extends Component {
             <input
               className="input-box"
               autoFocus
-              placeholder="Session Name"
+              placeholder="Client List Name"
               value={this.state.listName}
               onChange={e => this.setState({ listName: e.target.value })}
               onKeyDown={e => this.returnSave(e)}
@@ -386,85 +390,16 @@ class Sidebar extends Component {
             </div>
           </Modal>
 
-          {/* Modal to check if user wants to delete list */}
-          <Modal
-            open={this.state.deleteListCheck}
-            on
-            onClose={() =>
-              this.setState({
-                deleteListCheck: false,
-                listName: "",
-                listInEdit: {}
-              })
-            }
-            center
-          >
-            <h3 className="modal-title">
-              {this.state.lists.length > 1 ? (
-                <p>Keep clients from {this.state.listInEdit.list_name}?</p>
-              ) : (
-                  <p>Delete {this.state.listInEdit.list_name}?</p>
-                )}
-            </h3>
-            <div>
-              {/* select list to transfer */}
-
-              {this.state.lists.length > 1 ? (
-                <div className="delete-list-modal-check center column">
-                  <p> Move Clients to: </p>
-                  <select
-                    onChange={e =>
-                      this.setState({ listToMove: parseInt(e.target.value) })
-                    }
-                  >
-                    {this.state.lists
-                      .filter(e => {
-                        return e.list_id !== this.state.listInEdit.list_id;
-                      })
-                      .map(e => {
-                        return (
-                          <option value={e.list_id} key={e.list_id}>
-                            {e.list_name}
-                          </option>
-                        );
-                      })}
-                  </select>
-                </div>
-              ) : (
-                  ""
-                )}
-
-              {/* select list to transfer */}
-
-              {this.state.lists.length > 1 ? (
-                <React.Fragment>
-                  <button
-                    type="button"
-                    className="btn btn-danger save full"
-                    onClick={this.moveClients}
-                  >
-                    Yes, Move Clients First
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-danger save full"
-                    onClick={this.deleteList}
-                  >
-                    No, Delete Everything
-                  </button>
-                </React.Fragment>
-              ) : (
-                  <button
-                    type="button"
-                    className="btn btn-danger save full"
-                    onClick={this.deleteList}
-                  >
-                    Delete List
-                </button>
-                )}
-            </div>
-          </Modal>
+          <VerifyDeleteList
+            //--Var--//
+            deleteListCheck={deleteListCheck}
+            listInEdit={listInEdit}
+            lists={lists}
+            //--Func--//
+            clearAndClose={this.clearDeleteListState}
+            listTransfer={this.listTransfer}
+            moveClients={this.moveClients}
+            deleteList={this.deleteList} />
 
           <Tutorial
             showTutorial={this.state.showTutorial}
