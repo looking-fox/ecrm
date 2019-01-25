@@ -47,7 +47,7 @@ class Sessions extends Component {
       else {
         this.setState({ noSessions: true })
       }
-      this.props.updateProps({ sessionTypes: response.data })
+      this.props.updateProps({ sessionTypes: response.data, listId: -1 })
     })
 
   }
@@ -140,7 +140,6 @@ class Sessions extends Component {
                       {e.actions.length} steps
                     </div>
                     <Select
-                      onChange={e => this.updateSort(e)}
                       options={e.actions}
                       value={e.actions[0]}
                       styles={customStyles}

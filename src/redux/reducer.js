@@ -1,7 +1,9 @@
+import userIcon from '../assets/user.svg'
+
 const initialState = {
     name: '',
     email: '',
-    picture: '',
+    picture: userIcon,
     sub: '',
     clients: [],
     currentActions: [{ label: 'inquired', value: 'inquired' },
