@@ -52,13 +52,16 @@ app.get('/auth/callback', async (req, res) => {
         grant_type: 'authorization_code',
         redirect_uri: `${PROTOCOL}://${req.headers.host}/auth/callback`
     };
+    console.log('payload: ', payload)
     //----get token---//
 
     let receiveToken = await axios.post(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/oauth/token`, payload)
-
+    console.log('RT', receiveToken)
     //----exchange token---//
 
     let receiveUser = await axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo?access_token=${receiveToken.data.access_token}`)
+
+    console.log('RU', receiveUser)
 
     //-----user data-----//
     req.session.user = receiveUser.data;
