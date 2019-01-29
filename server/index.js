@@ -50,7 +50,7 @@ app.get('/auth/callback', async (req, res) => {
         client_secret: process.env.AUTH0_CLIENT_SECRET,
         code: req.query.code,
         grant_type: 'authorization_code',
-        redirect_uri: `${PROTOCOL}://${req.headers.host}/auth/callback`
+        redirectUri: `${PROTOCOL}://${req.headers.host}/auth/callback`
     };
     //----get token---//
 
