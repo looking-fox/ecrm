@@ -184,7 +184,7 @@ app.get('/api/user-info', (req, res) => {
 
 app.post('/api/logout', (req, res) => {
     req.session.destroy()
-    res.send()
+    res.sendStatus(200)
 })
 
 

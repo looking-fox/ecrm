@@ -279,8 +279,8 @@ class Sidebar extends Component {
 
   logOut = () => {
     axios.post("/api/logout").then(() => {
-      this.props.logoutUser();
-      this.props.history.push("/");
+      this.props.logoutUser()
+      this.props.history.push('/')
     });
   };
 
