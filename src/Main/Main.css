@@ -41,3 +41,36 @@
 }
 
 
+/* DatePicker CSS */
+.react-date-picker__inputGroup__month {
+    width: max-content !important;
+    text-align: center;
+}
+.react-date-picker__inputGroup__day {
+    width: max-content !important;
+    text-align: center;
+}
+
+.react-date-picker__inputGroup__year {
+    width: max-content !important;
+    text-align: center;
+}
+
+.react-date-picker__wrapper {
+    align-items: center;
+    padding: 2px;
+    border: none !important;
+}
+
+.react-date-picker__clear-button {
+    display: none;
+}
+
+.react-date-picker__calendar * {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.react-date-picker__calendar {
+    position: absolute;
+}
+/* DatePicker CSS */

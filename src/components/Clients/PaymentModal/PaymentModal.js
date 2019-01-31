@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
 import './PaymentModal.css'
-import Payment from './Payment/Payment'
 import Modal from 'react-responsive-modal'
+import Table from './Table/Table'
 import DatePicker from 'react-date-picker'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateProps } from '../../../redux/reducer'
 import { convertToRawMoney, convertRawMoney } from '../../../Main/MainLogic'
 
+
 class PaymentModal extends Component {
     constructor() {
         super()
         this.state = {
             payments: [],
+            expenses: [],
             paid: 0,
             total: 0,
             totalPaid: 0,
+            modalView: 'expenses',
             amount: '',
             date: new Date(),
             description: '',
@@ -200,6 +203,7 @@ class PaymentModal extends Component {
 
     render() {
         const { open, name, sessionColor } = this.props.paymentModal
+        const { modalView, payments } = this.state
         return (
             <Modal open={open} onClose={this.closeModal}>
                 <div className="client-payment-container align-center column">
@@ -208,12 +212,21 @@ class PaymentModal extends Component {
                         {name}
                     </h3>
 
+                    <div className="modal-menu-bar">
+                        <p className="modal-menu-item center"
+                            onClick={() => this.setState({ modalView: 'payments' })}>Payments</p>
+                        <p className="modal-menu-item center"
+                            onClick={() => this.setState({ modalView: 'expenses' })}>Expenses</p>
+                        <p className="modal-menu-item center"
+                            onClick={() => this.setState({ modalView: 'mileage' })}>Mileage</p>
+                    </div>
+
                     <div className="progress-bar">
 
                         {this.state.noPayments ?
                             <div className="no-progress center">
                                 No Payments
-                    </div>
+                            </div>
                             :
                             <div className={`progress-completed center ${sessionColor}`}
                                 style={{ width: `${this.state.paid}%` }}>
@@ -259,24 +272,15 @@ class PaymentModal extends Component {
                         </div>
                     </div>
 
+                    {/* Swaps out table views based on menu */}
+                    <Table
+                        listData={payments}
+                        listDataType={modalView}
+                        updatePayment={this.updatePayment}
+                        deletePayment={this.deletePayment}
+                        verifyDelete={this.verifyDelete}
+                    />
 
-                    <div className="payment-table">
-
-                        {this.state.payments.map((e, i) => {
-                            return (
-                                <Payment
-                                    payment={e}
-                                    index={i}
-                                    key={e.payment_id}
-                                    updatePayment={this.updatePayment}
-                                    deletePayment={this.deletePayment}
-                                    verifyDelete={this.verifyDelete} />
-                            )
-                        })
-                        }
-
-
-                    </div>
 
                     <button className="btn btn-dark save full payment-save-btn"
                         onClick={this.saveAllPayments}>
@@ -290,13 +294,13 @@ class PaymentModal extends Component {
 
                         <h1 className="client-settings-modal-title">
                             Delete payment of {this.state.deleteInfo.amount}?
-             </h1>
+                        </h1>
 
                         <button type="button"
                             className="btn btn-danger options"
                             onClick={this.deletePayment}>
                             Yes, Delete Payment
-            </button>
+                        </button>
 
                     </div>
                 </Modal>

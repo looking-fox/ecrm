@@ -1,23 +1,15 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import DatePicker from 'react-date-picker'
 import { convertRawMoney, convertToRawMoney, convertToLocalDate } from '../../../../Main/MainLogic'
 
 export default class Payment extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            amount: '',
-            description: '',
-            date: null
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.payment) {
-            const { amount, description, date } = this.props.payment
-            let filterDate = convertToLocalDate(date)
-            var filterAmount = convertRawMoney(amount)
-            this.setState({ amount: filterAmount, description, date: filterDate })
+            amount: convertRawMoney(props.payment.amount),
+            description: props.payment.description,
+            date: convertToLocalDate(props.payment.date)
         }
     }
 
@@ -43,7 +35,6 @@ export default class Payment extends Component {
         let newInfo = { amount: intAmount, date, description }
         this.props.updatePayment(id, newInfo)
     }
-
 
     render() {
         const { payment, index } = this.props
@@ -87,4 +78,12 @@ export default class Payment extends Component {
             </div>
         )
     }
+}
+
+Payment.propTypes = {
+    payment: PropTypes.shape({
+        amount: PropTypes.number.isRequired,
+        description: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired
+    }).isRequired
 }
