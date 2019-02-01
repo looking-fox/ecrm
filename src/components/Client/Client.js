@@ -85,11 +85,11 @@ export default class Client extends Component {
             <p>{name}</p>
           </div>
 
-          <div className="item small-item">
+          <div className="item">
             <span className={`bubble ${session_color}`}>{session_name}</span>
           </div>
 
-          <div className="date item small-item">
+          <div className="date item">
             <p>{formatDate}</p>
           </div>
 
@@ -98,7 +98,7 @@ export default class Client extends Component {
             <p><i className="far fa-map" />{location}</p>
           </div>
 
-          <div className="total item small-item"
+          <div className="total item"
             onClick={() => this.props.openPayments({ name, client_id, session_price, session_color })}>
             <p><i className="far fa-credit-card" />{session_price}</p>
           </div>

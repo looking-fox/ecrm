@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Table from '../Table/Table'
+import Modal from 'react-responsive-modal'
 import DatePicker from 'react-date-picker'
 import axios from 'axios'
+import Table from '../Table/Table'
 import { convertToRawMoney, convertRawMoney } from '../../../../Main/MainLogic'
 
 export default class PaymentTable extends Component {
@@ -80,7 +81,7 @@ export default class PaymentTable extends Component {
 
         this.setState({ payments: prevPayments, verifyDelete: false, deleteInfo: {}, savingStatus: true }, () => {
             axios.delete(`/api/deletepayment/${payment_id}`)
-                .then(() => this.setState({ savingStatus: false }, () => this.updateProgressBar(this.state.payments)))
+                .then(() => this.setState({ savingStatus: false }, () => this.props.updateProgressBar(this.state.payments)))
         })
     }
 
@@ -142,6 +143,25 @@ export default class PaymentTable extends Component {
                     onClick={this.props.clearAndClose}>
                     <p>{this.state.savingStatus ? 'Saving...' : 'Done'}</p>
                 </button>
+
+                {/* ---Delete Veriy Modal--- */}
+                <Modal open={this.state.verifyDelete} onClose={() => this.setState({ verifyDelete: false, deleteInfo: {} })}>
+                    <div className="client-options">
+
+                        <h1 className="client-settings-modal-title">
+                            Delete payment of {this.state.deleteInfo.amount}?
+                        </h1>
+
+                        <button type="button"
+                            className="btn btn-danger options"
+                            onClick={this.deletePayment}>
+                            Yes, Delete Payment
+                        </button>
+
+                    </div>
+                </Modal>
+                {/* ---Delete Veriy Modal--- */}
+
             </div>
         )
     }
@@ -149,18 +169,3 @@ export default class PaymentTable extends Component {
 
 
 
-{/* <Modal open={this.state.verifyDelete} onClose={() => this.setState({ verifyDelete: false, deleteInfo: {} })}>
-    <div className="client-options">
-
-        <h1 className="client-settings-modal-title">
-            Delete payment of {this.state.deleteInfo.amount}?
-                        </h1>
-
-        <button type="button"
-            className="btn btn-danger options"
-            onClick={this.deletePayment}>
-            Yes, Delete Payment
-                        </button>
-
-    </div>
-</Modal> */}
