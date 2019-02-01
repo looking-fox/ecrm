@@ -282,7 +282,7 @@ app.get('/api/getpayments/:id', payments.getPayments)
 
 app.post('/api/savepayment', payments.savePayment)
 
-app.put('/api/updatepayments', payments.updatePayments)
+app.put('/api/updatepayment', payments.updatePayment)
 
 app.delete('/api/deletepayment/:id', payments.deletePayment)
 

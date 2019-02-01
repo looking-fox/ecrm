@@ -1,32 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Spinner from '../../assets/spinner.svg'
 
-const styles = theme => ({
-    root: {
-      flexGrow: 1,
-    },
-    loading: {
-      color: 'black',
-      animationDuration: '800ms'
-    },
-  });
-
-function Loading(props) {
-    const {loading} = props.classes
+export default function Loading(props) {
+  const { small } = props
   return (
-    <React.Fragment>
-        <CircularProgress
-        className={loading}
-        size={props.small ? 24 : 48}
-        thickness={2}/>
-    </React.Fragment>
+    <img src={Spinner} alt="loading spinner"
+      style={{ width: small ? '20px' : '40px' }} />
   )
 }
 
 Loading.propTypes = {
   small: PropTypes.bool
 }
-
-export default withStyles(styles)(Loading)

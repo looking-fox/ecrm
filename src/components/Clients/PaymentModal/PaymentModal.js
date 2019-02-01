@@ -1,55 +1,30 @@
 import React, { Component } from 'react'
 import './PaymentModal.css'
 import Modal from 'react-responsive-modal'
-import Table from './Table/Table'
-import DatePicker from 'react-date-picker'
-import axios from 'axios'
+import PaymentTable from './PaymentTable/PaymentTable'
 import { connect } from 'react-redux'
 import { updateProps } from '../../../redux/reducer'
 import { convertToRawMoney, convertRawMoney } from '../../../Main/MainLogic'
-
 
 class PaymentModal extends Component {
     constructor() {
         super()
         this.state = {
-            payments: [],
-            expenses: [],
+            listData: [],
             paid: 0,
             total: 0,
             totalPaid: 0,
-            modalView: 'expenses',
-            amount: '',
-            date: new Date(),
-            description: '',
-            noPayments: false,
-            updates: {},
-            deletes: {},
-            notSavedPayments: {},
-            verifyDelete: false,
-            deleteInfo: {}
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.paymentModal !== this.props.paymentModal) {
-            const { clientId } = this.props.paymentModal
-
-            axios.get(`/api/getpayments/${clientId}`).then(response => {
-                this.setState({ payments: response.data })
-                this.updateProgressBar()
-            })
+            modalView: 'payments',
+            noPayments: false
         }
     }
 
     //Determine perecent of amount paid vs session price. Update UI.
-    //currentPayments makes deep copy of [{}] to avoid changing state.
-    updateProgressBar = () => {
-        if (this.state.payments[0]) {
+    updateProgressBar = payments => {
+        if (payments) {
+            let newPayments = JSON.parse(JSON.stringify(payments))
             const { sessionPrice } = this.props.paymentModal
-            let currentPayments = JSON.parse(JSON.stringify(this.state.payments.slice()))
-
-            let paid = currentPayments.reduce((a, b) => {
+            let paid = newPayments.reduce((a, b) => {
                 a.amount += b.amount
                 return a
             }).amount
@@ -61,131 +36,32 @@ class PaymentModal extends Component {
 
         }
         else {
+            console.log('else')
             const { sessionPrice } = this.props.paymentModal
             let filterSessionPrice = parseInt(sessionPrice.replace(/[$,]+/g, ""))
             this.setState({ paid: 0, total: filterSessionPrice, noPayments: true })
         }
     }
 
-    convertAmount = () => {
-        if (this.state.amount) {
-            const { amount } = this.state
-            let intAmount = convertToRawMoney(amount)
-            let filterAmount = convertRawMoney(intAmount)
-            this.setState({ amount: filterAmount })
-        }
-    }
-
-    savePayment = () => {
-        const { amount, date, description } = this.state
-
-        if (!amount || !description) {
-            alert('Please fill in the payment information before adding it.')
-            return
-        }
-        let intAmount = convertToRawMoney(amount)
-        const { clientId } = this.props.paymentModal
-        axios.post('/api/savepayment', { amount: intAmount, date, description, clientId }).then((response) => {
-            var prevPayments = this.state.payments.slice()
-            var notSaved = JSON.parse(JSON.stringify(this.state.notSavedPayments))
-            const { payment_id } = response.data[0]
-            notSaved[payment_id] = payment_id
-            prevPayments.push(response.data[0])
-
-            this.setState({
-                payments: prevPayments,
-                initialPayments: prevPayments,
-                notSavedPayments: notSaved,
-                amount: '',
-                date: new Date(),
-                description: ''
-            }, () => {
-                this.updateProgressBar()
-            })
+    changeLists = index => {
+        this.setState(state => {
+            if (index === 0) {
+                return {
+                    listData: state.payments,
+                    modalView: "payments"
+                }
+            } else if (index === 1) {
+                return {
+                    listData: state.expenses,
+                    modalView: "expenses"
+                }
+            } else {
+                return {
+                    listData: state.payments,
+                    modalView: "payments"
+                }
+            }
         })
-    }
-
-    updatePayment = (id, newInfo, index) => {
-        const { updates, payments } = this.state
-        updates[id] = { ...newInfo, ...{ payment_id: id } }
-
-        if (index >= 0) {
-            if (typeof newInfo.amount === 'number') {
-                let newPayments = JSON.parse(JSON.stringify(payments.slice()))
-                let newAmount = newInfo.amount
-                newPayments[index].amount = newAmount
-
-                this.setState({ payments: newPayments, updates }, () => {
-                    this.updateProgressBar()
-                })
-            }
-        }
-        else {
-            this.setState({ updates })
-        }
-    }
-
-    saveAllPayments = () => {
-        const { updates } = this.state
-        if (this.hasKeys(updates)) {
-            axios.put('/api/updatepayments', { updates })
-                .then(() => this.handleDeletes())
-        }
-        else {
-            this.handleDeletes()
-        }
-    }
-
-    handleDeletes = () => {
-        const { deletes } = this.state
-        for (var key in deletes) {
-            axios.delete(`/api/deletepayment/${key}`)
-        }
-        this.clearAndClose()
-    }
-
-    hasKeys(updates) {
-        for (var key in updates) {
-            return true
-        }
-        return false
-    }
-
-    verifyDelete = (index, payment) => {
-        const { amount, client_id, payment_id } = payment
-        let filterAmount = convertRawMoney(amount)
-        let deleteInfo = { index, amount: filterAmount, client_id, payment_id }
-        this.setState({ verifyDelete: true, deleteInfo })
-    }
-
-    deletePayment = () => {
-        const { payments, deletes, deleteInfo } = this.state
-        const { payment_id } = deleteInfo
-        let prevPayments = JSON.parse(JSON.stringify(payments))
-
-        prevPayments.splice(deleteInfo.index, 1)
-        deletes[payment_id] = payment_id
-
-        this.setState({ payments: prevPayments, deletes, verifyDelete: false, deleteInfo: {} }, () => this.updateProgressBar())
-    }
-
-    changeDate = date => {
-        this.setState({ date })
-    }
-
-    isReturnKey = e => {
-        if (e.keyCode === 13) this.savePayment()
-    }
-
-    closeModal = () => {
-        //If user adds payment, but doesn't want to save--delete added payments.
-        const { notSavedPayments } = this.state
-        if (this.hasKeys(notSavedPayments)) {
-            for (var key in notSavedPayments) {
-                axios.delete(`/api/deletepayment/${key}`)
-            }
-        }
-        this.clearAndClose()
     }
 
     clearAndClose = () => {
@@ -196,30 +72,23 @@ class PaymentModal extends Component {
             amount: '',
             date: new Date(),
             description: '',
-            notSavedPayments: {}
+            deletePaymentId: null
         })
-        this.props.updateProps({ paymentModal: { open: false, clientId: null } })
+        this.props.updateProps({
+            paymentModal: { open: false, clientId: null }
+        })
     }
 
     render() {
         const { open, name, sessionColor } = this.props.paymentModal
-        const { modalView, payments } = this.state
+        const { modalView, listData } = this.state
         return (
-            <Modal open={open} onClose={this.closeModal}>
+            <Modal open={open} onClose={this.clearAndClose}>
                 <div className="client-payment-container align-center column">
                     <h3 className="title">
                         <i className="far fa-credit-card" />
                         {name}
                     </h3>
-
-                    <div className="modal-menu-bar">
-                        <p className="modal-menu-item center"
-                            onClick={() => this.setState({ modalView: 'payments' })}>Payments</p>
-                        <p className="modal-menu-item center"
-                            onClick={() => this.setState({ modalView: 'expenses' })}>Expenses</p>
-                        <p className="modal-menu-item center"
-                            onClick={() => this.setState({ modalView: 'mileage' })}>Mileage</p>
-                    </div>
 
                     <div className="progress-bar">
 
@@ -238,73 +107,25 @@ class PaymentModal extends Component {
 
                     </div>
 
-                    <div className="payment-top-row-container">
-                        <div className="row top-row-input">
-                            <div className="pay pay-amount">
-
-                                <input
-                                    className="row-input amount-input"
-                                    placeholder="$50"
-                                    value={this.state.amount}
-                                    onChange={e => this.setState({ amount: e.target.value })}
-                                    onBlur={() => this.convertAmount()} />
-
-                            </div>
-
-                            <div className="pay pay-date">
-                                <DatePicker
-                                    onChange={e => this.changeDate(e)}
-                                    value={this.state.date} />
-                            </div>
-
-                            <div className="pay pay-description">
-
-                                <input
-                                    className="row-input"
-                                    placeholder="Deposit"
-                                    value={this.state.description}
-                                    onChange={e => this.setState({ description: e.target.value })}
-                                    onKeyDown={e => this.isReturnKey(e)} />
-
-                                <i className="fas fa-plus-square add-pay"
-                                    onClick={this.savePayment} />
-                            </div>
-                        </div>
+                    <div className="modal-menu-bar">
+                        <p className="modal-menu-item center"
+                            onClick={() => this.changeLists(0)}>Payments</p>
+                        <p className="modal-menu-item center"
+                            onClick={() => this.changeLists(1)}>Expenses</p>
+                        <p className="modal-menu-item center"
+                            onClick={() => this.changeLists(2)}>Mileage</p>
                     </div>
 
                     {/* Swaps out table views based on menu */}
-                    <Table
-                        listData={payments}
-                        listDataType={modalView}
-                        updatePayment={this.updatePayment}
-                        deletePayment={this.deletePayment}
-                        verifyDelete={this.verifyDelete}
-                    />
 
 
-                    <button className="btn btn-dark save full payment-save-btn"
-                        onClick={this.saveAllPayments}>
-                        <p>Save</p>
-                    </button>
+                    <PaymentTable
+                        clientId={this.props.paymentModal.clientId}
+                        updateProgressBar={this.updateProgressBar}
+                        savingStatus={this.state.savingStatus}
+                        clearAndClose={this.clearAndClose} />
 
                 </div>
-
-                <Modal open={this.state.verifyDelete} onClose={() => this.setState({ verifyDelete: false, deleteInfo: {} })}>
-                    <div className="client-options">
-
-                        <h1 className="client-settings-modal-title">
-                            Delete payment of {this.state.deleteInfo.amount}?
-                        </h1>
-
-                        <button type="button"
-                            className="btn btn-danger options"
-                            onClick={this.deletePayment}>
-                            Yes, Delete Payment
-                        </button>
-
-                    </div>
-                </Modal>
-
 
             </Modal>
         )
@@ -316,6 +137,5 @@ function mapStateToProps(state) {
         ...this.props, ...state
     }
 }
-
 
 export default connect(mapStateToProps, { updateProps })(PaymentModal)

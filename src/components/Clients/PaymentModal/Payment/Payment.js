@@ -17,23 +17,24 @@ export default class Payment extends Component {
     updateAmount = () => {
         if (this.state.amount) {
             const { amount, description, date } = this.state
-            let id = this.props.payment.payment_id
+            const { id, index } = this.props
             let intAmount = convertToRawMoney(amount)
             let filterAmount = convertRawMoney(intAmount)
 
             this.setState({ amount: filterAmount }, () => {
                 let newInfo = { amount: intAmount, description, date }
-                this.props.updatePayment(id, newInfo, this.props.index)
+                this.props.updatePayment(newInfo, index, id)
             })
         }
     }
 
-    updateDate = (date, id) => {
+    updateDate = date => {
         this.setState({ date })
+        const { id, index } = this.props
         const { amount, description } = this.state
         let intAmount = convertToRawMoney(amount)
         let newInfo = { amount: intAmount, date, description }
-        this.props.updatePayment(id, newInfo)
+        this.props.updatePayment(newInfo, index, id)
     }
 
     render() {
@@ -41,7 +42,6 @@ export default class Payment extends Component {
         const { amount, description, date } = this.state
         let filterAmount = convertToRawMoney(amount)
         let newInfo = { amount: filterAmount, description, date }
-        let id = payment.payment_id
 
         return (
             <div className="row">
@@ -52,14 +52,14 @@ export default class Payment extends Component {
                         className="row-input amount-input"
                         placeholder="$50"
                         onChange={e => this.setState({ amount: e.target.value })}
-                        onBlur={() => this.updateAmount()}
+                        onBlur={this.updateAmount}
                         value={this.state.amount} />
 
                 </div>
 
                 <div className="pay pay-date">
                     <DatePicker
-                        onChange={e => this.updateDate(e, id)}
+                        onChange={e => this.updateDate(e)}
                         value={this.state.date} />
                 </div>
 
@@ -70,7 +70,7 @@ export default class Payment extends Component {
                         placeholder="Deposit"
                         value={this.state.description}
                         onChange={e => this.setState({ description: e.target.value })}
-                        onBlur={e => this.props.updatePayment(id, newInfo)} />
+                        onBlur={this.updateAmount} />
                     <i className="far fa-trash-alt row-delete"
                         onClick={() => this.props.verifyDelete(index, payment)} />
                 </div>
