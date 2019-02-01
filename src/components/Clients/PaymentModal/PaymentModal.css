@@ -1,6 +1,6 @@
 .client-payment-container {
     width: 600px;
-    height: 450px;
+    height: 500px;
     justify-content: flex-start;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .row-input:focus {
-    border-bottom: 2px solid #5959b6;
+    border-bottom: 1px solid #777777;
 }
 
 .progress-bar {
@@ -67,14 +67,15 @@
 
 div.modal-menu-bar {
     width: fit-content;
-    padding-bottom: 20px;
+    padding-top: 20px;
     display: flex;
     border-radius: 20px;
+    font-size: 0.8em;
 }
 
 p.modal-menu-item {
     background: #f1f1f1;
-    padding: 10px;
+    padding: 8px;
     cursor: pointer;
 }
 
