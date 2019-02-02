@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from 'react-date-picker'
-import { convertRawMoney, convertToRawMoney, convertToLocalDate } from '../../../../Main/MainLogic'
+import { convertRawMoney, convertToMiles, convertToRawMoney, convertToLocalDate } from '../../../../Main/MainLogic'
 
 export default class Payment extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
-            amount: convertRawMoney(props.item.amount),
+            amount: props.showMileage ? convertToMiles(props.item.amount) : convertRawMoney(props.item.amount),
             description: props.item.description,
             date: convertToLocalDate(props.item.date)
         }
+
     }
 
     //Convert string input to raw integer on change. Set state to string value with commas/$ symbol. But pass up integer to store.
@@ -39,8 +41,6 @@ export default class Payment extends Component {
 
     render() {
         const { item, index } = this.props
-        const { amount, description, date } = this.state
-
         return (
             <div className="row">
 
@@ -48,7 +48,6 @@ export default class Payment extends Component {
 
                     <input
                         className="row-input amount-input"
-                        placeholder="$50"
                         onChange={e => this.setState({ amount: e.target.value })}
                         onBlur={this.updateAmount}
                         value={this.state.amount} />
@@ -65,7 +64,6 @@ export default class Payment extends Component {
 
                     <input
                         className="row-input"
-                        placeholder="Deposit"
                         value={this.state.description}
                         onChange={e => this.setState({ description: e.target.value })}
                         onBlur={this.updateAmount} />

@@ -37,7 +37,8 @@ export default function Table(props) {
                             key={e.payment_id}
                             updateItem={updateItem}
                             deleteItem={deleteItem}
-                            verifyDelete={verifyDelete} />
+                            verifyDelete={verifyDelete}
+                            showMileage={true} />
                     )
                 }
             })
