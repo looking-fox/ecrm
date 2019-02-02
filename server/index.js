@@ -9,11 +9,14 @@ const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 
 //------Controllers------//
+
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const payments = require('./payments_controller')
+const expenses = require('./expenses_controller')
 const subscription = require('./stripe_controller')
 const email = require('./email_controller')
+
 //------Controllers------//
 
 const app = express()
@@ -130,10 +133,6 @@ app.get('/auth/callback', async (req, res) => {
             })
         }
     })
-
-
-
-
 })
 
 //========Auth0==========//
@@ -294,6 +293,20 @@ app.get('/api/yearlymacro/:year', payments.yearlyMacro)
 
 
 
+//===============EXPENSES==================//
+
+app.get('/api/getexpenses/:id', expenses.getPayments)
+
+app.post('/api/savepayment', expenses.savePayment)
+
+app.put('/api/updatepayment', expenses.updatePayment)
+
+app.delete('/api/deletepayment/:id', expenses.deletePayment)
+
+//===============EXPENSES==================//
+
+
+
 //===============STRIPE==================//
 
 app.get('/api/stripe/subinfo', subscription.getInfo)
@@ -335,7 +348,6 @@ app.post('/api/email/signup', email.subscribed)
 //============SENDGRID==================//
 
 
-
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
@@ -346,4 +358,3 @@ const SERVER_PORT = process.env.SERVER_PORT || 3051
 app.listen(SERVER_PORT, () => {
     console.log(`Server is listening on ${SERVER_PORT}`)
 })
-

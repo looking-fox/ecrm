@@ -5,11 +5,11 @@ import axios from 'axios'
 import Table from '../Table/Table'
 import { convertToRawMoney, convertRawMoney } from '../../../../Main/MainLogic'
 
-export default class PaymentTable extends Component {
+export default class ExpenseTable extends Component {
     constructor() {
         super()
         this.state = {
-            payments: [],
+            expenses: [],
             amount: '',
             date: new Date(),
             description: '',
@@ -21,16 +21,14 @@ export default class PaymentTable extends Component {
 
     componentDidMount() {
         const { clientId } = this.props
-        axios.get(`/api/getpayments/${clientId}`)
+        axios.get(`/api/getexpenses/${clientId}`)
             .then(response => {
-                this.setState({ payments: response.data })
-            }).then(() => {
-                this.props.updateProgressBar(this.state.payments)
+                this.setState({ expenses: response.data })
             })
     }
 
-    savePayment = () => {
-        const { amount, date, description, payments } = this.state
+    saveExpense = () => {
+        const { amount, date, description, expenses } = this.state
 
         if (!amount || !description) {
             alert('Please fill in the payment information before adding it.')
@@ -40,49 +38,48 @@ export default class PaymentTable extends Component {
         const { clientId } = this.props
 
         this.setState({ savingStatus: true })
-        axios.post('/api/savepayment', { amount: intAmount, date, description, clientId })
+        axios.post('/api/saveexpense', { amount: intAmount, date, description, clientId })
             .then(response => {
-                let prevPayments = [...payments]
-                prevPayments.push(response.data[0])
+                let prevExpenses = [...expenses]
+                prevExpenses.push(response.data[0])
 
                 this.setState({
-                    payments: prevPayments,
+                    expenses: prevExpenses,
                     amount: '',
                     date: new Date(),
                     description: '',
                     savingStatus: false
-                }, () => this.props.updateProgressBar(this.state.payments))
+                })
             })
     }
 
-    updatePayment = (newInfo, index) => {
-        const { payments } = this.state
-        let newPayments = [...payments]
-        newPayments[index] = { ...newPayments[index], ...newInfo }
-        console.log('paymers', payments)
-        console.log('newsies', newPayments)
-        this.setState({ payments: newPayments, savingStatus: true }, () => {
-            axios.put('/api/updatepayment', { payment: newPayments[index] })
-                .then(() => this.setState({ savingStatus: false }, () => this.props.updateProgressBar(this.state.payments)))
+    updateExpense = (newInfo, index) => {
+        const { expenses } = this.state
+        let newExpenses = [...expenses]
+        newExpenses[index] = { ...newExpenses[index], ...newInfo }
+
+        this.setState({ expenses: newExpenses, savingStatus: true }, () => {
+            axios.put('/api/updatepayment', { expense: newExpenses[index] })
+                .then(() => this.setState({ savingStatus: false }))
         })
     }
 
     verifyDelete = (index, payment) => {
-        const { amount, client_id, payment_id } = payment
+        const { amount, client_id, expense_id } = payment
         let filterAmount = convertRawMoney(amount)
-        let deleteInfo = { index, amount: filterAmount, client_id, payment_id }
+        let deleteInfo = { index, amount: filterAmount, client_id, expense_id }
         this.setState({ verifyDelete: true, deleteInfo })
     }
 
-    deletePayment = () => {
-        const { payments, deleteInfo } = this.state
-        const { payment_id } = deleteInfo
-        let prevPayments = [...payments]
-        prevPayments.splice(deleteInfo.index, 1)
+    deleteExpense = () => {
+        const { expenses, deleteInfo } = this.state
+        const { expense_id } = deleteInfo
+        let prevExpenses = [...expenses]
+        prevExpenses.splice(deleteInfo.index, 1)
 
-        this.setState({ payments: prevPayments, verifyDelete: false, deleteInfo: {}, savingStatus: true }, () => {
+        this.setState({ expenses: prevExpenses, verifyDelete: false, deleteInfo: {}, savingStatus: true }, () => {
             axios.delete(`/api/deletepayment/${payment_id}`)
-                .then(() => this.setState({ savingStatus: false }, () => this.props.updateProgressBar(this.state.payments)))
+                .then(() => this.setState({ savingStatus: false }))
         })
     }
 
@@ -124,17 +121,17 @@ export default class PaymentTable extends Component {
                                 placeholder="Deposit"
                                 value={this.state.description}
                                 onChange={e => this.setState({ description: e.target.value })}
-                                onKeyDown={e => e.keyCode === 13 ? this.savePayment() : ''} />
+                                onKeyDown={e => e.keyCode === 13 ? this.saveExpense() : ''} />
 
                             <i className="fas fa-plus-square add-pay"
-                                onClick={this.savePayment} />
+                                onClick={this.saveExpense} />
                         </div>
                     </div>
                 </div>
 
                 <Table
-                    listData={this.state.payments}
-                    listDataType={"payments"}
+                    listData={this.state.expenses}
+                    listDataType={"expenses"}
                     updatePayment={this.updatePayment}
                     deletePayment={this.deletePayment}
                     verifyDelete={this.verifyDelete}
@@ -150,13 +147,13 @@ export default class PaymentTable extends Component {
                     <div className="client-options">
 
                         <h1 className="client-settings-modal-title">
-                            Delete payment of {this.state.deleteInfo.amount}?
+                            Delete expense of {this.state.deleteInfo.amount}?
                         </h1>
 
                         <button type="button"
                             className="btn btn-danger options"
-                            onClick={this.deletePayment}>
-                            Yes, Delete Payment
+                            onClick={this.deleteExpense}>
+                            Yes, Delete Expense
                         </button>
 
                     </div>
@@ -167,6 +164,3 @@ export default class PaymentTable extends Component {
         )
     }
 }
-
-
-
