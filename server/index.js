@@ -295,13 +295,13 @@ app.get('/api/yearlymacro/:year', payments.yearlyMacro)
 
 //===============EXPENSES==================//
 
-app.get('/api/getexpenses/:id', expenses.getPayments)
+app.get('/api/getexpenses/:id', expenses.getExpenses)
 
-app.post('/api/savepayment', expenses.savePayment)
+app.post('/api/savepayment', expenses.saveExpense)
 
-app.put('/api/updatepayment', expenses.updatePayment)
+app.put('/api/updatepayment', expenses.updateExpense)
 
-app.delete('/api/deletepayment/:id', expenses.deletePayment)
+app.delete('/api/deletepayment/:id', expenses.deleteExpense)
 
 //===============EXPENSES==================//
 

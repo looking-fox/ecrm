@@ -27,7 +27,7 @@ module.exports = {
         })
     },
 
-    deletePayment: (req, res) => {
+    deleteExpense: (req, res) => {
         const dbInstance = req.app.get('db')
         const { sub } = req.session.user
         const { id } = req.params

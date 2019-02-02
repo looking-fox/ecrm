@@ -23,7 +23,7 @@ export default function Table(props) {
                         <Payment
                             payment={e}
                             index={i}
-                            key={e.payment_id}
+                            key={e.expense_id}
                             updatePayment={updatePayment}
                             deletePayment={deletePayment}
                             verifyDelete={verifyDelete} />

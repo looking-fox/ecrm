@@ -100,7 +100,7 @@ class PaymentModal extends Component {
 
     render() {
         const { open, name, sessionColor } = this.props.paymentModal
-        const { modalView } = this.state
+
         return (
             <Modal open={open} onClose={this.clearAndClose}>
                 <div className="client-payment-container align-center column">

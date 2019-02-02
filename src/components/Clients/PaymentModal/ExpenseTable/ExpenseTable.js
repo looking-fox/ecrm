@@ -78,7 +78,7 @@ export default class ExpenseTable extends Component {
         prevExpenses.splice(deleteInfo.index, 1)
 
         this.setState({ expenses: prevExpenses, verifyDelete: false, deleteInfo: {}, savingStatus: true }, () => {
-            axios.delete(`/api/deletepayment/${payment_id}`)
+            axios.delete(`/api/deletepayment/${expense_id}`)
                 .then(() => this.setState({ savingStatus: false }))
         })
     }
