@@ -37,6 +37,8 @@ export default class Finances extends Component {
       yearlyPayments: [],
       yearPayStrings: [],
       totalPaid: 0,
+      avgExpenses: 0,
+      totalExpenses: 0,
       currentYear: null
     }
   }
@@ -51,10 +53,12 @@ export default class Finances extends Component {
   getYearInfo = () => {
     const { currentYear } = this.state
     axios.get(`/api/yearlypayments/${currentYear}`).then(response => {
-      let intAmount = response.data.map(e => parseInt(e.total))
+      const { monthlyPayments, macro } = response.data
+      const [clients, expenses] = macro
+      let intAmount = monthlyPayments.map(e => parseInt(e.total))
       let stringAmount = intAmount.map(e => convertRawMoney(e))
       let sum = intAmount.reduce((acc, e) => acc += e)
-      this.setState({ yearlyPayments: intAmount, yearPayStrings: stringAmount, totalPaid: sum, currentYear })
+      this.setState({ yearlyPayments: intAmount, yearPayStrings: stringAmount, totalPaid: sum, currentYear, totalExpenses: +expenses.sum, avgExpenses: expenses.sum / clients.sum })
     })
   }
 
@@ -63,7 +67,7 @@ export default class Finances extends Component {
   }
 
   render() {
-    const { yearlyPayments, totalPaid } = this.state
+    const { yearlyPayments, totalPaid, avgExpenses, totalExpenses } = this.state
     var paymentsData = {
       labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       datasets: [
@@ -98,6 +102,16 @@ export default class Finances extends Component {
             <div className="macro-category center column">
               <p className="small-title">AVG / MO</p>
               <p className="big-number">{convertRawMoney(Math.round(totalPaid / 12))}</p>
+            </div>
+
+            <div className="macro-category center column">
+              <p className="small-title">expenses</p>
+              <p className="big-number paid">{convertRawMoney(totalExpenses)}</p>
+            </div>
+
+            <div className="macro-category center column">
+              <p className="small-title">AVG / CLIENT</p>
+              <p className="big-number">{convertRawMoney(Math.round(avgExpenses))}</p>
             </div>
           </div>
 
