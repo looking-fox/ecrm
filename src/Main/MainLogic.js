@@ -19,6 +19,14 @@ function convertRawMoney(amount) {
     return arr.join("")
 }
 
+function convertRawMiles(amount) {
+    return +amount.replace(/[\D+]+/g, "")
+}
+
+function convertToMiles(amount) {
+    return `${amount} mi`
+}
+
 function convertToRawMoney(amount) {
     if (isNaN(
         parseFloat(amount.replace(/[$," "]+/g, "")))
@@ -82,4 +90,4 @@ function goToMap(location) {
     window.open(url, '_blank')
 }
 
-module.exports = { convertRawMoney, convertToRawMoney, convertToLocalDate, login, goToMap }
+module.exports = { convertRawMoney, convertToRawMoney, convertToLocalDate, convertRawMiles, convertToMiles, login, goToMap }

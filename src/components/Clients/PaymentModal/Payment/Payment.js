@@ -40,8 +40,6 @@ export default class Payment extends Component {
     render() {
         const { item, index } = this.props
         const { amount, description, date } = this.state
-        let filterAmount = convertToRawMoney(amount)
-        let newInfo = { amount: filterAmount, description, date }
 
         return (
             <div className="row">

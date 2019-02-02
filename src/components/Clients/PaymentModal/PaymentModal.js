@@ -3,9 +3,10 @@ import './PaymentModal.css'
 import Modal from 'react-responsive-modal'
 import PaymentTable from './PaymentTable/PaymentTable'
 import ExpenseTable from './ExpenseTable/ExpenseTable'
+import MileageTable from './MileageTable/MileageTable'
 import { connect } from 'react-redux'
 import { updateProps } from '../../../redux/reducer'
-import { convertToRawMoney, convertRawMoney } from '../../../Main/MainLogic'
+import { convertRawMoney } from '../../../Main/MainLogic'
 
 class PaymentModal extends Component {
     constructor() {
@@ -46,18 +47,15 @@ class PaymentModal extends Component {
         this.setState(state => {
             if (index === 0) {
                 return {
-                    listData: state.payments,
                     modalView: "payments"
                 }
             } else if (index === 1) {
                 return {
-                    listData: state.expenses,
                     modalView: "expenses"
                 }
             } else {
                 return {
-                    listData: state.payments,
-                    modalView: "payments"
+                    modalView: "mileage"
                 }
             }
         })
@@ -80,7 +78,13 @@ class PaymentModal extends Component {
                     clearAndClose={this.clearAndClose} />
             )
         }
-        else return null
+        else {
+            return (
+                <MileageTable
+                    clientId={this.props.paymentModal.clientId}
+                    clearAndClose={this.clearAndClose} />
+            )
+        }
     }
 
     clearAndClose = () => {

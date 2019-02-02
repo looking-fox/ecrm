@@ -14,6 +14,7 @@ const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const payments = require('./payments_controller')
 const expenses = require('./expenses_controller')
+const mileage = require('./mileage_controller')
 const subscription = require('./stripe_controller')
 const email = require('./email_controller')
 
@@ -304,6 +305,20 @@ app.put('/api/updateexpense', expenses.updateExpense)
 app.delete('/api/deleteexpense/:id', expenses.deleteExpense)
 
 //===============EXPENSES==================//
+
+
+
+//===============MILEAGE==================//
+
+app.get('/api/getmileage/:id', mileage.getMileage)
+
+app.post('/api/savemileage', mileage.saveMileage)
+
+app.put('/api/updatemileage', mileage.updateMileage)
+
+app.delete('/api/deletemileage/:id', mileage.deleteMileage)
+
+//===============MILEAGE==================//
 
 
 
