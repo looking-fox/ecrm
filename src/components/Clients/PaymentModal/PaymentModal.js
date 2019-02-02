@@ -131,14 +131,14 @@ class PaymentModal extends Component {
 
                     </div>
 
-                    <div className="modal-menu-bar">
+                    <nav className="modal-menu-bar">
                         <p className="modal-menu-item center"
                             onClick={() => this.changeLists(0)}>Payments</p>
                         <p className="modal-menu-item center"
                             onClick={() => this.changeLists(1)}>Expenses</p>
                         <p className="modal-menu-item center"
                             onClick={() => this.changeLists(2)}>Mileage</p>
-                    </div>
+                    </nav>
 
 
                     {/* Swaps out table views based on menu */}

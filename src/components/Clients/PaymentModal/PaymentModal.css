@@ -1,7 +1,9 @@
 .client-payment-container {
     width: 600px;
+    min-width: 600px;
     height: 500px;
     justify-content: flex-start;
+    overflow-x: hidden;
 }
 
 .payment-top-row-container {
@@ -65,7 +67,7 @@
     color: black;
 }
 
-div.modal-menu-bar {
+nav.modal-menu-bar {
     width: fit-content;
     padding-top: 20px;
     display: flex;
@@ -118,6 +120,7 @@ p.modal-menu-item:hover {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .pay-amount {
     width: 20%;
     font-weight: 600;

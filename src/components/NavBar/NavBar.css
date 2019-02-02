@@ -28,7 +28,7 @@
      margin-bottom: 5px;
  }
  
- nav {
+ nav.main-navigation {
      font-size: 0.8em;
      font-weight: 700;
      display: flex;
@@ -37,7 +37,7 @@
      margin-right: 50px;
  }
  
- nav li {
+ nav.main-navigation li {
      list-style: none;
      margin: 0px 40px;
      letter-spacing: 2px;
@@ -46,12 +46,12 @@
      text-decoration: none;
  }
  
- nav li:hover {
+ nav.main-navigation li:hover {
      color: black;
      cursor: pointer;
  }
  
- nav button {
+ nav.main-navigation button {
      margin: 0 40px;
      letter-spacing: 1px;
  }
@@ -59,7 +59,7 @@
 
 
  @media (max-width: 576px) { 
-    nav li {
+    nav.main-navigation li {
         display: none;
     }
     .log-in-button{
@@ -76,5 +76,4 @@
         justify-content: center;
         align-items: center;
     }
-    
 }

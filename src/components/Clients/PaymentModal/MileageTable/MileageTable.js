@@ -94,7 +94,7 @@ export default class MileageTable extends Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <div className="payment-top-row-container">
                     <div className="row top-row-input">
                         <div className="pay pay-amount">
@@ -160,7 +160,7 @@ export default class MileageTable extends Component {
                 </Modal>
                 {/* ---Delete Veriy Modal--- */}
 
-            </div>
+            </React.Fragment>
         )
     }
 }

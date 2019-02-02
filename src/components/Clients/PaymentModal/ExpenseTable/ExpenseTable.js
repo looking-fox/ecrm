@@ -94,7 +94,7 @@ export default class ExpenseTable extends Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <div className="payment-top-row-container">
                     <div className="row top-row-input">
                         <div className="pay pay-amount">
@@ -118,7 +118,7 @@ export default class ExpenseTable extends Component {
 
                             <input
                                 className="row-input"
-                                placeholder="Deposit"
+                                placeholder="Roundtrip flight"
                                 value={this.state.description}
                                 onChange={e => this.setState({ description: e.target.value })}
                                 onKeyDown={e => e.keyCode === 13 ? this.saveExpense() : ''} />
@@ -160,7 +160,7 @@ export default class ExpenseTable extends Component {
                 </Modal>
                 {/* ---Delete Veriy Modal--- */}
 
-            </div>
+            </React.Fragment>
         )
     }
 }
