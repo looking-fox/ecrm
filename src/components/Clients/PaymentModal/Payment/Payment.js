@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from 'react-date-picker'
-import { convertRawMoney, convertToMiles, convertToRawMoney, convertToLocalDate } from '../../../../Main/MainLogic'
+import { convertRawMoney, convertToMiles, convertRawMiles, convertToRawMoney, convertToLocalDate } from '../../../../Main/MainLogic'
 
 export default class Payment extends Component {
     constructor(props) {
@@ -20,13 +20,23 @@ export default class Payment extends Component {
         if (this.state.amount) {
             const { amount, description, date } = this.state
             const { id, index } = this.props
-            let intAmount = convertToRawMoney(amount)
-            let filterAmount = convertRawMoney(intAmount)
-
-            this.setState({ amount: filterAmount }, () => {
+            const { intAmount, stringAmount } = convertMethod(amount, this.props.showMileage)
+            this.setState({ amount: stringAmount }, () => {
                 let newInfo = { amount: intAmount, description, date }
                 this.props.updateItem(newInfo, index, id)
             })
+        }
+
+        function convertMethod(amount, mileage) {
+            let intAmount, stringAmount
+            if (mileage) {
+                intAmount = convertRawMiles(amount)
+                stringAmount = convertToMiles(intAmount)
+            } else {
+                intAmount = convertToRawMoney(amount)
+                stringAmount = convertRawMoney(intAmount)
+            }
+            return { intAmount, stringAmount }
         }
     }
 

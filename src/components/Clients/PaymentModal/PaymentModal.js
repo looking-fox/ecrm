@@ -95,7 +95,8 @@ class PaymentModal extends Component {
             amount: '',
             date: new Date(),
             description: '',
-            deletePaymentId: null
+            deletePaymentId: null,
+            modalView: "payments"
         })
         this.props.updateProps({
             paymentModal: { open: false, clientId: null }
