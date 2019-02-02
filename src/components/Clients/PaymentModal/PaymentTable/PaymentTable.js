@@ -55,12 +55,11 @@ export default class PaymentTable extends Component {
             })
     }
 
-    updatePayment = (newInfo, index) => {
+    updateItem = (newInfo, index) => {
         const { payments } = this.state
         let newPayments = [...payments]
         newPayments[index] = { ...newPayments[index], ...newInfo }
-        console.log('paymers', payments)
-        console.log('newsies', newPayments)
+
         this.setState({ payments: newPayments, savingStatus: true }, () => {
             axios.put('/api/updatepayment', { payment: newPayments[index] })
                 .then(() => this.setState({ savingStatus: false }, () => this.props.updateProgressBar(this.state.payments)))
@@ -74,7 +73,7 @@ export default class PaymentTable extends Component {
         this.setState({ verifyDelete: true, deleteInfo })
     }
 
-    deletePayment = () => {
+    deleteItem = () => {
         const { payments, deleteInfo } = this.state
         const { payment_id } = deleteInfo
         let prevPayments = [...payments]
@@ -135,8 +134,8 @@ export default class PaymentTable extends Component {
                 <Table
                     listData={this.state.payments}
                     listDataType={"payments"}
-                    updatePayment={this.updatePayment}
-                    deletePayment={this.deletePayment}
+                    updateItem={this.updateItem}
+                    deleteItem={this.deleteItem}
                     verifyDelete={this.verifyDelete}
                 />
 
@@ -155,7 +154,7 @@ export default class PaymentTable extends Component {
 
                         <button type="button"
                             className="btn btn-danger options"
-                            onClick={this.deletePayment}>
+                            onClick={this.deleteItem}>
                             Yes, Delete Payment
                         </button>
 

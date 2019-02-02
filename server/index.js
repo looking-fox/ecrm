@@ -297,11 +297,11 @@ app.get('/api/yearlymacro/:year', payments.yearlyMacro)
 
 app.get('/api/getexpenses/:id', expenses.getExpenses)
 
-app.post('/api/savepayment', expenses.saveExpense)
+app.post('/api/saveexpense', expenses.saveExpense)
 
-app.put('/api/updatepayment', expenses.updateExpense)
+app.put('/api/updateexpense', expenses.updateExpense)
 
-app.delete('/api/deletepayment/:id', expenses.deleteExpense)
+app.delete('/api/deleteexpense/:id', expenses.deleteExpense)
 
 //===============EXPENSES==================//
 

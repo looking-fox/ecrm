@@ -7,9 +7,9 @@ export default class Payment extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            amount: convertRawMoney(props.payment.amount),
-            description: props.payment.description,
-            date: convertToLocalDate(props.payment.date)
+            amount: convertRawMoney(props.item.amount),
+            description: props.item.description,
+            date: convertToLocalDate(props.item.date)
         }
     }
 
@@ -23,7 +23,7 @@ export default class Payment extends Component {
 
             this.setState({ amount: filterAmount }, () => {
                 let newInfo = { amount: intAmount, description, date }
-                this.props.updatePayment(newInfo, index, id)
+                this.props.updateItem(newInfo, index, id)
             })
         }
     }
@@ -34,11 +34,11 @@ export default class Payment extends Component {
         const { amount, description } = this.state
         let intAmount = convertToRawMoney(amount)
         let newInfo = { amount: intAmount, date, description }
-        this.props.updatePayment(newInfo, index, id)
+        this.props.updateItem(newInfo, index, id)
     }
 
     render() {
-        const { payment, index } = this.props
+        const { item, index } = this.props
         const { amount, description, date } = this.state
         let filterAmount = convertToRawMoney(amount)
         let newInfo = { amount: filterAmount, description, date }
@@ -72,7 +72,7 @@ export default class Payment extends Component {
                         onChange={e => this.setState({ description: e.target.value })}
                         onBlur={this.updateAmount} />
                     <i className="far fa-trash-alt row-delete"
-                        onClick={() => this.props.verifyDelete(index, payment)} />
+                        onClick={() => this.props.verifyDelete(index, item)} />
                 </div>
 
             </div>
@@ -81,9 +81,9 @@ export default class Payment extends Component {
 }
 
 Payment.propTypes = {
-    payment: PropTypes.shape({
+    item: PropTypes.shape({
         amount: PropTypes.number.isRequired,
         description: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired
+        date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired
     }).isRequired
 }

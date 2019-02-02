@@ -31,7 +31,7 @@ export default class ExpenseTable extends Component {
         const { amount, date, description, expenses } = this.state
 
         if (!amount || !description) {
-            alert('Please fill in the payment information before adding it.')
+            alert('Please fill in the expense information before adding it.')
             return
         }
         let intAmount = convertToRawMoney(amount)
@@ -53,32 +53,32 @@ export default class ExpenseTable extends Component {
             })
     }
 
-    updateExpense = (newInfo, index) => {
+    updateItem = (newInfo, index) => {
         const { expenses } = this.state
         let newExpenses = [...expenses]
         newExpenses[index] = { ...newExpenses[index], ...newInfo }
 
         this.setState({ expenses: newExpenses, savingStatus: true }, () => {
-            axios.put('/api/updatepayment', { expense: newExpenses[index] })
+            axios.put('/api/updateexpense', { expense: newExpenses[index] })
                 .then(() => this.setState({ savingStatus: false }))
         })
     }
 
-    verifyDelete = (index, payment) => {
-        const { amount, client_id, expense_id } = payment
+    verifyDelete = (index, expense) => {
+        const { amount, client_id, expense_id } = expense
         let filterAmount = convertRawMoney(amount)
         let deleteInfo = { index, amount: filterAmount, client_id, expense_id }
         this.setState({ verifyDelete: true, deleteInfo })
     }
 
-    deleteExpense = () => {
+    deleteItem = () => {
         const { expenses, deleteInfo } = this.state
         const { expense_id } = deleteInfo
         let prevExpenses = [...expenses]
         prevExpenses.splice(deleteInfo.index, 1)
-
+        console.table('deleteInfo', deleteInfo, 'expense_id', expense_id)
         this.setState({ expenses: prevExpenses, verifyDelete: false, deleteInfo: {}, savingStatus: true }, () => {
-            axios.delete(`/api/deletepayment/${expense_id}`)
+            axios.delete(`/api/deleteexpense/${expense_id}`)
                 .then(() => this.setState({ savingStatus: false }))
         })
     }
@@ -132,8 +132,8 @@ export default class ExpenseTable extends Component {
                 <Table
                     listData={this.state.expenses}
                     listDataType={"expenses"}
-                    updatePayment={this.updatePayment}
-                    deletePayment={this.deletePayment}
+                    updateItem={this.updateItem}
+                    deleteItem={this.deleteItem}
                     verifyDelete={this.verifyDelete}
                 />
 
@@ -152,7 +152,7 @@ export default class ExpenseTable extends Component {
 
                         <button type="button"
                             className="btn btn-danger options"
-                            onClick={this.deleteExpense}>
+                            onClick={this.deleteItem}>
                             Yes, Delete Expense
                         </button>
 
