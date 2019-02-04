@@ -87,14 +87,13 @@
     cursor: pointer;
 }
 .session-form{
-    width: 50vw;
+    width: auto;
     min-width: 700px;
     height: 375px;
     margin-bottom: 5%;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 1;
-
 }
 .title{
     font-size: 1.3em;

@@ -1,5 +1,5 @@
 .client-modal-container {
-    width: 50vw;
+    width: auto;
     min-width: 700px;
     display: grid;
     grid-template-columns: 50% 50%;
@@ -10,7 +10,7 @@
 }
 
 .add-client-modal{ 
-    width:100%;
+    width: 100%;
     min-width: 20vw;
     padding-bottom: 20px;
     grid-column: 1;    

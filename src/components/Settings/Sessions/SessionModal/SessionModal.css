@@ -19,11 +19,11 @@
 }
 
 .session-action-panel {
+    width: auto;
     padding-bottom: 10%; 
     overflow: hidden;
 }
 .session-title {
     font-size: 1.1em;
     color: black;
-    background: blue;
 }
