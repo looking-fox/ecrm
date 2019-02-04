@@ -4,7 +4,7 @@ import Nav from '../Nav/Nav'
 import axios from 'axios'
 import { Line } from 'react-chartjs-2';
 import Select from 'react-select'
-import { convertRawMoney } from '../../../Main/MainLogic'
+import { convertRawMoney, convertToMiles } from '../../../Main/MainLogic'
 
 const options = [
   { value: 2017, label: '2017' },
@@ -37,7 +37,7 @@ export default class Finances extends Component {
       yearlyPayments: [],
       yearPayStrings: [],
       totalPaid: 0,
-      avgExpenses: 0,
+      totalMileage: 0,
       totalExpenses: 0,
       currentYear: null
     }
@@ -54,11 +54,12 @@ export default class Finances extends Component {
     const { currentYear } = this.state
     axios.get(`/api/yearlypayments/${currentYear}`).then(response => {
       const { monthlyPayments, macro } = response.data
-      const [clients, expenses] = macro
+      const [expenses, mileage] = macro
+
       let intAmount = monthlyPayments.map(e => parseInt(e.total))
       let stringAmount = intAmount.map(e => convertRawMoney(e))
       let sum = intAmount.reduce((acc, e) => acc += e)
-      this.setState({ yearlyPayments: intAmount, yearPayStrings: stringAmount, totalPaid: sum, currentYear, totalExpenses: +expenses.sum, avgExpenses: expenses.sum / clients.sum })
+      this.setState({ yearlyPayments: intAmount, yearPayStrings: stringAmount, totalPaid: sum, currentYear, totalExpenses: +expenses.amount, totalMileage: convertToMiles(+mileage.amount) })
     })
   }
 
@@ -67,7 +68,7 @@ export default class Finances extends Component {
   }
 
   render() {
-    const { yearlyPayments, totalPaid, avgExpenses, totalExpenses } = this.state
+    const { yearlyPayments, totalPaid, totalMileage, totalExpenses } = this.state
     var paymentsData = {
       labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       datasets: [
@@ -110,8 +111,8 @@ export default class Finances extends Component {
             </div>
 
             <div className="macro-category center column">
-              <p className="small-title">AVG / CLIENT</p>
-              <p className="big-number">{convertRawMoney(Math.round(avgExpenses))}</p>
+              <p className="small-title">mileage</p>
+              <p className="big-number">{totalMileage}</p>
             </div>
           </div>
 
