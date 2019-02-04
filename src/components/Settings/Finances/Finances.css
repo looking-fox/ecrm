@@ -41,6 +41,7 @@
     grid-template-rows: 50% 50%;
     padding: 100px 30px;
     padding-left: 40px;
+    animation: fadeInMacro 200ms ease-in-out;
 }
 
 .macro-category {
@@ -100,4 +101,9 @@
 @keyframes fadeUp {
     from {transform: translateY(30px) scale(0.9)}
     to {transform: translateY(0px) scale(1)}
+}
+
+@keyframes fadeInMacro {
+    from {opacity: 0}
+    to {opacity: 1}
 }
