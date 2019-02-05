@@ -22,69 +22,72 @@ import Sessions from './components/Settings/Sessions/Sessions'
 import SignUp from './components/Subscription/SignUp'
 
 ReactDOM.render(
-    <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>
-        <Provider store={store}>
-            <Router>
-                <Switch>
-                    <Route exact path="/"
-                        render={props => <Home {...props} />} />
+    <Provider store={store}>
+        <Router>
+            <Switch>
+                <Route exact path="/"
+                    render={props => <Home {...props} />} />
 
-                    <Route path="/contact" render={props => {
-                        return (
-                            <div className="app">
-                                <Navbar {...props} />
-                                <Contact />
-                            </div>
-                        )
-                    }} />
+                <Route path="/contact" render={props => {
+                    return (
+                        <div className="app">
+                            <Navbar {...props} />
+                            <Contact />
+                        </div>
+                    )
+                }} />
 
-                    <Route path="/dashboard" render={props => {
-                        return (
-                            <div style={{ display: 'flex' }}>
+                <Route path="/dashboard" render={props => {
+                    return (
+                        <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>\
+                        <div style={{ display: 'flex' }}>
                                 <Sidebar {...props} />
                                 <Clients />
                             </div>
-                        )
-                    }} />
+                        </StripeProvider>
+                    )
+                }} />
 
-                    <Route path="/dashboard/welcome" render={props => {
+                <Route path="/dashboard/welcome" render={props => {
+                    return (
+                        <div style={{ display: 'flex' }}>
+                            <Sidebar {...props} />
+                            <Clients />
+                        </div>
+                    )
+                }} />
+
+                <Route exact path="/tools/templates"
+                    render={props => {
                         return (
                             <div style={{ display: 'flex' }}>
                                 <Sidebar {...props} />
-                                <Clients />
+                                <Sessions />
                             </div>
                         )
                     }} />
 
-                    <Route exact path="/tools/templates"
-                        render={props => {
-                            return (
-                                <div style={{ display: 'flex' }}>
-                                    <Sidebar {...props} />
-                                    <Sessions />
-                                </div>
-                            )
-                        }} />
+                <Route exact path="/tools/finances"
+                    render={props => {
+                        return (
+                            <div style={{ display: 'flex' }}>
+                                <Sidebar {...props} />
+                                <Finances />
+                            </div>
+                        )
+                    }} />
 
-                    <Route exact path="/tools/finances"
-                        render={props => {
-                            return (
-                                <div style={{ display: 'flex' }}>
-                                    <Sidebar {...props} />
-                                    <Finances />
-                                </div>
-                            )
-                        }} />
+                <Route exact path="/signup" render={props => {
+                    return (
+                        <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>
+                            <SignUp {...props} />
+                        </StripeProvider>
+                    )
+                }} />
 
-                    <Route exact path="/signup" render={props => (
-                        <SignUp {...props} />
-                    )} />
-
-                </Switch>
-            </Router>
-        </Provider>
-    </StripeProvider>
-
+            </Switch>
+        </Router>
+    </Provider>
     , document.getElementById('root'));
 
 unregister();
