@@ -5,13 +5,12 @@ import './reset.css';
 import './index.css';
 import './Main/Main.css';
 
-
 import store from './redux/store'
 import { unregister } from './serviceWorker';
 
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import {Provider} from 'react-redux'
-import {StripeProvider} from 'react-stripe-elements';
+import { Provider } from 'react-redux'
+import { StripeProvider } from 'react-stripe-elements';
 
 import Navbar from './components/NavBar/NavBar'
 import Home from './components/Home/Home'
@@ -23,69 +22,69 @@ import Sessions from './components/Settings/Sessions/Sessions'
 import SignUp from './components/Subscription/SignUp'
 
 ReactDOM.render(
-<StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>
-<Provider store={store}>
-    <Router>
-        <Switch>
-            <Route exact path="/" 
-            render={props => <Home {...props}/>} />
+    <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>
+        <Provider store={store}>
+            <Router>
+                <Switch>
+                    <Route exact path="/"
+                        render={props => <Home {...props} />} />
 
-            <Route path="/contact" render={ props => {
-                return (
-                <div className="app">
-                    <Navbar {...props}/>
-                    <Contact/>
-                </div>
-                )
-            }}/>
+                    <Route path="/contact" render={props => {
+                        return (
+                            <div className="app">
+                                <Navbar {...props} />
+                                <Contact />
+                            </div>
+                        )
+                    }} />
 
-            <Route path="/dashboard" render={ props => {
-                return (
-                    <div style={{display: 'flex'}}>
-                        <Sidebar {...props}/>
-                        <Clients/>
-                    </div>
-                )
-            }}/>
+                    <Route path="/dashboard" render={props => {
+                        return (
+                            <div style={{ display: 'flex' }}>
+                                <Sidebar {...props} />
+                                <Clients />
+                            </div>
+                        )
+                    }} />
 
-            <Route path="/dashboard/welcome" render={ props => {
-                return (
-                    <div style={{display: 'flex'}}>
-                        <Sidebar {...props}/>
-                        <Clients/>
-                    </div>
-                )
-            }}/>
+                    <Route path="/dashboard/welcome" render={props => {
+                        return (
+                            <div style={{ display: 'flex' }}>
+                                <Sidebar {...props} />
+                                <Clients />
+                            </div>
+                        )
+                    }} />
 
-            <Route exact path="/tools/templates" 
-            render={ props => {
-                return (
-                    <div style={{display: 'flex'}}>
-                        <Sidebar {...props}/>
-                        <Sessions/>
-                    </div>
-                )
-            }}/>
+                    <Route exact path="/tools/templates"
+                        render={props => {
+                            return (
+                                <div style={{ display: 'flex' }}>
+                                    <Sidebar {...props} />
+                                    <Sessions />
+                                </div>
+                            )
+                        }} />
 
-            <Route exact path="/tools/finances" 
-            render={ props => {
-                return (
-                    <div style={{display: 'flex'}}>
-                        <Sidebar {...props}/>
-                        <Finances/>
-                    </div>
-                )
-            }}/>
+                    <Route exact path="/tools/finances"
+                        render={props => {
+                            return (
+                                <div style={{ display: 'flex' }}>
+                                    <Sidebar {...props} />
+                                    <Finances />
+                                </div>
+                            )
+                        }} />
 
-            <Route exact path="/signup" render={props => (
-                <SignUp {...props} />
-            )}/>
- 
-        </Switch>
-    </Router>
-</Provider>
-</StripeProvider>
+                    <Route exact path="/signup" render={props => (
+                        <SignUp {...props} />
+                    )} />
 
-, document.getElementById('root'));
+                </Switch>
+            </Router>
+        </Provider>
+    </StripeProvider>
+
+    , document.getElementById('root'));
 
 unregister();

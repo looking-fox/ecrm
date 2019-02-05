@@ -3,13 +3,13 @@ import Modal from 'react-responsive-modal'
 import DatePicker from 'react-date-picker'
 import axios from 'axios'
 import Table from '../Table/Table'
-import { convertToRawMoney, convertRawMoney } from '../../../../Main/MainLogic'
+import { convertToMiles, convertRawMiles } from '../../../../Main/MainLogic'
 
-export default class PaymentTable extends Component {
+export default class MileageTable extends Component {
     constructor() {
         super()
         this.state = {
-            payments: [],
+            mileage: [],
             amount: '',
             date: new Date(),
             description: '',
@@ -21,75 +21,73 @@ export default class PaymentTable extends Component {
 
     componentDidMount() {
         const { clientId } = this.props
-        axios.get(`/api/getpayments/${clientId}`)
+        axios.get(`/api/getmileage/${clientId}`)
             .then(response => {
-                this.setState({ payments: response.data })
-            }).then(() => {
-                this.props.updateProgressBar(this.state.payments)
+                this.setState({ mileage: response.data })
             })
     }
 
-    savePayment = () => {
-        const { amount, date, description, payments } = this.state
+    saveMileage = () => {
+        const { amount, date, description, mileage } = this.state
 
         if (!amount || !description) {
-            alert('Please fill in the payment information before adding it.')
+            alert('Please fill in the mileage information before adding it.')
             return
         }
-        let intAmount = convertToRawMoney(amount)
+        let intAmount = convertRawMiles(amount)
         const { clientId } = this.props
 
         this.setState({ savingStatus: true })
-        axios.post('/api/savepayment', { amount: intAmount, date, description, clientId })
+        axios.post('/api/savemileage', { amount: intAmount, date, description, clientId })
             .then(response => {
-                let prevPayments = [...payments]
-                prevPayments.push(response.data[0])
+                let prevMileage = [...mileage]
+                prevMileage.push(response.data[0])
 
                 this.setState({
-                    payments: prevPayments,
+                    mileage: prevMileage,
                     amount: '',
                     date: new Date(),
                     description: '',
                     savingStatus: false
-                }, () => this.props.updateProgressBar(this.state.payments))
+                })
             })
     }
 
     updateItem = (newInfo, index) => {
-        const { payments } = this.state
-        let newPayments = [...payments]
-        newPayments[index] = { ...newPayments[index], ...newInfo }
+        const { mileage } = this.state
+        let newMileage = [...mileage]
+        newMileage[index] = { ...newMileage[index], ...newInfo }
 
-        this.setState({ payments: newPayments, savingStatus: true }, () => {
-            axios.put('/api/updatepayment', { payment: newPayments[index] })
-                .then(() => this.setState({ savingStatus: false }, () => this.props.updateProgressBar(this.state.payments)))
+        this.setState({ mileage: newMileage, savingStatus: true }, () => {
+            axios.put('/api/updatemileage', { mileage: newMileage[index] })
+                .then(() => this.setState({ savingStatus: false }))
         })
     }
 
-    verifyDelete = (index, payment) => {
-        const { amount, client_id, payment_id } = payment
-        let filterAmount = convertRawMoney(amount)
-        let deleteInfo = { index, amount: filterAmount, client_id, payment_id }
+    verifyDelete = (index, mileage) => {
+        const { amount, client_id, mileage_id } = mileage
+        let filterAmount = convertToMiles(amount)
+        let deleteInfo = { index, amount: filterAmount, client_id, mileage_id }
         this.setState({ verifyDelete: true, deleteInfo })
     }
 
     deleteItem = () => {
-        const { payments, deleteInfo } = this.state
-        const { payment_id } = deleteInfo
-        let prevPayments = [...payments]
-        prevPayments.splice(deleteInfo.index, 1)
+        const { mileage, deleteInfo } = this.state
+        const { mileage_id } = deleteInfo
+        let prevMileage = [...mileage]
+        prevMileage.splice(deleteInfo.index, 1)
 
-        this.setState({ payments: prevPayments, verifyDelete: false, deleteInfo: {}, savingStatus: true }, () => {
-            axios.delete(`/api/deletepayment/${payment_id}`)
-                .then(() => this.setState({ savingStatus: false }, () => this.props.updateProgressBar(this.state.payments)))
+        this.setState({ mileage: prevMileage, verifyDelete: false, deleteInfo: {}, savingStatus: true }, () => {
+            axios.delete(`/api/deletemileage/${mileage_id}`)
+                .then(() => this.setState({ savingStatus: false }))
         })
     }
 
     convertAmount = () => {
         if (this.state.amount) {
             const { amount } = this.state
-            let intAmount = convertToRawMoney(amount)
-            let filterAmount = convertRawMoney(intAmount)
+            let intAmount = convertRawMiles(amount)
+            let filterAmount = convertToMiles(intAmount)
             this.setState({ amount: filterAmount })
         }
     }
@@ -103,7 +101,7 @@ export default class PaymentTable extends Component {
 
                             <input
                                 className="row-input amount-input"
-                                placeholder="$50"
+                                placeholder="50 mi"
                                 value={this.state.amount}
                                 onChange={e => this.setState({ amount: e.target.value })}
                                 onBlur={() => this.convertAmount()} />
@@ -120,20 +118,20 @@ export default class PaymentTable extends Component {
 
                             <input
                                 className="row-input"
-                                placeholder="Deposit"
+                                placeholder="Seattle to Port Angeles"
                                 value={this.state.description}
                                 onChange={e => this.setState({ description: e.target.value })}
-                                onKeyDown={e => e.keyCode === 13 ? this.savePayment() : ''} />
+                                onKeyDown={e => e.keyCode === 13 ? this.saveMileage() : ''} />
 
                             <i className="fas fa-plus-square add-pay"
-                                onClick={this.savePayment} />
+                                onClick={this.saveMileage} />
                         </div>
                     </div>
                 </div>
 
                 <Table
-                    listData={this.state.payments}
-                    listDataType={"payments"}
+                    listData={this.state.mileage}
+                    listDataType={"mileage"}
                     updateItem={this.updateItem}
                     deleteItem={this.deleteItem}
                     verifyDelete={this.verifyDelete}
@@ -149,13 +147,13 @@ export default class PaymentTable extends Component {
                     <div className="client-options">
 
                         <h1 className="client-settings-modal-title">
-                            Delete payment of {this.state.deleteInfo.amount}?
+                            Delete mileage of {this.state.deleteInfo.amount}?
                         </h1>
 
                         <button type="button"
                             className="btn btn-danger options"
                             onClick={this.deleteItem}>
-                            Yes, Delete Payment
+                            Yes, Delete Mileage
                         </button>
 
                     </div>
@@ -166,6 +164,3 @@ export default class PaymentTable extends Component {
         )
     }
 }
-
-
-

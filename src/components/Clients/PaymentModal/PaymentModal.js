@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import './PaymentModal.css'
 import Modal from 'react-responsive-modal'
 import PaymentTable from './PaymentTable/PaymentTable'
+import ExpenseTable from './ExpenseTable/ExpenseTable'
+import MileageTable from './MileageTable/MileageTable'
 import { connect } from 'react-redux'
 import { updateProps } from '../../../redux/reducer'
-import { convertToRawMoney, convertRawMoney } from '../../../Main/MainLogic'
+import { convertRawMoney } from '../../../Main/MainLogic'
 
 class PaymentModal extends Component {
     constructor() {
         super()
         this.state = {
-            listData: [],
             paid: 0,
             total: 0,
             totalPaid: 0,
@@ -36,7 +37,6 @@ class PaymentModal extends Component {
 
         }
         else {
-            console.log('else')
             const { sessionPrice } = this.props.paymentModal
             let filterSessionPrice = parseInt(sessionPrice.replace(/[$,]+/g, ""))
             this.setState({ paid: 0, total: filterSessionPrice, noPayments: true })
@@ -47,21 +47,44 @@ class PaymentModal extends Component {
         this.setState(state => {
             if (index === 0) {
                 return {
-                    listData: state.payments,
                     modalView: "payments"
                 }
             } else if (index === 1) {
                 return {
-                    listData: state.expenses,
                     modalView: "expenses"
                 }
             } else {
                 return {
-                    listData: state.payments,
-                    modalView: "payments"
+                    modalView: "mileage"
                 }
             }
         })
+    }
+
+    renderTable = () => {
+        const { modalView } = this.state
+        if (modalView === "payments") {
+            return (
+                <PaymentTable
+                    clientId={this.props.paymentModal.clientId}
+                    updateProgressBar={this.updateProgressBar}
+                    clearAndClose={this.clearAndClose} />
+            )
+        }
+        else if (modalView === "expenses") {
+            return (
+                <ExpenseTable
+                    clientId={this.props.paymentModal.clientId}
+                    clearAndClose={this.clearAndClose} />
+            )
+        }
+        else {
+            return (
+                <MileageTable
+                    clientId={this.props.paymentModal.clientId}
+                    clearAndClose={this.clearAndClose} />
+            )
+        }
     }
 
     clearAndClose = () => {
@@ -72,7 +95,8 @@ class PaymentModal extends Component {
             amount: '',
             date: new Date(),
             description: '',
-            deletePaymentId: null
+            deletePaymentId: null,
+            modalView: "payments"
         })
         this.props.updateProps({
             paymentModal: { open: false, clientId: null }
@@ -81,7 +105,7 @@ class PaymentModal extends Component {
 
     render() {
         const { open, name, sessionColor } = this.props.paymentModal
-        const { modalView, listData } = this.state
+
         return (
             <Modal open={open} onClose={this.clearAndClose}>
                 <div className="client-payment-container align-center column">
@@ -107,23 +131,19 @@ class PaymentModal extends Component {
 
                     </div>
 
-                    <div className="modal-menu-bar">
+                    <nav className="modal-menu-bar">
                         <p className="modal-menu-item center"
                             onClick={() => this.changeLists(0)}>Payments</p>
                         <p className="modal-menu-item center"
                             onClick={() => this.changeLists(1)}>Expenses</p>
                         <p className="modal-menu-item center"
                             onClick={() => this.changeLists(2)}>Mileage</p>
-                    </div>
+                    </nav>
+
 
                     {/* Swaps out table views based on menu */}
+                    {this.renderTable()}
 
-
-                    <PaymentTable
-                        clientId={this.props.paymentModal.clientId}
-                        updateProgressBar={this.updateProgressBar}
-                        savingStatus={this.state.savingStatus}
-                        clearAndClose={this.clearAndClose} />
 
                 </div>
 

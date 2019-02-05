@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./Home.css";
 import { login } from "../../Main/MainLogic";
-import Workspace from "../../assets/Workspace5.jpg";
 import Navbar from "../NavBar/NavBar";
-import Features from "../Features/Features";
 import Footer from "../Footer/Footer";
 import Fade from "react-reveal/Fade";
+import LazyLoad from 'react-lazyload';
+import Workspace from '../../assets/Workspace5.jpg'
+const Features = React.lazy(() => import('../Features/Features'))
 
 export default function Home(props) {
   return (
@@ -35,16 +36,22 @@ export default function Home(props) {
           </div>
         </Fade>
 
-        <Fade>
-          <img
-            className="main-image"
-            src={Workspace}
-            alt="Home office workspace"
-          />
-        </Fade>
+        <LazyLoad>
+          <Fade>
+            <img
+              src={Workspace}
+              className="main-image"
+              alt="Main office workspace" />
+          </Fade>
+        </LazyLoad>
+
+
       </div>
 
-      <Features {...props} />
+      <Suspense fallback={""}>
+        <Features {...props} />
+      </Suspense>
+
       <Footer />
     </div>
   );

@@ -46,7 +46,6 @@ b {
 }
 
 .main-image{
-    width: 60vw;
     height: 90vh;
     display: grid;
     grid-column: 2;

@@ -9,11 +9,15 @@ const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 
 //------Controllers------//
+
 const sessions = require('./sessions_controller')
 const clients = require('./clients_controller')
 const payments = require('./payments_controller')
+const expenses = require('./expenses_controller')
+const mileage = require('./mileage_controller')
 const subscription = require('./stripe_controller')
 const email = require('./email_controller')
+
 //------Controllers------//
 
 const app = express()
@@ -130,10 +134,6 @@ app.get('/auth/callback', async (req, res) => {
             })
         }
     })
-
-
-
-
 })
 
 //========Auth0==========//
@@ -288,9 +288,35 @@ app.delete('/api/deletepayment/:id', payments.deletePayment)
 
 app.get('/api/yearlypayments/:year', payments.yearlyPayments)
 
-app.get('/api/yearlymacro/:year', payments.yearlyMacro)
-
 //===============PAYMENTS==================//
+
+
+
+//===============EXPENSES==================//
+
+app.get('/api/getexpenses/:id', expenses.getExpenses)
+
+app.post('/api/saveexpense', expenses.saveExpense)
+
+app.put('/api/updateexpense', expenses.updateExpense)
+
+app.delete('/api/deleteexpense/:id', expenses.deleteExpense)
+
+//===============EXPENSES==================//
+
+
+
+//===============MILEAGE==================//
+
+app.get('/api/getmileage/:id', mileage.getMileage)
+
+app.post('/api/savemileage', mileage.saveMileage)
+
+app.put('/api/updatemileage', mileage.updateMileage)
+
+app.delete('/api/deletemileage/:id', mileage.deleteMileage)
+
+//===============MILEAGE==================//
 
 
 
@@ -335,7 +361,6 @@ app.post('/api/email/signup', email.subscribed)
 //============SENDGRID==================//
 
 
-
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
@@ -346,4 +371,3 @@ const SERVER_PORT = process.env.SERVER_PORT || 3051
 app.listen(SERVER_PORT, () => {
     console.log(`Server is listening on ${SERVER_PORT}`)
 })
-

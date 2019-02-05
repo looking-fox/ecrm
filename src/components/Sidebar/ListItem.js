@@ -1,62 +1,54 @@
-import React, { Component } from 'react'
-import {Draggable} from 'react-beautiful-dnd'
+import React from 'react'
+import { Draggable } from 'react-beautiful-dnd'
 import PropTypes from 'prop-types'
 
+export default function ListItem(props) {
+	if (props.active) {
+		return (
+			<Draggable
+				draggableId={String(props.index)}
+				index={props.index}>
+				{provided => (
+					<div className="list-item current-list"
+						id={props.index}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+						ref={provided.innerRef}
+						key={props.item.list_id} onClick={() => props.clickList(props.item)}>
 
-export default class ListItem extends Component {
-	
-  render() {
-    if(this.props.active){
-    return (
-			<Draggable 
-			draggableId={String(this.props.index)}
-			index={this.props.index}>
-			{provided => (
-				<div className="list-item current-list" 
-				id={this.props.index}
-				{...provided.draggableProps}
-				{...provided.dragHandleProps}
-				ref={provided.innerRef}
-				key={this.props.item.list_id} onClick={() => this.props.clickList(this.props.item)}>
-					
+						<i id="menu-icon" className="fas fa-ellipsis-v menu-icon options-icon"
+							onClick={props.optionsMenu} />
 
-					<i id="menu-icon" className="fas fa-ellipsis-v menu-icon options-icon"
-					onClick={this.props.optionsMenu}/>
+						<p>{props.item.list_name}</p>
 
-						<p>{this.props.item.list_name}</p>
-						
-						<i onClick={() => this.props.openClient(this.props.item)}
-				className="fas fa-plus-circle menu-icon add-icon"/>
-
-					
-				</div>
-			)}
+						<i onClick={() => props.openClient(props.item)}
+							className="fas fa-plus-circle menu-icon add-icon" />
+					</div>
+				)}
 			</Draggable>
-		) 
-    }
+		)
+	}
 
-    else {
-        return (
-			<Draggable 
-			draggableId={String(this.props.index)}
-			index={this.props.index}>
-			{provided => (
-				<div className="list-item" 
-				key={this.props.item.list_id}
-				id={this.props.index}
-				{...provided.draggableProps}
-				{...provided.dragHandleProps}
-				ref={provided.innerRef}
-                onClick={() => this.props.clickList(this.props.item)}>
-                      <p>{this.props.item.list_name}</p>
-                </div>
-			)}
+	else {
+		return (
+			<Draggable
+				draggableId={String(props.index)}
+				index={props.index}>
+				{provided => (
+					<div className="list-item"
+						key={props.item.list_id}
+						id={props.index}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+						ref={provided.innerRef}
+						onClick={() => props.clickList(props.item)}>
+						<p>{props.item.list_name}</p>
+					</div>
+				)}
 			</Draggable>
-              )    
-        }      
-    }
+		)
+	}
 }
-
 
 ListItem.propTypes = {
 	item: PropTypes.object.isRequired,
@@ -67,4 +59,3 @@ ListItem.propTypes = {
 	openClient: PropTypes.func,
 	optionsMenu: PropTypes.func
 }
-

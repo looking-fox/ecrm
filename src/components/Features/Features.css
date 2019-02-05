@@ -67,7 +67,7 @@
 .browser-dash img {
     -webkit-filter: drop-shadow(5px 10px 10px rgb(34, 34, 34, 0.3));
     filter: drop-shadow(5px 10px 10px rgb(34, 34, 34, 0.3));
-    width: 60%;
+    height: 300px;
     
 }
 
@@ -78,7 +78,7 @@ img.main-dash {
 }
 
 img.finance-dash {
-  width: 50%;
+  height: 210px;
   position: relative;
   bottom: 8%;
   left: 5%;
