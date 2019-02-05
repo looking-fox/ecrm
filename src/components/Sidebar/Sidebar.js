@@ -70,7 +70,7 @@ class Sidebar extends Component {
           this.setState({ showTutorial: true });
         }
       })
-      .catch(error => {
+      .catch(() => {
         //If 500 error with no user, redirect to home page.
         this.props.history.push("/");
       });

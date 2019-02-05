@@ -24,7 +24,12 @@ function convertRawMiles(amount) {
 }
 
 function convertToMiles(amount) {
-    return `${amount} mi`
+    let strAmount = String(amount).split("")
+    let len = strAmount.length
+    if (len >= 4) {
+        strAmount.splice(len - 3, 0, ",")
+    }
+    return `${strAmount.join("")} mi`
 }
 
 function convertToRawMoney(amount) {
