@@ -1,4 +1,4 @@
-const {convertRawMoney, convertToRawMoney} = require('./MainLogic')
+const { convertRawMoney, convertToRawMoney, convertToMiles } = require('./MainLogic')
 
 describe('convertRawMoney Func', () => {
 
@@ -7,7 +7,7 @@ describe('convertRawMoney Func', () => {
     })
 
     it('Should return a string', () => {
-        expect( typeof convertRawMoney(45) ).toBe('string')
+        expect(typeof convertRawMoney(45)).toBe('string')
     })
 
     it('Should return with dollar symbol', () => {
@@ -19,7 +19,7 @@ describe('convertRawMoney Func', () => {
     })
 
     it('Should correctly place comma for values > 10,000', () => {
-        expect( convertRawMoney(12000) ).toBe('$12,000')
+        expect(convertRawMoney(12000)).toBe('$12,000.00')
     })
 
     it('Should maintain decimals with 4 digits', () => {
@@ -78,6 +78,30 @@ describe('convertToRawMoney Func', () => {
 
     it('Should work for non-decimal values', () => {
         expect(convertToRawMoney('$45,000')).toBe(45000)
+    })
+
+})
+
+describe('Convert To Miles Func', () => {
+
+    it('Should be defined', () => {
+        expect(convertToMiles).toBeDefined()
+    })
+
+    it('Should return a string', () => {
+        expect(typeof convertToMiles(1024)).toBe("string")
+    })
+
+    it('Should contain a decimal for values larger than 1,000', () => {
+        expect(convertToMiles(1024)).toContain(",")
+    })
+
+    it('Should handle strings if provided by accident', () => {
+        expect(convertToMiles("1024")).toBe("1,024 mi");
+    })
+
+    it('Should be tough', () => {
+        expect(convertToMiles("test")).toBe("0 mi")
     })
 
 })
