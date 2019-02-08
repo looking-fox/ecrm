@@ -1,4 +1,4 @@
-const { convertRawMoney, convertToRawMoney, convertToMiles } = require('./MainLogic')
+const { convertRawMoney, convertToRawMoney, convertToMiles, convertToLocalDate } = require('./MainLogic')
 
 describe('convertRawMoney Func', () => {
 
@@ -100,8 +100,28 @@ describe('Convert To Miles Func', () => {
         expect(convertToMiles("1024")).toBe("1,024 mi");
     })
 
-    it('Should be tough', () => {
+    it('Should handle a non-integer string', () => {
         expect(convertToMiles("test")).toBe("0 mi")
+    })
+
+})
+
+describe('Convert to Local Date Func', () => {
+
+    it('Should be defined', () => {
+        expect(convertToLocalDate).toBeDefined()
+    })
+
+    it('Should return an object', () => {
+        let today = "12/24/2018"
+        let date = new Date(today)
+        expect(typeof convertToLocalDate(today)).toBe("object")
+    })
+
+    it('Should return a date object', () => {
+        let today = "12/24/2018"
+        let date = new Date(today)
+        expect(convertToLocalDate(today)).toEqual(date)
     })
 
 })
