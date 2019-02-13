@@ -6,7 +6,7 @@ import './index.css';
 import './Main/Main.css';
 
 import store from './redux/store'
-import { unregister } from './serviceWorker';
+import * as serviceWorker from './serviceWorker';
 
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux'
@@ -87,4 +87,4 @@ ReactDOM.render(
 
     , document.getElementById('root'));
 
-unregister();
+serviceWorker.register();

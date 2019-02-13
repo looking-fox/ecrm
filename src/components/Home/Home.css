@@ -10,7 +10,7 @@
     grid-row: 2;
     display: grid;
     grid-template-rows: 1;
-    grid-template-columns: 30vw 70vw;
+    grid-template-columns: 40vw 60vw;
 }
 
 .intro-container {

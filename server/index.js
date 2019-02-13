@@ -37,7 +37,7 @@ massive(process.env.CONNECTION_STRING).then(db => {
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false
 }))
 
