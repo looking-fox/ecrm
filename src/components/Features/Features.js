@@ -1,7 +1,6 @@
 import React from 'react'
 import './Features.css'
 import Fade from 'react-reveal/Fade'
-import LazyLoad from 'react-lazyload';
 import financeDash from '../../assets/finance_dash.png'
 import mainDash from '../../assets/main_dash.png'
 
@@ -42,17 +41,13 @@ export default function Features() {
 
         <div className="browser-dash center">
           <Fade left>
-            <LazyLoad offset={100}>
-              <img className="finance-dash"
-                src={financeDash} alt="Dashboard Preview" />
-            </LazyLoad>
+            <img className="finance-dash"
+              src={financeDash} alt="Dashboard Preview" />
           </Fade>
 
           <Fade right>
-            <LazyLoad offset={100} height={400}>
-              <img className="main-dash"
-                src={mainDash} alt="Dashboard Preview" />
-            </LazyLoad>
+            <img className="main-dash"
+              src={mainDash} alt="Dashboard Preview" />
           </Fade>
 
         </div>

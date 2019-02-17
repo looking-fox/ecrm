@@ -47,6 +47,7 @@ b {
 
 .main-image{
     height: 90vh;
+    max-width: 100%;
     display: grid;
     grid-column: 2;
     justify-self: flex-end;
