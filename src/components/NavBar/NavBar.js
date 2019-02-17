@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { PropTypes } from 'react'
 import './NavBar.css'
 import { login } from '../../Main/MainLogic'
 import Logo from '../../assets/logo.png'
@@ -8,14 +7,9 @@ var smoothScroll = require('smoothscroll');
 
 export default class NavBar extends Component {
 
-
-
   handleClick(location) {
-
     if (this.props.match.path === '/contact') {
-
       //Async IIFE that forces handleScroll to wait until props updates before smooth scrolling.
-
       (async () => {
         let pathPromise = new Promise((resolve, reject) => {
           this.props.history.push('/')
@@ -26,11 +20,9 @@ export default class NavBar extends Component {
         if (newPath === '/') this.handleScroll(location)
 
       })()
-
     }
 
     else this.handleScroll(location)
-
   }
 
   handleScroll(location) {
@@ -42,15 +34,11 @@ export default class NavBar extends Component {
     this.props.history.push('/contact')
   }
 
-
-
-
   render() {
-
     return (
       <div className="header">
 
-        <div className="logo-container center">
+        <div className="center">
           <img src={Logo} alt="Logo" className="logo-image" />
           <h1 className="logo center"
             onClick={() => this.props.history.push('/')}>
