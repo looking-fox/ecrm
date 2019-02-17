@@ -20,9 +20,19 @@ import Clients from './components/Clients/Clients'
 import Finances from './components/Settings/Finances/Finances'
 import Sessions from './components/Settings/Sessions/Sessions'
 import SignUp from './components/Subscription/SignUp'
+let stripeId = null;
+
+if (window.Stripe) {
+    stripeId = window.Stripe(process.env.REACT_APP_STRIPE_PUB)
+} else {
+    document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        stripeId = window.Stripe(process.env.REACT_APP_STRIPE_PUB)
+    });
+}
 
 ReactDOM.render(
-    <StripeProvider apiKey={process.env.REACT_APP_STRIPE_PUB}>
+    <StripeProvider stripe={stripeId}>
         <Provider store={store}>
             <Router>
                 <Switch>
